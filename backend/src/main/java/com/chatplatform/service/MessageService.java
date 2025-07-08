@@ -1,10 +1,11 @@
 package com.chatplatform.service;
 
+import com.chatplatform.dto.MessageDistributionEvent;
 import com.chatplatform.model.ChatMessage;
 import com.chatplatform.repository.mongo.ChatMessageRepository;
-import com.chatplatform.websocket.ChatWebSocketHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Async;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class MessageService {
@@ -21,17 +21,14 @@ public class MessageService {
     
     private final ChatMessageRepository messageRepository;
     private final KafkaTemplate<String, ChatMessage> kafkaTemplate;
-    private final ConnectionManager connectionManager;
-    private final ChatWebSocketHandler webSocketHandler;
+    private final ApplicationEventPublisher eventPublisher;
     
     public MessageService(ChatMessageRepository messageRepository,
                          KafkaTemplate<String, ChatMessage> kafkaTemplate,
-                         ConnectionManager connectionManager,
-                         ChatWebSocketHandler webSocketHandler) {
+                         ApplicationEventPublisher eventPublisher) {
         this.messageRepository = messageRepository;
         this.kafkaTemplate = kafkaTemplate;
-        this.connectionManager = connectionManager;
-        this.webSocketHandler = webSocketHandler;
+        this.eventPublisher = eventPublisher;
     }
     
     @Async
@@ -51,26 +48,10 @@ public class MessageService {
     @KafkaListener(topics = "chat-messages", groupId = "chat-platform")
     public void handleMessageFromKafka(ChatMessage message) {
         try {
-            distributeMessage(message);
+            eventPublisher.publishEvent(new MessageDistributionEvent(message));
         } catch (Exception e) {
             logger.error("Error handling message from Kafka", e);
         }
-    }
-    
-    private void distributeMessage(ChatMessage message) {
-        String conversationId = message.getConversationId();
-        
-        // For now, we'll broadcast to all connected users
-        // In a real application, you'd get conversation participants
-        Set<String> sessions = connectionManager.getSessionsForServer(getServerId());
-        
-        sessions.forEach(sessionId -> {
-            try {
-                webSocketHandler.sendMessageToSession(sessionId, message);
-            } catch (Exception e) {
-                logger.error("Error sending message to session: {}", sessionId, e);
-            }
-        });
     }
     
     public List<ChatMessage> getConversationMessages(String conversationId) {
