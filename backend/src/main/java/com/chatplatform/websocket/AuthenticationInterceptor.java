@@ -71,9 +71,6 @@ public class AuthenticationInterceptor implements HandshakeInterceptor {
             logger.error("Error during WebSocket handshake", e);
             return false;
         }
-        
-        logger.warn("WebSocket handshake failed");
-        return false;
     }
     
     @Override
