@@ -1,11 +1,16 @@
 package com.chatplatform.controller;
 
+import com.chatplatform.dto.AuthResponse;
+import com.chatplatform.dto.LoginRequest;
+import com.chatplatform.dto.RegisterRequest;
 import com.chatplatform.model.User;
-import com.chatplatform.service.UserService;
+import com.chatplatform.service.AuthService;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -13,46 +18,59 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class AuthController {
     
-    private final UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
     
-    public AuthController(UserService userService) {
-        this.userService = userService;
+    private final AuthService authService;
+    
+    public AuthController(AuthService authService) {
+        this.authService = authService;
     }
     
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
-        String email = loginRequest.get("email");
-        String password = loginRequest.get("password");
-        
-        // For demo purposes, create a mock user
-        User user = new User();
-        user.setId("demo-user-" + email.hashCode());
-        user.setUsername(email);
-        user.setEmail(email);
-        user.setDisplayName("Demo User");
-        
-        // Mock JWT token
-        String token = "demo-token-" + System.currentTimeMillis();
-        
-        Map<String, Object> response = new HashMap<>();
-        response.put("token", token);
-        response.put("user", user);
-        
-        return ResponseEntity.ok(response);
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
+        try {
+            AuthResponse authResponse = authService.login(loginRequest);
+            return ResponseEntity.ok(authResponse);
+        } catch (Exception e) {
+            logger.error("Login failed for email: {}", loginRequest.getEmail(), e);
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Invalid email or password"));
+        }
+    }
+    
+    @PostMapping("/register")
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
+        try {
+            AuthResponse authResponse = authService.register(registerRequest);
+            return ResponseEntity.ok(authResponse);
+        } catch (Exception e) {
+            logger.error("Registration failed for email: {}", registerRequest.getEmail(), e);
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", e.getMessage()));
+        }
     }
     
     @GetMapping("/me")
     public ResponseEntity<?> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
-        // Extract token from Authorization header
-        String token = authHeader.replace("Bearer ", "");
-        
-        // For demo purposes, return a mock user based on token
-        User user = new User();
-        user.setId("demo-user-" + token.hashCode());
-        user.setUsername("demo@example.com");
-        user.setEmail("demo@example.com");
-        user.setDisplayName("Demo User");
-        
-        return ResponseEntity.ok(user);
+        try {
+            User user = authService.getUserFromToken(authHeader);
+            return ResponseEntity.ok(user);
+        } catch (Exception e) {
+            logger.error("Get current user failed", e);
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Invalid or expired token"));
+        }
+    }
+    
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+        try {
+            authService.logout(authHeader);
+            return ResponseEntity.ok(Map.of("message", "Logout successful"));
+        } catch (Exception e) {
+            logger.error("Logout failed", e);
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Logout failed"));
+        }
     }
 }
