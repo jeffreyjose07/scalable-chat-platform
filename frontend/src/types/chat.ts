@@ -2,6 +2,7 @@ export interface ChatMessage {
   id: string;
   conversationId: string;
   senderId: string;
+  senderUsername?: string; // Optional with fallback handling
   content: string;
   type: MessageType;
   timestamp: string;

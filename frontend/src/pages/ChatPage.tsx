@@ -23,6 +23,7 @@ const ChatPage: React.FC = () => {
     sendMessage({
       conversationId: selectedConversation,
       senderId: user.id,
+      senderUsername: undefined, // Backend will set this as source of truth
       content: content.trim(),
       type: MessageType.TEXT,
     });
