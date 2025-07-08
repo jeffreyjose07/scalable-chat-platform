@@ -8,6 +8,8 @@ A real-time chat platform built with Spring Boot backend and React frontend, des
 - **Frontend**: React with TypeScript, WebSocket client, Tailwind CSS
 - **Infrastructure**: Docker Compose for local development
 
+📊 **[View Detailed Architecture](docs/ARCHITECTURE.md)** | 🎯 **[Demo Guide](docs/DEMO.md)**
+
 ## Quick Start
 
 ### Prerequisites
@@ -79,12 +81,12 @@ Login with different emails on each instance and start chatting!
 - ✅ Message queuing (Kafka)
 - ✅ Responsive UI with Tailwind CSS
 
-### Architecture Components
-- **WebSocket Handlers**: Real-time bidirectional communication
-- **Message Service**: Async message processing with Kafka
-- **Connection Manager**: User session and presence tracking
-- **Multi-database setup**: PostgreSQL for users, MongoDB for messages
-- **Caching**: Redis for session management and real-time data
+### Technical Highlights
+- **Event-Driven Architecture**: Microservices with Kafka message distribution
+- **Multi-Database Strategy**: PostgreSQL for users, MongoDB for messages, Redis for sessions
+- **Real-Time Communication**: WebSocket-based instant messaging
+- **Horizontal Scalability**: Stateless services designed for load balancing
+- **Fault Tolerance**: Message persistence and graceful error handling
 
 ## Services and Ports
 
