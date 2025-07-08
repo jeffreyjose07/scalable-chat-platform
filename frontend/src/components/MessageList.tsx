@@ -14,15 +14,33 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId }) =>
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Debug logging
+  useEffect(() => {
+    console.log('MessageList render:', {
+      currentUserId,
+      messageCount: messages.length,
+      sampleMessage: messages[0] ? {
+        id: messages[0].id,
+        senderId: messages[0].senderId,
+        senderUsername: messages[0].senderUsername,
+        isOwn: messages[0].senderId === currentUserId
+      } : null
+    });
+  }, [messages, currentUserId]);
+
   return (
     <div className="flex-1 overflow-y-auto p-4 space-y-4">
-      {messages.map((message) => (
-        <MessageBubble
-          key={message.id}
-          message={message}
-          isOwn={message.senderId === currentUserId}
-        />
-      ))}
+      {messages.map((message) => {
+        const isOwn = message.senderId === currentUserId;
+        console.log(`Message ${message.id}: senderId=${message.senderId}, currentUserId=${currentUserId}, isOwn=${isOwn}`);
+        return (
+          <MessageBubble
+            key={message.id}
+            message={message}
+            isOwn={isOwn}
+          />
+        );
+      })}
       <div ref={messagesEndRef} />
     </div>
   );
@@ -42,7 +60,9 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isOwn }) => {
           : 'bg-gray-100 text-gray-900'
       }`}>
         {!isOwn && (
-          <div className="text-xs text-gray-600 mb-1">{message.senderId}</div>
+          <div className="text-xs text-gray-600 mb-1">
+            {message.senderUsername || message.senderId || 'Unknown User'}
+          </div>
         )}
         <div className="text-sm">{message.content}</div>
         <div className={`text-xs mt-1 ${
