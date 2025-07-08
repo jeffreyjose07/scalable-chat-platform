@@ -4,78 +4,234 @@
 
 The Scalable Chat Platform follows a microservices-inspired architecture with real-time messaging capabilities, designed for horizontal scalability and high availability.
 
-## Architecture Diagram
+## System Architecture Overview
 
 ```mermaid
-graph TB
-    subgraph "Frontend Layer"
-        UI1[React App :3000]
-        UI2[React App :3001]
-        UI3[React App :3002]
+---
+title: Scalable Chat Platform - System Architecture
+config:
+  theme: base
+  themeVariables:
+    primaryColor: "#ffffff"
+    primaryTextColor: "#2c3e50"
+    primaryBorderColor: "#3498db"
+    lineColor: "#34495e"
+    sectionBkColor: "#f8f9fa"
+    altSectionBkColor: "#ffffff"
+    gridColor: "#ecf0f1"
+    clusterBkg: "#f8f9fa"
+    clusterBorder: "#bdc3c7"
+---
+
+flowchart TD
+    %% External Users
+    USER1[👤 User 1<br/>Browser]
+    USER2[👤 User 2<br/>Browser]
+    USER3[👤 User 3<br/>Browser]
+
+    %% Presentation Layer
+    subgraph PRESENTATION["🎨 Presentation Layer"]
+        direction TB
+        FE1["⚛️ React App<br/>:3000"]
+        FE2["⚛️ React App<br/>:3001"]
+        FE3["⚛️ React App<br/>:3002"]
+    end
+
+    %% API Gateway
+    subgraph GATEWAY["🌐 API Gateway Layer"]
+        direction TB
+        API["🚀 Spring Boot API<br/>:8080<br/>REST Endpoints"]
+        WS["🔌 WebSocket Handler<br/>Real-time Communication"]
+    end
+
+    %% Application Services
+    subgraph SERVICES["⚙️ Application Services"]
+        direction TB
+        subgraph CORE["Core Services"]
+            MS["📨 Message Service<br/>Business Logic"]
+            US["👥 User Service<br/>Authentication"]
+            CS["🔗 Connection Manager<br/>Session Tracking"]
+        end
+        subgraph MESSAGING["Event Handling"]
+            DS["📡 Distribution Service<br/>Event Consumer"]
+        end
+    end
+
+    %% Message Infrastructure
+    subgraph QUEUE["📬 Message Infrastructure"]
+        direction TB
+        KAFKA["🚀 Apache Kafka<br/>:9092<br/>Event Streaming"]
+        ZK["🌳 Zookeeper<br/>:2181<br/>Coordination"]
+    end
+
+    %% Data Persistence
+    subgraph DATA["🗄️ Data Persistence Layer"]
+        direction TB
+        PG[("🐘 PostgreSQL<br/>:5432<br/>User Accounts")]
+        MONGO[("🍃 MongoDB<br/>:27017<br/>Message History")]
+        REDIS[("🔴 Redis<br/>:6379<br/>Sessions & Cache")]
+        ES[("🔍 Elasticsearch<br/>:9200<br/>Search Index")]
+    end
+
+    %% User Connections
+    USER1 -.->|HTTPS| FE1
+    USER2 -.->|HTTPS| FE2
+    USER3 -.->|HTTPS| FE3
+
+    %% Frontend to Backend
+    FE1 -->|"REST API<br/>Authentication"| API
+    FE2 -->|"REST API<br/>Authentication"| API
+    FE3 -->|"REST API<br/>Authentication"| API
+
+    FE1 -.->|"WebSocket<br/>Real-time"| WS
+    FE2 -.->|"WebSocket<br/>Real-time"| WS
+    FE3 -.->|"WebSocket<br/>Real-time"| WS
+
+    %% API Gateway to Services
+    API -->|"User Operations"| US
+    API -->|"Message Operations"| MS
+    WS -->|"Connection Tracking"| CS
+    WS -->|"Message Processing"| MS
+
+    %% Service Interactions
+    MS -->|"Event Publishing"| KAFKA
+    DS -->|"Event Consumption"| KAFKA
+    DS -->|"Message Broadcasting"| WS
+
+    %% Data Access
+    MS -->|"Store Messages"| MONGO
+    US -->|"User Management"| PG
+    CS -->|"Session Management"| REDIS
+    MS -.->|"Index Messages"| ES
+
+    %% Infrastructure Dependencies
+    KAFKA -->|"Cluster Management"| ZK
+
+    %% Styling Classes
+    classDef userStyle fill:#3498db,stroke:#2980b9,stroke-width:2px,color:#fff
+    classDef frontendStyle fill:#e8f5e9,stroke:#4caf50,stroke-width:2px,color:#2e7d32
+    classDef gatewayStyle fill:#fff3e0,stroke:#ff9800,stroke-width:2px,color:#ef6c00
+    classDef serviceStyle fill:#f3e5f5,stroke:#9c27b0,stroke-width:2px,color:#7b1fa2
+    classDef queueStyle fill:#e3f2fd,stroke:#2196f3,stroke-width:2px,color:#1565c0
+    classDef dataStyle fill:#fce4ec,stroke:#e91e63,stroke-width:2px,color:#ad1457
+    classDef layerStyle fill:#f8f9fa,stroke:#95a5a6,stroke-width:2px,stroke-dasharray: 5 5
+
+    %% Apply Styles
+    class USER1,USER2,USER3 userStyle
+    class FE1,FE2,FE3 frontendStyle
+    class API,WS gatewayStyle
+    class MS,US,CS,DS serviceStyle
+    class KAFKA,ZK queueStyle
+    class PG,MONGO,REDIS,ES dataStyle
+    class PRESENTATION,GATEWAY,SERVICES,QUEUE,DATA layerStyle
+```
+
+## Data Flow Diagrams
+
+### Message Flow Architecture
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant FE as React Frontend
+    participant WS as WebSocket Handler
+    participant MS as Message Service
+    participant K as Kafka
+    participant DS as Distribution Service
+    participant DB as MongoDB
+    participant R as Redis
+
+    Note over U,R: Real-time Message Flow
+
+    U->>FE: Type & Send Message
+    FE->>WS: WebSocket: {message}
+    WS->>MS: Process Message
+    
+    par Store Message
+        MS->>DB: Save to MongoDB
+    and Publish Event
+        MS->>K: Publish to Topic
     end
     
-    subgraph "API Gateway Layer"
-        API[Spring Boot API :8080]
-        WS[WebSocket Handler]
-    end
+    K->>DS: Consume Event
+    DS->>R: Get Active Sessions
+    DS->>WS: Broadcast to Sessions
+    WS-->>FE: WebSocket: {message}
+    FE-->>U: Display Message
     
-    subgraph "Service Layer"
-        MS[Message Service]
-        US[User Service]
-        CS[Connection Manager]
-        DS[Message Distribution Service]
-    end
+    Note over U,R: Sub-100ms latency for local deployment
+```
+
+### Authentication Flow
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant FE as React Frontend
+    participant API as Spring Boot API
+    participant US as User Service
+    participant DB as PostgreSQL
+    participant R as Redis
+    participant WS as WebSocket Handler
+
+    Note over U,WS: Authentication & Session Management
+
+    U->>FE: Login Credentials
+    FE->>API: POST /auth/login
+    API->>US: Validate User
+    US->>DB: Query User Data
+    DB-->>US: User Record
+    US-->>API: JWT Token
+    API-->>FE: {token, user}
     
-    subgraph "Message Queue"
-        KAFKA[Apache Kafka :9092]
-        ZK[Zookeeper :2181]
-    end
+    FE->>WS: Connect WebSocket + JWT
+    WS->>US: Validate Token
+    US->>R: Store Session
+    WS-->>FE: Connection Established
     
-    subgraph "Data Layer"
-        PG[(PostgreSQL :5432<br/>User Data)]
-        MONGO[(MongoDB :27017<br/>Messages)]
-        REDIS[(Redis :6379<br/>Sessions/Cache)]
-        ES[(Elasticsearch :9200<br/>Search Index)]
-    end
-    
-    %% Frontend connections
-    UI1 -.->|WebSocket| WS
-    UI2 -.->|WebSocket| WS
-    UI3 -.->|WebSocket| WS
-    UI1 -->|HTTP/REST| API
-    UI2 -->|HTTP/REST| API
-    UI3 -->|HTTP/REST| API
-    
-    %% API Layer
-    API --> US
-    API --> MS
-    WS --> CS
-    WS --> MS
-    
-    %% Service Layer
-    MS -->|Publish| KAFKA
-    MS -->|Store| MONGO
-    DS -->|Subscribe| KAFKA
-    DS --> WS
-    US --> PG
-    CS --> REDIS
-    
-    %% Dependencies
-    KAFKA --> ZK
-    MS -.->|Search| ES
-    
-    %% Styling
-    classDef frontend fill:#e1f5fe
-    classDef api fill:#f3e5f5
-    classDef service fill:#e8f5e8
-    classDef queue fill:#fff3e0
-    classDef data fill:#fce4ec
-    
-    class UI1,UI2,UI3 frontend
-    class API,WS api
-    class MS,US,CS,DS service
-    class KAFKA,ZK queue
-    class PG,MONGO,REDIS,ES data
+    Note over U,WS: Stateless authentication with Redis session tracking
+```
+
+## Simplified Architecture View
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        📱 CLIENT LAYER                          │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐                │
+│  │React App:3000│ │React App:3001│ │React App:3002│                │
+│  └─────────────┘ └─────────────┘ └─────────────┘                │
+└─────────────────────────────────────────────────────────────────┘
+                           │ HTTP/WebSocket
+┌─────────────────────────────────────────────────────────────────┐
+│                       🌐 API GATEWAY                            │
+│  ┌─────────────────┐              ┌─────────────────┐           │
+│  │  Spring Boot    │              │  WebSocket      │           │
+│  │  REST API:8080  │              │  Handler        │           │
+│  └─────────────────┘              └─────────────────┘           │
+└─────────────────────────────────────────────────────────────────┘
+                           │
+┌─────────────────────────────────────────────────────────────────┐
+│                      ⚙️ SERVICE LAYER                           │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐│
+│  │  Message    │ │    User     │ │ Connection  │ │Distribution ││
+│  │  Service    │ │  Service    │ │  Manager    │ │  Service    ││
+│  └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘│
+└─────────────────────────────────────────────────────────────────┘
+                           │
+┌─────────────────────────────────────────────────────────────────┐
+│                     📬 MESSAGE QUEUE                            │
+│         ┌─────────────────┐    ┌─────────────────┐              │
+│         │  Apache Kafka   │    │   Zookeeper     │              │
+│         │     :9092       │    │     :2181       │              │
+│         └─────────────────┘    └─────────────────┘              │
+└─────────────────────────────────────────────────────────────────┘
+                           │
+┌─────────────────────────────────────────────────────────────────┐
+│                      🗄️ DATA LAYER                              │
+│ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ │
+│ │ PostgreSQL  │ │  MongoDB    │ │    Redis    │ │Elasticsearch│ │
+│ │   :5432     │ │   :27017    │ │   :6379     │ │   :9200     │ │
+│ │(User Data)  │ │ (Messages)  │ │ (Sessions)  │ │  (Search)   │ │
+│ └─────────────┘ └─────────────┘ └─────────────┘ └─────────────┘ │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ## Component Details
