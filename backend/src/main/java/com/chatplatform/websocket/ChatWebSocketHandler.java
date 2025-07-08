@@ -6,6 +6,7 @@ import com.chatplatform.service.MessageService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
+import org.springframework.web.socket.handler.TextWebSocketHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
