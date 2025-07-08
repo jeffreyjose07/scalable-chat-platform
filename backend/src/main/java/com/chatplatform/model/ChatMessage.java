@@ -17,6 +17,8 @@ public class ChatMessage {
     @Indexed
     private String senderId;
     
+    private String senderUsername;
+    
     private String content;
     private MessageType type;
     private Instant timestamp;
@@ -29,9 +31,10 @@ public class ChatMessage {
         this.expiresAt = Instant.now().plusSeconds(2592000);
     }
     
-    public ChatMessage(String conversationId, String senderId, String content, MessageType type) {
+    public ChatMessage(String conversationId, String senderId, String senderUsername, String content, MessageType type) {
         this.conversationId = conversationId;
         this.senderId = senderId;
+        this.senderUsername = senderUsername;
         this.content = content;
         this.type = type;
         this.timestamp = Instant.now();
@@ -65,6 +68,14 @@ public class ChatMessage {
     
     public void setSenderId(String senderId) { 
         this.senderId = senderId; 
+    }
+    
+    public String getSenderUsername() {
+        return senderUsername;
+    }
+    
+    public void setSenderUsername(String senderUsername) {
+        this.senderUsername = senderUsername;
     }
     
     public String getContent() { 

@@ -1,8 +1,10 @@
 package com.chatplatform.websocket;
 
 import com.chatplatform.model.ChatMessage;
+import com.chatplatform.model.User;
 import com.chatplatform.service.ConnectionManager;
 import com.chatplatform.service.MessageService;
+import com.chatplatform.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
@@ -20,31 +22,49 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     
     private final ConnectionManager connectionManager;
     private final MessageService messageService;
+    private final UserService userService;
     private final ObjectMapper objectMapper;
     
     private final ConcurrentHashMap<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
     
     public ChatWebSocketHandler(ConnectionManager connectionManager, 
                               MessageService messageService,
+                              UserService userService,
                               ObjectMapper objectMapper) {
         this.connectionManager = connectionManager;
         this.messageService = messageService;
+        this.userService = userService;
         this.objectMapper = objectMapper;
     }
     
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
         String userId = getUserId(session);
+        String username = getUserName(session);
         String serverId = getServerId();
+        
+        logger.info("WebSocket connection established - Session ID: {}, User ID: {}, Username: {}", 
+            session.getId(), userId, username);
+        
+        if (userId == null) {
+            logger.error("No userId found in session attributes - closing connection");
+            try {
+                session.close();
+            } catch (Exception e) {
+                logger.error("Error closing session", e);
+            }
+            return;
+        }
         
         sessions.put(session.getId(), session);
         connectionManager.registerConnection(userId, serverId, session.getId());
         
-        logger.info("WebSocket connection established for user: {}", userId);
+        logger.info("WebSocket connection registered for user: {} ({})", username, userId);
         
         // Send pending messages
         List<ChatMessage> pendingMessages = messageService.getPendingMessages(userId);
-        if (pendingMessages != null) {
+        if (pendingMessages != null && !pendingMessages.isEmpty()) {
+            logger.info("Sending {} pending messages to user: {}", pendingMessages.size(), username);
             pendingMessages.forEach(msg -> sendMessage(session, msg));
         }
     }
@@ -53,15 +73,53 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         try {
             ChatMessage chatMessage = objectMapper.readValue(message.getPayload(), ChatMessage.class);
-            chatMessage.setSenderId(getUserId(session));
+            String userId = getUserId(session);
+            String username = getUserName(session);
+            
+            logger.info("Processing message from user: {} ({})", username, userId);
+            
+            if (userId == null) {
+                logger.error("No userId in session - rejecting message");
+                sendError(session, "Authentication error");
+                return;
+            }
+            
+            // Always set senderId to authenticated user (security measure)
+            chatMessage.setSenderId(userId);
+            
+            // Backend is source of truth for username - always fetch from database
+            User sender = userService.findById(userId).orElse(null);
+            if (sender != null) {
+                chatMessage.setSenderUsername(sender.getUsername());
+                logger.debug("Set senderUsername to: {} for user ID: {}", sender.getUsername(), userId);
+            } else {
+                logger.warn("Could not find user with ID: {}, setting fallback username", userId);
+                chatMessage.setSenderUsername("Unknown User");
+            }
+            
+            // Validate required fields
+            if (chatMessage.getContent() == null || chatMessage.getContent().trim().isEmpty()) {
+                sendError(session, "Message content cannot be empty");
+                return;
+            }
+            
+            if (chatMessage.getConversationId() == null || chatMessage.getConversationId().trim().isEmpty()) {
+                sendError(session, "Conversation ID is required");
+                return;
+            }
+            
+            logger.info("Processing message from user: {} ({}), content: '{}', conversation: {}", 
+                chatMessage.getSenderUsername(), userId, 
+                chatMessage.getContent().substring(0, Math.min(50, chatMessage.getContent().length())),
+                chatMessage.getConversationId());
             
             sendAcknowledgment(session, chatMessage.getId());
             
             messageService.processMessage(chatMessage);
             
         } catch (Exception e) {
-            logger.error("Error handling message", e);
-            sendError(session, "Failed to process message");
+            logger.error("Error handling message from session: {}", session.getId(), e);
+            sendError(session, "Failed to process message: " + e.getMessage());
         }
     }
     
@@ -89,6 +147,10 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     
     private String getUserId(WebSocketSession session) {
         return (String) session.getAttributes().get("userId");
+    }
+    
+    private String getUserName(WebSocketSession session) {
+        return (String) session.getAttributes().get("username");
     }
     
     private String getServerId() {

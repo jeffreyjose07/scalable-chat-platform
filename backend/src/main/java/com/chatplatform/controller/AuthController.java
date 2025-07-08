@@ -29,24 +29,64 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
         try {
+            if (loginRequest.getEmail() == null || loginRequest.getEmail().trim().isEmpty()) {
+                return ResponseEntity.status(400)
+                    .body(Map.of("error", "Email is required"));
+            }
+            
+            if (loginRequest.getPassword() == null || loginRequest.getPassword().trim().isEmpty()) {
+                return ResponseEntity.status(400)
+                    .body(Map.of("error", "Password is required"));
+            }
+            
+            logger.info("Login attempt for email: {}", loginRequest.getEmail());
             AuthResponse authResponse = authService.login(loginRequest);
+            logger.info("Login successful for email: {}", loginRequest.getEmail());
             return ResponseEntity.ok(authResponse);
+            
+        } catch (IllegalArgumentException e) {
+            logger.warn("Login failed for email: {} - {}", loginRequest.getEmail(), e.getMessage());
+            return ResponseEntity.status(400)
+                    .body(Map.of("error", "Invalid email or password"));
         } catch (Exception e) {
             logger.error("Login failed for email: {}", loginRequest.getEmail(), e);
-            return ResponseEntity.badRequest()
-                    .body(Map.of("error", "Invalid email or password"));
+            return ResponseEntity.status(500)
+                    .body(Map.of("error", "Login failed due to server error"));
         }
     }
     
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
         try {
+            if (registerRequest.getEmail() == null || registerRequest.getEmail().trim().isEmpty()) {
+                return ResponseEntity.status(400)
+                    .body(Map.of("error", "Email is required"));
+            }
+            
+            if (registerRequest.getUsername() == null || registerRequest.getUsername().trim().isEmpty()) {
+                return ResponseEntity.status(400)
+                    .body(Map.of("error", "Username is required"));
+            }
+            
+            if (registerRequest.getPassword() == null || registerRequest.getPassword().length() < 6) {
+                return ResponseEntity.status(400)
+                    .body(Map.of("error", "Password must be at least 6 characters"));
+            }
+            
+            logger.info("Registration attempt for email: {}, username: {}", 
+                registerRequest.getEmail(), registerRequest.getUsername());
             AuthResponse authResponse = authService.register(registerRequest);
+            logger.info("Registration successful for email: {}", registerRequest.getEmail());
             return ResponseEntity.ok(authResponse);
+            
+        } catch (IllegalArgumentException e) {
+            logger.warn("Registration failed for email: {} - {}", registerRequest.getEmail(), e.getMessage());
+            return ResponseEntity.status(400)
+                    .body(Map.of("error", e.getMessage()));
         } catch (Exception e) {
             logger.error("Registration failed for email: {}", registerRequest.getEmail(), e);
-            return ResponseEntity.badRequest()
-                    .body(Map.of("error", e.getMessage()));
+            return ResponseEntity.status(500)
+                    .body(Map.of("error", "Registration failed due to server error"));
         }
     }
     

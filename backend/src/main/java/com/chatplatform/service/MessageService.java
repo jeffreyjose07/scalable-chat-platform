@@ -63,9 +63,15 @@ public class MessageService {
     }
     
     public List<ChatMessage> getPendingMessages(String userId) {
-        // For now, return empty list
-        // In a real application, you'd return messages that were sent while user was offline
-        return List.of();
+        // Return recent messages from the last hour
+        Instant oneHourAgo = Instant.now().minusSeconds(3600);
+        return messageRepository.findByTimestampAfterOrderByTimestampAsc(oneHourAgo);
+    }
+    
+    public List<ChatMessage> getRecentMessagesForUser(String userId) {
+        // Return recent messages from the last 24 hours
+        Instant oneDayAgo = Instant.now().minusSeconds(86400);
+        return messageRepository.findByTimestampAfterOrderByTimestampAsc(oneDayAgo);
     }
     
     public void deleteConversationMessages(String conversationId) {
