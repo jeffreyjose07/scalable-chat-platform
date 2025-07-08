@@ -8,7 +8,9 @@ A real-time chat platform built with Spring Boot backend and React frontend, des
 - **Frontend**: React with TypeScript, WebSocket client, Tailwind CSS
 - **Infrastructure**: Docker Compose for local development
 
-📊 **[View Detailed Architecture](docs/ARCHITECTURE.md)** | 🎯 **[Demo Guide](docs/DEMO.md)**
+📊 **[View System Architecture](docs/ARCHITECTURE.md)** | 🎯 **[Professional Demo Guide](docs/DEMO.md)**
+
+> **Features professional Mermaid diagrams, sequence flows, and comprehensive technical documentation**
 
 ## Quick Start
 
