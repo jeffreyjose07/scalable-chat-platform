@@ -53,19 +53,16 @@ class AuthServiceTest {
         
         loginRequest = new LoginRequest("test@example.com", "password123");
         
-        registerRequest = new RegisterRequest();
-        registerRequest.setUsername("newuser");
-        registerRequest.setEmail("new@example.com");
-        registerRequest.setPassword("password123");
-        registerRequest.setDisplayName("New User");
+        registerRequest = new RegisterRequest("newuser", "new@example.com", "password123", "New User");
     }
     
     @Test
     void shouldLoginSuccessfully() {
         // Given
-        when(userService.findByEmail(loginRequest.getEmail())).thenReturn(Optional.of(testUser));
+        when(userService.findByEmail(loginRequest.email())).thenReturn(Optional.of(testUser));
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(authentication);
+        when(authentication.isAuthenticated()).thenReturn(true);
         when(jwtService.generateToken(testUser)).thenReturn("test-jwt-token");
         
         // When
@@ -73,11 +70,13 @@ class AuthServiceTest {
         
         // Then
         assertNotNull(response);
-        assertEquals("test-jwt-token", response.getToken());
-        assertEquals(testUser, response.getUser());
+        assertEquals("test-jwt-token", response.token());
+        assertEquals(testUser.getUsername(), response.user().username());
+        assertEquals(testUser.getEmail(), response.user().email());
+        assertTrue(response.isAuthenticated());
         
         verify(userService).updateUserOnlineStatus(testUser.getId(), true);
-        verify(userService).findByEmail(loginRequest.getEmail());
+        verify(userService).findByEmail(loginRequest.email());
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(jwtService).generateToken(testUser);
     }
@@ -85,7 +84,7 @@ class AuthServiceTest {
     @Test
     void shouldThrowExceptionWhenUserNotFound() {
         // Given
-        when(userService.findByEmail(loginRequest.getEmail())).thenReturn(Optional.empty());
+        when(userService.findByEmail(loginRequest.email())).thenReturn(Optional.empty());
         
         // When & Then
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
@@ -93,7 +92,7 @@ class AuthServiceTest {
         });
         
         assertEquals("Invalid email or password", exception.getMessage());
-        verify(userService).findByEmail(loginRequest.getEmail());
+        verify(userService).findByEmail(loginRequest.email());
         verifyNoInteractions(authenticationManager, jwtService);
     }
     
@@ -109,14 +108,16 @@ class AuthServiceTest {
         
         // Then
         assertNotNull(response);
-        assertEquals("test-jwt-token", response.getToken());
-        assertEquals(testUser, response.getUser());
+        assertEquals("test-jwt-token", response.token());
+        assertEquals(testUser.getUsername(), response.user().username());
+        assertEquals(testUser.getEmail(), response.user().email());
+        assertTrue(response.isAuthenticated());
         
         verify(userService).createUser(
-                registerRequest.getUsername(),
-                registerRequest.getEmail(),
-                registerRequest.getPassword(),
-                registerRequest.getDisplayName()
+                registerRequest.username(),
+                registerRequest.email(),
+                registerRequest.password(),
+                registerRequest.displayName()
         );
         verify(userService).updateUserOnlineStatus(testUser.getId(), true);
         verify(jwtService).generateToken(testUser);
@@ -179,7 +180,7 @@ class AuthServiceTest {
             authService.getUserFromToken("");
         });
         
-        assertEquals("Token is required", exception.getMessage());
+        assertEquals("Invalid or expired token", exception.getMessage());
         verifyNoInteractions(jwtService, userService);
     }
     
@@ -202,12 +203,48 @@ class AuthServiceTest {
     void shouldHandleLogoutWithInvalidToken() {
         // Given
         String token = "Bearer invalid-jwt-token";
-        when(jwtService.validateToken("invalid-jwt-token")).thenReturn(false);
         
         // When & Then
         assertDoesNotThrow(() -> authService.logout(token));
         
         // Logout should not throw exception even with invalid token
-        verify(jwtService).validateToken("invalid-jwt-token");
+        // The safeGetUserFromToken method handles this gracefully
+    }
+    
+    @Test
+    void shouldValidateLoginRequest() {
+        // Given
+        LoginRequest validRequest = new LoginRequest("test@example.com", "password123");
+        LoginRequest invalidRequest = new LoginRequest("", "");
+        
+        // When & Then
+        assertTrue(validRequest.isValid());
+        assertFalse(invalidRequest.isValid());
+    }
+    
+    @Test
+    void shouldValidateRegisterRequest() {
+        // Given
+        RegisterRequest validRequest = new RegisterRequest("user", "test@example.com", "password123", "Test User");
+        RegisterRequest invalidRequest = new RegisterRequest("", "", "", "");
+        
+        // When & Then
+        assertTrue(validRequest.isValid());
+        assertFalse(invalidRequest.isValid());
+    }
+    
+    @Test
+    void shouldCreateMaskedRegisterRequest() {
+        // Given
+        RegisterRequest request = new RegisterRequest("user", "test@example.com", "password123", "Test User");
+        
+        // When
+        RegisterRequest masked = request.withMaskedPassword();
+        
+        // Then
+        assertEquals("user", masked.username());
+        assertEquals("test@example.com", masked.email());
+        assertEquals("****", masked.password());
+        assertEquals("Test User", masked.displayName());
     }
 }

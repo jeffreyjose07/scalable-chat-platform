@@ -8,8 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+
+import java.util.concurrent.CompletableFuture;
 
 import java.time.Instant;
 import java.util.List;
@@ -36,21 +39,54 @@ public class MessageService {
         try {
             ChatMessage savedMessage = messageRepository.save(message);
             
-            kafkaTemplate.send("chat-messages", savedMessage);
+            // Send to Kafka with callback handling
+            CompletableFuture<SendResult<String, ChatMessage>> future = 
+                kafkaTemplate.send("chat-messages", savedMessage);
             
-            logger.info("Message processed and sent to Kafka: {}", savedMessage.getId());
+            future.whenComplete((result, ex) -> {
+                if (ex == null) {
+                    logger.info("✅ Message sent to Kafka successfully: {} (partition: {}, offset: {})", 
+                        savedMessage.getId(), result.getRecordMetadata().partition(), result.getRecordMetadata().offset());
+                } else {
+                    logger.error("❌ Failed to send message {} to Kafka: {}", savedMessage.getId(), ex.getMessage());
+                    logger.warn("🔄 Falling back to direct event publishing for message: {}", savedMessage.getId());
+                    
+                    // Fallback: publish event directly if Kafka fails
+                    try {
+                        eventPublisher.publishEvent(new MessageDistributionEvent(savedMessage));
+                        logger.info("✅ Message {} distributed via direct event publishing", savedMessage.getId());
+                    } catch (Exception eventEx) {
+                        logger.error("❌ Failed to distribute message {} via direct event: {}", 
+                            savedMessage.getId(), eventEx.getMessage());
+                    }
+                }
+            });
             
         } catch (Exception e) {
-            logger.error("Error processing message", e);
+            logger.error("Error processing message: {}", e.getMessage());
+            
+            // Emergency fallback: try to save and publish directly
+            try {
+                if (message.getId() == null) {
+                    ChatMessage savedMessage = messageRepository.save(message);
+                    eventPublisher.publishEvent(new MessageDistributionEvent(savedMessage));
+                    logger.warn("Message {} processed via emergency fallback", savedMessage.getId());
+                }
+            } catch (Exception fallbackEx) {
+                logger.error("Emergency fallback failed for message: {}", fallbackEx.getMessage());
+            }
         }
     }
     
     @KafkaListener(topics = "chat-messages", groupId = "chat-platform")
     public void handleMessageFromKafka(ChatMessage message) {
         try {
+            logger.info("📨 Received message from Kafka: {} (content: {})", 
+                message.getId(), message.getContent().substring(0, Math.min(50, message.getContent().length())));
             eventPublisher.publishEvent(new MessageDistributionEvent(message));
+            logger.info("🚀 Published MessageDistributionEvent for message: {}", message.getId());
         } catch (Exception e) {
-            logger.error("Error handling message from Kafka", e);
+            logger.error("❌ Error handling message from Kafka: {}", e.getMessage());
         }
     }
     

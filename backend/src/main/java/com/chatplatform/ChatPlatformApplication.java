@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableCaching
@@ -14,6 +15,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @EnableMongoRepositories(basePackages = "com.chatplatform.repository.mongo")
 @EnableKafka
 @EnableAsync
+@EnableScheduling
 public class ChatPlatformApplication {
     public static void main(String[] args) {
         SpringApplication.run(ChatPlatformApplication.class, args);

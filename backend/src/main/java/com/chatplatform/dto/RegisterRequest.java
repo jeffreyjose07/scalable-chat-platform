@@ -3,63 +3,108 @@ package com.chatplatform.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import java.util.Objects;
+import java.util.function.Predicate;
 
-public class RegisterRequest {
-    
+/**
+ * Registration request record using Java 17 features
+ * Immutable data carrier with built-in validation and sanitization
+ */
+public record RegisterRequest(
     @NotBlank(message = "Username is required")
     @Size(min = 3, max = 20, message = "Username must be between 3 and 20 characters")
-    private String username;
+    String username,
     
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
-    private String email;
+    String email,
     
     @NotBlank(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters")
-    private String password;
+    String password,
     
     @NotBlank(message = "Display name is required")
     @Size(max = 50, message = "Display name must be less than 50 characters")
-    private String displayName;
+    String displayName
+) {
     
-    public RegisterRequest() {}
-    
-    public RegisterRequest(String username, String email, String password, String displayName) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.displayName = displayName;
+    /**
+     * Compact constructor for sanitization and validation
+     */
+    public RegisterRequest {
+        username = sanitizeString(username);
+        email = sanitizeEmail(email);
+        password = Objects.requireNonNullElse(password, "").trim();
+        displayName = sanitizeString(displayName);
     }
     
-    public String getUsername() {
-        return username;
+    /**
+     * Factory method for creating sanitized registration request
+     */
+    public static RegisterRequest of(String username, String email, String password, String displayName) {
+        return new RegisterRequest(username, email, password, displayName);
     }
     
-    public void setUsername(String username) {
-        this.username = username;
+    /**
+     * Comprehensive validation using functional approach
+     */
+    public boolean isValid() {
+        return isUsernameValid().and(isEmailValid()).and(isPasswordValid()).and(isDisplayNameValid()).test(this);
     }
     
-    public String getEmail() {
-        return email;
+    /**
+     * Username validation predicate
+     */
+    private static Predicate<RegisterRequest> isUsernameValid() {
+        return req -> req.username != null && 
+                     !req.username.isBlank() && 
+                     req.username.length() >= 3 && 
+                     req.username.length() <= 20;
     }
     
-    public void setEmail(String email) {
-        this.email = email;
+    /**
+     * Email validation predicate
+     */
+    private static Predicate<RegisterRequest> isEmailValid() {
+        return req -> req.email != null && 
+                     !req.email.isBlank() && 
+                     req.email.contains("@");
     }
     
-    public String getPassword() {
-        return password;
+    /**
+     * Password validation predicate
+     */
+    private static Predicate<RegisterRequest> isPasswordValid() {
+        return req -> req.password != null && req.password.length() >= 6;
     }
     
-    public void setPassword(String password) {
-        this.password = password;
+    /**
+     * Display name validation predicate
+     */
+    private static Predicate<RegisterRequest> isDisplayNameValid() {
+        return req -> req.displayName != null && 
+                     !req.displayName.isBlank() && 
+                     req.displayName.length() <= 50;
     }
     
-    public String getDisplayName() {
-        return displayName;
+    /**
+     * Sanitize string by trimming and handling nulls
+     */
+    private static String sanitizeString(String input) {
+        return Objects.requireNonNullElse(input, "").trim();
     }
     
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+    /**
+     * Sanitize email by trimming and converting to lowercase
+     */
+    private static String sanitizeEmail(String email) {
+        return Objects.requireNonNullElse(email, "").trim().toLowerCase();
+    }
+    
+    /**
+     * Create a sanitized copy with masked password for logging
+     */
+    public RegisterRequest withMaskedPassword() {
+        return new RegisterRequest(username, email, "****", displayName);
     }
 }

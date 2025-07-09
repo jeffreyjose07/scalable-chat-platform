@@ -11,6 +11,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
+/**
+ * Authentication service using Java 17 functional programming patterns
+ * Provides secure user authentication with proper error handling
+ */
 @Service
 public class AuthService {
     
@@ -28,88 +37,167 @@ public class AuthService {
         this.authenticationManager = authenticationManager;
     }
     
+    /**
+     * Authenticate user with functional approach
+     */
     public AuthResponse login(LoginRequest loginRequest) {
-        logger.info("Attempting login for email: {}", loginRequest.getEmail());
+        logger.info("🔐 Attempting login for email: {}", loginRequest.email());
         
-        // Find user by email for authentication
-        User user = userService.findByEmail(loginRequest.getEmail())
+        return findUserByEmail(loginRequest.email())
+                .map(user -> authenticateUser(user, loginRequest.password()))
+                .map(this::generateAuthResponse)
+                .map(this::setUserOnline)
                 .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+    }
+    
+    /**
+     * Register new user with functional approach
+     */
+    public AuthResponse register(RegisterRequest registerRequest) {
+        logger.info("📝 Attempting registration for email: {}", registerRequest.email());
         
-        // Authenticate using Spring Security
+        try {
+            User user = createUser(registerRequest).orElseThrow(() -> 
+                new RuntimeException("Registration failed"));
+            
+            AuthResponse authResponse = generateAuthResponse(user);
+            return setUserOnline(authResponse);
+        } catch (IllegalArgumentException e) {
+            // Re-throw with original message for proper error handling
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Extract user from token with functional validation
+     */
+    public User getUserFromToken(String token) {
+        return Optional.ofNullable(token)
+                .filter(t -> !t.isEmpty())
+                .map(this::removeBearerPrefix)
+                .filter(jwtService::validateToken)
+                .map(jwtService::extractUsername)
+                .flatMap(userService::findByUsername)
+                .orElseThrow(() -> new RuntimeException("Invalid or expired token"));
+    }
+    
+    /**
+     * Logout user with graceful error handling
+     */
+    public void logout(String token) {
+        Optional.ofNullable(token)
+                .map(this::safeGetUserFromToken)
+                .ifPresentOrElse(
+                    user -> {
+                        userService.updateUserOnlineStatus(user.getId(), false);
+                        logger.info("👋 Logout successful for user: {}", user.getUsername());
+                    },
+                    () -> logger.warn("⚠️ Logout failed: Invalid token")
+                );
+    }
+    
+    /**
+     * Async login for better performance
+     */
+    public CompletableFuture<AuthResponse> loginAsync(LoginRequest loginRequest) {
+        return CompletableFuture.supplyAsync(() -> login(loginRequest));
+    }
+    
+    /**
+     * Async registration for better performance
+     */
+    public CompletableFuture<AuthResponse> registerAsync(RegisterRequest registerRequest) {
+        return CompletableFuture.supplyAsync(() -> register(registerRequest));
+    }
+    
+    // Private helper methods using functional patterns
+    
+    /**
+     * Find user by email with error handling
+     */
+    private Optional<User> findUserByEmail(String email) {
+        return userService.findByEmail(email);
+    }
+    
+    /**
+     * Authenticate user credentials
+     */
+    private User authenticateUser(User user, String password) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        user.getUsername(), // Spring Security expects username
-                        loginRequest.getPassword()
-                )
+                new UsernamePasswordAuthenticationToken(user.getUsername(), password)
         );
         
-        // Generate JWT token
+        if (authentication.isAuthenticated()) {
+            logger.info("✅ Authentication successful for user: {}", user.getUsername());
+            return user;
+        } else {
+            throw new RuntimeException("Authentication failed");
+        }
+    }
+    
+    /**
+     * Generate authentication response
+     */
+    private AuthResponse generateAuthResponse(User user) {
         String token = jwtService.generateToken(user);
-        
-        // Update user online status
-        userService.updateUserOnlineStatus(user.getId(), true);
-        
-        logger.info("Login successful for user: {}", user.getUsername());
-        return new AuthResponse(token, user);
+        logger.info("🎫 JWT token generated for user: {}", user.getUsername());
+        return AuthResponse.success(token, user);
     }
     
-    public AuthResponse register(RegisterRequest registerRequest) {
-        logger.info("Attempting registration for email: {}", registerRequest.getEmail());
-        
+    /**
+     * Set user online status
+     */
+    private AuthResponse setUserOnline(AuthResponse authResponse) {
+        if (authResponse.isAuthenticated()) {
+            userService.updateUserOnlineStatus(authResponse.user().id(), true);
+            logger.info("🟢 User set to online: {}", authResponse.user().username());
+        }
+        return authResponse;
+    }
+    
+    /**
+     * Create new user with validation
+     */
+    private Optional<User> createUser(RegisterRequest registerRequest) {
+        User user = userService.createUser(
+                registerRequest.username(),
+                registerRequest.email(),
+                registerRequest.password(),
+                registerRequest.displayName()
+        );
+        logger.info("👤 User created successfully: {}", user.getUsername());
+        return Optional.of(user);
+    }
+    
+    /**
+     * Remove Bearer prefix from token
+     */
+    private String removeBearerPrefix(String token) {
+        return token.startsWith("Bearer ") ? token.substring(7) : token;
+    }
+    
+    /**
+     * Safe user extraction from token (no exceptions thrown)
+     */
+    private User safeGetUserFromToken(String token) {
         try {
-            // Create new user
-            User user = userService.createUser(
-                    registerRequest.getUsername(),
-                    registerRequest.getEmail(),
-                    registerRequest.getPassword(),
-                    registerRequest.getDisplayName()
-            );
-            
-            // Generate JWT token
-            String token = jwtService.generateToken(user);
-            
-            // Set user as online
-            userService.updateUserOnlineStatus(user.getId(), true);
-            
-            logger.info("Registration successful for user: {}", user.getUsername());
-            return new AuthResponse(token, user);
-            
-        } catch (IllegalArgumentException e) {
-            logger.error("Registration failed: {}", e.getMessage());
-            throw new RuntimeException(e.getMessage());
-        }
-    }
-    
-    public User getUserFromToken(String token) {
-        if (token == null || token.isEmpty()) {
-            throw new RuntimeException("Token is required");
-        }
-        
-        // Remove Bearer prefix if present
-        if (token.startsWith("Bearer ")) {
-            token = token.substring(7);
-        }
-        
-        // Validate token
-        if (!jwtService.validateToken(token)) {
-            throw new RuntimeException("Invalid or expired token");
-        }
-        
-        // Extract username from token
-        String username = jwtService.extractUsername(token);
-        
-        // Find user by username
-        return userService.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-    }
-    
-    public void logout(String token) {
-        try {
-            User user = getUserFromToken(token);
-            userService.updateUserOnlineStatus(user.getId(), false);
-            logger.info("Logout successful for user: {}", user.getUsername());
+            return getUserFromToken(token);
         } catch (Exception e) {
-            logger.warn("Logout failed: {}", e.getMessage());
+            logger.warn("⚠️ Failed to extract user from token: {}", e.getMessage());
+            return null;
         }
+    }
+    
+    /**
+     * Functional validation chain builder
+     */
+    private <T> Function<T, T> validate(java.util.function.Predicate<T> predicate, Supplier<RuntimeException> exceptionSupplier) {
+        return input -> {
+            if (predicate.test(input)) {
+                return input;
+            } else {
+                throw exceptionSupplier.get();
+            }
+        };
     }
 }

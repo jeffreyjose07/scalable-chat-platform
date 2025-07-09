@@ -42,6 +42,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         String userId = getUserId(session);
         String username = getUserName(session);
         String serverId = getServerId();
+        logger.info("[WS-SESSION] Connection established - Session ID: {}, User ID: {}, Username: {}, Server ID: {}", session.getId(), userId, username, serverId);
         
         logger.info("WebSocket connection established - Session ID: {}, User ID: {}, Username: {}", 
             session.getId(), userId, username);
@@ -61,11 +62,27 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         
         logger.info("WebSocket connection registered for user: {} ({})", username, userId);
         
-        // Send pending messages
+        // Send pending messages with a small delay to ensure connection is ready
         List<ChatMessage> pendingMessages = messageService.getPendingMessages(userId);
         if (pendingMessages != null && !pendingMessages.isEmpty()) {
             logger.info("Sending {} pending messages to user: {}", pendingMessages.size(), username);
-            pendingMessages.forEach(msg -> sendMessage(session, msg));
+            // Add a small delay to ensure connection is fully established
+            new Thread(() -> {
+                try {
+                    Thread.sleep(100); // Small delay
+                    if (session.isOpen()) {
+                        pendingMessages.forEach(msg -> {
+                            try {
+                                sendMessage(session, msg);
+                            } catch (Exception e) {
+                                logger.warn("Failed to send pending message to user {}: {}", username, e.getMessage());
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }).start();
         }
     }
     
@@ -141,6 +158,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     public void sendMessageToSession(String sessionId, ChatMessage message) {
         WebSocketSession session = sessions.get(sessionId);
         if (session != null && session.isOpen()) {
+            logger.info("[WS-SESSION] Sending message {} to session {} (userId: {})", message.getId(), sessionId, getUserId(session));
             sendMessage(session, message);
         }
     }
@@ -159,10 +177,16 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     
     private void sendMessage(WebSocketSession session, ChatMessage message) {
         try {
-            String json = objectMapper.writeValueAsString(message);
-            session.sendMessage(new TextMessage(json));
+            if (session.isOpen()) {
+                String json = objectMapper.writeValueAsString(message);
+                session.sendMessage(new TextMessage(json));
+            } else {
+                logger.warn("Cannot send message - session is closed: {}", session.getId());
+            }
         } catch (Exception e) {
-            logger.error("Error sending message", e);
+            logger.error("Error sending message to session {}: {}", session.getId(), e.getMessage());
+            // Remove session from active sessions if it's broken
+            sessions.remove(session.getId());
         }
     }
     

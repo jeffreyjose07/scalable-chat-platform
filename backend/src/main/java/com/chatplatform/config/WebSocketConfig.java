@@ -21,15 +21,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(chatWebSocketHandler, "/ws/chat")
-                .setAllowedOrigins(
-                    "http://localhost:3000",
-                    "http://localhost:3001", 
-                    "http://127.0.0.1:3000",
-                    "http://127.0.0.1:3001",
-                    "https://localhost:3000",
-                    "https://localhost:3001"
-                )
-                .addInterceptors(authenticationInterceptor);
+                .setAllowedOrigins("*") // Allow all origins, but filter in interceptor
+                .addInterceptors(authenticationInterceptor, new DynamicOriginWebSocketConfigurer());
                 // Removed SockJS to match frontend plain WebSocket usage
     }
 }

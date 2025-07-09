@@ -5,6 +5,7 @@ import { ChatMessage, MessageType } from '../types/chat';
 import MessageList from '../components/MessageList';
 import MessageInput from '../components/MessageInput';
 import ConversationList from '../components/ConversationList';
+import NetworkDebug from '../components/NetworkDebug';
 
 const ChatPage: React.FC = () => {
   const { messages, sendMessage, isConnected } = useWebSocket();
@@ -77,15 +78,15 @@ const ChatPage: React.FC = () => {
         </div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-hidden">
-          <MessageList messages={conversationMessages} currentUserId={user?.id} />
-        </div>
+        <MessageList messages={conversationMessages} currentUserId={user?.id} />
 
         {/* Message Input */}
         <div className="border-t border-gray-200 bg-white">
           <MessageInput onSendMessage={handleSendMessage} disabled={!isConnected} />
         </div>
       </div>
+      
+      <NetworkDebug />
     </div>
   );
 };
