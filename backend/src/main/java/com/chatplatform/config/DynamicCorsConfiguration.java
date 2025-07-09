@@ -40,13 +40,13 @@ public class DynamicCorsConfiguration implements CorsConfigurationSource {
             "Access-Control-Request-Method",
             "Access-Control-Request-Headers"
         ));
-        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        configuration.setExposedHeaders(List.of("Authorization"));
         configuration.setAllowCredentials(true);
         configuration.setMaxAge(3600L);
         
         // Check if origin matches any allowed pattern
         if (origin != null && isAllowedOrigin(origin)) {
-            configuration.setAllowedOrigins(Arrays.asList(origin));
+            configuration.setAllowedOrigins(List.of(origin));
         } else {
             // Fallback to default localhost origins for security
             configuration.setAllowedOrigins(Arrays.asList(

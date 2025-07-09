@@ -4,6 +4,7 @@ import com.chatplatform.dto.AuthResponse;
 import com.chatplatform.dto.LoginRequest;
 import com.chatplatform.dto.RegisterRequest;
 import com.chatplatform.model.User;
+import com.chatplatform.exception.AuthenticationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -53,7 +54,12 @@ class AuthServiceTest {
         
         loginRequest = new LoginRequest("test@example.com", "password123");
         
-        registerRequest = new RegisterRequest("newuser", "new@example.com", "password123", "New User");
+        registerRequest = RegisterRequest.builder()
+            .username("newuser")
+            .email("new@example.com")
+            .password("password123")
+            .displayName("New User")
+            .build();
     }
     
     @Test
@@ -87,7 +93,7 @@ class AuthServiceTest {
         when(userService.findByEmail(loginRequest.email())).thenReturn(Optional.empty());
         
         // When & Then
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        AuthenticationException exception = assertThrows(AuthenticationException.class, () -> {
             authService.login(loginRequest);
         });
         
@@ -130,7 +136,7 @@ class AuthServiceTest {
                 .thenThrow(new IllegalArgumentException("Username already exists"));
         
         // When & Then
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        AuthenticationException exception = assertThrows(AuthenticationException.class, () -> {
             authService.register(registerRequest);
         });
         
@@ -164,7 +170,7 @@ class AuthServiceTest {
         when(jwtService.validateToken("invalid-jwt-token")).thenReturn(false);
         
         // When & Then
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        AuthenticationException exception = assertThrows(AuthenticationException.class, () -> {
             authService.getUserFromToken(token);
         });
         
@@ -176,7 +182,7 @@ class AuthServiceTest {
     @Test
     void shouldThrowExceptionForEmptyToken() {
         // When & Then
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        AuthenticationException exception = assertThrows(AuthenticationException.class, () -> {
             authService.getUserFromToken("");
         });
         
@@ -225,8 +231,18 @@ class AuthServiceTest {
     @Test
     void shouldValidateRegisterRequest() {
         // Given
-        RegisterRequest validRequest = new RegisterRequest("user", "test@example.com", "password123", "Test User");
-        RegisterRequest invalidRequest = new RegisterRequest("", "", "", "");
+        RegisterRequest validRequest = RegisterRequest.builder()
+            .username("user")
+            .email("test@example.com")
+            .password("password123")
+            .displayName("Test User")
+            .build();
+        RegisterRequest invalidRequest = RegisterRequest.builder()
+            .username("")
+            .email("")
+            .password("")
+            .displayName("")
+            .build();
         
         // When & Then
         assertTrue(validRequest.isValid());
@@ -236,7 +252,12 @@ class AuthServiceTest {
     @Test
     void shouldCreateMaskedRegisterRequest() {
         // Given
-        RegisterRequest request = new RegisterRequest("user", "test@example.com", "password123", "Test User");
+        RegisterRequest request = RegisterRequest.builder()
+            .username("user")
+            .email("test@example.com")
+            .password("password123")
+            .displayName("Test User")
+            .build();
         
         // When
         RegisterRequest masked = request.withMaskedPassword();

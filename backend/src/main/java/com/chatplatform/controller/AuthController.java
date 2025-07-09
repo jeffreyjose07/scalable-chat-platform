@@ -2,16 +2,20 @@ package com.chatplatform.controller;
 
 import com.chatplatform.dto.AuthResponse;
 import com.chatplatform.dto.LoginRequest;
+import com.chatplatform.dto.MessageResponse;
 import com.chatplatform.dto.RegisterRequest;
 import com.chatplatform.model.User;
 import com.chatplatform.service.AuthService;
+import com.chatplatform.validator.AuthValidator;
+import com.chatplatform.exception.ValidationException;
+import com.chatplatform.exception.AuthenticationException;
+import com.chatplatform.util.ResponseUtils;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -19,99 +23,88 @@ import java.util.Map;
 public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-    public static final String ERROR = "error";
 
     private final AuthService authService;
-    
-    public AuthController(AuthService authService) {
+    private final AuthValidator authValidator;
+
+    public AuthController(AuthService authService, AuthValidator authValidator) {
         this.authService = authService;
+        this.authValidator = authValidator;
     }
-    
+
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<MessageResponse<AuthResponse>> login(@Valid @RequestBody LoginRequest loginRequest) {
         try {
-            if (loginRequest.email() == null || loginRequest.email().trim().isEmpty()) {
-                return ResponseEntity.status(400)
-                    .body(Map.of(ERROR, "Email is required"));
-            }
-            
-            if (loginRequest.password() == null || loginRequest.password().trim().isEmpty()) {
-                return ResponseEntity.status(400)
-                    .body(Map.of(ERROR, "Password is required"));
-            }
-            
             logger.info("Login attempt for email: {}", loginRequest.email());
-            AuthResponse authResponse = authService.login(loginRequest);
-            logger.info("Login successful for email: {}", loginRequest.email());
-            return ResponseEntity.ok(authResponse);
             
-        } catch (IllegalArgumentException e) {
+            AuthResponse authResponse = authService.login(loginRequest);
+            
+            logger.info("Login successful for email: {}", loginRequest.email());
+            return ResponseUtils.success("Login successful", authResponse);
+            
+        } catch (AuthenticationException e) {
             logger.warn("Login failed for email: {} - {}", loginRequest.email(), e.getMessage());
-            return ResponseEntity.status(400)
-                    .body(Map.of(ERROR, "Invalid email or password"));
+            return ResponseUtils.unauthorized(e.getMessage());
         } catch (Exception e) {
             logger.error("Login failed for email: {}", loginRequest.email(), e);
-            return ResponseEntity.status(500)
-                    .body(Map.of(ERROR, "Login failed due to server error"));
+            return ResponseUtils.internalServerError("Login failed due to server error");
         }
     }
-    
+
     @PostMapping("/register")
-    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<MessageResponse<AuthResponse>> register(
+            @Valid @RequestBody RegisterRequest registerRequest, 
+            BindingResult bindingResult) {
         try {
-            if (registerRequest.email() == null || registerRequest.email().trim().isEmpty()) {
-                return ResponseEntity.status(400)
-                    .body(Map.of(ERROR, "Email is required"));
-            }
+            // Validate request using dedicated validator
+            authValidator.validateRegistrationRequest(registerRequest, bindingResult);
             
-            if (registerRequest.username() == null || registerRequest.username().trim().isEmpty()) {
-                return ResponseEntity.status(400)
-                    .body(Map.of(ERROR, "Username is required"));
-            }
+            logger.info("Registration attempt for email: {}", registerRequest.email());
             
-            if (registerRequest.password() == null || registerRequest.password().length() < 6) {
-                return ResponseEntity.status(400)
-                    .body(Map.of(ERROR, "Password must be at least 6 characters"));
-            }
-            
-            logger.info("Registration attempt for email: {}, username: {}", 
-                registerRequest.email(), registerRequest.username());
             AuthResponse authResponse = authService.register(registerRequest);
-            logger.info("Registration successful for email: {}", registerRequest.email());
-            return ResponseEntity.ok(authResponse);
             
+            logger.info("Registration successful for email: {}", registerRequest.email());
+            return ResponseUtils.created("User registered successfully", authResponse);
+            
+        } catch (ValidationException e) {
+            logger.warn("Registration validation failed for email: {} - {}", 
+                       registerRequest.email(), e.getMessage());
+            return ResponseUtils.badRequest(e.getMessage());
         } catch (IllegalArgumentException e) {
-            logger.warn("Registration failed for email: {} - {}", registerRequest.email(), e.getMessage());
-            return ResponseEntity.status(400)
-                    .body(Map.of(ERROR, e.getMessage()));
+            logger.warn("Registration failed for email: {} - {}", 
+                       registerRequest.email(), e.getMessage());
+            return ResponseUtils.conflict(e.getMessage());
         } catch (Exception e) {
-            logger.error("Registration failed for email: {}", registerRequest.email(), e);
-            return ResponseEntity.status(500)
-                    .body(Map.of(ERROR, "Registration failed due to server error"));
+            logger.error("Unexpected error during registration for email: {}", 
+                        registerRequest.email(), e);
+            return ResponseUtils.internalServerError("Registration failed due to server error");
         }
     }
-    
+
     @GetMapping("/me")
-    public ResponseEntity<?> getCurrentUser(@RequestHeader("Authorization") String authHeader) {
+    public ResponseEntity<MessageResponse<User>> getCurrentUser(
+            @RequestHeader("Authorization") String authHeader) {
         try {
             User user = authService.getUserFromToken(authHeader);
-            return ResponseEntity.ok(user);
+            return ResponseUtils.success("User retrieved successfully", user);
+        } catch (AuthenticationException e) {
+            logger.warn("Get current user failed - {}", e.getMessage());
+            return ResponseUtils.unauthorized("Invalid or expired token", (User) null);
         } catch (Exception e) {
             logger.error("Get current user failed", e);
-            return ResponseEntity.badRequest()
-                    .body(Map.of(ERROR, "Invalid or expired token"));
+            return ResponseUtils.internalServerError("Failed to retrieve user information", (User) null);
         }
     }
-    
+
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+    public ResponseEntity<MessageResponse<Void>> logout(
+            @RequestHeader("Authorization") String authHeader) {
         try {
             authService.logout(authHeader);
-            return ResponseEntity.ok(Map.of("message", "Logout successful"));
+            return ResponseUtils.success("Logout successful");
         } catch (Exception e) {
-            logger.error("Logout failed", e);
-            return ResponseEntity.badRequest()
-                    .body(Map.of(ERROR, "Logout failed"));
+            logger.warn("Logout failed", e);
+            return ResponseUtils.badRequest("Logout failed", (Void) null);
         }
     }
 }
