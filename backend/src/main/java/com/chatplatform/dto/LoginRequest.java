@@ -4,36 +4,44 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public class LoginRequest {
-    
+/**
+ * Login request record using Java 17 features
+ * Immutable data carrier with built-in validation
+ */
+public record LoginRequest(
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
-    private String email;
+    String email,
     
     @NotBlank(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters")
-    private String password;
+    String password
+) {
     
-    public LoginRequest() {}
-    
-    public LoginRequest(String email, String password) {
-        this.email = email;
-        this.password = password;
+    /**
+     * Compact constructor for additional validation
+     */
+    public LoginRequest {
+        if (email != null) {
+            email = email.trim().toLowerCase();
+        }
+        if (password != null) {
+            password = password.trim();
+        }
     }
     
-    public String getEmail() {
-        return email;
+    /**
+     * Factory method for creating sanitized login request
+     */
+    public static LoginRequest of(String email, String password) {
+        return new LoginRequest(email, password);
     }
     
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
-    public String getPassword() {
-        return password;
-    }
-    
-    public void setPassword(String password) {
-        this.password = password;
+    /**
+     * Validation helper using functional approach
+     */
+    public boolean isValid() {
+        return email != null && !email.isBlank() && 
+               password != null && password.length() >= 6;
     }
 }

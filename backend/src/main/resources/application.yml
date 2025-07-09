@@ -41,12 +41,22 @@ spring:
       properties:
         max.in.flight.requests.per.connection: 1
         enable.idempotence: true
+        retries: 3
+        request.timeout.ms: 30000
+        delivery.timeout.ms: 60000
     consumer:
       group-id: chat-platform
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       properties:
         spring.json.trusted.packages: "com.chatplatform.model"
+        session.timeout.ms: 30000
+        heartbeat.interval.ms: 3000
+    admin:
+      properties:
+        request.timeout.ms: 30000
+        connections.max.idle.ms: 30000
+      fail-fast: false
 
   elasticsearch:
     uris: ${SPRING_ELASTICSEARCH_URIS:http://localhost:9200}

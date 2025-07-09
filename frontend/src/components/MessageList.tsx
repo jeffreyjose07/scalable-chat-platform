@@ -29,19 +29,21 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId }) =>
   }, [messages, currentUserId]);
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4">
-      {messages.map((message) => {
-        const isOwn = message.senderId === currentUserId;
-        console.log(`Message ${message.id}: senderId=${message.senderId}, currentUserId=${currentUserId}, isOwn=${isOwn}`);
-        return (
-          <MessageBubble
-            key={message.id}
-            message={message}
-            isOwn={isOwn}
-          />
-        );
-      })}
-      <div ref={messagesEndRef} />
+    <div className="flex-1 flex flex-col">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+        {messages.map((message) => {
+          const isOwn = message.senderId === currentUserId;
+          console.log(`Message ${message.id}: senderId=${message.senderId}, currentUserId=${currentUserId}, isOwn=${isOwn}`);
+          return (
+            <MessageBubble
+              key={message.id}
+              message={message}
+              isOwn={isOwn}
+            />
+          );
+        })}
+        <div ref={messagesEndRef} />
+      </div>
     </div>
   );
 };

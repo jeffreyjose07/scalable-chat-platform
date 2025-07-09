@@ -9,11 +9,37 @@ if ! docker info > /dev/null 2>&1; then
     exit 1
 fi
 
+# Check for Kafka cluster ID mismatch and fix it
+echo "🔧 Checking Kafka cluster ID consistency..."
+if docker-compose logs kafka 2>/dev/null | grep -q "InconsistentClusterIdException"; then
+    echo "⚠️  Kafka cluster ID mismatch detected. Fixing..."
+    echo "🧹 Removing only Kafka and Zookeeper volumes to preserve user data..."
+    docker-compose down
+    docker volume rm scalable-chat-platform_kafka_data scalable-chat-platform_zookeeper_data scalable-chat-platform_zookeeper_log 2>/dev/null || true
+    echo "✅ Kafka/Zookeeper volumes cleared. User data preserved."
+fi
+
 echo "📦 Starting infrastructure services..."
 docker-compose up -d
 
 echo "⏳ Waiting for services to be ready..."
-sleep 10
+sleep 15
+
+echo "🔧 Setting up Kafka topics..."
+# Wait for Kafka to be fully ready
+until docker exec scalable-chat-platform-kafka-1 kafka-topics --list --bootstrap-server localhost:9092 > /dev/null 2>&1; do
+    echo "⏳ Waiting for Kafka to be ready..."
+    sleep 2
+done
+
+# Create chat-messages topic if it doesn't exist
+if ! docker exec scalable-chat-platform-kafka-1 kafka-topics --list --bootstrap-server localhost:9092 | grep -q "chat-messages"; then
+    echo "📝 Creating chat-messages topic..."
+    docker exec scalable-chat-platform-kafka-1 kafka-topics --create --topic chat-messages --bootstrap-server localhost:9092 --replication-factor 1 --partitions 3
+    echo "✅ Topic created successfully"
+else
+    echo "✅ Topic chat-messages already exists"
+fi
 
 echo "🗄️ Checking service health..."
 echo "PostgreSQL: $(docker-compose ps postgres --format 'table {{.State}}')"

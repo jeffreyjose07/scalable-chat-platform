@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { getApiBaseUrl } from '../utils/networkUtils';
 
 interface User {
   id: string;
@@ -34,7 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
   const [isLoading, setIsLoading] = useState(true);
 
-  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+  const apiUrl = getApiBaseUrl();
 
   useEffect(() => {
     if (token) {

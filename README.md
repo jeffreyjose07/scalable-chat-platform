@@ -1,12 +1,13 @@
 # Scalable Chat Platform
 
-A real-time chat platform built with Spring Boot backend and React frontend, designed for local development.
+A real-time chat platform built with Spring Boot backend and React frontend, designed for local development and network access.
 
 ## Architecture
 
-- **Backend**: Spring Boot with WebSocket support, PostgreSQL, MongoDB, Redis, Kafka, Elasticsearch
-- **Frontend**: React with TypeScript, WebSocket client, Tailwind CSS
-- **Infrastructure**: Docker Compose for local development
+- **Backend**: Spring Boot 3.2 with Java 17, WebSocket support, PostgreSQL, MongoDB, Redis, Kafka, Elasticsearch
+- **Frontend**: React 18 with TypeScript, WebSocket client, Tailwind CSS
+- **Infrastructure**: Docker Compose with persistent volumes and automatic topic management
+- **Network Access**: Automatic IP detection and dynamic CORS configuration
 
 📊 **[View System Architecture](docs/ARCHITECTURE.md)** | 🎯 **[Professional Demo Guide](docs/DEMO.md)**
 
@@ -16,10 +17,11 @@ A real-time chat platform built with Spring Boot backend and React frontend, des
 
 ### Prerequisites
 
-- Docker and Docker Compose
-- Java 17+ (for backend development)
-- Node.js 18+ (for frontend development)
-- Maven (for backend builds)
+- **Docker and Docker Compose** (latest version)
+- **Java 17+** (for backend development)
+- **Node.js 18+** (for frontend development)
+- **Maven 3.8+** (for backend builds)
+- **Git** (for version control)
 
 ### Local Development Setup
 
@@ -27,7 +29,11 @@ A real-time chat platform built with Spring Boot backend and React frontend, des
    ```bash
    ./start-dev.sh
    ```
-   This starts PostgreSQL, MongoDB, Redis, Kafka, and Elasticsearch.
+   This starts PostgreSQL, MongoDB, Redis, Kafka, and Elasticsearch with persistent volumes.
+   
+   ✅ **Automatic Kafka topic creation and persistence**
+   ✅ **Zookeeper cluster ID consistency**
+   ✅ **Health monitoring and service validation**
 
 2. **Start Backend**
    ```bash
@@ -35,14 +41,24 @@ A real-time chat platform built with Spring Boot backend and React frontend, des
    mvn spring-boot:run
    ```
    Backend will run on http://localhost:8080
+   
+   ✅ **Multi-layer topic validation on startup**
+   ✅ **Enhanced logging with emojis for debugging**
+   ✅ **Automatic failover mechanisms**
 
 3. **Start Frontend**
    ```bash
    cd frontend
    npm install
-   npm start
+   npm run start:network  # For network access
+   # OR
+   npm start              # For localhost only
    ```
    Frontend will run on http://localhost:3000
+   
+   ✅ **Automatic IP detection and configuration**
+   ✅ **Dynamic CORS handling**
+   ✅ **Network debug information**
 
 ### Testing Real-time Chat
 
@@ -72,16 +88,44 @@ Login with different emails on each instance and start chatting!
 ./stop-dev.sh
 ```
 
+**Note**: This preserves all data (users, messages, sessions). Only use `docker-compose down -v` if you want to reset everything.
+
+### Network Access
+
+For accessing from other machines on the same network:
+
+```bash
+# Start frontend with network access
+cd frontend && npm run start:network
+
+# Access from any device on your network
+http://YOUR_IP:3000
+```
+
+✅ **Automatic IP detection - no hardcoding needed**
+✅ **Dynamic CORS configuration**
+✅ **Works across different WiFi networks**
+
 ## Features
 
-### Implemented
-- ✅ Real-time messaging via WebSocket
-- ✅ Multiple conversation channels
-- ✅ User authentication (demo mode)
-- ✅ Message persistence (MongoDB)
-- ✅ Connection management (Redis)
-- ✅ Message queuing (Kafka)
-- ✅ Responsive UI with Tailwind CSS
+### Core Features
+- ✅ **Real-time messaging** via WebSocket with automatic reconnection
+- ✅ **Multiple conversation channels** with persistent state
+- ✅ **User authentication** (demo mode with JWT tokens)
+- ✅ **Message persistence** (MongoDB with automatic indexing)
+- ✅ **Connection management** (Redis with session tracking)
+- ✅ **Message queuing** (Kafka with guaranteed delivery)
+- ✅ **Responsive UI** with Tailwind CSS and smooth animations
+
+### Infrastructure Features
+- ✅ **Kafka topic auto-creation** and persistence
+- ✅ **Zookeeper cluster ID consistency** 
+- ✅ **Multi-layer health monitoring**
+- ✅ **Automatic IP detection** for network access
+- ✅ **Dynamic CORS configuration**
+- ✅ **Persistent volumes** for data retention
+- ✅ **Enhanced logging** with emoji indicators
+- ✅ **Graceful error handling** and recovery
 
 ### Technical Highlights
 - **Event-Driven Architecture**: Microservices with Kafka message distribution
@@ -131,17 +175,44 @@ frontend/src/
 
 ### Common Issues
 
-**Port conflicts:**
-- If PostgreSQL fails to start, check for existing instances on port 5432
-- Stop conflicting services: `docker stop <container-name>`
+**🔧 Kafka Issues:**
+- **Topic missing**: Run `./start-dev.sh` - it will auto-create topics
+- **Cluster ID mismatch**: Run `./fix-kafka-only.sh` to fix without data loss
+- **Messages not real-time**: Check backend logs for Kafka connection status
 
-**Frontend issues:**
-- Delete `node_modules` and `package-lock.json`, then run `npm install`
-- Ensure `react-scripts` version is 5.0.1 in package.json
+**🌐 Network Access:**
+- **Login fails from other machines**: Use `npm run start:network` for frontend
+- **IP detection wrong**: Check "Network Info" button in chat window
+- **CORS errors**: Backend automatically allows private IP ranges
 
-**Backend issues:**
-- Check if all Docker services are running: `docker-compose ps`
-- Verify database connections in application logs
+**🐳 Infrastructure:**
+- **Port conflicts**: Use `docker ps` to check running containers
+- **Services not starting**: Run `docker-compose logs <service-name>`
+- **Data loss**: Use `./stop-dev.sh` (preserves data) not `docker-compose down -v`
+
+**💻 Development:**
+- **Frontend issues**: Delete `node_modules`, run `npm install`
+- **Backend compilation**: Ensure Java 17+ is installed
+- **WebSocket connection**: Check browser console for connection errors
+
+### Advanced Troubleshooting
+
+**📊 Health Monitoring:**
+```bash
+# Check all services
+docker-compose ps
+
+# Check specific service logs
+docker-compose logs -f kafka
+
+# Verify Kafka topics
+docker exec scalable-chat-platform-kafka-1 kafka-topics --list --bootstrap-server localhost:9092
+```
+
+**🔍 Debug Network Issues:**
+- Use "Network Info" button in chat interface
+- Check browser developer tools network tab
+- Verify backend accessibility: `curl http://YOUR_IP:8080/api/health`
 
 ## API Documentation
 

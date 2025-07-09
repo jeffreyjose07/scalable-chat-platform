@@ -11,8 +11,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Component
 public class AuthenticationInterceptor implements HandshakeInterceptor {
@@ -82,13 +84,13 @@ public class AuthenticationInterceptor implements HandshakeInterceptor {
     private String extractTokenFromRequest(ServerHttpRequest request) {
         // Try to get token from query parameters
         String query = request.getURI().getQuery();
-        if (query != null && query.contains("token=")) {
-            String[] params = query.split("&");
-            for (String param : params) {
-                if (param.startsWith("token=")) {
-                    return param.substring("token=".length());
-                }
-            }
+        if (query != null) {
+            return Pattern.compile("token=([^&]*)")
+                    .matcher(query)
+                    .results()
+                    .map(m -> m.group(1))
+                    .findFirst()
+                    .orElse(null);
         }
         
         // Try to get token from Authorization header

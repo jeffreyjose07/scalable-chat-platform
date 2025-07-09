@@ -1,6 +1,7 @@
 import { ChatMessage } from '../types/chat';
+import { getApiBaseUrl } from '../utils/networkUtils';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8080';
+const API_BASE = getApiBaseUrl();
 
 export const messageService = {
   async fetchConversationMessages(conversationId: string, token: string): Promise<ChatMessage[]> {

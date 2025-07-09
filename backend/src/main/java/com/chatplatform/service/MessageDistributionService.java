@@ -29,9 +29,10 @@ public class MessageDistributionService {
     @Async
     public void handleMessageDistribution(MessageDistributionEvent event) {
         try {
-            distributeMessage(event.getMessage());
+            logger.info("📢 Received MessageDistributionEvent for message: {}", event.message().getId());
+            distributeMessage(event.message());
         } catch (Exception e) {
-            logger.error("Error distributing message", e);
+            logger.error("❌ Error distributing message: {}", e.getMessage());
         }
     }
     
@@ -41,12 +42,13 @@ public class MessageDistributionService {
         // For now, we'll broadcast to all connected users
         // In a real application, you'd get conversation participants
         Set<String> sessions = connectionManager.getSessionsForServer(getServerId());
-        
+        logger.info("[WS-BROADCAST] Broadcasting message {} to sessions: {} (conversationId: {})", message.getId(), sessions, conversationId);
         sessions.forEach(sessionId -> {
             try {
+                logger.info("[WS-BROADCAST] Sending message {} to session {}", message.getId(), sessionId);
                 webSocketHandler.sendMessageToSession(sessionId, message);
             } catch (Exception e) {
-                logger.error("Error sending message to session: {}", sessionId, e);
+                logger.error("[WS-BROADCAST] Error sending message to session: {}", sessionId, e);
             }
         });
     }
