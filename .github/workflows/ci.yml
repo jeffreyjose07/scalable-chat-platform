@@ -127,7 +127,7 @@ jobs:
         CI: true
 
     - name: Upload coverage reports
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v5
       if: success()
       with:
         directory: ./frontend/coverage
