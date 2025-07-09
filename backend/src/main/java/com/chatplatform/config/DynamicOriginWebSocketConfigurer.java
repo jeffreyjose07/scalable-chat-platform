@@ -1,5 +1,7 @@
 package com.chatplatform.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.socket.WebSocketHandler;
@@ -14,6 +16,7 @@ import java.util.List;
  * WebSocket handshake interceptor that dynamically allows local network origins
  */
 public class DynamicOriginWebSocketConfigurer implements HandshakeInterceptor {
+    private static final Logger logger = LoggerFactory.getLogger(DynamicOriginWebSocketConfigurer.class);
 
     private static final List<Pattern> ALLOWED_LOCAL_IP_PATTERNS = Arrays.asList(
         // Private IP ranges  
@@ -44,11 +47,11 @@ public class DynamicOriginWebSocketConfigurer implements HandshakeInterceptor {
             .anyMatch(pattern -> pattern.matcher(origin).matches());
             
         if (!isAllowed) {
-            System.out.println("WebSocket connection rejected for origin: " + origin);
+            logger.warn("WebSocket connection rejected for origin: {}", origin);
             return false;
         }
         
-        System.out.println("WebSocket connection allowed for origin: " + origin);
+        logger.info("WebSocket connection allowed for origin: {}", origin);
         return true;
     }
 

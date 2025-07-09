@@ -11,9 +11,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
-    
+    public static final String PASSWORD_123 = "password123";
+
     private final UserService userService;
     
     @Value("${app.admin.username:admin}")
@@ -63,9 +64,9 @@ public class DataInitializer implements CommandLineRunner {
     
     private void createSampleUsers() {
         String[][] sampleUsers = {
-            {"alice", "alice@example.com", "password123", "Alice Johnson"},
-            {"bob", "bob@example.com", "password123", "Bob Smith"},
-            {"charlie", "charlie@example.com", "password123", "Charlie Brown"}
+            {"alice", "alice@example.com", PASSWORD_123, "Alice Johnson"},
+            {"bob", "bob@example.com", PASSWORD_123, "Bob Smith"},
+            {"charlie", "charlie@example.com", PASSWORD_123, "Charlie Brown"}
         };
         
         for (String[] userData : sampleUsers) {

@@ -1,7 +1,7 @@
 package com.chatplatform.dto;
 
 import com.chatplatform.model.ChatMessage;
-import com.chatplatform.model.ChatMessage.MessageType;
+
 import java.time.Instant;
 import java.util.Objects;
 

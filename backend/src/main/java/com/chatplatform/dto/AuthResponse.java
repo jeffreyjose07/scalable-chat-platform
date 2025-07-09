@@ -15,12 +15,14 @@ public record AuthResponse(
     Instant issuedAt,
     boolean success
 ) {
-    
+
+    public static final String BEARER = "Bearer";
+
     /**
      * Default constructor with Bearer type
      */
     public AuthResponse(String token, User user) {
-        this(token, "Bearer", UserInfo.from(user), Instant.now(), true);
+        this(token, BEARER, UserInfo.from(user), Instant.now(), true);
     }
     
     /**
@@ -108,7 +110,7 @@ public record AuthResponse(
      * Compact constructor for validation
      */
     public AuthResponse {
-        type = Objects.requireNonNullElse(type, "Bearer");
+        type = Objects.requireNonNullElse(type, BEARER);
         issuedAt = Objects.requireNonNullElse(issuedAt, Instant.now());
     }
     
