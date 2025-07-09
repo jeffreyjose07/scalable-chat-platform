@@ -17,9 +17,10 @@ import java.util.Map;
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
 public class AuthController {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-    
+    public static final String ERROR = "error";
+
     private final AuthService authService;
     
     public AuthController(AuthService authService) {
@@ -31,12 +32,12 @@ public class AuthController {
         try {
             if (loginRequest.email() == null || loginRequest.email().trim().isEmpty()) {
                 return ResponseEntity.status(400)
-                    .body(Map.of("error", "Email is required"));
+                    .body(Map.of(ERROR, "Email is required"));
             }
             
             if (loginRequest.password() == null || loginRequest.password().trim().isEmpty()) {
                 return ResponseEntity.status(400)
-                    .body(Map.of("error", "Password is required"));
+                    .body(Map.of(ERROR, "Password is required"));
             }
             
             logger.info("Login attempt for email: {}", loginRequest.email());
@@ -47,11 +48,11 @@ public class AuthController {
         } catch (IllegalArgumentException e) {
             logger.warn("Login failed for email: {} - {}", loginRequest.email(), e.getMessage());
             return ResponseEntity.status(400)
-                    .body(Map.of("error", "Invalid email or password"));
+                    .body(Map.of(ERROR, "Invalid email or password"));
         } catch (Exception e) {
             logger.error("Login failed for email: {}", loginRequest.email(), e);
             return ResponseEntity.status(500)
-                    .body(Map.of("error", "Login failed due to server error"));
+                    .body(Map.of(ERROR, "Login failed due to server error"));
         }
     }
     
@@ -60,17 +61,17 @@ public class AuthController {
         try {
             if (registerRequest.email() == null || registerRequest.email().trim().isEmpty()) {
                 return ResponseEntity.status(400)
-                    .body(Map.of("error", "Email is required"));
+                    .body(Map.of(ERROR, "Email is required"));
             }
             
             if (registerRequest.username() == null || registerRequest.username().trim().isEmpty()) {
                 return ResponseEntity.status(400)
-                    .body(Map.of("error", "Username is required"));
+                    .body(Map.of(ERROR, "Username is required"));
             }
             
             if (registerRequest.password() == null || registerRequest.password().length() < 6) {
                 return ResponseEntity.status(400)
-                    .body(Map.of("error", "Password must be at least 6 characters"));
+                    .body(Map.of(ERROR, "Password must be at least 6 characters"));
             }
             
             logger.info("Registration attempt for email: {}, username: {}", 
@@ -82,11 +83,11 @@ public class AuthController {
         } catch (IllegalArgumentException e) {
             logger.warn("Registration failed for email: {} - {}", registerRequest.email(), e.getMessage());
             return ResponseEntity.status(400)
-                    .body(Map.of("error", e.getMessage()));
+                    .body(Map.of(ERROR, e.getMessage()));
         } catch (Exception e) {
             logger.error("Registration failed for email: {}", registerRequest.email(), e);
             return ResponseEntity.status(500)
-                    .body(Map.of("error", "Registration failed due to server error"));
+                    .body(Map.of(ERROR, "Registration failed due to server error"));
         }
     }
     
@@ -98,7 +99,7 @@ public class AuthController {
         } catch (Exception e) {
             logger.error("Get current user failed", e);
             return ResponseEntity.badRequest()
-                    .body(Map.of("error", "Invalid or expired token"));
+                    .body(Map.of(ERROR, "Invalid or expired token"));
         }
     }
     
@@ -110,7 +111,7 @@ public class AuthController {
         } catch (Exception e) {
             logger.error("Logout failed", e);
             return ResponseEntity.badRequest()
-                    .body(Map.of("error", "Logout failed"));
+                    .body(Map.of(ERROR, "Logout failed"));
         }
     }
 }

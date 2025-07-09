@@ -21,7 +21,8 @@ import java.util.concurrent.TimeUnit;
 public class KafkaHealthService {
 
     private static final Logger logger = LoggerFactory.getLogger(KafkaHealthService.class);
-    
+    public static final String CHAT_MESSAGES = "chat-messages";
+
     @Autowired
     private KafkaAdmin kafkaAdmin;
     
@@ -43,7 +44,7 @@ public class KafkaHealthService {
             Set<String> existingTopics = topicsResult.names().get(10, TimeUnit.SECONDS);
             
             kafkaHealthy = true;
-            topicExists = existingTopics.contains("chat-messages");
+            topicExists = existingTopics.contains(CHAT_MESSAGES);
             
             if (!topicExists) {
                 logger.warn("Topic 'chat-messages' not found. Attempting to create...");
@@ -74,10 +75,10 @@ public class KafkaHealthService {
 
     private void verifyTopicConfiguration(AdminClient adminClient) {
         try {
-            DescribeTopicsResult result = adminClient.describeTopics(Arrays.asList("chat-messages"));
+            DescribeTopicsResult result = adminClient.describeTopics(Arrays.asList(CHAT_MESSAGES));
             Map<String, TopicDescription> descriptions = result.all().get(10, TimeUnit.SECONDS);
             
-            TopicDescription desc = descriptions.get("chat-messages");
+            TopicDescription desc = descriptions.get(CHAT_MESSAGES);
             if (desc != null) {
                 logger.debug("Topic 'chat-messages' - Partitions: {}, Replication Factor: {}", 
                     desc.partitions().size(), 

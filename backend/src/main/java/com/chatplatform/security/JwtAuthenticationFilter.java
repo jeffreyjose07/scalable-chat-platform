@@ -21,7 +21,7 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     
-    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
+    private static final Logger ourLogger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
     
     private final JwtService jwtService;
     private final UserService userService;
@@ -76,11 +76,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     // Set authentication in security context
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                     
-                    logger.debug("Authentication set for user: {}", username);
+                    ourLogger.debug("Authentication set for user: {}", username);
                 }
             }
         } catch (Exception e) {
-            logger.error("JWT authentication failed", e);
+            ourLogger.error("JWT authentication failed", e);
         }
         
         filterChain.doFilter(request, response);

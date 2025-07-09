@@ -12,9 +12,10 @@ import java.util.Map;
 @RequestMapping("/api/health")
 @CrossOrigin(origins = "*")
 public class HealthController {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(HealthController.class);
-    
+    public static final String ENABLED = "enabled";
+
     @GetMapping("/status")
     public ResponseEntity<?> getStatus() {
         logger.info("Health check requested");
@@ -33,10 +34,10 @@ public class HealthController {
             "message", "Backend is working correctly",
             "timestamp", Instant.now(),
             "features", Map.of(
-                "authentication", "enabled",
-                "websockets", "enabled", 
-                "messaging", "enabled",
-                "persistence", "enabled"
+                "authentication", ENABLED,
+                "websockets", ENABLED,
+                "messaging", ENABLED,
+                "persistence", ENABLED
             )
         ));
     }

@@ -17,7 +17,7 @@ public class DynamicCorsConfiguration implements CorsConfigurationSource {
         // Private IP ranges
         Pattern.compile("^http://192\\.168\\.\\d{1,3}\\.\\d{1,3}:(3000|3001)$"),
         Pattern.compile("^http://10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}:(3000|3001)$"),
-        Pattern.compile("^http://172\\.(1[6-9]|2[0-9]|3[01])\\.\\d{1,3}\\.\\d{1,3}:(3000|3001)$"),
+        Pattern.compile("^http://172\\.(1[6-9]|2\\d|3[01])\\.\\d{1,3}\\.\\d{1,3}:(3000|3001)$"),
         // Localhost patterns
         Pattern.compile("^https?://localhost:(3000|3001)$"),
         Pattern.compile("^https?://127\\.0\\.0\\.1:(3000|3001)$")
