@@ -46,6 +46,13 @@ public record RegisterRequest(
     }
     
     /**
+     * Create a builder instance for fluent API construction
+     */
+    public static Builder builder() {
+        return new Builder();
+    }
+    
+    /**
      * Comprehensive validation using functional approach
      */
     public boolean isValid() {
@@ -106,5 +113,90 @@ public record RegisterRequest(
      */
     public RegisterRequest withMaskedPassword() {
         return new RegisterRequest(username, email, "****", displayName);
+    }
+    
+    /**
+     * Builder class for fluent API construction
+     * Provides readable, maintainable way to construct RegisterRequest objects
+     */
+    public static class Builder {
+        private String username;
+        private String email;
+        private String password;
+        private String displayName;
+        
+        private Builder() {
+            // Private constructor to enforce factory method usage
+        }
+        
+        /**
+         * Set the username (required)
+         */
+        public Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+        
+        /**
+         * Set the email address (required)
+         */
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+        
+        /**
+         * Set the password (required)
+         */
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+        
+        /**
+         * Set the display name (required)
+         */
+        public Builder displayName(String displayName) {
+            this.displayName = displayName;
+            return this;
+        }
+        
+        /**
+         * Build the RegisterRequest instance
+         * @return Immutable RegisterRequest with validation and sanitization
+         */
+        public RegisterRequest build() {
+            return new RegisterRequest(username, email, password, displayName);
+        }
+        
+        /**
+         * Build with validation - throws exception if required fields are missing
+         */
+        public RegisterRequest buildWithValidation() {
+            if (username == null || username.trim().isEmpty()) {
+                throw new IllegalArgumentException("Username is required");
+            }
+            if (email == null || email.trim().isEmpty()) {
+                throw new IllegalArgumentException("Email is required");
+            }
+            if (password == null || password.trim().isEmpty()) {
+                throw new IllegalArgumentException("Password is required");
+            }
+            if (displayName == null || displayName.trim().isEmpty()) {
+                throw new IllegalArgumentException("Display name is required");
+            }
+            return build();
+        }
+        
+        /**
+         * Create a builder from an existing RegisterRequest
+         */
+        public static Builder from(RegisterRequest request) {
+            return new Builder()
+                .username(request.username())
+                .email(request.email())
+                .password(request.password())
+                .displayName(request.displayName());
+        }
     }
 }

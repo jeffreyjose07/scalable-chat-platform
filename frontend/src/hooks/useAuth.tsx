@@ -11,6 +11,26 @@ interface User {
   avatarUrl?: string;
 }
 
+interface MessageResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+}
+
+interface AuthResponse {
+  token: string;
+  type: string;
+  user: {
+    id: string;
+    username: string;
+    email: string;
+    displayName: string;
+    createdAt: string;
+  };
+  issuedAt: string;
+  success: boolean;
+}
+
 interface AuthContextType {
   user: User | null;
   token: string | null;
@@ -43,7 +63,21 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
-        setUser(response.data);
+        const messageResponse = response.data as MessageResponse<User>;
+        if (messageResponse.success && messageResponse.data) {
+          // Map backend User to frontend User interface
+          const user: User = {
+            id: messageResponse.data.id,
+            username: messageResponse.data.username,
+            email: messageResponse.data.email,
+            displayName: messageResponse.data.displayName,
+            avatarUrl: undefined // Backend doesn't have avatarUrl yet
+          };
+          setUser(user);
+        } else {
+          localStorage.removeItem('token');
+          setToken(null);
+        }
       })
       .catch(() => {
         localStorage.removeItem('token');
@@ -64,15 +98,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         password
       });
       
-      const { token: newToken, user: userData } = response.data;
+      const messageResponse = response.data as MessageResponse<AuthResponse>;
       
-      localStorage.setItem('token', newToken);
-      setToken(newToken);
-      setUser(userData);
-      
-      toast.success('Login successful');
+      if (messageResponse.success && messageResponse.data) {
+        const { token: newToken, user: userData } = messageResponse.data;
+        
+        // Map backend UserInfo to frontend User interface
+        const user: User = {
+          id: userData.id,
+          username: userData.username,
+          email: userData.email,
+          displayName: userData.displayName,
+          avatarUrl: undefined // Backend doesn't have avatarUrl yet
+        };
+        
+        localStorage.setItem('token', newToken);
+        setToken(newToken);
+        setUser(user);
+        
+        toast.success(messageResponse.message || 'Login successful');
+      } else {
+        toast.error(messageResponse.message || 'Login failed');
+        throw new Error(messageResponse.message || 'Login failed');
+      }
     } catch (error: any) {
-      toast.error(error.response?.data?.error || 'Login failed');
+      const errorMessage = error.response?.data?.message || error.message || 'Login failed';
+      toast.error(errorMessage);
       throw error;
     }
   };
@@ -86,15 +137,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         displayName
       });
       
-      const { token: newToken, user: userData } = response.data;
+      const messageResponse = response.data as MessageResponse<AuthResponse>;
       
-      localStorage.setItem('token', newToken);
-      setToken(newToken);
-      setUser(userData);
-      
-      toast.success('Registration successful');
+      if (messageResponse.success && messageResponse.data) {
+        const { token: newToken, user: userData } = messageResponse.data;
+        
+        // Map backend UserInfo to frontend User interface
+        const user: User = {
+          id: userData.id,
+          username: userData.username,
+          email: userData.email,
+          displayName: userData.displayName,
+          avatarUrl: undefined // Backend doesn't have avatarUrl yet
+        };
+        
+        localStorage.setItem('token', newToken);
+        setToken(newToken);
+        setUser(user);
+        
+        toast.success(messageResponse.message || 'Registration successful');
+      } else {
+        toast.error(messageResponse.message || 'Registration failed');
+        throw new Error(messageResponse.message || 'Registration failed');
+      }
     } catch (error: any) {
-      toast.error(error.response?.data?.error || 'Registration failed');
+      const errorMessage = error.response?.data?.message || error.message || 'Registration failed';
+      toast.error(errorMessage);
       throw error;
     }
   };
@@ -102,9 +170,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const logout = async () => {
     try {
       if (token) {
-        await axios.post(`${apiUrl}/api/auth/logout`, {}, {
+        const response = await axios.post(`${apiUrl}/api/auth/logout`, {}, {
           headers: { Authorization: `Bearer ${token}` }
         });
+        const messageResponse = response.data as MessageResponse<void>;
+        if (messageResponse.success) {
+          toast.success(messageResponse.message || 'Logged out successfully');
+        }
       }
     } catch (error) {
       console.warn('Logout request failed:', error);
@@ -112,7 +184,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.removeItem('token');
       setToken(null);
       setUser(null);
-      toast.success('Logged out successfully');
+      if (!token) {
+        toast.success('Logged out successfully');
+      }
     }
   };
 

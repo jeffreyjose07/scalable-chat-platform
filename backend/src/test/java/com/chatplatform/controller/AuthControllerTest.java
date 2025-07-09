@@ -1,56 +1,51 @@
 package com.chatplatform.controller;
 
-/*
-// TODO: Fix this test later - commenting out for now
-
 import com.chatplatform.dto.AuthResponse;
 import com.chatplatform.dto.LoginRequest;
 import com.chatplatform.dto.RegisterRequest;
+import com.chatplatform.dto.MessageResponse;
 import com.chatplatform.model.User;
 import com.chatplatform.service.AuthService;
-import com.chatplatform.service.JwtService;
-import com.chatplatform.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.chatplatform.validator.AuthValidator;
+import com.chatplatform.exception.ValidationException;
+import com.chatplatform.exception.AuthenticationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.context.annotation.Import;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 
+import java.time.Instant;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(controllers = AuthController.class, excludeAutoConfiguration = SecurityAutoConfiguration.class)
+@ExtendWith(MockitoExtension.class)
 class AuthControllerTest {
-    
-    @Autowired
-    private MockMvc mockMvc;
-    
-    @MockBean
+
+    @Mock
     private AuthService authService;
-    
-    @MockBean
-    private JwtService jwtService;
-    
-    @MockBean
-    private UserService userService;
-    
-    @Autowired
-    private ObjectMapper objectMapper;
-    
+
+    @Mock
+    private AuthValidator authValidator;
+
+    @Mock
+    private BindingResult bindingResult;
+
+    @InjectMocks
+    private AuthController authController;
+
     private User testUser;
     private AuthResponse authResponse;
     private LoginRequest loginRequest;
     private RegisterRequest registerRequest;
-    
+
     @BeforeEach
     void setUp() {
         testUser = new User();
@@ -58,153 +53,300 @@ class AuthControllerTest {
         testUser.setUsername("testuser");
         testUser.setEmail("test@example.com");
         testUser.setDisplayName("Test User");
-        
-        authResponse = new AuthResponse("test-jwt-token", testUser);
-        
+        testUser.setCreatedAt(Instant.now());
+
+        authResponse = AuthResponse.builder()
+            .token("test-jwt-token")
+            .user(testUser)
+            .build();
+
         loginRequest = new LoginRequest("test@example.com", "password123");
-        
-        registerRequest = new RegisterRequest();
-        registerRequest.setUsername("newuser");
-        registerRequest.setEmail("new@example.com");
-        registerRequest.setPassword("password123");
-        registerRequest.setDisplayName("New User");
+
+        registerRequest = RegisterRequest.builder()
+            .username("newuser")
+            .email("new@example.com")
+            .password("password123")
+            .displayName("New User")
+            .build();
     }
-    
+
     @Test
-    void shouldLoginSuccessfully() throws Exception {
+    void shouldLoginSuccessfully() {
         // Given
         when(authService.login(any(LoginRequest.class))).thenReturn(authResponse);
-        
-        // When & Then
-        mockMvc.perform(post("/api/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(loginRequest)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.token").value("test-jwt-token"))
-                .andExpect(jsonPath("$.user.username").value("testuser"))
-                .andExpect(jsonPath("$.user.email").value("test@example.com"));
-        
+
+        // When
+        ResponseEntity<MessageResponse<AuthResponse>> response = authController.login(loginRequest);
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(response.getBody().success());
+        assertEquals("Login successful", response.getBody().message());
+        assertEquals(authResponse, response.getBody().data());
         verify(authService).login(any(LoginRequest.class));
     }
-    
+
     @Test
-    void shouldReturnBadRequestWhenLoginFails() throws Exception {
+    void shouldReturnUnauthorizedWhenLoginFails() {
         // Given
         when(authService.login(any(LoginRequest.class)))
-                .thenThrow(new RuntimeException("Invalid email or password"));
-        
-        // When & Then
-        mockMvc.perform(post("/api/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(loginRequest)))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").value("Invalid email or password"));
-        
+                .thenThrow(new AuthenticationException("Invalid email or password"));
+
+        // When
+        ResponseEntity<MessageResponse<AuthResponse>> response = authController.login(loginRequest);
+
+        // Then
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().success());
+        assertEquals("Invalid email or password", response.getBody().message());
         verify(authService).login(any(LoginRequest.class));
     }
-    
+
     @Test
-    void shouldValidateLoginRequestFields() throws Exception {
+    void shouldReturnInternalServerErrorWhenUnexpectedExceptionOccurs() {
         // Given
-        LoginRequest invalidRequest = new LoginRequest("", ""); // Invalid email and password
-        
-        // When & Then
-        mockMvc.perform(post("/api/auth/login")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(invalidRequest)))
-                .andExpect(status().isBadRequest());
-        
+        when(authService.login(any(LoginRequest.class)))
+                .thenThrow(new RuntimeException("Unexpected error"));
+
+        // When
+        ResponseEntity<MessageResponse<AuthResponse>> response = authController.login(loginRequest);
+
+        // Then
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().success());
+        assertEquals("Login failed due to server error", response.getBody().message());
+        verify(authService).login(any(LoginRequest.class));
+    }
+
+    @Test
+    void shouldRegisterSuccessfully() {
+        // Given
+        doNothing().when(authValidator).validateRegistrationRequest(any(RegisterRequest.class), any(BindingResult.class));
+        when(authService.register(any(RegisterRequest.class))).thenReturn(authResponse);
+
+        // When
+        ResponseEntity<MessageResponse<AuthResponse>> response = authController.register(registerRequest, bindingResult);
+
+        // Then
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(response.getBody().success());
+        assertEquals("User registered successfully", response.getBody().message());
+        assertEquals(authResponse, response.getBody().data());
+        verify(authValidator).validateRegistrationRequest(any(RegisterRequest.class), any(BindingResult.class));
+        verify(authService).register(any(RegisterRequest.class));
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenValidationFails() {
+        // Given
+        doThrow(new ValidationException("email: Email is required, password: Password is required"))
+                .when(authValidator).validateRegistrationRequest(any(RegisterRequest.class), any(BindingResult.class));
+
+        // When
+        ResponseEntity<MessageResponse<AuthResponse>> response = authController.register(registerRequest, bindingResult);
+
+        // Then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().success());
+        assertEquals("email: Email is required, password: Password is required", response.getBody().message());
+        verify(authValidator).validateRegistrationRequest(any(RegisterRequest.class), any(BindingResult.class));
         verifyNoInteractions(authService);
     }
-    
+
     @Test
-    void shouldRegisterSuccessfully() throws Exception {
+    void shouldReturnConflictWhenRegistrationFails() {
         // Given
-        when(authService.register(any(RegisterRequest.class))).thenReturn(authResponse);
-        
-        // When & Then
-        mockMvc.perform(post("/api/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(registerRequest)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.token").value("test-jwt-token"))
-                .andExpect(jsonPath("$.user.username").value("testuser"));
-        
-        verify(authService).register(any(RegisterRequest.class));
-    }
-    
-    @Test
-    void shouldReturnBadRequestWhenRegistrationFails() throws Exception {
-        // Given
+        doNothing().when(authValidator).validateRegistrationRequest(any(RegisterRequest.class), any(BindingResult.class));
         when(authService.register(any(RegisterRequest.class)))
-                .thenThrow(new RuntimeException("Username already exists"));
-        
-        // When & Then
-        mockMvc.perform(post("/api/auth/register")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(registerRequest)))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").value("Username already exists"));
-        
+                .thenThrow(new IllegalArgumentException("Username already exists"));
+
+        // When
+        ResponseEntity<MessageResponse<AuthResponse>> response = authController.register(registerRequest, bindingResult);
+
+        // Then
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().success());
+        assertEquals("Username already exists", response.getBody().message());
+        verify(authValidator).validateRegistrationRequest(any(RegisterRequest.class), any(BindingResult.class));
         verify(authService).register(any(RegisterRequest.class));
     }
-    
+
     @Test
-    void shouldGetCurrentUserSuccessfully() throws Exception {
+    void shouldReturnInternalServerErrorWhenRegistrationThrowsUnexpectedException() {
+        // Given
+        doNothing().when(authValidator).validateRegistrationRequest(any(RegisterRequest.class), any(BindingResult.class));
+        when(authService.register(any(RegisterRequest.class)))
+                .thenThrow(new RuntimeException("Database error"));
+
+        // When
+        ResponseEntity<MessageResponse<AuthResponse>> response = authController.register(registerRequest, bindingResult);
+
+        // Then
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().success());
+        assertEquals("Registration failed due to server error", response.getBody().message());
+        verify(authValidator).validateRegistrationRequest(any(RegisterRequest.class), any(BindingResult.class));
+        verify(authService).register(any(RegisterRequest.class));
+    }
+
+    @Test
+    void shouldGetCurrentUserSuccessfully() {
         // Given
         when(authService.getUserFromToken(anyString())).thenReturn(testUser);
-        
-        // When & Then
-        mockMvc.perform(get("/api/auth/me")
-                .header("Authorization", "Bearer test-jwt-token"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.username").value("testuser"))
-                .andExpect(jsonPath("$.email").value("test@example.com"));
-        
+
+        // When
+        ResponseEntity<MessageResponse<User>> response = authController.getCurrentUser("Bearer test-jwt-token");
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(response.getBody().success());
+        assertEquals("User retrieved successfully", response.getBody().message());
+        assertEquals(testUser, response.getBody().data());
         verify(authService).getUserFromToken("Bearer test-jwt-token");
     }
-    
+
     @Test
-    void shouldReturnBadRequestWhenTokenIsInvalid() throws Exception {
+    void shouldReturnUnauthorizedWhenTokenIsInvalid() {
         // Given
         when(authService.getUserFromToken(anyString()))
-                .thenThrow(new RuntimeException("Invalid or expired token"));
-        
-        // When & Then
-        mockMvc.perform(get("/api/auth/me")
-                .header("Authorization", "Bearer invalid-token"))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").value("Invalid or expired token"));
-        
+                .thenThrow(new AuthenticationException("Invalid or expired token"));
+
+        // When
+        ResponseEntity<MessageResponse<User>> response = authController.getCurrentUser("Bearer invalid-token");
+
+        // Then
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().success());
+        assertEquals("Invalid or expired token", response.getBody().message());
         verify(authService).getUserFromToken("Bearer invalid-token");
     }
-    
+
     @Test
-    void shouldLogoutSuccessfully() throws Exception {
+    void shouldReturnInternalServerErrorWhenGetCurrentUserThrowsUnexpectedException() {
+        // Given
+        when(authService.getUserFromToken(anyString()))
+                .thenThrow(new RuntimeException("Database connection error"));
+
+        // When
+        ResponseEntity<MessageResponse<User>> response = authController.getCurrentUser("Bearer test-token");
+
+        // Then
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().success());
+        assertEquals("Failed to retrieve user information", response.getBody().message());
+        verify(authService).getUserFromToken("Bearer test-token");
+    }
+
+    @Test
+    void shouldLogoutSuccessfully() {
         // Given
         doNothing().when(authService).logout(anyString());
-        
-        // When & Then
-        mockMvc.perform(post("/api/auth/logout")
-                .header("Authorization", "Bearer test-jwt-token"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Logout successful"));
-        
+
+        // When
+        ResponseEntity<MessageResponse<Void>> response = authController.logout("Bearer test-jwt-token");
+
+        // Then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertTrue(response.getBody().success());
+        assertEquals("Logout successful", response.getBody().message());
         verify(authService).logout("Bearer test-jwt-token");
     }
-    
+
     @Test
-    void shouldHandleLogoutFailure() throws Exception {
+    void shouldHandleLogoutFailure() {
         // Given
         doThrow(new RuntimeException("Logout failed")).when(authService).logout(anyString());
-        
-        // When & Then
-        mockMvc.perform(post("/api/auth/logout")
-                .header("Authorization", "Bearer test-jwt-token"))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").value("Logout failed"));
-        
+
+        // When
+        ResponseEntity<MessageResponse<Void>> response = authController.logout("Bearer test-jwt-token");
+
+        // Then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().success());
+        assertEquals("Logout failed", response.getBody().message());
         verify(authService).logout("Bearer test-jwt-token");
     }
+
+    @Test
+    void shouldHandleNullAuthHeaderForGetCurrentUser() {
+        // Given
+        when(authService.getUserFromToken(null))
+                .thenThrow(new AuthenticationException("Invalid or expired token"));
+
+        // When
+        ResponseEntity<MessageResponse<User>> response = authController.getCurrentUser(null);
+
+        // Then
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().success());
+        assertEquals("Invalid or expired token", response.getBody().message());
+        verify(authService).getUserFromToken(null);
+    }
+
+    @Test
+    void shouldHandleNullAuthHeaderForLogout() {
+        // Given
+        doThrow(new RuntimeException("Invalid token")).when(authService).logout(null);
+
+        // When
+        ResponseEntity<MessageResponse<Void>> response = authController.logout(null);
+
+        // Then
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().success());
+        assertEquals("Logout failed", response.getBody().message());
+        verify(authService).logout(null);
+    }
+
+    @Test
+    void shouldVerifyCorrectExceptionTypesAreHandled() {
+        // Test that ValidationException is properly handled
+        doThrow(new ValidationException("Validation failed"))
+                .when(authValidator).validateRegistrationRequest(any(RegisterRequest.class), any(BindingResult.class));
+
+        ResponseEntity<MessageResponse<AuthResponse>> response = authController.register(registerRequest, bindingResult);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals("Validation failed", response.getBody().message());
+    }
+
+    @Test
+    void shouldVerifyAuthenticationExceptionIsHandled() {
+        // Test that AuthenticationException is properly handled
+        when(authService.login(any(LoginRequest.class)))
+                .thenThrow(new AuthenticationException("Authentication failed"));
+
+        ResponseEntity<MessageResponse<AuthResponse>> response = authController.login(loginRequest);
+
+        assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
+        assertEquals("Authentication failed", response.getBody().message());
+    }
+
+    @Test
+    void shouldVerifyIllegalArgumentExceptionIsHandled() {
+        // Test that IllegalArgumentException is properly handled
+        when(authService.register(any(RegisterRequest.class)))
+                .thenThrow(new IllegalArgumentException("Invalid argument"));
+
+        doNothing().when(authValidator).validateRegistrationRequest(any(RegisterRequest.class), any(BindingResult.class));
+
+        ResponseEntity<MessageResponse<AuthResponse>> response = authController.register(registerRequest, bindingResult);
+
+        assertEquals(HttpStatus.CONFLICT, response.getStatusCode());
+        assertEquals("Invalid argument", response.getBody().message());
+    }
 }
-*/

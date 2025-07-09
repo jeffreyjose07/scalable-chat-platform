@@ -4,6 +4,7 @@ import com.chatplatform.dto.AuthResponse;
 import com.chatplatform.dto.LoginRequest;
 import com.chatplatform.dto.RegisterRequest;
 import com.chatplatform.model.User;
+import com.chatplatform.exception.AuthenticationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,7 +48,7 @@ public class AuthService {
                 .map(user -> authenticateUser(user, loginRequest.password()))
                 .map(this::generateAuthResponse)
                 .map(this::setUserOnline)
-                .orElseThrow(() -> new RuntimeException("Invalid email or password"));
+                .orElseThrow(() -> new AuthenticationException("Invalid email or password"));
     }
     
     /**
@@ -58,13 +59,13 @@ public class AuthService {
         
         try {
             User user = createUser(registerRequest).orElseThrow(() -> 
-                new RuntimeException("Registration failed"));
+                new AuthenticationException("Registration failed"));
             
             AuthResponse authResponse = generateAuthResponse(user);
             return setUserOnline(authResponse);
         } catch (IllegalArgumentException e) {
             // Re-throw with original message for proper error handling
-            throw new RuntimeException(e.getMessage(), e);
+            throw new AuthenticationException(e.getMessage(), e);
         }
     }
     
@@ -78,7 +79,7 @@ public class AuthService {
                 .filter(jwtService::validateToken)
                 .map(jwtService::extractUsername)
                 .flatMap(userService::findByUsername)
-                .orElseThrow(() -> new RuntimeException("Invalid or expired token"));
+                .orElseThrow(() -> new AuthenticationException("Invalid or expired token"));
     }
     
     /**
@@ -131,17 +132,22 @@ public class AuthService {
             logger.info("✅ Authentication successful for user: {}", user.getUsername());
             return user;
         } else {
-            throw new RuntimeException("Authentication failed");
+            throw new AuthenticationException("Authentication failed");
         }
     }
     
     /**
-     * Generate authentication response
+     * Generate authentication response using Builder pattern
      */
     private AuthResponse generateAuthResponse(User user) {
         String token = jwtService.generateToken(user);
         logger.info("🎫 JWT token generated for user: {}", user.getUsername());
-        return AuthResponse.success(token, user);
+        
+        return AuthResponse.builder()
+            .token(token)
+            .user(user)
+            .successful()
+            .build();
     }
     
     /**
@@ -191,7 +197,7 @@ public class AuthService {
     /**
      * Functional validation chain builder
      */
-    private <T> Function<T, T> validate(java.util.function.Predicate<T> predicate, Supplier<RuntimeException> exceptionSupplier) {
+    private <T> Function<T, T> validate(java.util.function.Predicate<T> predicate, Supplier<AuthenticationException> exceptionSupplier) {
         return input -> {
             if (predicate.test(input)) {
                 return input;
