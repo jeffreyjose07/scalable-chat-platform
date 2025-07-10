@@ -8,6 +8,7 @@ import { WebSocketProvider } from './hooks/useWebSocket';
 import LoginPage from './pages/LoginPage';
 import ChatPage from './pages/ChatPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import ErrorBoundary, { ChatErrorBoundary } from './components/ErrorBoundary';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,29 +21,37 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <WebSocketProvider>
-          <Router>
-            <div className="min-h-screen bg-gray-50">
-              <Routes>
-                <Route path="/login" element={<LoginPage />} />
-                <Route 
-                  path="/chat" 
-                  element={
-                    <ProtectedRoute>
-                      <ChatPage />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route path="/" element={<LoginPage />} />
-              </Routes>
-              <Toaster position="top-right" />
-            </div>
-          </Router>
-        </WebSocketProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <ErrorBoundary>
+          <AuthProvider>
+            <ErrorBoundary>
+              <WebSocketProvider>
+                <Router>
+                  <div className="min-h-screen bg-gray-50">
+                    <Routes>
+                      <Route path="/login" element={<LoginPage />} />
+                      <Route 
+                        path="/chat" 
+                        element={
+                          <ProtectedRoute>
+                            <ChatErrorBoundary>
+                              <ChatPage />
+                            </ChatErrorBoundary>
+                          </ProtectedRoute>
+                        } 
+                      />
+                      <Route path="/" element={<LoginPage />} />
+                    </Routes>
+                    <Toaster position="top-right" />
+                  </div>
+                </Router>
+              </WebSocketProvider>
+            </ErrorBoundary>
+          </AuthProvider>
+        </ErrorBoundary>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 
