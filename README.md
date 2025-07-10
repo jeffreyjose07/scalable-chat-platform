@@ -110,12 +110,15 @@ http://YOUR_IP:3000
 
 ### Core Features
 - ✅ **Real-time messaging** via WebSocket with automatic reconnection
-- ✅ **Multiple conversation channels** with persistent state
+- ✅ **Private messaging** with direct conversations and user discovery
+- ✅ **Group conversations** with persistent state and participant management
+- ✅ **Unread message tracking** with industry-standard timestamp-based system
+- ✅ **Message search** within conversations with highlighting and pagination
 - ✅ **User authentication** (demo mode with JWT tokens)
 - ✅ **Message persistence** (MongoDB with automatic indexing)
 - ✅ **Connection management** (Redis with session tracking)
 - ✅ **Message queuing** (Kafka with guaranteed delivery)
-- ✅ **Responsive UI** with Tailwind CSS and smooth animations
+- ✅ **Responsive UI** with Tailwind CSS and mobile-first design
 
 ### Infrastructure Features
 - ✅ **Kafka topic auto-creation** and persistence
@@ -129,8 +132,10 @@ http://YOUR_IP:3000
 
 ### Technical Highlights
 - **Event-Driven Architecture**: Microservices with Kafka message distribution
-- **Multi-Database Strategy**: PostgreSQL for users, MongoDB for messages, Redis for sessions
-- **Real-Time Communication**: WebSocket-based instant messaging
+- **Multi-Database Strategy**: PostgreSQL for users/conversations, MongoDB for messages, Redis for sessions
+- **Real-Time Communication**: WebSocket-based instant messaging with unread tracking
+- **Modern React Architecture**: Custom hooks pattern without Redux complexity
+- **Industry-Standard UX**: Last-read timestamp approach used by Discord/Slack/WhatsApp
 - **Horizontal Scalability**: Stateless services designed for load balancing
 - **Fault Tolerance**: Message persistence and graceful error handling
 
