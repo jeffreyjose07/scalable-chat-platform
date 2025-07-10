@@ -71,4 +71,14 @@ public class ResponseUtils {
         return ResponseEntity.status(HttpStatus.CONFLICT)
             .body(MessageResponse.error(message, data));
     }
+
+    public static <T> ResponseEntity<MessageResponse<T>> notFound(String message, T data) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(MessageResponse.error(message, data));
+    }
+
+    public static <T> ResponseEntity<MessageResponse<T>> forbidden(String message, T data) {
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+            .body(MessageResponse.error(message, data));
+    }
 }
