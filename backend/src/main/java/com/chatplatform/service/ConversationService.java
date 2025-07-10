@@ -43,38 +43,67 @@ public class ConversationService {
     public ConversationDto createDirectConversation(String userId1, String userId2) {
         logger.info("Creating direct conversation between users: {} and {}", userId1, userId2);
         
-        // Validate users exist
-        User user1 = userRepository.findById(userId1)
-            .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId1));
-        User user2 = userRepository.findById(userId2)
-            .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId2));
-        
-        // Check if direct conversation already exists
-        Optional<Conversation> existingConversation = conversationRepository
-            .findDirectConversationBetweenUsers(userId1, userId2);
-        
-        if (existingConversation.isPresent()) {
-            logger.info("Direct conversation already exists: {}", existingConversation.get().getId());
-            return convertToDto(existingConversation.get());
+        try {
+            // Validate users exist
+            logger.debug("Validating users exist - User1: {}, User2: {}", userId1, userId2);
+            User user1 = userRepository.findById(userId1)
+                .orElseThrow(() -> {
+                    logger.error("User not found: {}", userId1);
+                    return new IllegalArgumentException("User not found: " + userId1);
+                });
+            User user2 = userRepository.findById(userId2)
+                .orElseThrow(() -> {
+                    logger.error("User not found: {}", userId2);
+                    return new IllegalArgumentException("User not found: " + userId2);
+                });
+            
+            logger.debug("Both users found - User1: {} ({}), User2: {} ({})", 
+                        user1.getId(), user1.getUsername(), user2.getId(), user2.getUsername());
+            
+            // Check if direct conversation already exists
+            logger.debug("Checking for existing direct conversation between users: {} and {}", userId1, userId2);
+            Optional<Conversation> existingConversation = conversationRepository
+                .findDirectConversationBetweenUsers(userId1, userId2);
+            
+            if (existingConversation.isPresent()) {
+                logger.info("Direct conversation already exists: {}", existingConversation.get().getId());
+                return convertToDto(existingConversation.get());
+            }
+            
+            // Create standardized conversation ID (smaller ID first for consistency)
+            String conversationId = createDirectConversationId(userId1, userId2);
+            logger.debug("Generated conversation ID: {}", conversationId);
+            
+            // Create conversation
+            logger.debug("Creating conversation entity - ID: {}, Type: DIRECT, CreatedBy: {}", 
+                        conversationId, userId1);
+            Conversation conversation = new Conversation(conversationId, ConversationType.DIRECT, null, userId1);
+            conversationRepository.save(conversation);
+            logger.debug("Conversation entity saved successfully: {}", conversationId);
+            
+            // Add both users as participants
+            logger.debug("Adding participants - ConversationId: {}, User1: {}, User2: {}", 
+                        conversationId, userId1, userId2);
+            ConversationParticipant participant1 = new ConversationParticipant(conversation, user1);
+            ConversationParticipant participant2 = new ConversationParticipant(conversation, user2);
+            
+            participantRepository.save(participant1);
+            logger.debug("Participant1 saved successfully - ConversationId: {}, UserId: {}", 
+                        conversationId, userId1);
+            
+            participantRepository.save(participant2);
+            logger.debug("Participant2 saved successfully - ConversationId: {}, UserId: {}", 
+                        conversationId, userId2);
+            
+            logger.info("Created direct conversation: {} between {} and {}", conversationId, userId1, userId2);
+            
+            return convertToDto(conversation);
+            
+        } catch (Exception e) {
+            logger.error("Failed to create direct conversation between users: {} and {} - Error: {}", 
+                        userId1, userId2, e.getMessage(), e);
+            throw e;
         }
-        
-        // Create standardized conversation ID (smaller ID first for consistency)
-        String conversationId = createDirectConversationId(userId1, userId2);
-        
-        // Create conversation
-        Conversation conversation = new Conversation(conversationId, ConversationType.DIRECT, null, userId1);
-        conversationRepository.save(conversation);
-        
-        // Add both users as participants
-        ConversationParticipant participant1 = new ConversationParticipant(conversationId, userId1);
-        ConversationParticipant participant2 = new ConversationParticipant(conversationId, userId2);
-        
-        participantRepository.save(participant1);
-        participantRepository.save(participant2);
-        
-        logger.info("Created direct conversation: {} between {} and {}", conversationId, userId1, userId2);
-        
-        return convertToDto(conversation);
     }
     
     /**
