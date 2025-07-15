@@ -574,6 +574,9 @@ main                    # Protected, production-ready
 
 ### **Environment Progression**
 1. **Development**: Local with Docker Compose
+   - **Start:** `./start-full-stack.sh` (4-6 min first time)
+   - **Stop:** `./stop-full-stack.sh` (preserves data)
+   - **Reset:** `./stop-full-stack.sh --clean` (removes data)
 2. **Staging**: Automated deployment from main
 3. **Production**: Manual deployment with approval
 
@@ -626,6 +629,30 @@ main                    # Protected, production-ready
 - **Sharding strategy**: Distribute conversations across databases
 - **CDN integration**: Static asset delivery
 - **Microservices**: Break into smaller services
+
+---
+
+---
+
+## 🚀 Getting Started
+
+### **Phase 6 Testing** - Ready Now!
+```bash
+# Start the full stack (4-6 minutes first time)
+./start-full-stack.sh
+
+# Access the application
+# Frontend: http://localhost:3000
+# Backend:  http://localhost:8080
+
+# When done testing
+./stop-full-stack.sh  # Preserves all data
+```
+
+### **🛑 Data Management**
+- **Normal shutdown**: `./stop-full-stack.sh` - keeps all messages, users, conversations
+- **Fresh start**: `./stop-full-stack.sh --clean` - removes all data for clean testing
+- **Complete reset**: `./stop-full-stack.sh --purge` - removes everything including images
 
 ---
 
