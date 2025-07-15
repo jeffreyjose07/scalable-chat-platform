@@ -104,12 +104,13 @@ if [ "$existing_containers" -gt 0 ]; then
     
     print_status "Gracefully stopping existing containers..."
     
-    # Graceful shutdown with timeout
-    if ! timeout 60 docker-compose down --remove-orphans; then
+    # Graceful shutdown with timeout (macOS compatible)
+    print_status "Initiating graceful shutdown (60 second timeout)..."
+    docker-compose down --remove-orphans --timeout 60 || {
         print_warning "Graceful shutdown timed out, forcing container stop..."
         docker-compose kill
         docker-compose down --remove-orphans
-    fi
+    }
 else
     print_success "No existing containers found - clean start"
 fi
@@ -140,70 +141,10 @@ else
     docker-compose build
 fi
 
-# Start services in correct order
-print_status "Starting infrastructure services (databases, message queue)..."
-docker-compose up -d postgres mongodb redis zookeeper kafka elasticsearch
-
-# SRE Practice: Comprehensive dependency health checks
-print_status "Waiting for infrastructure services to be ready..."
-
-# Function to check service health
-check_service_health() {
-    local service_name=$1
-    local check_command=$2
-    local max_attempts=$3
-    local wait_time=$4
-    
-    for attempt in $(seq 1 $max_attempts); do
-        if eval "$check_command" > /dev/null 2>&1; then
-            print_success "✅ $service_name is ready"
-            return 0
-        fi
-        
-        if [ $attempt -eq $max_attempts ]; then
-            print_error "❌ $service_name failed to start after $max_attempts attempts"
-            return 1
-        fi
-        
-        if [ $((attempt % 5)) -eq 0 ]; then
-            print_status "Still waiting for $service_name... (attempt $attempt/$max_attempts)"
-        else
-            echo -n "."
-        fi
-        
-        sleep $wait_time
-    done
-}
-
-print_status "Checking PostgreSQL..."
-if ! check_service_health "PostgreSQL" "docker exec scalable-chat-platform-postgres-1 pg_isready -h localhost" 30 2; then
-    print_error "PostgreSQL startup failed. Aborting."
-    exit 1
-fi
-
-print_status "Checking MongoDB..."
-if ! check_service_health "MongoDB" "docker exec scalable-chat-platform-mongodb-1 mongosh --eval 'db.runCommand({ping:1})' --quiet" 30 2; then
-    print_error "MongoDB startup failed. Aborting."
-    exit 1
-fi
-
-print_status "Checking Redis..."
-if ! check_service_health "Redis" "docker exec scalable-chat-platform-redis-1 redis-cli ping" 30 2; then
-    print_error "Redis startup failed. Aborting."
-    exit 1
-fi
-
-print_status "Checking Kafka..."
-if ! check_service_health "Kafka" "docker exec scalable-chat-platform-kafka-1 kafka-topics --bootstrap-server localhost:9092 --list" 60 3; then
-    print_error "Kafka startup failed. Aborting."
-    exit 1
-fi
-
-print_success "All infrastructure services are ready!"
-
-# Start backend service
-print_status "Starting backend service..."
-docker-compose up -d backend
+# Start all services with dependency ordering
+print_status "Starting all services with dependency health checks..."
+print_status "Docker Compose will handle proper startup order..."
+docker-compose up -d
 
 # SRE Practice: Robust health checking with exponential backoff
 print_status "Waiting for backend to be ready..."
@@ -259,17 +200,25 @@ while [ $attempt -le $max_attempts ]; do
     fi
 done
 
-# Start frontend service
-print_status "Starting frontend service..."
-docker-compose up -d frontend
+# Wait for services to be ready
+print_status "Waiting for services to be ready..."
 
-# SRE Practice: Frontend health checking
-print_status "Waiting for frontend to be ready..."
+# SRE Practice: Final service validation
+print_status "Checking service readiness..."
 max_attempts=15
 attempt=1
 
 while [ $attempt -le $max_attempts ]; do
     frontend_status=$(docker-compose ps frontend --format "{{.State}}" 2>/dev/null || echo "unknown")
+    
+    # Debug: Show actual frontend container status
+    if [ $((attempt % 3)) -eq 0 ]; then
+        echo ""
+        print_status "Frontend status: '$frontend_status' (attempt $attempt/$max_attempts)"
+        docker-compose ps frontend 2>/dev/null || echo "No frontend container found"
+    else
+        echo -n "."
+    fi
     
     if [ "$frontend_status" = "running" ]; then
         if curl -s -f http://localhost:3000/health > /dev/null 2>&1; then
@@ -282,12 +231,6 @@ while [ $attempt -le $max_attempts ]; do
         exit 1
     fi
     
-    if [ $((attempt % 3)) -eq 0 ]; then
-        echo ""
-        print_status "Frontend status: $frontend_status (attempt $attempt/$max_attempts)"
-    else
-        echo -n "."
-    fi
     
     if [ $attempt -eq $max_attempts ]; then
         echo ""
