@@ -70,9 +70,11 @@ else
 fi
 
 echo ""
-echo "Options:"
-echo "========"
-echo "🔄 Restart:      ./start-full-stack.sh"
-echo "🔧 Rebuild:      ./start-full-stack.sh --rebuild"
-echo "🧹 Clean data:   ./stop-full-stack.sh --clean"
-echo "💥 Remove all:   ./stop-full-stack.sh --purge"
+echo "Next Steps:"
+echo "==========="
+echo "🔄 Restart (keeps data):     ./start-full-stack.sh"
+echo "🔧 Rebuild (keeps data):     ./start-full-stack.sh --rebuild"
+echo "🧹 Fresh start (no data):    ./stop-full-stack.sh --clean && ./start-full-stack.sh"
+echo "💥 Complete reset:           ./stop-full-stack.sh --purge && ./start-full-stack.sh --rebuild"
+echo ""
+echo "🔒 Data Safety: Normal shutdown preserves all messages and users"
