@@ -38,9 +38,31 @@ if ! docker info > /dev/null 2>&1; then
     exit 1
 fi
 
-# Stop all services
-print_status "Stopping all services..."
-docker-compose down
+# SRE Practice: Check what's actually running before stopping
+print_status "Checking current service status..."
+running_services=$(docker-compose ps --services --filter "status=running" 2>/dev/null | wc -l | tr -d ' ')
+
+if [ "$running_services" -eq 0 ]; then
+    print_success "No services are currently running"
+    exit 0
+fi
+
+print_status "Found $running_services running services"
+
+# Show what will be stopped
+print_status "Services to be stopped:"
+docker-compose ps --format "table {{.Service}}\t{{.State}}\t{{.Ports}}" 2>/dev/null | grep -E "(running|Up)" || true
+
+# SRE Practice: Graceful shutdown with proper signaling
+print_status "Initiating graceful shutdown..."
+
+# Send SIGTERM first, then wait, then force if needed
+if ! timeout 45 docker-compose down --remove-orphans; then
+    print_warning "Graceful shutdown timed out after 45 seconds"
+    print_status "Forcing container termination..."
+    docker-compose kill
+    docker-compose down --remove-orphans --timeout 10
+fi
 
 # Remove volumes if requested
 if [[ "$1" == "--clean" ]]; then
