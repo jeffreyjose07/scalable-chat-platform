@@ -13,52 +13,46 @@ A real-time chat platform built with Spring Boot backend and React frontend, des
 
 > **Features professional Mermaid diagrams, sequence flows, and comprehensive technical documentation**
 
-## Quick Start
+## ⚡ Quick Start
 
-### Prerequisites
+### **One Command Setup** (Recommended):
+```bash
+# Start everything - takes 4-6 minutes first time
+./start-full-stack.sh
+```
+**What you get:** Complete chat platform running at http://localhost:3000
 
-- **Docker and Docker Compose** (latest version)
-- **Java 17+** (for backend development)
-- **Node.js 18+** (for frontend development)
-- **Maven 3.8+** (for backend builds)
-- **Git** (for version control)
+### **Stop the Application**:
+```bash
+# Safe stop - preserves all your data  
+./stop-full-stack.sh
 
-### Local Development Setup
+# Clean stop - removes all data (fresh start)
+./stop-full-stack.sh --clean
+```
 
-1. **Start Infrastructure Services**
+### **Requirements**
+- Docker Desktop (4GB+ RAM recommended)
+- Git
+
+### **Manual Development Setup** (Alternative):
+
+1. **Start Infrastructure**
    ```bash
    ./start-dev.sh
    ```
-   This starts PostgreSQL, MongoDB, Redis, Kafka, and Elasticsearch with persistent volumes.
-   
-   ✅ **Automatic Kafka topic creation and persistence**
-   ✅ **Zookeeper cluster ID consistency**
-   ✅ **Health monitoring and service validation**
 
 2. **Start Backend**
    ```bash
    cd backend
    mvn spring-boot:run
    ```
-   Backend will run on http://localhost:8080
-   
-   ✅ **Multi-layer topic validation on startup**
-   ✅ **Enhanced logging with emojis for debugging**
-   ✅ **Automatic failover mechanisms**
 
 3. **Start Frontend**
    ```bash
    cd frontend
-   npm install
-   npm run start:network  # For network access
-   # OR
-   npm start              # For localhost only
+   npm install && npm start
    ```
-   Frontend will run on http://localhost:3000
-   
-   ✅ **Automatic IP detection and configuration**
-   ✅ **Dynamic CORS handling**
-   ✅ **Network debug information**
 
 ### Testing Real-time Chat
 
@@ -82,13 +76,18 @@ Then open:
 
 Login with different emails on each instance and start chatting!
 
-### Stop Services
+### **Data Management**
 
 ```bash
-./stop-dev.sh
-```
+# Normal stop - keeps all data
+./stop-full-stack.sh
 
-**Note**: This preserves all data (users, messages, sessions). Only use `docker-compose down -v` if you want to reset everything.
+# Clean restart - removes all data  
+./stop-full-stack.sh --clean && ./start-full-stack.sh
+
+# Legacy infrastructure only
+./stop-dev.sh  # Preserves data
+```
 
 ### Network Access
 
