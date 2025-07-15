@@ -1,7 +1,18 @@
 import { User } from '../components/UserSearchModal';
 import { Conversation } from '../components/ConversationList';
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
+// Get API base URL from runtime config or environment variables
+const getApiBaseUrl = (): string => {
+  // Check for runtime configuration first (Docker)
+  if (typeof window !== 'undefined' && (window as any)._env_?.REACT_APP_API_BASE_URL) {
+    return `${(window as any)._env_.REACT_APP_API_BASE_URL}/api`;
+  }
+  
+  // Fall back to build-time environment variable
+  return process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Helper function to get auth token
 const getAuthToken = (): string | null => {
