@@ -40,8 +40,8 @@ USER appuser
 EXPOSE 8080
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
-  CMD curl -f http://localhost:8080/health || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --start-period=90s --retries=5 \
+  CMD curl -f http://localhost:8080/api/health/status || exit 1
 
 # Run application
 ENTRYPOINT ["java", "-jar", "app.jar"]
