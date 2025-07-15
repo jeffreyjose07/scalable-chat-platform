@@ -32,6 +32,17 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# SRE Practice: Graceful cleanup on script interruption
+cleanup() {
+    echo ""
+    print_warning "Script interrupted. Performing graceful cleanup..."
+    docker-compose down --remove-orphans 2>/dev/null || true
+    exit 1
+}
+
+# Trap common signals for graceful cleanup
+trap cleanup SIGINT SIGTERM
+
 # Check if Docker is running
 if ! docker info > /dev/null 2>&1; then
     print_error "Docker is not running. Please start Docker Desktop and try again."
@@ -133,9 +144,62 @@ fi
 print_status "Starting infrastructure services (databases, message queue)..."
 docker-compose up -d postgres mongodb redis zookeeper kafka elasticsearch
 
-# Wait for infrastructure to be ready
+# SRE Practice: Comprehensive dependency health checks
 print_status "Waiting for infrastructure services to be ready..."
-sleep 30
+
+# Function to check service health
+check_service_health() {
+    local service_name=$1
+    local check_command=$2
+    local max_attempts=$3
+    local wait_time=$4
+    
+    for attempt in $(seq 1 $max_attempts); do
+        if eval "$check_command" > /dev/null 2>&1; then
+            print_success "✅ $service_name is ready"
+            return 0
+        fi
+        
+        if [ $attempt -eq $max_attempts ]; then
+            print_error "❌ $service_name failed to start after $max_attempts attempts"
+            return 1
+        fi
+        
+        if [ $((attempt % 5)) -eq 0 ]; then
+            print_status "Still waiting for $service_name... (attempt $attempt/$max_attempts)"
+        else
+            echo -n "."
+        fi
+        
+        sleep $wait_time
+    done
+}
+
+print_status "Checking PostgreSQL..."
+if ! check_service_health "PostgreSQL" "docker exec scalable-chat-platform-postgres-1 pg_isready -h localhost" 30 2; then
+    print_error "PostgreSQL startup failed. Aborting."
+    exit 1
+fi
+
+print_status "Checking MongoDB..."
+if ! check_service_health "MongoDB" "docker exec scalable-chat-platform-mongodb-1 mongosh --eval 'db.runCommand({ping:1})' --quiet" 30 2; then
+    print_error "MongoDB startup failed. Aborting."
+    exit 1
+fi
+
+print_status "Checking Redis..."
+if ! check_service_health "Redis" "docker exec scalable-chat-platform-redis-1 redis-cli ping" 30 2; then
+    print_error "Redis startup failed. Aborting."
+    exit 1
+fi
+
+print_status "Checking Kafka..."
+if ! check_service_health "Kafka" "docker exec scalable-chat-platform-kafka-1 kafka-topics --bootstrap-server localhost:9092 --list" 60 3; then
+    print_error "Kafka startup failed. Aborting."
+    exit 1
+fi
+
+print_success "All infrastructure services are ready!"
 
 # Start backend service
 print_status "Starting backend service..."
@@ -143,16 +207,16 @@ docker-compose up -d backend
 
 # SRE Practice: Robust health checking with exponential backoff
 print_status "Waiting for backend to be ready..."
-max_attempts=30
+max_attempts=60  # Increased timeout for Spring Boot startup
 attempt=1
-wait_time=2
+wait_time=3
 
 while [ $attempt -le $max_attempts ]; do
     # Check both health endpoint and container status
     backend_status=$(docker-compose ps backend --format "{{.State}}" 2>/dev/null || echo "unknown")
     
     if [ "$backend_status" = "running" ]; then
-        if curl -s -f http://localhost:8080/health > /dev/null 2>&1; then
+        if curl -s -f http://localhost:8080/api/health/status > /dev/null 2>&1; then
             print_success "Backend is ready and healthy!"
             break
         fi
@@ -178,8 +242,11 @@ while [ $attempt -le $max_attempts ]; do
         print_error "Debugging information:"
         echo "- Backend container status: $backend_status"
         echo "- Check logs: docker-compose logs backend"
-        echo "- Check health: curl http://localhost:8080/health"
+        echo "- Check health: curl http://localhost:8080/api/health/status"
         echo "- Check processes: docker-compose ps"
+        echo ""
+        print_warning "Attempting graceful cleanup..."
+        docker-compose down --remove-orphans
         exit 1
     fi
     
@@ -229,6 +296,9 @@ while [ $attempt -le $max_attempts ]; do
         echo "- Frontend container status: $frontend_status"
         echo "- Check logs: docker-compose logs frontend"
         echo "- Try accessing: http://localhost:3000"
+        echo ""
+        print_warning "Attempting graceful cleanup..."
+        docker-compose down --remove-orphans
         exit 1
     fi
     
@@ -242,7 +312,7 @@ print_status "Performing final health checks..."
 
 # Validate all critical services
 services_healthy=true
-for service in "Frontend:http://localhost:3000/health" "Backend:http://localhost:8080/health"; do
+for service in "Frontend:http://localhost:3000/health" "Backend:http://localhost:8080/api/health/status"; do
     service_name=$(echo $service | cut -d: -f1)
     service_url=$(echo $service | cut -d: -f2-)
     
@@ -266,7 +336,7 @@ echo "🌐 Service URLs:"
 echo "================"
 echo "🎯 Frontend:     http://localhost:3000"
 echo "🔧 Backend API:  http://localhost:8080"
-echo "📊 Health Check: http://localhost:8080/health"
+echo "📊 Health Check: http://localhost:8080/api/health/status"
 echo ""
 echo "Database Access:"
 echo "================"
