@@ -90,7 +90,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<MessageResponse<Object>> handleIllegalArgumentException(IllegalArgumentException e) {
         logger.warn("Illegal argument: {}", e.getMessage());
-        return ResponseUtils.badRequest(e.getMessage(), null);
+        return ResponseUtils.conflict(e.getMessage(), null);
     }
 
     @ExceptionHandler(Exception.class)
