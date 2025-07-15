@@ -4,15 +4,25 @@ Complete containerized chat platform with all services running in Docker.
 
 ## 🚀 Quick Start
 
-### Start the entire stack:
+### **Startup Process** (4-6 minutes first time, 2-3 minutes after):
 ```bash
 ./start-full-stack.sh
 ```
+**What happens:** Infrastructure → Backend → Frontend → Ready!  
+**Access:** http://localhost:3000
 
-### Stop the entire stack:
+### **Shutdown Process** (preserves your data):
 ```bash
+# Safe shutdown - keeps all data
 ./stop-full-stack.sh
+
+# Clean shutdown - removes all data  
+./stop-full-stack.sh --clean
+
+# Complete removal - removes images too
+./stop-full-stack.sh --purge
 ```
+**✅ Normal shutdown preserves:** Messages, users, conversations, search history
 
 ## 📋 What's Included
 
@@ -43,15 +53,17 @@ Complete containerized chat platform with all services running in Docker.
 
 ### Stop Script (`stop-full-stack.sh`)
 ```bash
-# Normal stop
+# Safe stop - preserves all your data
 ./stop-full-stack.sh
 
-# Stop and remove data volumes
+# Clean stop - removes all data (fresh start next time)
 ./stop-full-stack.sh --clean
 
-# Stop and remove everything (images, volumes, etc.)
+# Purge - removes everything (images, volumes, cached data)
 ./stop-full-stack.sh --purge
 ```
+
+**🔒 Data Safety:** Normal shutdown keeps all messages, users, and conversations safe
 
 ## 🌐 Environment Configuration
 
@@ -194,10 +206,12 @@ docker stats
 
 ### Clean Reset
 ```bash
-# Complete clean restart
+# Complete clean restart (removes all data and images)
 ./stop-full-stack.sh --purge
 ./start-full-stack.sh --rebuild
 ```
+
+**⚠️ Warning:** This removes all your messages, users, and conversations
 
 ## 📊 Production Considerations
 
