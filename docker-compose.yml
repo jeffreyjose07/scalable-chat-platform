@@ -80,6 +80,76 @@ services:
     networks:
       - chat-network
 
+  # Spring Boot Backend
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      # Database connections
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/chatdb
+      - SPRING_DATASOURCE_USERNAME=chatuser
+      - SPRING_DATASOURCE_PASSWORD=chatpass
+      
+      # MongoDB connection
+      - SPRING_DATA_MONGODB_URI=mongodb://mongodb:27017/chatdb
+      
+      # Redis connection
+      - SPRING_REDIS_HOST=redis
+      - SPRING_REDIS_PORT=6379
+      
+      # Kafka connection
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+      
+      # CORS settings
+      - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://frontend:80
+      
+      # WebSocket settings
+      - WEBSOCKET_ALLOWED_ORIGINS=http://localhost:3000,http://frontend:80
+      
+      # Application settings
+      - SPRING_PROFILES_ACTIVE=docker
+      - SERVER_PORT=8080
+      - LOGGING_LEVEL_COM_CHATPLATFORM=INFO
+    depends_on:
+      - postgres
+      - mongodb
+      - redis
+      - kafka
+    networks:
+      - chat-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    environment:
+      # Backend API URL for container communication
+      - REACT_APP_API_BASE_URL=http://backend:8080
+      # WebSocket URL for container communication
+      - REACT_APP_WS_URL=ws://backend:8080
+    depends_on:
+      - backend
+    networks:
+      - chat-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
 volumes:
   postgres_data:
   mongodb_data:

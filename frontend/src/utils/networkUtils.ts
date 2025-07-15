@@ -40,6 +40,11 @@ export const getApiBaseUrl = (): string => {
  * Gets the appropriate WebSocket URL based on current environment
  */
 export const getWebSocketUrl = (): string => {
+  // Check for runtime configuration first (Docker)
+  if (typeof window !== 'undefined' && (window as any)._env_?.REACT_APP_WS_URL) {
+    return (window as any)._env_.REACT_APP_WS_URL;
+  }
+  
   // If environment variable is set, use it
   if (process.env.REACT_APP_WS_URL) {
     return process.env.REACT_APP_WS_URL;
