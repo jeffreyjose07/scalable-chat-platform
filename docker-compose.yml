@@ -173,10 +173,10 @@ services:
     ports:
       - "3000:80"
     environment:
-      # Backend API URL for container communication
-      - REACT_APP_API_BASE_URL=http://backend:8080
-      # WebSocket URL for container communication
-      - REACT_APP_WS_URL=ws://backend:8080
+      # Backend API URL for browser access (not container-to-container)
+      - REACT_APP_API_BASE_URL=http://localhost:8080
+      # WebSocket URL for browser access (not container-to-container)
+      - REACT_APP_WS_URL=ws://localhost:8080
     depends_on:
       backend:
         condition: service_healthy
