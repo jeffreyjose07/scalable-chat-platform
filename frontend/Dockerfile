@@ -32,9 +32,9 @@ RUN chmod +x /docker-entrypoint.sh
 # Expose port
 EXPOSE 80
 
-# Health check
+# Health check  
 HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
+  CMD curl -f http://localhost/ || exit 1
 
 # Start nginx with environment variable substitution
 ENTRYPOINT ["/docker-entrypoint.sh"]
