@@ -33,8 +33,8 @@ RUN chmod +x /docker-entrypoint.sh
 EXPOSE 80
 
 # Health check  
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD curl -f http://localhost/ || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
+  CMD curl -f http://localhost/health || exit 1
 
 # Start nginx with environment variable substitution
 ENTRYPOINT ["/docker-entrypoint.sh"]
