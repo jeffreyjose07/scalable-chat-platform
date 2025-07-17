@@ -144,7 +144,38 @@ fi
 # Start all services with dependency ordering
 print_status "Starting all services with dependency health checks..."
 print_status "Docker Compose will handle proper startup order..."
-docker-compose up -d
+
+# SRE Practice: Retry mechanism for Kafka/ZooKeeper conflicts
+max_retries=3
+retry_count=0
+
+while [ $retry_count -lt $max_retries ]; do
+    if docker-compose up -d; then
+        print_success "All services started successfully"
+        break
+    else
+        retry_count=$((retry_count + 1))
+        print_warning "Startup failed (attempt $retry_count/$max_retries)"
+        
+        # Check if it's a Kafka/ZooKeeper issue by examining recent logs
+        if docker-compose logs kafka 2>&1 | tail -50 | grep -q "NodeExistsException\|Failed to acquire lock\|broker.*already exists\|InconsistentClusterIdException\|doesn't match stored clusterId"; then
+            print_warning "Detected Kafka/ZooKeeper cluster ID mismatch. Cleaning up..."
+            docker-compose stop kafka zookeeper 2>/dev/null || true
+            docker-compose rm -f kafka zookeeper 2>/dev/null || true
+            # Remove both ZooKeeper and Kafka volumes to resolve cluster ID conflicts, but preserve user data
+            docker volume rm $(docker volume ls -q | grep -E "(zookeeper|kafka)") 2>/dev/null || true
+            print_status "Retrying with clean Kafka/ZooKeeper state..."
+        else
+            print_error "Startup failed for unknown reason"
+            if [ $retry_count -eq $max_retries ]; then
+                print_error "Maximum retries reached. Check logs with: docker-compose logs"
+                exit 1
+            fi
+        fi
+        
+        sleep 5
+    fi
+done
 
 # SRE Practice: Robust health checking with exponential backoff
 print_status "Waiting for backend to be ready..."

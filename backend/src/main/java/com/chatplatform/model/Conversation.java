@@ -29,6 +29,14 @@ public class Conversation {
     @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ConversationParticipant> participants = new HashSet<>();
     
+    private String description;
+    
+    @Column(name = "is_public")
+    private Boolean isPublic = false;
+    
+    @Column(name = "max_participants")
+    private Integer maxParticipants = 100;
+    
     public Conversation() {
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
@@ -103,6 +111,30 @@ public class Conversation {
     
     public void setParticipants(Set<ConversationParticipant> participants) {
         this.participants = participants;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
+    
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+    
+    public Integer getMaxParticipants() {
+        return maxParticipants;
+    }
+    
+    public void setMaxParticipants(Integer maxParticipants) {
+        this.maxParticipants = maxParticipants;
     }
     
     // Helper methods

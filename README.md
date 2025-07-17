@@ -111,6 +111,9 @@ http://YOUR_IP:3000
 - ✅ **Real-time messaging** via WebSocket with automatic reconnection
 - ✅ **Private messaging** with direct conversations and user discovery
 - ✅ **Group conversations** with persistent state and participant management
+- ✅ **Advanced group management** with role-based access control (OWNER/ADMIN/MEMBER)
+- ✅ **Group creation & settings** with customizable permissions and metadata
+- ✅ **Conversation deletion** with proper message cleanup and role-based permissions
 - ✅ **Unread message tracking** with industry-standard timestamp-based system
 - ✅ **Message search** within conversations with highlighting and pagination
 - ✅ **User authentication** (demo mode with JWT tokens)
@@ -220,11 +223,43 @@ docker exec scalable-chat-platform-kafka-1 kafka-topics --list --bootstrap-serve
 
 ## API Documentation
 
+### Authentication
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/auth/login` | User authentication |
+
+### Conversations
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/conversations` | Get user's conversations |
+| GET | `/api/conversations/{id}` | Get specific conversation |
+| POST | `/api/conversations/direct` | Create direct conversation |
+| POST | `/api/conversations/groups` | Create group conversation |
+| PUT | `/api/conversations/{id}/settings` | Update group settings |
+| POST | `/api/conversations/{id}/participants` | Add participant to group |
+| DELETE | `/api/conversations/{id}/participants/{userId}` | Remove participant from group |
+| DELETE | `/api/conversations/{id}` | Delete conversation (with message cleanup) |
+
+### Messages
+| Method | Endpoint | Description |
+|--------|----------|-------------|
 | GET | `/api/messages/{conversationId}` | Get conversation messages |
-| WebSocket | `/ws/chat` | Real-time messaging |
+| POST | `/api/messages` | Send message |
+
+### WebSocket
+| Endpoint | Description |
+|----------|-------------|
+| `/ws/chat` | Real-time messaging and status updates |
+
+### Role-Based Access Control
+- **OWNER**: Full control (delete group, manage all participants, update settings)
+- **ADMIN**: Manage participants and update settings
+- **MEMBER**: Send messages and view conversation history
+
+### Conversation Deletion
+- **Groups**: Only group owners can delete groups (includes all messages)
+- **Direct conversations**: Any participant can delete (removes for both users)
+- **Message cleanup**: All messages are automatically deleted with the conversation
 
 ## Testing
 

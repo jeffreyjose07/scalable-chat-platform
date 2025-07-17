@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react';
-import { User } from '../components/UserSearchModal';
-import { Conversation } from '../components/ConversationList';
+import { User, Conversation } from '../types/chat';
 import { api } from '../services/api';
 
 interface UseUserSearchReturn {

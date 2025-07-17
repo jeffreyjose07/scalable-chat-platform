@@ -1,10 +1,14 @@
 package com.chatplatform.service;
 
 import com.chatplatform.dto.ConversationDto;
+import com.chatplatform.dto.ConversationParticipantDto;
+import com.chatplatform.dto.CreateGroupRequest;
+import com.chatplatform.dto.UpdateGroupSettingsRequest;
 import com.chatplatform.dto.UserDto;
 import com.chatplatform.model.Conversation;
 import com.chatplatform.model.ConversationParticipant;
 import com.chatplatform.model.ConversationType;
+import com.chatplatform.model.ParticipantRole;
 import com.chatplatform.model.User;
 import com.chatplatform.repository.jpa.ConversationRepository;
 import com.chatplatform.repository.jpa.ConversationParticipantRepository;
@@ -16,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,13 +32,16 @@ public class ConversationService {
     private final ConversationRepository conversationRepository;
     private final ConversationParticipantRepository participantRepository;
     private final UserRepository userRepository;
+    private final MessageService messageService;
     
     public ConversationService(ConversationRepository conversationRepository,
                              ConversationParticipantRepository participantRepository,
-                             UserRepository userRepository) {
+                             UserRepository userRepository,
+                             MessageService messageService) {
         this.conversationRepository = conversationRepository;
         this.participantRepository = participantRepository;
         this.userRepository = userRepository;
+        this.messageService = messageService;
     }
     
     /**
@@ -107,6 +115,69 @@ public class ConversationService {
     }
     
     /**
+     * Create a group conversation
+     */
+    public ConversationDto createGroup(String creatorId, CreateGroupRequest request) {
+        logger.info("Creating group - CreatorId: {}, GroupName: {}, IsPublic: {}, MaxParticipants: {}", 
+                   creatorId, request.getName(), request.getIsPublic(), request.getMaxParticipants());
+        
+        try {
+            // Validate creator exists
+            User creator = userRepository.findById(creatorId)
+                .orElseThrow(() -> {
+                    logger.error("Creator not found: {}", creatorId);
+                    return new IllegalArgumentException("Creator not found: " + creatorId);
+                });
+            
+            // Generate unique group ID
+            String groupId = "grp_" + UUID.randomUUID().toString().replace("-", "");
+            logger.debug("Generated group ID: {}", groupId);
+            
+            // Create conversation with group metadata
+            Conversation conversation = new Conversation(groupId, ConversationType.GROUP, request.getName(), creatorId);
+            conversation.setDescription(request.getDescription());
+            conversation.setIsPublic(request.getIsPublic() != null ? request.getIsPublic() : false);
+            conversation.setMaxParticipants(request.getMaxParticipants() != null ? request.getMaxParticipants() : 100);
+            
+            conversationRepository.save(conversation);
+            logger.debug("Group conversation saved successfully: {}", groupId);
+            
+            // Add creator as OWNER
+            ConversationParticipant creatorParticipant = new ConversationParticipant(conversation, creator, ParticipantRole.OWNER);
+            participantRepository.save(creatorParticipant);
+            logger.debug("Creator added as OWNER - GroupId: {}, CreatorId: {}", groupId, creatorId);
+            
+            // Add initial participants as MEMBERS if provided
+            if (request.getParticipantIds() != null && !request.getParticipantIds().isEmpty()) {
+                for (String participantId : request.getParticipantIds()) {
+                    if (!participantId.equals(creatorId)) {
+                        User participant = userRepository.findById(participantId)
+                            .orElseThrow(() -> {
+                                logger.error("Participant not found: {}", participantId);
+                                return new IllegalArgumentException("Participant not found: " + participantId);
+                            });
+                        
+                        ConversationParticipant groupParticipant = new ConversationParticipant(conversation, participant, ParticipantRole.MEMBER);
+                        participantRepository.save(groupParticipant);
+                        logger.debug("Participant added as MEMBER - GroupId: {}, ParticipantId: {}", groupId, participantId);
+                    }
+                }
+            }
+            
+            logger.info("Group created successfully - GroupId: {}, CreatorId: {}, GroupName: {}, TotalParticipants: {}", 
+                       groupId, creatorId, request.getName(), 
+                       1 + (request.getParticipantIds() != null ? request.getParticipantIds().size() : 0));
+            
+            return convertToDto(conversation);
+            
+        } catch (Exception e) {
+            logger.error("Failed to create group - CreatorId: {}, GroupName: {}, Error: {}", 
+                        creatorId, request.getName(), e.getMessage(), e);
+            throw e;
+        }
+    }
+    
+    /**
      * Get all conversations for a user
      */
     @Transactional(readOnly = true)
@@ -150,6 +221,103 @@ public class ConversationService {
     @Transactional(readOnly = true)
     public boolean hasUserAccess(String userId, String conversationId) {
         return participantRepository.existsByIdConversationIdAndIdUserIdAndIsActiveTrue(conversationId, userId);
+    }
+    
+    /**
+     * Check if user can manage participants in a conversation
+     */
+    @Transactional(readOnly = true)
+    public boolean canManageParticipants(String userId, String conversationId) {
+        Optional<ConversationParticipant> participant = participantRepository
+            .findByIdConversationIdAndIdUserIdAndIsActiveTrue(conversationId, userId);
+        
+        return participant.isPresent() && participant.get().canManageParticipants();
+    }
+    
+    /**
+     * Check if user can update conversation settings
+     */
+    @Transactional(readOnly = true)
+    public boolean canUpdateSettings(String userId, String conversationId) {
+        Optional<ConversationParticipant> participant = participantRepository
+            .findByIdConversationIdAndIdUserIdAndIsActiveTrue(conversationId, userId);
+        
+        return participant.isPresent() && participant.get().canUpdateSettings();
+    }
+    
+    /**
+     * Check if user is owner of a conversation
+     */
+    @Transactional(readOnly = true)
+    public boolean isOwner(String userId, String conversationId) {
+        Optional<ConversationParticipant> participant = participantRepository
+            .findByIdConversationIdAndIdUserIdAndIsActiveTrue(conversationId, userId);
+        
+        return participant.isPresent() && participant.get().isOwner();
+    }
+    
+    /**
+     * Get user's role in a conversation
+     */
+    @Transactional(readOnly = true)
+    public Optional<ParticipantRole> getUserRole(String userId, String conversationId) {
+        Optional<ConversationParticipant> participant = participantRepository
+            .findByIdConversationIdAndIdUserIdAndIsActiveTrue(conversationId, userId);
+        
+        return participant.map(ConversationParticipant::getRole);
+    }
+    
+    /**
+     * Update group settings
+     */
+    public ConversationDto updateGroupSettings(String conversationId, UpdateGroupSettingsRequest request) {
+        logger.info("Updating group settings - ConversationId: {}", conversationId);
+        
+        try {
+            // Validate conversation exists and is a group
+            Conversation conversation = conversationRepository.findById(conversationId)
+                .orElseThrow(() -> {
+                    logger.error("Conversation not found: {}", conversationId);
+                    return new IllegalArgumentException("Conversation not found: " + conversationId);
+                });
+            
+            if (conversation.getType() != ConversationType.GROUP) {
+                logger.error("Cannot update settings for non-group conversation: {}", conversationId);
+                throw new IllegalArgumentException("Cannot update settings for non-group conversation");
+            }
+            
+            // Update only provided fields
+            if (request.getName() != null) {
+                conversation.setName(request.getName());
+                logger.debug("Updated group name - ConversationId: {}, NewName: {}", conversationId, request.getName());
+            }
+            
+            if (request.getDescription() != null) {
+                conversation.setDescription(request.getDescription());
+                logger.debug("Updated group description - ConversationId: {}", conversationId);
+            }
+            
+            if (request.getIsPublic() != null) {
+                conversation.setIsPublic(request.getIsPublic());
+                logger.debug("Updated group visibility - ConversationId: {}, IsPublic: {}", conversationId, request.getIsPublic());
+            }
+            
+            if (request.getMaxParticipants() != null) {
+                conversation.setMaxParticipants(request.getMaxParticipants());
+                logger.debug("Updated group max participants - ConversationId: {}, MaxParticipants: {}", 
+                           conversationId, request.getMaxParticipants());
+            }
+            
+            conversationRepository.save(conversation);
+            logger.info("Group settings updated successfully - ConversationId: {}", conversationId);
+            
+            return convertToDto(conversation);
+            
+        } catch (Exception e) {
+            logger.error("Failed to update group settings - ConversationId: {}, Error: {}", 
+                        conversationId, e.getMessage(), e);
+            throw e;
+        }
     }
     
     /**
@@ -202,8 +370,23 @@ public class ConversationService {
             }
         }
         
-        // Add new participant
-        ConversationParticipant participant = new ConversationParticipant(conversationId, userId);
+        // Add new participant - need to load actual entities for @MapsId to work
+        Optional<Conversation> conversationOpt = conversationRepository.findById(conversationId);
+        Optional<User> userOpt = userRepository.findById(userId);
+        
+        if (conversationOpt.isEmpty()) {
+            throw new IllegalArgumentException("Conversation not found: " + conversationId);
+        }
+        
+        if (userOpt.isEmpty()) {
+            throw new IllegalArgumentException("User not found: " + userId);
+        }
+        
+        ConversationParticipant participant = new ConversationParticipant(
+            conversationOpt.get(), 
+            userOpt.get(), 
+            ParticipantRole.MEMBER
+        );
         participantRepository.save(participant);
         
         logger.info("Added user {} to conversation {}", userId, conversationId);
@@ -227,6 +410,58 @@ public class ConversationService {
         }
     }
     
+    /**
+     * Delete conversation (only for group owners or direct conversation participants)
+     */
+    public void deleteConversation(String conversationId, String userId) {
+        logger.info("Attempting to delete conversation {} by user {}", conversationId, userId);
+        
+        try {
+            // Validate conversation exists
+            Conversation conversation = conversationRepository.findById(conversationId)
+                .orElseThrow(() -> {
+                    logger.error("Conversation not found: {}", conversationId);
+                    return new IllegalArgumentException("Conversation not found: " + conversationId);
+                });
+            
+            // Check user permissions
+            if (conversation.getType() == ConversationType.GROUP) {
+                // For groups, only owners can delete
+                if (!isOwner(userId, conversationId)) {
+                    logger.error("User {} does not have permission to delete group {}", userId, conversationId);
+                    throw new IllegalArgumentException("Only group owners can delete groups");
+                }
+            } else if (conversation.getType() == ConversationType.DIRECT) {
+                // For direct conversations, any participant can delete the entire conversation
+                if (!hasUserAccess(userId, conversationId)) {
+                    logger.error("User {} does not have access to conversation {}", userId, conversationId);
+                    throw new IllegalArgumentException("You do not have access to this conversation");
+                }
+                logger.info("User {} is deleting direct conversation {}", userId, conversationId);
+                // Continue with full deletion logic below
+            }
+            
+            // Delete all messages in the conversation first
+            messageService.deleteConversationMessages(conversationId);
+            logger.debug("Deleted all messages from conversation {}", conversationId);
+            
+            // Delete all participants (both active and inactive)
+            List<ConversationParticipant> participants = participantRepository
+                .findByIdConversationId(conversationId);
+            participantRepository.deleteAll(participants);
+            logger.debug("Deleted {} participants from conversation {}", participants.size(), conversationId);
+            
+            // Delete conversation
+            conversationRepository.delete(conversation);
+            logger.info("Successfully deleted conversation {} by user {}", conversationId, userId);
+            
+        } catch (Exception e) {
+            logger.error("Failed to delete conversation {} by user {} - Error: {}", 
+                        conversationId, userId, e.getMessage(), e);
+            throw e;
+        }
+    }
+    
     // Helper methods
     
     private String createDirectConversationId(String userId1, String userId2) {
@@ -246,16 +481,31 @@ public class ConversationService {
             conversation.getUpdatedAt()
         );
         
-        // Load participants
+        // Set group metadata for GROUP conversations
+        if (conversation.getType() == ConversationType.GROUP) {
+            dto.setDescription(conversation.getDescription());
+            dto.setIsPublic(conversation.getIsPublic());
+            dto.setMaxParticipants(conversation.getMaxParticipants());
+        }
+        
+        // Load participants with role information
         List<ConversationParticipant> participants = participantRepository
             .findByIdConversationIdAndIsActiveTrue(conversation.getId());
         
-        List<UserDto> participantDtos = participants.stream()
+        List<ConversationParticipantDto> participantDtos = participants.stream()
             .map(participant -> {
                 Optional<User> user = userRepository.findById(participant.getUserId());
-                return user.map(this::convertUserToDto).orElse(null);
+                return user.map(u -> {
+                    UserDto userDto = convertUserToDto(u);
+                    return new ConversationParticipantDto(
+                        userDto, 
+                        participant.getRole(),
+                        participant.getJoinedAt(),
+                        participant.getLastReadAt()
+                    );
+                }).orElse(null);
             })
-            .filter(userDto -> userDto != null)
+            .filter(participantDto -> participantDto != null)
             .collect(Collectors.toList());
         
         dto.setParticipants(participantDtos);

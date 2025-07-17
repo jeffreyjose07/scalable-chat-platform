@@ -10,15 +10,23 @@ import { ChatMessage, MessageType } from '../types/chat';
 import MessageList from '../components/MessageList';
 import MessageInput from '../components/MessageInput';
 import ConversationList from '../components/ConversationList';
-import UserSearchModal, { User } from '../components/UserSearchModal';
+import UserSearchModal from '../components/UserSearchModal';
+import { User } from '../types/chat';
 import MessageSearchBar from '../components/MessageSearchBar';
 import SearchResultsList from '../components/SearchResultsList';
 import NetworkDebug from '../components/NetworkDebug';
 import { ConversationType } from '../components/ConversationTypeToggle';
+import { CreateGroupModal } from '../components/groups/CreateGroupModal';
+import { GroupSettingsModal } from '../components/groups/GroupSettingsModal';
+import { api } from '../services/api';
 
 const ChatPage: React.FC = () => {
   const { messages, sendMessage, isConnected } = useWebSocket();
   const { user, logout } = useAuth();
+  
+  // Group modal states
+  const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
+  const [isGroupSettingsModalOpen, setIsGroupSettingsModalOpen] = useState(false);
   
   // Custom hooks for state management
   const chatState = useChatState();
@@ -44,7 +52,7 @@ const ChatPage: React.FC = () => {
     sendMessage({
       conversationId: chatState.selectedConversation,
       senderId: user.id,
-      senderUsername: undefined, // Backend will set this as source of truth
+      senderUsername: user.displayName || user.username, // Use displayName or username
       content: content.trim(),
       type: MessageType.TEXT,
     });
@@ -86,13 +94,85 @@ const ChatPage: React.FC = () => {
     }
   };
 
+  const handleNewGroup = () => {
+    setIsCreateGroupModalOpen(true);
+  };
+
+  const handleGroupCreated = (group: any) => {
+    // Add group to conversation list
+    conversationHook.addConversation(group);
+    
+    // Switch to groups tab and select the new group
+    chatState.setActiveConversationType('groups');
+    chatState.setSelectedConversation(group.id);
+    
+    // Close modal
+    setIsCreateGroupModalOpen(false);
+  };
+
+  const handleDeleteConversation = async (conversationId: string) => {
+    try {
+      await api.conversation.deleteConversation(conversationId);
+      
+      // Remove conversation from the list
+      conversationHook.removeConversation(conversationId);
+      
+      // If this was the selected conversation, clear the selection
+      if (chatState.selectedConversation === conversationId) {
+        chatState.setSelectedConversation('');
+      }
+    } catch (error) {
+      console.error('Failed to delete conversation:', error);
+      alert('Failed to delete conversation: ' + (error instanceof Error ? error.message : String(error)));
+    }
+  };
+
+  // Helper functions
+  const getCurrentConversation = () => {
+    return conversationHook.conversations.find(conv => conv.id === chatState.selectedConversation);
+  };
+
+  const isCurrentConversationGroup = () => {
+    const conversation = getCurrentConversation();
+    return conversation?.type === 'GROUP';
+  };
+
+  const getCurrentUserRole = () => {
+    const conversation = getCurrentConversation();
+    if (!conversation || !conversation.participants || !user) return null;
+    
+    // Handle both ConversationDto (with ConversationParticipant[]) and Conversation (with User[])
+    if (conversation.participants.length > 0 && 'user' in conversation.participants[0]) {
+      // ConversationDto type with ConversationParticipant[]
+      const participant = conversation.participants.find((p: any) => p.user.id === user.id) as any;
+      return participant?.role || null;
+    } else {
+      // Conversation type with User[] - no role information available
+      return null;
+    }
+  };
+
   // Helper function to get conversation display name
   const getConversationDisplayName = (conversationId: string) => {
     const conversation = conversationHook.conversations.find(conv => conv.id === conversationId);
     if (conversation) {
-      if (conversation.type === 'DIRECT' && conversation.participants) {
-        const otherParticipant = conversation.participants.find(p => p.id !== user?.id);
-        return otherParticipant?.displayName || otherParticipant?.username || 'Unknown User';
+      if (conversation.type === 'DIRECT' && conversation.participants && conversation.participants.length > 0) {
+        // Handle both ConversationDto (with ConversationParticipant[]) and Conversation (with User[])
+        if ('user' in conversation.participants[0]) {
+          // ConversationDto type with ConversationParticipant[]
+          const otherParticipant = conversation.participants.find((p: any) => p.user.id !== user?.id) as any;
+          if (otherParticipant) {
+            const userObj = otherParticipant.user;
+            return userObj.displayNameOrUsername || userObj.displayName || userObj.username || 'Unknown User';
+          }
+        } else {
+          // Legacy format - treat as User objects (shouldn't happen with current backend)
+          const otherParticipant = (conversation.participants as any[]).find((participant: any) => participant.id !== user?.id);
+          if (otherParticipant) {
+            return otherParticipant.displayNameOrUsername || otherParticipant.displayName || otherParticipant.username || 'Unknown User';
+          }
+        }
+        return 'Unknown User';
       }
       return conversation.name;
     }
@@ -104,6 +184,10 @@ const ChatPage: React.FC = () => {
       case 'tech': return 'Tech Talk';
       default: return conversationId;
     }
+  };
+
+  const handleGroupUpdated = (updatedGroup: any) => {
+    conversationHook.updateConversation(updatedGroup.id, updatedGroup);
   };
 
   return (
@@ -163,8 +247,10 @@ const ChatPage: React.FC = () => {
           activeType={chatState.activeConversationType}
           onTypeChange={handleConversationTypeChange}
           onNewDirectMessage={userSearchHook.openUserSearchModal}
+          onNewGroup={handleNewGroup}
           unreadCounts={unreadHook.unreadCounts}
           currentUserId={user?.id}
+          onDeleteConversation={handleDeleteConversation}
         />
       </div>
 
@@ -198,6 +284,20 @@ const ChatPage: React.FC = () => {
               </div>
               
               <div className="flex items-center space-x-2 flex-shrink-0">
+                {/* Group Settings Button */}
+                {isCurrentConversationGroup() && (
+                  <button
+                    onClick={() => setIsGroupSettingsModalOpen(true)}
+                    className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-md"
+                    title="Group Settings"
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </button>
+                )}
+                
                 <MessageSearchBar
                   isSearchMode={searchHook.isSearchMode}
                   onToggleSearch={searchHook.toggleSearchMode}
@@ -245,7 +345,30 @@ const ChatPage: React.FC = () => {
         onSelectUser={handleUserSelect}
         searchUsers={userSearchHook.searchUsers}
         getUserSuggestions={userSearchHook.getUserSuggestions}
+        currentUserId={user?.id}
       />
+      
+      {/* Create Group Modal */}
+      <CreateGroupModal
+        isOpen={isCreateGroupModalOpen}
+        onClose={() => setIsCreateGroupModalOpen(false)}
+        onGroupCreated={handleGroupCreated}
+      />
+      
+      {/* Group Settings Modal */}
+      {getCurrentConversation() && isCurrentConversationGroup() && (
+        <GroupSettingsModal
+          isOpen={isGroupSettingsModalOpen}
+          onClose={() => setIsGroupSettingsModalOpen(false)}
+          conversation={getCurrentConversation() as any}
+          userRole={getCurrentUserRole() || 'MEMBER'}
+          onGroupUpdated={handleGroupUpdated}
+          onGroupDeleted={() => {
+            handleDeleteConversation(getCurrentConversation()!.id);
+            setIsGroupSettingsModalOpen(false);
+          }}
+        />
+      )}
       
       <NetworkDebug />
     </div>

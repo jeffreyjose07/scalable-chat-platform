@@ -11,11 +11,14 @@ public class ConversationDto {
     private String createdBy;
     private Instant createdAt;
     private Instant updatedAt;
-    private List<UserDto> participants;
+    private List<ConversationParticipantDto> participants;
     private String lastMessageContent;
     private Instant lastMessageAt;
     private String lastMessageSender;
     private int unreadCount;
+    private String description;
+    private Boolean isPublic;
+    private Integer maxParticipants;
     
     // Constructors
     public ConversationDto() {}
@@ -80,11 +83,11 @@ public class ConversationDto {
         this.updatedAt = updatedAt;
     }
     
-    public List<UserDto> getParticipants() {
+    public List<ConversationParticipantDto> getParticipants() {
         return participants;
     }
     
-    public void setParticipants(List<UserDto> participants) {
+    public void setParticipants(List<ConversationParticipantDto> participants) {
         this.participants = participants;
     }
     
@@ -120,6 +123,30 @@ public class ConversationDto {
         this.unreadCount = unreadCount;
     }
     
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    public Boolean getIsPublic() {
+        return isPublic;
+    }
+    
+    public void setIsPublic(Boolean isPublic) {
+        this.isPublic = isPublic;
+    }
+    
+    public Integer getMaxParticipants() {
+        return maxParticipants;
+    }
+    
+    public void setMaxParticipants(Integer maxParticipants) {
+        this.maxParticipants = maxParticipants;
+    }
+    
     // Helper methods
     public boolean isDirectMessage() {
         return ConversationType.DIRECT.equals(type);
@@ -136,6 +163,7 @@ public class ConversationDto {
         }
         
         return participants.stream()
+            .map(ConversationParticipantDto::getUser)
             .filter(user -> !user.getId().equals(currentUserId))
             .findFirst()
             .orElse(null);

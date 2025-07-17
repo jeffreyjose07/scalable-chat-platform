@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { getApiBaseUrl } from '../utils/networkUtils';
 
 const LoginPage: React.FC = () => {
   const [isRegisterMode, setIsRegisterMode] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotPasswordEmail, setForgotPasswordEmail] = useState('');
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -11,7 +16,9 @@ const LoginPage: React.FC = () => {
     displayName: ''
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [isForgotPasswordLoading, setIsForgotPasswordLoading] = useState(false);
   const { login, register, user } = useAuth();
+  const apiUrl = getApiBaseUrl();
 
   if (user) {
     return <Navigate to="/chat" replace />;
@@ -38,6 +45,25 @@ const LoginPage: React.FC = () => {
       // Error is handled by the auth functions
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleForgotPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsForgotPasswordLoading(true);
+    
+    try {
+      await axios.post(`${apiUrl}/api/auth/forgot-password`, forgotPasswordEmail, {
+        headers: { 'Content-Type': 'application/json' }
+      });
+      toast.success('Password reset email sent if account exists');
+      setShowForgotPassword(false);
+      setForgotPasswordEmail('');
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || 'Failed to send reset email';
+      toast.error(errorMessage);
+    } finally {
+      setIsForgotPasswordLoading(false);
     }
   };
 
@@ -130,7 +156,7 @@ const LoginPage: React.FC = () => {
               }
             </button>
             
-            <div className="text-center">
+            <div className="text-center space-y-2">
               <button
                 type="button"
                 onClick={() => setIsRegisterMode(!isRegisterMode)}
@@ -141,10 +167,66 @@ const LoginPage: React.FC = () => {
                   : "Don't have an account? Create one"
                 }
               </button>
+              
+              {!isRegisterMode && (
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setShowForgotPassword(true)}
+                    className="text-gray-600 hover:text-gray-500 text-sm"
+                  >
+                    Forgot your password?
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </form>
       </div>
+      
+      {/* Forgot Password Modal */}
+      {showForgotPassword && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50 flex items-center justify-center">
+          <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full mx-4">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Reset Password</h3>
+            <form onSubmit={handleForgotPassword}>
+              <div className="mb-4">
+                <label htmlFor="forgotEmail" className="block text-sm font-medium text-gray-700 mb-1">
+                  Email Address
+                </label>
+                <input
+                  id="forgotEmail"
+                  type="email"
+                  required
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  placeholder="Enter your email address"
+                  value={forgotPasswordEmail}
+                  onChange={(e) => setForgotPasswordEmail(e.target.value)}
+                />
+              </div>
+              <div className="flex justify-end space-x-3">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowForgotPassword(false);
+                    setForgotPasswordEmail('');
+                  }}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isForgotPasswordLoading}
+                  className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 disabled:opacity-50"
+                >
+                  {isForgotPasswordLoading ? 'Sending...' : 'Send Reset Email'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

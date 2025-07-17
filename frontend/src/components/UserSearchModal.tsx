@@ -1,12 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-
-export interface User {
-  id: string;
-  username: string;
-  displayName?: string;
-  email?: string;
-  avatarUrl?: string;
-}
+import { User } from '../types/chat';
 
 interface UserSearchModalProps {
   isOpen: boolean;
@@ -14,6 +7,7 @@ interface UserSearchModalProps {
   onSelectUser: (user: User) => void;
   searchUsers: (query: string) => Promise<User[]>;
   getUserSuggestions: () => Promise<User[]>;
+  currentUserId?: string;
 }
 
 const UserSearchModal: React.FC<UserSearchModalProps> = ({
@@ -21,7 +15,8 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
   onClose,
   onSelectUser,
   searchUsers,
-  getUserSuggestions
+  getUserSuggestions,
+  currentUserId
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [users, setUsers] = useState<User[]>([]);
@@ -70,7 +65,9 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
     setError(null);
     try {
       const suggestions = await getUserSuggestions();
-      setUsers(suggestions);
+      // Filter out the current user to prevent self-messaging
+      const filteredSuggestions = suggestions.filter(user => user.id !== currentUserId);
+      setUsers(filteredSuggestions);
     } catch (err) {
       setError('Failed to load user suggestions');
       setUsers([]);
@@ -84,7 +81,9 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
     setError(null);
     try {
       const results = await searchUsers(query);
-      setUsers(results);
+      // Filter out the current user to prevent self-messaging
+      const filteredResults = results.filter(user => user.id !== currentUserId);
+      setUsers(filteredResults);
     } catch (err) {
       setError('Failed to search users');
       setUsers([]);
