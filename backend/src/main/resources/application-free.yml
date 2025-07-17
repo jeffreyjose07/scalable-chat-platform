@@ -1,0 +1,128 @@
+spring:
+  profiles:
+    active: free
+    
+  # PostgreSQL Configuration (Railway Free)
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/chatdb}
+    username: ${DATABASE_USERNAME:chatuser}
+    password: ${DATABASE_PASSWORD:chatpass}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 5      # Reduced for free tier
+      minimum-idle: 1           # Reduced for free tier
+      connection-timeout: 20000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      
+  # JPA Configuration
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        
+  # MongoDB Configuration (Atlas Free M0)
+  data:
+    mongodb:
+      uri: ${MONGODB_URL:mongodb://localhost:27017/chatdb}
+      database: chatdb
+      auto-index-creation: true
+      
+  # Redis Configuration (Railway Free)
+  redis:
+    url: ${REDIS_URL:redis://localhost:6379}
+    timeout: 2000ms
+    lettuce:
+      pool:
+        max-active: 5           # Reduced for free tier
+        max-idle: 5             # Reduced for free tier
+        min-idle: 0
+        
+  # Kafka Configuration (Upstash Free)
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    security:
+      protocol: ${KAFKA_SECURITY_PROTOCOL:SASL_SSL}
+    sasl:
+      mechanism: ${KAFKA_SASL_MECHANISM:SCRAM-SHA-256}
+      jaas:
+        config: ${KAFKA_SASL_JAAS_CONFIG:}
+    consumer:
+      group-id: chat-platform-consumer
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      max-poll-records: 10      # Reduced for free tier
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      batch-size: 1000          # Smaller batches for free tier
+      linger-ms: 100            # Batch messages to stay under limits
+      
+# Server Configuration
+server:
+  port: ${PORT:8080}
+  compression:
+    enabled: true
+  tomcat:
+    threads:
+      max: 50                   # Reduced for free tier
+      min-spare: 5              # Reduced for free tier
+    
+# CORS Configuration
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:https://your-frontend-domain.vercel.app,http://localhost:3000}
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: "*"
+  allow-credentials: true
+  
+# WebSocket Configuration
+websocket:
+  allowed-origins: ${WEBSOCKET_ALLOWED_ORIGINS:https://your-frontend-domain.vercel.app,http://localhost:3000}
+  
+# JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:your-very-secure-jwt-secret-key-change-this-in-production}
+  expiration: 86400000 # 24 hours
+  
+# Logging Configuration (Reduced for free tier)
+logging:
+  level:
+    com.chatplatform: INFO
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.type: WARN
+    org.apache.kafka: WARN
+  pattern:
+    console: "%d{HH:mm:ss} - %msg%n"
+    
+# Management/Health Check Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+      
+# Application Configuration
+app:
+  name: Scalable Chat Platform
+  version: 1.0.0
+  description: Real-time chat platform - Free Tier
+  
+# Free Tier Optimizations
+spring.jpa.open-in-view: false
+spring.devtools.restart.enabled: false
+spring.devtools.livereload.enabled: false
+
+# Resource limits for free tier
+spring.datasource.hikari.leak-detection-threshold: 30000
+spring.kafka.producer.properties.delivery.timeout.ms: 30000
+spring.kafka.consumer.properties.session.timeout.ms: 30000

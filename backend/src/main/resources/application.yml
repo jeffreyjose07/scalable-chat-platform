@@ -58,8 +58,6 @@ spring:
         connections.max.idle.ms: 30000
       fail-fast: false
 
-  elasticsearch:
-    uris: ${SPRING_ELASTICSEARCH_URIS:http://localhost:9200}
 
 server:
   port: ${SERVER_PORT:8080}
