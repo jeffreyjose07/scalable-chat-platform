@@ -64,9 +64,9 @@ public class AuthService {
             AuthResponse authResponse = generateAuthResponse(user);
             return setUserOnline(authResponse);
         } catch (IllegalArgumentException e) {
-            // Re-throw as IllegalArgumentException to maintain proper HTTP status codes
+            // Wrap in AuthenticationException for consistent exception handling
             logger.warn("Registration failed: {}", e.getMessage());
-            throw e;
+            throw new AuthenticationException(e.getMessage());
         }
     }
     
