@@ -42,11 +42,14 @@ export const getApiBaseUrl = (): string => {
 export const getWebSocketUrl = (): string => {
   // Check for runtime configuration first (Docker)
   if (typeof window !== 'undefined' && (window as any)._env_?.REACT_APP_WS_URL) {
-    return (window as any)._env_.REACT_APP_WS_URL;
+    const wsUrl = (window as any)._env_.REACT_APP_WS_URL;
+    console.log('🔌 Using runtime WebSocket URL:', wsUrl);
+    return wsUrl;
   }
   
-  // If environment variable is set, use it
-  if (process.env.REACT_APP_WS_URL) {
+  // If environment variable is set and not empty, use it
+  if (process.env.REACT_APP_WS_URL && process.env.REACT_APP_WS_URL.trim()) {
+    console.log('🔌 Using build-time WebSocket URL:', process.env.REACT_APP_WS_URL);
     return process.env.REACT_APP_WS_URL;
   }
   
@@ -54,11 +57,15 @@ export const getWebSocketUrl = (): string => {
   
   // If accessing via local IP, use the same IP for WebSocket
   if (isLocalIP(hostname)) {
-    return `ws://${hostname}:8080`;
+    const wsUrl = `ws://${hostname}:8080`;
+    console.log('🔌 Using local IP WebSocket URL:', wsUrl);
+    return wsUrl;
   }
   
   // Default to localhost for local development
-  return 'ws://localhost:8080';
+  const wsUrl = 'ws://localhost:8080';
+  console.log('🔌 Using default WebSocket URL:', wsUrl);
+  return wsUrl;
 };
 
 /**

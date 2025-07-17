@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Conversation } from '../components/ConversationList';
+import { Conversation } from '../types/chat';
 import { api } from '../services/api';
 
 interface UseConversationsReturn {
@@ -9,6 +9,7 @@ interface UseConversationsReturn {
   loadConversations: () => Promise<void>;
   addConversation: (conversation: Conversation) => void;
   updateConversation: (conversationId: string, updates: Partial<Conversation>) => void;
+  removeConversation: (conversationId: string) => void;
 }
 
 export const useConversations = (): UseConversationsReturn => {
@@ -21,19 +22,20 @@ export const useConversations = (): UseConversationsReturn => {
     setError(null);
     
     try {
+      console.log('🔄 Loading conversations...');
       const userConversations = await api.conversation.getUserConversations();
+      console.log('📋 Loaded conversations:', userConversations);
+      console.log('🔍 Group conversations:', userConversations.filter(c => c.type === 'GROUP'));
+      console.log('🔍 Direct conversations:', userConversations.filter(c => c.type === 'DIRECT'));
       setConversations(userConversations);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to load conversations';
       setError(errorMessage);
-      console.error('Failed to load conversations:', err);
+      console.error('❌ Failed to load conversations:', err);
       
-      // Fallback to default conversations for development
-      setConversations([
-        { id: 'general', name: 'General Chat', type: 'GROUP' },
-        { id: 'random', name: 'Random', type: 'GROUP' },
-        { id: 'tech', name: 'Tech Talk', type: 'GROUP' },
-      ]);
+      // Security fix: Never show fallback conversations to prevent unauthorized access
+      // User will see empty list if API fails, which is more secure
+      setConversations([]);
     } finally {
       setIsLoading(false);
     }
@@ -59,6 +61,10 @@ export const useConversations = (): UseConversationsReturn => {
     );
   }, []);
 
+  const removeConversation = useCallback((conversationId: string) => {
+    setConversations(prev => prev.filter(conv => conv.id !== conversationId));
+  }, []);
+
   // Load conversations on mount
   useEffect(() => {
     loadConversations();
@@ -70,6 +76,7 @@ export const useConversations = (): UseConversationsReturn => {
     error,
     loadConversations,
     addConversation,
-    updateConversation
+    updateConversation,
+    removeConversation
   };
 };

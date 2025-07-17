@@ -11,6 +11,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -23,15 +24,18 @@ public class MessageService {
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
     
     private final ChatMessageRepository messageRepository;
-    private final KafkaTemplate<String, ChatMessage> kafkaTemplate;
+    private final KafkaTemplate<String, String> kafkaTemplate;
     private final ApplicationEventPublisher eventPublisher;
+    private final ObjectMapper objectMapper;
     
     public MessageService(ChatMessageRepository messageRepository,
-                         KafkaTemplate<String, ChatMessage> kafkaTemplate,
-                         ApplicationEventPublisher eventPublisher) {
+                         KafkaTemplate<String, String> kafkaTemplate,
+                         ApplicationEventPublisher eventPublisher,
+                         ObjectMapper objectMapper) {
         this.messageRepository = messageRepository;
         this.kafkaTemplate = kafkaTemplate;
         this.eventPublisher = eventPublisher;
+        this.objectMapper = objectMapper;
     }
     
     @Async
@@ -40,8 +44,9 @@ public class MessageService {
             ChatMessage savedMessage = messageRepository.save(message);
             
             // Send to Kafka with callback handling
-            CompletableFuture<SendResult<String, ChatMessage>> future = 
-                kafkaTemplate.send("chat-messages", savedMessage);
+            String messageJson = objectMapper.writeValueAsString(savedMessage);
+            CompletableFuture<SendResult<String, String>> future = 
+                kafkaTemplate.send("chat-messages", messageJson);
             
             future.whenComplete((result, ex) -> {
                 if (ex == null) {
@@ -79,8 +84,9 @@ public class MessageService {
     }
     
     @KafkaListener(topics = "chat-messages", groupId = "chat-platform")
-    public void handleMessageFromKafka(ChatMessage message) {
+    public void handleMessageFromKafka(String messageJson) {
         try {
+            ChatMessage message = objectMapper.readValue(messageJson, ChatMessage.class);
             logger.info("📨 Received message from Kafka: {} (content: {})", 
                 message.getId(), message.getContent().substring(0, Math.min(50, message.getContent().length())));
             eventPublisher.publishEvent(new MessageDistributionEvent(message));

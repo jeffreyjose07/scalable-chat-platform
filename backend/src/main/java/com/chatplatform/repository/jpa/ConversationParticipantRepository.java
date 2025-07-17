@@ -16,6 +16,9 @@ public interface ConversationParticipantRepository extends JpaRepository<Convers
     // Find participants by conversation ID
     List<ConversationParticipant> findByIdConversationIdAndIsActiveTrue(String conversationId);
     
+    // Find all participants by conversation ID (active and inactive)
+    List<ConversationParticipant> findByIdConversationId(String conversationId);
+    
     // Find participants by user ID
     List<ConversationParticipant> findByIdUserIdAndIsActiveTrue(String userId);
     
@@ -24,6 +27,9 @@ public interface ConversationParticipantRepository extends JpaRepository<Convers
     
     // Find specific participant
     Optional<ConversationParticipant> findByIdConversationIdAndIdUserId(String conversationId, String userId);
+    
+    // Find specific active participant
+    Optional<ConversationParticipant> findByIdConversationIdAndIdUserIdAndIsActiveTrue(String conversationId, String userId);
     
     // Count active participants in conversation
     @Query("SELECT COUNT(p) FROM ConversationParticipant p " +

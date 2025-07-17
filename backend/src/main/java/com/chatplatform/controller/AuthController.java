@@ -107,4 +107,29 @@ public class AuthController {
             return ResponseUtils.badRequest("Logout failed", (Void) null);
         }
     }
+    
+    @PostMapping("/forgot-password")
+    public ResponseEntity<MessageResponse<Void>> forgotPassword(@RequestBody String email) {
+        try {
+            authService.sendPasswordResetEmail(email);
+            return ResponseUtils.success("Password reset email sent if account exists");
+        } catch (Exception e) {
+            logger.error("Password reset failed for email: {}", email, e);
+            // Always return success for security reasons (don't reveal if email exists)
+            return ResponseUtils.success("Password reset email sent if account exists");
+        }
+    }
+    
+    @PostMapping("/reset-password")
+    public ResponseEntity<MessageResponse<Void>> resetPassword(
+            @RequestParam String token,
+            @RequestParam String newPassword) {
+        try {
+            authService.resetPassword(token, newPassword);
+            return ResponseUtils.success("Password reset successful");
+        } catch (Exception e) {
+            logger.warn("Password reset failed for token: {} - {}", token, e.getMessage());
+            return ResponseUtils.badRequest("Invalid or expired reset token", (Void) null);
+        }
+    }
 }
