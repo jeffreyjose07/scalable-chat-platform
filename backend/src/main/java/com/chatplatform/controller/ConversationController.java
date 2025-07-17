@@ -2,6 +2,8 @@ package com.chatplatform.controller;
 
 import com.chatplatform.dto.ConversationDto;
 import com.chatplatform.dto.CreateConversationRequest;
+import com.chatplatform.dto.CreateGroupRequest;
+import com.chatplatform.dto.UpdateGroupSettingsRequest;
 import com.chatplatform.model.User;
 import com.chatplatform.service.ConversationService;
 import org.slf4j.Logger;
@@ -46,6 +48,26 @@ public class ConversationController {
         } catch (Exception e) {
             logger.error("Failed to create direct conversation - User: {}, Participant: {}, Error: {}", 
                         userId, participantId, e.getMessage(), e);
+            throw e;
+        }
+    }
+    
+    @PostMapping("/groups")
+    public ResponseEntity<ConversationDto> createGroup(
+            @Valid @RequestBody CreateGroupRequest request,
+            Authentication authentication) {
+        String userId = getUserId(authentication);
+        logger.info("Creating group - User: {}, GroupName: {}, IsPublic: {}, MaxParticipants: {}", 
+                   userId, request.getName(), request.getIsPublic(), request.getMaxParticipants());
+        
+        try {
+            ConversationDto conversation = conversationService.createGroup(userId, request);
+            logger.info("Group created successfully - ConversationId: {}, User: {}, GroupName: {}", 
+                       conversation.getId(), userId, request.getName());
+            return ResponseEntity.ok(conversation);
+        } catch (Exception e) {
+            logger.error("Failed to create group - User: {}, GroupName: {}, Error: {}", 
+                        userId, request.getName(), e.getMessage(), e);
             throw e;
         }
     }
@@ -99,9 +121,9 @@ public class ConversationController {
                    conversationId, userId, participantId);
         
         try {
-            // Check if current user has access to add participants
-            if (!conversationService.hasUserAccess(userId, conversationId)) {
-                logger.warn("User doesn't have access to add participants - ConversationId: {}, User: {}", 
+            // Check if current user has permission to add participants
+            if (!conversationService.canManageParticipants(userId, conversationId)) {
+                logger.warn("User doesn't have permission to add participants - ConversationId: {}, User: {}", 
                            conversationId, userId);
                 return ResponseEntity.status(403).build();
             }
@@ -127,9 +149,9 @@ public class ConversationController {
                    conversationId, userId, participantId);
         
         try {
-            // Check if current user has access to remove participants
-            if (!conversationService.hasUserAccess(userId, conversationId)) {
-                logger.warn("User doesn't have access to remove participants - ConversationId: {}, User: {}", 
+            // Check if current user has permission to remove participants
+            if (!conversationService.canManageParticipants(userId, conversationId)) {
+                logger.warn("User doesn't have permission to remove participants - ConversationId: {}, User: {}", 
                            conversationId, userId);
                 return ResponseEntity.status(403).build();
             }
@@ -141,6 +163,56 @@ public class ConversationController {
         } catch (Exception e) {
             logger.error("Failed to remove participant - ConversationId: {}, User: {}, Participant: {}, Error: {}", 
                         conversationId, userId, participantId, e.getMessage(), e);
+            throw e;
+        }
+    }
+    
+    @PutMapping("/{conversationId}/settings")
+    public ResponseEntity<ConversationDto> updateGroupSettings(
+            @PathVariable String conversationId,
+            @Valid @RequestBody UpdateGroupSettingsRequest request,
+            Authentication authentication) {
+        String userId = getUserId(authentication);
+        logger.info("Updating group settings - ConversationId: {}, User: {}", conversationId, userId);
+        
+        try {
+            // Check if current user has permission to update settings
+            if (!conversationService.canUpdateSettings(userId, conversationId)) {
+                logger.warn("User doesn't have permission to update group settings - ConversationId: {}, User: {}", 
+                           conversationId, userId);
+                return ResponseEntity.status(403).build();
+            }
+            
+            ConversationDto updatedConversation = conversationService.updateGroupSettings(conversationId, request);
+            logger.info("Group settings updated successfully - ConversationId: {}, User: {}", 
+                       conversationId, userId);
+            return ResponseEntity.ok(updatedConversation);
+        } catch (Exception e) {
+            logger.error("Failed to update group settings - ConversationId: {}, User: {}, Error: {}", 
+                        conversationId, userId, e.getMessage(), e);
+            throw e;
+        }
+    }
+    
+    @DeleteMapping("/{conversationId}")
+    public ResponseEntity<Void> deleteConversation(
+            @PathVariable String conversationId,
+            Authentication authentication) {
+        String userId = getUserId(authentication);
+        logger.info("Deleting conversation - ConversationId: {}, User: {}", conversationId, userId);
+        
+        try {
+            conversationService.deleteConversation(conversationId, userId);
+            logger.info("Conversation deleted successfully - ConversationId: {}, User: {}", 
+                       conversationId, userId);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            logger.warn("Delete conversation request denied - ConversationId: {}, User: {}, Reason: {}", 
+                       conversationId, userId, e.getMessage());
+            return ResponseEntity.status(403).build();
+        } catch (Exception e) {
+            logger.error("Failed to delete conversation - ConversationId: {}, User: {}, Error: {}", 
+                        conversationId, userId, e.getMessage(), e);
             throw e;
         }
     }

@@ -28,6 +28,10 @@ public class ConversationParticipant {
     @Column(name = "is_active")
     private Boolean isActive = true;
     
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    private ParticipantRole role = ParticipantRole.MEMBER;
+    
     public ConversationParticipant() {
         this.joinedAt = Instant.now();
     }
@@ -38,12 +42,30 @@ public class ConversationParticipant {
         this.user = user;
         this.joinedAt = Instant.now();
         this.isActive = true;
+        this.role = ParticipantRole.MEMBER;
+    }
+    
+    public ConversationParticipant(Conversation conversation, User user, ParticipantRole role) {
+        this.id = new ConversationParticipantId(conversation.getId(), user.getId());
+        this.conversation = conversation;
+        this.user = user;
+        this.joinedAt = Instant.now();
+        this.isActive = true;
+        this.role = role;
     }
     
     public ConversationParticipant(String conversationId, String userId) {
         this.id = new ConversationParticipantId(conversationId, userId);
         this.joinedAt = Instant.now();
         this.isActive = true;
+        this.role = ParticipantRole.MEMBER;
+    }
+    
+    public ConversationParticipant(String conversationId, String userId, ParticipantRole role) {
+        this.id = new ConversationParticipantId(conversationId, userId);
+        this.joinedAt = Instant.now();
+        this.isActive = true;
+        this.role = role;
     }
     
     // Getters and setters
@@ -95,6 +117,14 @@ public class ConversationParticipant {
         this.isActive = isActive;
     }
     
+    public ParticipantRole getRole() {
+        return role;
+    }
+    
+    public void setRole(ParticipantRole role) {
+        this.role = role;
+    }
+    
     // Helper methods
     public String getConversationId() {
         return id != null ? id.getConversationId() : null;
@@ -102,5 +132,25 @@ public class ConversationParticipant {
     
     public String getUserId() {
         return id != null ? id.getUserId() : null;
+    }
+    
+    public boolean isOwner() {
+        return role == ParticipantRole.OWNER;
+    }
+    
+    public boolean isAdmin() {
+        return role == ParticipantRole.ADMIN;
+    }
+    
+    public boolean isOwnerOrAdmin() {
+        return role == ParticipantRole.OWNER || role == ParticipantRole.ADMIN;
+    }
+    
+    public boolean canManageParticipants() {
+        return isOwnerOrAdmin();
+    }
+    
+    public boolean canUpdateSettings() {
+        return isOwnerOrAdmin();
     }
 }

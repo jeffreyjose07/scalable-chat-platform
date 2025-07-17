@@ -22,6 +22,7 @@ A production-ready chat platform implementing modern messaging features with ind
 - **Direct Messages**: Private 1-on-1 conversations
 - **Conversation Switching**: Toggle between Groups and Direct message views
 - **Participant Management**: Add/remove users from conversations
+- **Conversation Deletion**: Role-based deletion with complete message cleanup
 
 ### ✅ Unread Message System
 - **Industry Standard**: Last-read timestamp approach (Discord/Slack/WhatsApp pattern)
@@ -81,6 +82,7 @@ A production-ready chat platform implementing modern messaging features with ind
 
 ### ✅ Access Control
 - **Conversation Permissions**: Users can only access conversations they're part of
+- **Role-Based Deletion**: Only owners can delete groups, any participant can delete direct chats
 - **API Validation**: All endpoints validate user permissions
 - **Input Sanitization**: Protection against injection attacks
 - **CORS Configuration**: Dynamic CORS for network access
@@ -99,6 +101,7 @@ A production-ready chat platform implementing modern messaging features with ind
 - **Multi-Database**: PostgreSQL for structured data, MongoDB for messages
 - **Optimized Storage**: Appropriate database choice for each data type
 - **Data Migration**: Backward compatibility with existing chat data
+- **Message Cleanup**: Automatic message deletion with conversation cleanup
 - **Performance**: Efficient queries and indexing strategies
 
 ### ✅ Real-Time Infrastructure

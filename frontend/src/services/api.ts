@@ -1,15 +1,31 @@
-import { User } from '../components/UserSearchModal';
-import { Conversation } from '../components/ConversationList';
+import { User, Conversation } from '../types/chat';
 
 // Get API base URL from runtime config or environment variables
 const getApiBaseUrl = (): string => {
-  // Check for runtime configuration first (Docker)
-  if (typeof window !== 'undefined' && (window as any)._env_?.REACT_APP_API_BASE_URL) {
-    return `${(window as any)._env_.REACT_APP_API_BASE_URL}/api`;
+  // Debug: log the runtime environment
+  if (typeof window !== 'undefined') {
+    console.log('🔍 Runtime env object:', (window as any)._env_);
+    console.log('🔍 Build-time env:', process.env.REACT_APP_API_BASE_URL);
   }
   
-  // Fall back to build-time environment variable
-  return process.env.REACT_APP_API_BASE_URL || 'http://localhost:8080/api';
+  // Check for runtime configuration first (Docker)
+  if (typeof window !== 'undefined' && (window as any)._env_?.REACT_APP_API_BASE_URL) {
+    const baseUrl = (window as any)._env_.REACT_APP_API_BASE_URL;
+    console.log('🌐 Using runtime API base URL:', baseUrl);
+    return `${baseUrl}/api`;
+  }
+  
+  // Fall back to build-time environment variable if it's not empty
+  const buildTimeUrl = process.env.REACT_APP_API_BASE_URL;
+  if (buildTimeUrl && buildTimeUrl.trim()) {
+    console.log('🌐 Using build-time API base URL:', buildTimeUrl);
+    return `${buildTimeUrl}/api`;
+  }
+  
+  // Final fallback
+  const fallbackUrl = 'http://localhost:8080';
+  console.log('🌐 Using fallback API base URL:', fallbackUrl);
+  return `${fallbackUrl}/api`;
 };
 
 const API_BASE_URL = getApiBaseUrl();
@@ -73,6 +89,30 @@ const authenticatedFetch = async (url: string, options: RequestInit = {}): Promi
 
 // User API functions
 export const userApi = {
+  getAllUsers: async (): Promise<User[]> => {
+    console.log('👥 Getting all users');
+    
+    try {
+      const response = await authenticatedFetch(`${API_BASE_URL}/users`);
+      const result = await response.json();
+      
+      // Handle both MessageResponse wrapper and direct array response
+      if (Array.isArray(result)) {
+        console.log('✅ All users retrieved:', result.length, 'users');
+        return result;
+      } else if (result.data && Array.isArray(result.data)) {
+        console.log('✅ All users retrieved:', result.data.length, 'users');
+        return result.data;
+      } else {
+        console.log('✅ All users retrieved:', result.length || 0, 'users');
+        return result;
+      }
+    } catch (error) {
+      console.error('Failed to fetch users:', error);
+      throw error;
+    }
+  },
+
   searchUsers: async (query: string, page = 0, size = 20): Promise<User[]> => {
     console.log('🔍 Searching users:', { query, page, size });
     
@@ -140,6 +180,55 @@ export const conversationApi = {
     console.log('✅ Direct conversation created:', result);
     
     return result;
+  },
+
+  createGroup: async (createGroupRequest: any): Promise<any> => {
+    console.log('🔄 Creating group:', createGroupRequest);
+    
+    const response = await authenticatedFetch(`${API_BASE_URL}/conversations/groups`, {
+      method: 'POST',
+      body: JSON.stringify(createGroupRequest),
+    });
+    
+    const result = await response.json();
+    console.log('✅ Group created:', result);
+    
+    return result;
+  },
+
+  updateGroupSettings: async (conversationId: string, updateRequest: any): Promise<any> => {
+    console.log('🔄 Updating group settings:', conversationId, updateRequest);
+    
+    const response = await authenticatedFetch(`${API_BASE_URL}/conversations/${conversationId}/settings`, {
+      method: 'PUT',
+      body: JSON.stringify(updateRequest),
+    });
+    
+    const result = await response.json();
+    console.log('✅ Group settings updated:', result);
+    
+    return result;
+  },
+
+  deleteConversation: async (conversationId: string): Promise<void> => {
+    console.log('🔄 Deleting conversation:', conversationId);
+    
+    await authenticatedFetch(`${API_BASE_URL}/conversations/${conversationId}`, {
+      method: 'DELETE',
+    });
+    
+    console.log('✅ Conversation deleted successfully:', conversationId);
+  },
+
+  // Legacy method for backward compatibility
+  deleteGroup: async (conversationId: string): Promise<void> => {
+    console.log('🔄 Deleting group (legacy):', conversationId);
+    
+    await authenticatedFetch(`${API_BASE_URL}/conversations/${conversationId}`, {
+      method: 'DELETE',
+    });
+    
+    console.log('✅ Group deleted successfully:', conversationId);
   },
 
   addParticipant: async (conversationId: string, participantId: string): Promise<void> => {
@@ -217,11 +306,44 @@ export const messageSearchApi = {
   },
 };
 
+// General API client with common HTTP methods
+export const apiClient = {
+  get: async (url: string): Promise<any> => {
+    const response = await authenticatedFetch(`${API_BASE_URL}${url}`);
+    return { data: await response.json() };
+  },
+
+  post: async (url: string, data?: any): Promise<any> => {
+    const response = await authenticatedFetch(`${API_BASE_URL}${url}`, {
+      method: 'POST',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+    return { data: await response.json() };
+  },
+
+  put: async (url: string, data?: any): Promise<any> => {
+    const response = await authenticatedFetch(`${API_BASE_URL}${url}`, {
+      method: 'PUT',
+      body: data ? JSON.stringify(data) : undefined,
+    });
+    return { data: await response.json() };
+  },
+
+  delete: async (url: string): Promise<any> => {
+    const response = await authenticatedFetch(`${API_BASE_URL}${url}`, {
+      method: 'DELETE',
+    });
+    return { data: response.ok ? null : await response.json() };
+  },
+};
+
 // Export all APIs
 export const api = {
   user: userApi,
   conversation: conversationApi,
   messageSearch: messageSearchApi,
+  // Include general HTTP methods for backward compatibility
+  ...apiClient,
 };
 
 export default api;
