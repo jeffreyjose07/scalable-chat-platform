@@ -1,9 +1,12 @@
 package com.chatplatform.service;
 
 import com.chatplatform.dto.ConversationDto;
+import com.chatplatform.dto.CreateGroupRequest;
+import com.chatplatform.dto.UpdateGroupSettingsRequest;
 import com.chatplatform.model.Conversation;
 import com.chatplatform.model.ConversationParticipant;
 import com.chatplatform.model.ConversationType;
+import com.chatplatform.model.ParticipantRole;
 import com.chatplatform.model.User;
 import com.chatplatform.repository.jpa.ConversationRepository;
 import com.chatplatform.repository.jpa.ConversationParticipantRepository;
@@ -306,6 +309,380 @@ class ConversationServiceTest {
         
         // When
         conversationService.removeUserFromConversation("group1", "user2");
+        
+        // Then
+        verify(participantRepository, never()).save(any(ConversationParticipant.class));
+    }
+
+    // Group Management Tests
+    
+    @Test
+    void testCreateGroup_Success() {
+        // Given
+        CreateGroupRequest request = new CreateGroupRequest(
+            "New Group", 
+            "Group description", 
+            false, 
+            50, 
+            Arrays.asList("user2", "user3")
+        );
+        
+        when(userRepository.findById("user1")).thenReturn(Optional.of(user1));
+        when(userRepository.findById("user2")).thenReturn(Optional.of(user2));
+        when(userRepository.findById("user3")).thenReturn(Optional.of(user3));
+        when(conversationRepository.save(any(Conversation.class))).thenReturn(groupConversation);
+        when(participantRepository.findByIdConversationIdAndIsActiveTrue(anyString()))
+            .thenReturn(Arrays.asList(new ConversationParticipant("group1", "user1", ParticipantRole.OWNER)));
+        
+        // When
+        ConversationDto result = conversationService.createGroup("user1", request);
+        
+        // Assert
+        assertNotNull(result);
+        assertEquals("New Group", result.getName());
+        assertEquals("Group description", result.getDescription());
+        assertEquals(false, result.getIsPublic());
+        assertEquals(50, result.getMaxParticipants());
+        assertTrue(result.isGroup());
+        
+        verify(conversationRepository).save(any(Conversation.class));
+        verify(participantRepository, times(3)).save(any(ConversationParticipant.class)); // Creator + 2 participants
+    }
+    
+    @Test
+    void testCreateGroup_CreatorNotFound() {
+        // Given
+        CreateGroupRequest request = new CreateGroupRequest("New Group", "Description", false, 50, Arrays.asList());
+        when(userRepository.findById("nonexistent")).thenReturn(Optional.empty());
+        
+        // When & Then
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> conversationService.createGroup("nonexistent", request)
+        );
+        
+        assertEquals("Creator not found: nonexistent", exception.getMessage());
+    }
+    
+    @Test
+    void testCreateGroup_ParticipantNotFound() {
+        // Given
+        CreateGroupRequest request = new CreateGroupRequest(
+            "New Group", 
+            "Description", 
+            false, 
+            50, 
+            Arrays.asList("nonexistent")
+        );
+        
+        when(userRepository.findById("user1")).thenReturn(Optional.of(user1));
+        when(userRepository.findById("nonexistent")).thenReturn(Optional.empty());
+        
+        // When & Then
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> conversationService.createGroup("user1", request)
+        );
+        
+        assertEquals("Participant not found: nonexistent", exception.getMessage());
+    }
+    
+    @Test
+    void testCreateGroup_WithEmptyParticipants() {
+        // Given
+        CreateGroupRequest request = new CreateGroupRequest("Solo Group", "Just me", false, 10, Arrays.asList());
+        
+        when(userRepository.findById("user1")).thenReturn(Optional.of(user1));
+        when(conversationRepository.save(any(Conversation.class))).thenReturn(groupConversation);
+        when(participantRepository.findByIdConversationIdAndIsActiveTrue(anyString()))
+            .thenReturn(Arrays.asList(new ConversationParticipant("group1", "user1", ParticipantRole.OWNER)));
+        
+        // When
+        ConversationDto result = conversationService.createGroup("user1", request);
+        
+        // Assert
+        assertNotNull(result);
+        assertEquals("Solo Group", result.getName());
+        verify(participantRepository, times(1)).save(any(ConversationParticipant.class)); // Only creator
+    }
+    
+    // Role-Based Permission Tests
+    
+    @Test
+    void testCanManageParticipants_Owner() {
+        // Given
+        ConversationParticipant ownerParticipant = new ConversationParticipant("group1", "user1", ParticipantRole.OWNER);
+        when(participantRepository.findByIdConversationIdAndIdUserIdAndIsActiveTrue("group1", "user1"))
+            .thenReturn(Optional.of(ownerParticipant));
+        
+        // When
+        boolean result = conversationService.canManageParticipants("user1", "group1");
+        
+        // Then
+        assertTrue(result);
+    }
+    
+    @Test
+    void testCanManageParticipants_Admin() {
+        // Given
+        ConversationParticipant adminParticipant = new ConversationParticipant("group1", "user1", ParticipantRole.ADMIN);
+        when(participantRepository.findByIdConversationIdAndIdUserIdAndIsActiveTrue("group1", "user1"))
+            .thenReturn(Optional.of(adminParticipant));
+        
+        // When
+        boolean result = conversationService.canManageParticipants("user1", "group1");
+        
+        // Then
+        assertTrue(result);
+    }
+    
+    @Test
+    void testCanManageParticipants_Member() {
+        // Given
+        ConversationParticipant memberParticipant = new ConversationParticipant("group1", "user1", ParticipantRole.MEMBER);
+        when(participantRepository.findByIdConversationIdAndIdUserIdAndIsActiveTrue("group1", "user1"))
+            .thenReturn(Optional.of(memberParticipant));
+        
+        // When
+        boolean result = conversationService.canManageParticipants("user1", "group1");
+        
+        // Then
+        assertFalse(result);
+    }
+    
+    @Test
+    void testCanManageParticipants_NotParticipant() {
+        // Given
+        when(participantRepository.findByIdConversationIdAndIdUserIdAndIsActiveTrue("group1", "user1"))
+            .thenReturn(Optional.empty());
+        
+        // When
+        boolean result = conversationService.canManageParticipants("user1", "group1");
+        
+        // Then
+        assertFalse(result);
+    }
+    
+    @Test
+    void testCanUpdateSettings_Owner() {
+        // Given
+        ConversationParticipant ownerParticipant = new ConversationParticipant("group1", "user1", ParticipantRole.OWNER);
+        when(participantRepository.findByIdConversationIdAndIdUserIdAndIsActiveTrue("group1", "user1"))
+            .thenReturn(Optional.of(ownerParticipant));
+        
+        // When
+        boolean result = conversationService.canUpdateSettings("user1", "group1");
+        
+        // Then
+        assertTrue(result);
+    }
+    
+    @Test
+    void testCanUpdateSettings_Admin() {
+        // Given
+        ConversationParticipant adminParticipant = new ConversationParticipant("group1", "user1", ParticipantRole.ADMIN);
+        when(participantRepository.findByIdConversationIdAndIdUserIdAndIsActiveTrue("group1", "user1"))
+            .thenReturn(Optional.of(adminParticipant));
+        
+        // When
+        boolean result = conversationService.canUpdateSettings("user1", "group1");
+        
+        // Then
+        assertTrue(result);
+    }
+    
+    @Test
+    void testCanUpdateSettings_Member() {
+        // Given
+        ConversationParticipant memberParticipant = new ConversationParticipant("group1", "user1", ParticipantRole.MEMBER);
+        when(participantRepository.findByIdConversationIdAndIdUserIdAndIsActiveTrue("group1", "user1"))
+            .thenReturn(Optional.of(memberParticipant));
+        
+        // When
+        boolean result = conversationService.canUpdateSettings("user1", "group1");
+        
+        // Then
+        assertFalse(result);
+    }
+    
+    @Test
+    void testIsOwner_Owner() {
+        // Given
+        ConversationParticipant ownerParticipant = new ConversationParticipant("group1", "user1", ParticipantRole.OWNER);
+        when(participantRepository.findByIdConversationIdAndIdUserIdAndIsActiveTrue("group1", "user1"))
+            .thenReturn(Optional.of(ownerParticipant));
+        
+        // When
+        boolean result = conversationService.isOwner("user1", "group1");
+        
+        // Then
+        assertTrue(result);
+    }
+    
+    @Test
+    void testIsOwner_Admin() {
+        // Given
+        ConversationParticipant adminParticipant = new ConversationParticipant("group1", "user1", ParticipantRole.ADMIN);
+        when(participantRepository.findByIdConversationIdAndIdUserIdAndIsActiveTrue("group1", "user1"))
+            .thenReturn(Optional.of(adminParticipant));
+        
+        // When
+        boolean result = conversationService.isOwner("user1", "group1");
+        
+        // Then
+        assertFalse(result);
+    }
+    
+    @Test
+    void testGetUserRole_Success() {
+        // Given
+        ConversationParticipant participant = new ConversationParticipant("group1", "user1", ParticipantRole.ADMIN);
+        when(participantRepository.findByIdConversationIdAndIdUserIdAndIsActiveTrue("group1", "user1"))
+            .thenReturn(Optional.of(participant));
+        
+        // When
+        Optional<ParticipantRole> result = conversationService.getUserRole("user1", "group1");
+        
+        // Then
+        assertTrue(result.isPresent());
+        assertEquals(ParticipantRole.ADMIN, result.get());
+    }
+    
+    @Test
+    void testGetUserRole_NotParticipant() {
+        // Given
+        when(participantRepository.findByIdConversationIdAndIdUserIdAndIsActiveTrue("group1", "user1"))
+            .thenReturn(Optional.empty());
+        
+        // When
+        Optional<ParticipantRole> result = conversationService.getUserRole("user1", "group1");
+        
+        // Then
+        assertFalse(result.isPresent());
+    }
+    
+    // Group Settings Tests
+    
+    @Test
+    void testUpdateGroupSettings_Success() {
+        // Given
+        UpdateGroupSettingsRequest request = new UpdateGroupSettingsRequest(
+            "Updated Group Name",
+            "Updated description",
+            true,
+            200
+        );
+        
+        when(conversationRepository.findById("group1")).thenReturn(Optional.of(groupConversation));
+        when(conversationRepository.save(any(Conversation.class))).thenReturn(groupConversation);
+        when(participantRepository.findByIdConversationIdAndIsActiveTrue("group1"))
+            .thenReturn(Arrays.asList(new ConversationParticipant("group1", "user1", ParticipantRole.OWNER)));
+        
+        // When
+        ConversationDto result = conversationService.updateGroupSettings("group1", request);
+        
+        // Then
+        assertNotNull(result);
+        verify(conversationRepository).save(any(Conversation.class));
+    }
+    
+    @Test
+    void testUpdateGroupSettings_PartialUpdate() {
+        // Given
+        UpdateGroupSettingsRequest request = new UpdateGroupSettingsRequest(
+            "Updated Name Only",
+            null,  // Don't update description
+            null,  // Don't update visibility
+            null   // Don't update max participants
+        );
+        
+        when(conversationRepository.findById("group1")).thenReturn(Optional.of(groupConversation));
+        when(conversationRepository.save(any(Conversation.class))).thenReturn(groupConversation);
+        when(participantRepository.findByIdConversationIdAndIsActiveTrue("group1"))
+            .thenReturn(Arrays.asList(new ConversationParticipant("group1", "user1", ParticipantRole.OWNER)));
+        
+        // When
+        ConversationDto result = conversationService.updateGroupSettings("group1", request);
+        
+        // Then
+        assertNotNull(result);
+        verify(conversationRepository).save(any(Conversation.class));
+    }
+    
+    @Test
+    void testUpdateGroupSettings_ConversationNotFound() {
+        // Given
+        UpdateGroupSettingsRequest request = new UpdateGroupSettingsRequest(
+            "Updated Name", "Updated description", true, 200
+        );
+        when(conversationRepository.findById("nonexistent")).thenReturn(Optional.empty());
+        
+        // When & Then
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> conversationService.updateGroupSettings("nonexistent", request)
+        );
+        
+        assertEquals("Conversation not found: nonexistent", exception.getMessage());
+    }
+    
+    @Test
+    void testUpdateGroupSettings_NotGroupConversation() {
+        // Given
+        UpdateGroupSettingsRequest request = new UpdateGroupSettingsRequest(
+            "Updated Name", "Updated description", true, 200
+        );
+        when(conversationRepository.findById("dm_user1_user2")).thenReturn(Optional.of(directConversation));
+        
+        // When & Then
+        IllegalArgumentException exception = assertThrows(
+            IllegalArgumentException.class,
+            () -> conversationService.updateGroupSettings("dm_user1_user2", request)
+        );
+        
+        assertEquals("Cannot update settings for non-group conversation", exception.getMessage());
+    }
+    
+    // Edge Cases and Error Handling Tests
+    
+    @Test
+    void testCreateGroup_CreatorAsParticipant() {
+        // Given - Creator is also in participant list (should be ignored)
+        CreateGroupRequest request = new CreateGroupRequest(
+            "New Group", 
+            "Description", 
+            false, 
+            50, 
+            Arrays.asList("user1", "user2")  // user1 is creator and participant
+        );
+        
+        when(userRepository.findById("user1")).thenReturn(Optional.of(user1));
+        when(userRepository.findById("user2")).thenReturn(Optional.of(user2));
+        when(conversationRepository.save(any(Conversation.class))).thenReturn(groupConversation);
+        when(participantRepository.findByIdConversationIdAndIsActiveTrue(anyString()))
+            .thenReturn(Arrays.asList(new ConversationParticipant("group1", "user1", ParticipantRole.OWNER)));
+        
+        // When
+        ConversationDto result = conversationService.createGroup("user1", request);
+        
+        // Then
+        assertNotNull(result);
+        verify(participantRepository, times(2)).save(any(ConversationParticipant.class)); // Creator + user2 (not duplicate)
+    }
+    
+    @Test
+    void testAddUserToConversation_AlreadyActiveParticipant() {
+        // Given
+        ConversationParticipant activeParticipant = new ConversationParticipant("group1", "user2");
+        activeParticipant.setIsActive(true);
+        
+        when(conversationRepository.findById("group1")).thenReturn(Optional.of(groupConversation));
+        when(userRepository.existsById("user2")).thenReturn(true);
+        when(participantRepository.findByIdConversationIdAndIdUserId("group1", "user2"))
+            .thenReturn(Optional.of(activeParticipant));
+        
+        // When
+        conversationService.addUserToConversation("group1", "user2");
         
         // Then
         verify(participantRepository, never()).save(any(ConversationParticipant.class));

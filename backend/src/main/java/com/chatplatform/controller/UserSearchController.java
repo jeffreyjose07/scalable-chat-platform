@@ -45,6 +45,16 @@ public class UserSearchController {
         return ResponseEntity.ok(users);
     }
     
+    @GetMapping
+    public ResponseEntity<List<UserDto>> getAllUsers(
+            @RequestParam(defaultValue = "50") @Min(1) @Max(100) int limit,
+            Authentication authentication) {
+        String currentUserId = authentication.getName();
+        // Return all users except the current user for group creation, etc.
+        List<UserDto> users = userSearchService.getAllUsers(currentUserId, limit);
+        return ResponseEntity.ok(users);
+    }
+    
     @GetMapping("/suggestions")
     public ResponseEntity<List<UserDto>> getUserSuggestions(
             @RequestParam(defaultValue = "10") @Min(1) @Max(50) int limit,

@@ -95,7 +95,11 @@ export const useUnreadMessages = ({
     const newUnreadCounts: Record<string, number> = {};
 
     conversationIds.forEach(conversationId => {
-      newUnreadCounts[conversationId] = calculateUnreadCount(conversationId);
+      const count = calculateUnreadCount(conversationId);
+      // Only include non-zero counts in the unread counts object
+      if (count > 0) {
+        newUnreadCounts[conversationId] = count;
+      }
     });
 
     setUnreadCounts(newUnreadCounts);
@@ -107,10 +111,12 @@ export const useUnreadMessages = ({
     if (!selectedConversationId || !initialLoadCompleteRef.current || !currentUserId) return;
 
     // Immediately clear unread count in UI for better UX
-    setUnreadCounts(prev => ({
-      ...prev,
-      [selectedConversationId]: 0
-    }));
+    setUnreadCounts(prev => {
+      const newCounts = { ...prev };
+      // Remove the conversation from unread counts instead of setting to 0
+      delete newCounts[selectedConversationId];
+      return newCounts;
+    });
 
     // Clear any existing timer
     if (markAsReadTimerRef.current) {

@@ -73,6 +73,32 @@ public class UserSearchService {
     }
     
     /**
+     * Get all users except the current user
+     * Used for group creation and similar functionality
+     */
+    public List<UserDto> getAllUsers(String currentUserId, int limit) {
+        logger.debug("Getting all users excluding user: {}, limit: {}", currentUserId, limit);
+        
+        // Validate and limit the search limit
+        int validatedLimit = Math.min(Math.max(1, limit), MAX_SEARCH_LIMIT);
+        if (validatedLimit != limit) {
+            logger.debug("Search limit adjusted from {} to {}", limit, validatedLimit);
+        }
+        
+        // Create pageable with sorting by username
+        Pageable pageable = PageRequest.of(0, validatedLimit, Sort.by("username").ascending());
+        
+        // Get all users except current user
+        List<User> users = userRepository.findAllExceptCurrentUser(currentUserId, pageable);
+        
+        logger.debug("Found {} total users (excluding current user)", users.size());
+        
+        return users.stream()
+            .map(this::convertToDto)
+            .collect(Collectors.toList());
+    }
+    
+    /**
      * Get user suggestions for a specific user (recently active users, etc.)
      * This could be enhanced with more sophisticated recommendations
      */

@@ -64,8 +64,9 @@ public class AuthService {
             AuthResponse authResponse = generateAuthResponse(user);
             return setUserOnline(authResponse);
         } catch (IllegalArgumentException e) {
-            // Re-throw with original message for proper error handling
-            throw new AuthenticationException(e.getMessage(), e);
+            // Re-throw as IllegalArgumentException to maintain proper HTTP status codes
+            logger.warn("Registration failed: {}", e.getMessage());
+            throw e;
         }
     }
     
@@ -95,6 +96,44 @@ public class AuthService {
                     },
                     () -> logger.warn("⚠️ Logout failed: Invalid token")
                 );
+    }
+    
+    /**
+     * Send password reset email (placeholder implementation)
+     */
+    public void sendPasswordResetEmail(String email) {
+        // For now, just log the reset request
+        // In production, you would:
+        // 1. Generate a secure reset token
+        // 2. Store it in the database with expiration
+        // 3. Send email with reset link
+        logger.info("🔄 Password reset requested for email: {}", email);
+        
+        // Simulate password reset token generation
+        findUserByEmail(email).ifPresent(user -> {
+            String resetToken = jwtService.generateToken(user);
+            logger.info("📧 Password reset token generated for user: {} (token: {}...)", user.getUsername(), resetToken.substring(0, 10));
+            // In production: store token and send email with reset identifier
+        });
+    }
+    
+    /**
+     * Reset password using token (placeholder implementation)
+     */
+    public void resetPassword(String token, String newPassword) {
+        // For now, simple validation
+        // In production, you would:
+        // 1. Validate the reset token
+        // 2. Check token expiration
+        // 3. Update user password
+        logger.info("🔄 Password reset attempt with token: {}...", token.substring(0, 10));
+        
+        if (token == null || token.length() < 10) {
+            throw new AuthenticationException("Invalid reset token");
+        }
+        
+        // Simulate password reset
+        logger.info("✅ Password reset successful (simulated)");
     }
     
     /**

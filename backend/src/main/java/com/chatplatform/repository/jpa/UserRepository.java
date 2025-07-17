@@ -42,4 +42,9 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Query("SELECT u FROM User u WHERE u.id != :currentUserId AND u.isOnline = true")
     List<User> findOnlineUsersExcluding(@Param("currentUserId") String currentUserId, 
                                        Pageable pageable);
+    
+    // Get all users except current user (for group creation, etc.)
+    @Query("SELECT u FROM User u WHERE u.id != :currentUserId")
+    List<User> findAllExceptCurrentUser(@Param("currentUserId") String currentUserId, 
+                                       Pageable pageable);
 }

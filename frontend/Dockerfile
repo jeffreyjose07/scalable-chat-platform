@@ -13,8 +13,13 @@ RUN npm ci --only=production
 # Copy source code
 COPY . .
 
-# Build application
-RUN npm run build
+# Build application - set empty vars to avoid build-time baking
+ENV REACT_APP_API_BASE_URL=""
+ENV REACT_APP_WS_URL=""
+RUN echo "Build-time environment variables:" && \
+    echo "REACT_APP_API_BASE_URL: ${REACT_APP_API_BASE_URL}" && \
+    echo "REACT_APP_WS_URL: ${REACT_APP_WS_URL}" && \
+    npm run build
 
 # Production stage with nginx
 FROM nginx:alpine

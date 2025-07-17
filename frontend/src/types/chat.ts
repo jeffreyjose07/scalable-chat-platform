@@ -18,9 +18,65 @@ export enum MessageType {
 export interface Conversation {
   id: string;
   name: string;
-  participants: string[];
+  participants: ConversationParticipant[]; // Backend returns ConversationParticipantDto objects
   lastMessage?: ChatMessage;
   updatedAt: string;
+  type?: ConversationType;
+  description?: string;
+  isPublic?: boolean;
+  maxParticipants?: number;
+  createdBy?: string;
+  createdAt?: string;
+}
+
+export enum ConversationType {
+  DIRECT = 'DIRECT',
+  GROUP = 'GROUP'
+}
+
+export enum ParticipantRole {
+  OWNER = 'OWNER',
+  ADMIN = 'ADMIN',
+  MEMBER = 'MEMBER'
+}
+
+export interface ConversationParticipant {
+  user: User;
+  role: ParticipantRole;
+  joinedAt?: string;
+  lastReadAt?: string;
+}
+
+export interface ConversationDto {
+  id: string;
+  name: string | null;
+  description: string | null;
+  type: ConversationType;
+  isPublic: boolean;
+  maxParticipants: number;
+  createdBy: string;
+  createdAt: string;
+  updatedAt: string;
+  participants: ConversationParticipant[];
+  lastMessage?: ChatMessage;
+  isGroup: boolean;
+  isDirectMessage: boolean;
+  unreadCount?: number;
+}
+
+export interface CreateGroupRequest {
+  name: string;
+  description: string | null;
+  isPublic: boolean;
+  maxParticipants: number;
+  participantIds: string[];
+}
+
+export interface UpdateGroupSettingsRequest {
+  name: string;
+  description: string | null;
+  isPublic: boolean;
+  maxParticipants: number;
 }
 
 export interface User {
@@ -29,5 +85,9 @@ export interface User {
   email: string;
   displayName: string;
   avatarUrl?: string;
-  isOnline: boolean;
+  lastSeenAt?: string;
+  online?: boolean;
+  displayNameOrUsername?: string;
+  initials?: string;
+  isOnline?: boolean; // Keep for backward compatibility
 }

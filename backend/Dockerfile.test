@@ -1,0 +1,17 @@
+# Test-specific Dockerfile for running backend tests
+FROM maven:3.9.4-eclipse-temurin-17
+
+# Set working directory
+WORKDIR /app
+
+# Copy pom.xml first to leverage Docker cache
+COPY pom.xml .
+
+# Download dependencies
+RUN mvn dependency:go-offline -B
+
+# Copy source code
+COPY src ./src
+
+# Run tests
+CMD ["mvn", "test"]
