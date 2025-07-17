@@ -241,6 +241,7 @@ class ConversationServiceTest {
         // Given
         when(conversationRepository.findById("group1")).thenReturn(Optional.of(groupConversation));
         when(userRepository.existsById("user2")).thenReturn(true);
+        when(userRepository.findById("user2")).thenReturn(Optional.of(user2));
         when(participantRepository.findByIdConversationIdAndIdUserId("group1", "user2"))
             .thenReturn(Optional.empty());
         
