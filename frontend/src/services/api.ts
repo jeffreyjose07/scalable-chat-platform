@@ -22,10 +22,10 @@ const getApiBaseUrl = (): string => {
     return `${buildTimeUrl}/api`;
   }
   
-  // Final fallback
-  const fallbackUrl = 'http://localhost:8080';
-  console.log('🌐 Using fallback API base URL:', fallbackUrl);
-  return `${fallbackUrl}/api`;
+  // Final fallback - use relative path for single service deployment
+  const fallbackUrl = '';
+  console.log('🌐 Using relative API base URL for single service deployment');
+  return '/api';
 };
 
 const API_BASE_URL = getApiBaseUrl();

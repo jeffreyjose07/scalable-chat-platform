@@ -6,17 +6,17 @@ import com.chatplatform.repository.mongo.ChatMessageRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.util.concurrent.CompletableFuture;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 
 @Service
 public class MessageService {
@@ -24,75 +24,70 @@ public class MessageService {
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
     
     private final ChatMessageRepository messageRepository;
-    private final KafkaTemplate<String, String> kafkaTemplate;
     private final ApplicationEventPublisher eventPublisher;
-    private final ObjectMapper objectMapper;
+    
+    // In-memory queue to replace Kafka
+    private final BlockingQueue<ChatMessage> messageQueue = new LinkedBlockingQueue<>();
+    private final ExecutorService messageProcessor = Executors.newSingleThreadExecutor(r -> {
+        Thread t = new Thread(r, "message-processor");
+        t.setDaemon(true);
+        return t;
+    });
     
     public MessageService(ChatMessageRepository messageRepository,
-                         KafkaTemplate<String, String> kafkaTemplate,
-                         ApplicationEventPublisher eventPublisher,
-                         ObjectMapper objectMapper) {
+                         ApplicationEventPublisher eventPublisher) {
         this.messageRepository = messageRepository;
-        this.kafkaTemplate = kafkaTemplate;
         this.eventPublisher = eventPublisher;
-        this.objectMapper = objectMapper;
+    }
+    
+    @PostConstruct
+    public void startMessageProcessor() {
+        messageProcessor.submit(() -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    ChatMessage message = messageQueue.take(); // Blocks until message available
+                    processMessageInternal(message);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    break;
+                } catch (Exception e) {
+                    logger.error("❌ Error processing message from queue: {}", e.getMessage());
+                }
+            }
+        });
+        logger.info("🚀 Started in-memory message processor");
+    }
+    
+    @PreDestroy
+    public void shutdown() {
+        messageProcessor.shutdown();
+        logger.info("🛑 Shutdown in-memory message processor");
     }
     
     @Async
     public void processMessage(ChatMessage message) {
         try {
-            ChatMessage savedMessage = messageRepository.save(message);
-            
-            // Send to Kafka with callback handling
-            String messageJson = objectMapper.writeValueAsString(savedMessage);
-            CompletableFuture<SendResult<String, String>> future = 
-                kafkaTemplate.send("chat-messages", messageJson);
-            
-            future.whenComplete((result, ex) -> {
-                if (ex == null) {
-                    logger.info("✅ Message sent to Kafka successfully: {} (partition: {}, offset: {})", 
-                        savedMessage.getId(), result.getRecordMetadata().partition(), result.getRecordMetadata().offset());
-                } else {
-                    logger.error("❌ Failed to send message {} to Kafka: {}", savedMessage.getId(), ex.getMessage());
-                    logger.warn("🔄 Falling back to direct event publishing for message: {}", savedMessage.getId());
-                    
-                    // Fallback: publish event directly if Kafka fails
-                    try {
-                        eventPublisher.publishEvent(new MessageDistributionEvent(savedMessage));
-                        logger.info("✅ Message {} distributed via direct event publishing", savedMessage.getId());
-                    } catch (Exception eventEx) {
-                        logger.error("❌ Failed to distribute message {} via direct event: {}", 
-                            savedMessage.getId(), eventEx.getMessage());
-                    }
-                }
-            });
-            
+            // Add to in-memory queue for processing
+            messageQueue.offer(message);
+            logger.info("📤 Message queued for processing: {}", message.getContent().substring(0, Math.min(50, message.getContent().length())));
         } catch (Exception e) {
-            logger.error("Error processing message: {}", e.getMessage());
-            
-            // Emergency fallback: try to save and publish directly
-            try {
-                if (message.getId() == null) {
-                    ChatMessage savedMessage = messageRepository.save(message);
-                    eventPublisher.publishEvent(new MessageDistributionEvent(savedMessage));
-                    logger.warn("Message {} processed via emergency fallback", savedMessage.getId());
-                }
-            } catch (Exception fallbackEx) {
-                logger.error("Emergency fallback failed for message: {}", fallbackEx.getMessage());
-            }
+            logger.error("❌ Failed to queue message: {}", e.getMessage());
+            // Direct processing as fallback
+            processMessageInternal(message);
         }
     }
     
-    @KafkaListener(topics = "chat-messages", groupId = "chat-platform")
-    public void handleMessageFromKafka(String messageJson) {
+    private void processMessageInternal(ChatMessage message) {
         try {
-            ChatMessage message = objectMapper.readValue(messageJson, ChatMessage.class);
-            logger.info("📨 Received message from Kafka: {} (content: {})", 
-                message.getId(), message.getContent().substring(0, Math.min(50, message.getContent().length())));
-            eventPublisher.publishEvent(new MessageDistributionEvent(message));
-            logger.info("🚀 Published MessageDistributionEvent for message: {}", message.getId());
+            ChatMessage savedMessage = messageRepository.save(message);
+            logger.info("💾 Message saved: {}", savedMessage.getId());
+            
+            // Publish event directly (no Kafka)
+            eventPublisher.publishEvent(new MessageDistributionEvent(savedMessage));
+            logger.info("✅ Message {} distributed via in-memory event publishing", savedMessage.getId());
+            
         } catch (Exception e) {
-            logger.error("❌ Error handling message from Kafka: {}", e.getMessage());
+            logger.error("❌ Error processing message internally: {}", e.getMessage());
         }
     }
     

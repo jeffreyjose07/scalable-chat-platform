@@ -62,9 +62,10 @@ export const getWebSocketUrl = (): string => {
     return wsUrl;
   }
   
-  // Default to localhost for local development
-  const wsUrl = 'ws://localhost:8080';
-  console.log('🔌 Using default WebSocket URL:', wsUrl);
+  // For single service deployment, use relative WebSocket URL
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const wsUrl = `${protocol}//${window.location.host}`;
+  console.log('🔌 Using single-service WebSocket URL:', wsUrl);
   return wsUrl;
 };
 
