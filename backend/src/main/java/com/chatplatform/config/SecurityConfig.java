@@ -42,9 +42,15 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                 .requestMatchers("/api/health/**").permitAll() // Health endpoints
                 .requestMatchers("/actuator/health").permitAll() // Actuator health check
+                .requestMatchers("/health").permitAll() // Health check endpoint
+                // Static resources and frontend routes
+                .requestMatchers("/", "/login", "/chat/**", "/conversations/**", "/settings/**").permitAll()
+                .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/favicon.ico", "/manifest.json").permitAll()
+                .requestMatchers("/index.html", "/asset-manifest.json", "/robots.txt").permitAll()
                 .requestMatchers("/api/auth/**").authenticated() // Other auth endpoints require auth
                 .requestMatchers("/api/messages/**").authenticated() // Message endpoints require auth
-                .anyRequest().authenticated()
+                .requestMatchers("/api/**").authenticated() // All other API endpoints require auth
+                .anyRequest().permitAll() // Allow everything else (frontend resources)
             )
             .authenticationProvider(authenticationProvider())
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
