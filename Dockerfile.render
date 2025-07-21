@@ -1,0 +1,58 @@
+# Multi-stage Dockerfile for single service deployment (Spring Boot + React)
+# Stage 1: Build the application
+FROM maven:3.9-eclipse-temurin-17 AS builder
+
+# Set working directory
+WORKDIR /app
+
+# Copy entire frontend directory
+COPY frontend/ ./frontend/
+
+# Copy backend files
+COPY backend/pom.xml ./backend/
+COPY backend/src ./backend/src
+
+# Set working directory to backend for Maven build
+WORKDIR /app/backend
+
+# Build the application (this will also build the React frontend)
+RUN mvn clean package -Prender
+
+# Stage 2: Create the runtime image
+FROM openjdk:17-jdk-slim
+
+# Install curl for health checks
+RUN apt-get update && apt-get install -y curl && rm -rf /var/lib/apt/lists/*
+
+# Create app user
+RUN groupadd -r app && useradd -r -g app app
+
+# Set working directory
+WORKDIR /app
+
+# Copy the built JAR from builder stage
+COPY --from=builder /app/backend/target/chat-platform-backend-*.jar app.jar
+
+# Change ownership to app user
+RUN chown -R app:app /app
+
+# Switch to app user
+USER app
+
+# Expose the port
+EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+  CMD curl -f http://localhost:8080/api/health/status || exit 1
+
+# Run the application
+ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=render"]
+
+# JVM optimization for containers
+ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC"
+
+# Labels for metadata
+LABEL maintainer="Chat Platform Team"
+LABEL description="Single-service chat platform deployment (Spring Boot + React)"
+LABEL version="1.0.0"

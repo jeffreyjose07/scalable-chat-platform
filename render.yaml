@@ -1,0 +1,45 @@
+# Render configuration file for single-service deployment
+services:
+  # Combined Web Service (Spring Boot + React)
+  - type: web
+    name: chat-platform
+    env: docker
+    dockerfilePath: ./Dockerfile.render
+    plan: free
+    region: oregon
+    branch: render-single-service-deployment
+    buildCommand: ""
+    startCommand: ""
+    healthCheckPath: /api/health/status
+    envVars:
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
+      - key: PORT
+        value: 8080
+      - key: CORS_ALLOWED_ORIGINS
+        value: "*"
+      - key: WEBSOCKET_ALLOWED_ORIGINS
+        value: "*"
+      - key: JWT_SECRET
+        generateValue: true
+        # Auto-generated secure random string
+      - key: LOGGING_LEVEL_COM_CHATPLATFORM
+        value: INFO
+      - key: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
+        value: WARN
+      - key: LOGGING_LEVEL_ORG_HIBERNATE
+        value: WARN
+
+  # PostgreSQL Database (Free Tier)
+  - type: pgsql
+    name: chat-platform-db
+    plan: free
+    databaseName: chatdb
+    databaseUser: chatuser
+    region: oregon
+
+# Note: MongoDB Atlas and Redis need to be configured externally
+# Add these environment variables to your Render web service:
+# - MONGODB_URI: Your MongoDB Atlas connection string
+# - REDIS_URL: Your Redis service connection string (Upstash, Redis Cloud, etc.)
+# - DATABASE_URL: Will be auto-set by Render PostgreSQL service
