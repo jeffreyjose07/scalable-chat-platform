@@ -18,14 +18,17 @@ import java.util.List;
 public class DynamicOriginWebSocketConfigurer implements HandshakeInterceptor {
     private static final Logger logger = LoggerFactory.getLogger(DynamicOriginWebSocketConfigurer.class);
 
-    private static final List<Pattern> ALLOWED_LOCAL_IP_PATTERNS = Arrays.asList(
-        // Private IP ranges  
+    private static final List<Pattern> ALLOWED_ORIGIN_PATTERNS = Arrays.asList(
+        // Private IP ranges for local development
         Pattern.compile("^http://192\\.168\\.\\d{1,3}\\.\\d{1,3}:(3000|3001)$"),
         Pattern.compile("^http://10\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}:(3000|3001)$"),
         Pattern.compile("^http://172\\.(1[6-9]|2[0-9]|3[01])\\.\\d{1,3}\\.\\d{1,3}:(3000|3001)$"),
-        // Localhost patterns
+        // Localhost patterns for local development
         Pattern.compile("^https?://localhost:(3000|3001)$"),
-        Pattern.compile("^https?://127\\.0\\.0\\.1:(3000|3001)$")
+        Pattern.compile("^https?://127\\.0\\.0\\.1:(3000|3001)$"),
+        // Production domains
+        Pattern.compile("^https://.*\\.onrender\\.com$"),
+        Pattern.compile("^https://scalable-chat-platform\\.onrender\\.com$")
     );
 
     @Override
@@ -43,10 +46,17 @@ public class DynamicOriginWebSocketConfigurer implements HandshakeInterceptor {
         }
         
         // Check if origin matches any allowed pattern
-        boolean isAllowed = ALLOWED_LOCAL_IP_PATTERNS.stream()
+        boolean isAllowed = ALLOWED_ORIGIN_PATTERNS.stream()
             .anyMatch(pattern -> pattern.matcher(origin).matches());
             
         if (!isAllowed) {
+            // For single-service deployment, allow same-origin requests
+            String host = request.getHeaders().getHost();
+            if (host != null && origin.equals("https://" + host)) {
+                logger.info("WebSocket connection allowed for same-origin: {}", origin);
+                return true;
+            }
+            
             logger.warn("WebSocket connection rejected for origin: {}", origin);
             return false;
         }
