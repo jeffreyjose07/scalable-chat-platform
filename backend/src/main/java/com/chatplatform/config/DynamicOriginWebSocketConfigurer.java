@@ -51,8 +51,8 @@ public class DynamicOriginWebSocketConfigurer implements HandshakeInterceptor {
             
         if (!isAllowed) {
             // For single-service deployment, allow same-origin requests
-            String host = request.getHeaders().getHost();
-            if (host != null && origin.equals("https://" + host)) {
+            String hostHeader = request.getHeaders().getFirst("Host");
+            if (hostHeader != null && origin.equals("https://" + hostHeader)) {
                 logger.info("WebSocket connection allowed for same-origin: {}", origin);
                 return true;
             }
