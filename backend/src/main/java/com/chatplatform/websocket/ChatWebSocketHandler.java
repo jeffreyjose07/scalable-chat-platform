@@ -49,8 +49,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         
         if (userId == null) {
             logger.error("No userId found in session attributes - closing connection");
+            logger.error("Session attributes: {}", session.getAttributes());
             try {
-                session.close();
+                session.close(CloseStatus.SERVER_ERROR.withReason("No user ID found"));
             } catch (Exception e) {
                 logger.error("Error closing session", e);
             }
