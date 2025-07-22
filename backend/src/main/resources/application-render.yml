@@ -36,6 +36,7 @@ spring:
   redis:
     url: ${REDIS_URL}
     timeout: 2000ms
+    ssl: true
     lettuce:
       pool:
         max-active: 3           # Conservative for free tier
