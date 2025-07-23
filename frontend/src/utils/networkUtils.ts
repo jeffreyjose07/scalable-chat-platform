@@ -85,20 +85,3 @@ export const getWebSocketUrl = (): string => {
   return wsUrl;
 };
 
-/**
- * Gets the current network configuration info for debugging
- */
-export const getNetworkInfo = () => {
-  const hostname = window.location.hostname;
-  const port = window.location.port;
-  const isLocal = isLocalIP(hostname);
-  
-  return {
-    hostname,
-    port,
-    isLocalIP: isLocal,
-    apiUrl: getApiBaseUrl(),
-    wsUrl: getWebSocketUrl(),
-    fullUrl: window.location.href
-  };
-};

@@ -14,7 +14,6 @@ import UserSearchModal from '../components/UserSearchModal';
 import { User } from '../types/chat';
 import MessageSearchBar from '../components/MessageSearchBar';
 import SearchResultsList from '../components/SearchResultsList';
-import NetworkDebug from '../components/NetworkDebug';
 import { ConversationType } from '../components/ConversationTypeToggle';
 import { CreateGroupModal } from '../components/groups/CreateGroupModal';
 import { GroupSettingsModal } from '../components/groups/GroupSettingsModal';
@@ -370,7 +369,6 @@ const ChatPage: React.FC = () => {
         />
       )}
       
-      <NetworkDebug />
     </div>
   );
 };
