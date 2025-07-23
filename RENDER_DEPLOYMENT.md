@@ -33,12 +33,12 @@ This guide covers deploying the complete chat platform as a single service on Re
 **Option A: Upstash Redis (Recommended)**
 1. Go to [Upstash](https://upstash.com)
 2. Create free Redis database (10,000 commands/day)
-3. Get Redis URL: `redis://default:password@hostname:port`
+3. Get Redis URL: `rediss://default:password@hostname:port` ⚠️ **Note: Use `rediss://` (with SSL)**
 
 **Option B: Redis Cloud**
 1. Go to [Redis Cloud](https://redis.io/cloud/)
 2. Create 30MB free database
-3. Get Redis URL: `redis://default:password@hostname:port`
+3. Get Redis URL: `rediss://default:password@hostname:port` ⚠️ **Note: Use `rediss://` (with SSL)**
 
 ## 🚀 Step 2: Render Deployment
 
@@ -74,7 +74,7 @@ DATABASE_URL=postgresql://user:pass@hostname:port/chatdb
 
 # External Services
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/chatdb?retryWrites=true&w=majority
-REDIS_URL=redis://default:password@hostname:port
+REDIS_URL=rediss://default:password@hostname:port
 
 # Application Config
 SPRING_PROFILES_ACTIVE=render
@@ -164,6 +164,7 @@ For production deployment:
 - Verify DATABASE_URL format
 - Check MongoDB Atlas whitelist settings
 - Test Redis URL format and credentials
+- **Redis SSL Issues**: Ensure using `rediss://` not `redis://` for Upstash/external Redis
 
 ### Frontend Not Loading
 - Check if static resources are built correctly
