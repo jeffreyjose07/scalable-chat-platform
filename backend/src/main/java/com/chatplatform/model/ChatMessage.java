@@ -23,12 +23,12 @@ public class ChatMessage {
     private MessageType type;
     private Instant timestamp;
     
-    @Indexed(expireAfterSeconds = 2592000) // 30 days
+    @Indexed(expireAfterSeconds = 31536000) // 1 year
     private Instant expiresAt;
     
     public ChatMessage() {
         this.timestamp = Instant.now();
-        this.expiresAt = Instant.now().plusSeconds(2592000);
+        this.expiresAt = Instant.now().plusSeconds(31536000);
     }
     
     public ChatMessage(String conversationId, String senderId, String senderUsername, String content, MessageType type) {
@@ -38,7 +38,7 @@ public class ChatMessage {
         this.content = content;
         this.type = type;
         this.timestamp = Instant.now();
-        this.expiresAt = Instant.now().plusSeconds(2592000);
+        this.expiresAt = Instant.now().plusSeconds(31536000);
     }
     
     public enum MessageType {
