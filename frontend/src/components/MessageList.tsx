@@ -5,9 +5,10 @@ import { format } from 'date-fns';
 interface MessageListProps {
   messages: ChatMessage[];
   currentUserId?: string;
+  isLoading?: boolean;
 }
 
-const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId }) => {
+const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, isLoading = false }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,17 +32,29 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId }) =>
   return (
     <div className="flex-1 flex flex-col">
       <div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-2 sm:space-y-4">
-        {messages.map((message) => {
-          const isOwn = message.senderId === currentUserId;
-          console.log(`Message ${message.id}: senderId=${message.senderId}, currentUserId=${currentUserId}, isOwn=${isOwn}`);
-          return (
-            <MessageBubble
-              key={message.id}
-              message={message}
-              isOwn={isOwn}
-            />
-          );
-        })}
+        {isLoading && messages.length === 0 ? (
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-gray-500 text-sm">Loading messages...</div>
+          </div>
+        ) : messages.length === 0 ? (
+          <div className="flex-1 flex items-center justify-center">
+            <div className="text-gray-500 text-sm">No messages yet. Start the conversation!</div>
+          </div>
+        ) : (
+          <>
+            {messages.map((message) => {
+              const isOwn = message.senderId === currentUserId;
+              console.log(`Message ${message.id}: senderId=${message.senderId}, currentUserId=${currentUserId}, isOwn=${isOwn}`);
+              return (
+                <MessageBubble
+                  key={message.id}
+                  message={message}
+                  isOwn={isOwn}
+                />
+              );
+            })}
+          </>
+        )}
         <div ref={messagesEndRef} />
       </div>
     </div>
