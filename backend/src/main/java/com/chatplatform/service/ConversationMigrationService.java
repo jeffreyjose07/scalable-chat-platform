@@ -40,12 +40,9 @@ public class ConversationMigrationService {
         logger.info("Starting conversation migration...");
         
         try {
-            // Create default group conversations if they don't exist
-            createDefaultGroupConversation("general", "General Chat");
-            createDefaultGroupConversation("random", "Random");
-            createDefaultGroupConversation("tech", "Tech Talk");
-            
-            logger.info("Conversation migration completed successfully");
+            // Note: Removed automatic default group creation to allow users full control
+            // Default groups will only be created if explicitly requested by users
+            logger.info("Conversation migration completed successfully (no default groups created)");
         } catch (Exception e) {
             logger.error("Error during conversation migration", e);
         }
