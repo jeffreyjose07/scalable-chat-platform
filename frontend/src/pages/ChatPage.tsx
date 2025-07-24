@@ -38,6 +38,14 @@ const ChatPage: React.FC = () => {
   const searchHook = useMessageSearch();
   const userSearchHook = useUserSearch();
   
+  // Auto-select first available conversation if none selected
+  useEffect(() => {
+    if (!chatState.selectedConversation && conversationHook.conversations.length > 0) {
+      const firstConversation = conversationHook.conversations[0];
+      chatState.setSelectedConversation(firstConversation.id);
+    }
+  }, [chatState.selectedConversation, conversationHook.conversations, chatState]);
+
   // Load messages for initially selected conversation
   useEffect(() => {
     if (chatState.selectedConversation && user) {
@@ -53,7 +61,7 @@ const ChatPage: React.FC = () => {
 
   // Event handlers
   const handleSendMessage = (content: string) => {
-    if (!content.trim() || !user) return;
+    if (!content.trim() || !user || !chatState.selectedConversation) return;
 
     sendMessage({
       conversationId: chatState.selectedConversation,
@@ -192,13 +200,8 @@ const ChatPage: React.FC = () => {
       return conversation.name;
     }
     
-    // Fallback for default conversations
-    switch (conversationId) {
-      case 'general': return 'General Chat';
-      case 'random': return 'Random';
-      case 'tech': return 'Tech Talk';
-      default: return conversationId;
-    }
+    // Fallback - return the conversation ID itself
+    return conversationId;
   };
 
   const handleGroupUpdated = (updatedGroup: any) => {
@@ -290,7 +293,7 @@ const ChatPage: React.FC = () => {
                 
                 <div className="min-w-0 flex-1">
                   <h2 className="text-lg font-medium text-gray-900 truncate">
-                    {getConversationDisplayName(chatState.selectedConversation)}
+                    {chatState.selectedConversation ? getConversationDisplayName(chatState.selectedConversation) : 'No conversation selected'}
                   </h2>
                   <div className="text-sm text-gray-500">
                     {conversationMessages.length} messages
@@ -333,7 +336,7 @@ const ChatPage: React.FC = () => {
             <MessageInput 
               key={chatState.selectedConversation} 
               onSendMessage={handleSendMessage} 
-              disabled={!isConnected} 
+              disabled={!isConnected || !chatState.selectedConversation} 
             />
           </div>
         </div>
