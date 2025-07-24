@@ -5,8 +5,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.Index;
-import org.springframework.data.mongodb.core.index.IndexInfo;
-import org.springframework.data.mongodb.core.query.Criteria;
+import org.bson.Document;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,10 +28,10 @@ public class MongoIndexConfiguration {
 
         try {
             // Check if TTL index exists with different expireAfterSeconds
-            List<IndexInfo> indexes = mongoTemplate.getCollection(collectionName).listIndexes().into(new java.util.ArrayList<>());
+            List<Document> indexes = mongoTemplate.getCollection(collectionName).listIndexes().into(new java.util.ArrayList<>());
             
             boolean needsRecreation = false;
-            for (org.bson.Document index : indexes) {
+            for (Document index : indexes) {
                 if (indexName.equals(index.getString("name"))) {
                     Integer currentTTL = index.getInteger("expireAfterSeconds");
                     if (currentTTL != null && !currentTTL.equals(newTTLSeconds)) {
@@ -64,7 +63,7 @@ public class MongoIndexConfiguration {
 
     private boolean indexExists(String collectionName, String indexName) {
         try {
-            List<IndexInfo> indexes = mongoTemplate.getCollection(collectionName).listIndexes().into(new java.util.ArrayList<>());
+            List<Document> indexes = mongoTemplate.getCollection(collectionName).listIndexes().into(new java.util.ArrayList<>());
             return indexes.stream().anyMatch(index -> indexName.equals(index.getString("name")));
         } catch (Exception e) {
             return false;

@@ -10,6 +10,8 @@ interface WebSocketContextType {
   isConnected: boolean;
   sendMessage: (message: Omit<ChatMessage, 'id' | 'timestamp'>) => void;
   messages: ChatMessage[];
+  loadConversationMessages: (conversationId: string) => Promise<void>;
+  isLoadingMessages: boolean;
 }
 
 const WebSocketContext = createContext<WebSocketContextType | null>(null);
@@ -31,9 +33,45 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [hasShownConnectedToast, setHasShownConnectedToast] = useState(false);
   const [lastSentMessageId, setLastSentMessageId] = useState<string | null>(null);
   const [wasEverConnected, setWasEverConnected] = useState(false);
+  const [isLoadingMessages, setIsLoadingMessages] = useState(false);
+  const [loadedConversations, setLoadedConversations] = useState<Set<string>>(new Set());
   const { user, token } = useAuth();
 
-  // Load messages immediately when user and token are available
+  // Load conversation messages function
+  const loadConversationMessages = async (conversationId: string) => {
+    if (!user || !token || loadedConversations.has(conversationId)) {
+      console.log('Skipping conversation load:', { user: !!user, token: !!token, alreadyLoaded: loadedConversations.has(conversationId) });
+      return;
+    }
+    
+    setIsLoadingMessages(true);
+    try {
+      console.log(`Loading messages for conversation: ${conversationId}`);
+      const conversationMessages = await messageService.fetchConversationMessages(conversationId, token);
+      
+      setMessages(prev => {
+        // Remove any existing messages from this conversation to avoid duplicates
+        const filteredPrev = prev.filter(msg => msg.conversationId !== conversationId);
+        // Add the new conversation messages
+        const combined = [...filteredPrev, ...conversationMessages];
+        // Sort by timestamp to maintain chronological order
+        return combined.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+      });
+      
+      setLoadedConversations(prev => {
+        const newSet = new Set(prev);
+        newSet.add(conversationId);
+        return newSet;
+      });
+      console.log(`Loaded ${conversationMessages.length} messages for conversation: ${conversationId}`);
+    } catch (error) {
+      console.error(`Error loading messages for conversation ${conversationId}:`, error);
+    } finally {
+      setIsLoadingMessages(false);
+    }
+  };
+
+  // Load recent messages only on initial load (for quick start)
   useEffect(() => {
     if (!user || !token || messagesLoaded) return;
     
@@ -42,7 +80,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         const recentMessages = await messageService.fetchRecentMessages(token);
         setMessages(recentMessages);
         setMessagesLoaded(true);
-        console.log('Historical messages loaded on component mount');
+        console.log('Initial recent messages loaded on component mount');
       } catch (error) {
         console.error('Error loading initial messages:', error);
       }
@@ -96,7 +134,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           const recentMessages = await messageService.fetchRecentMessages(token);
           setMessages(recentMessages);
           setMessagesLoaded(true);
-          console.log('Historical messages loaded on WebSocket connection');
+          console.log('Recent messages loaded on WebSocket connection');
         } catch (error) {
           console.error('Error loading recent messages:', error);
         }
@@ -146,14 +184,16 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             console.warn('Message missing senderUsername, using senderId as fallback');
           }
           
-          // Prevent duplicate messages
+          // Add new message (real-time)
           setMessages(prev => {
             const exists = prev.some(msg => msg.id === message.id);
             if (exists) {
               console.log('Duplicate message detected, skipping:', message.id);
               return prev;
             }
-            return [...prev, message];
+            // Insert message in correct chronological position
+            const newMessages = [...prev, message];
+            return newMessages.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
           });
         }
       } catch (error) {
@@ -212,7 +252,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   return (
-    <WebSocketContext.Provider value={{ socket, isConnected, sendMessage, messages }}>
+    <WebSocketContext.Provider value={{ socket, isConnected, sendMessage, messages, loadConversationMessages, isLoadingMessages }}>
       {children}
     </WebSocketContext.Provider>
   );

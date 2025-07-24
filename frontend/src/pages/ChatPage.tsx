@@ -20,7 +20,7 @@ import { GroupSettingsModal } from '../components/groups/GroupSettingsModal';
 import { api } from '../services/api';
 
 const ChatPage: React.FC = () => {
-  const { messages, sendMessage, isConnected } = useWebSocket();
+  const { messages, sendMessage, isConnected, loadConversationMessages, isLoadingMessages } = useWebSocket();
   const { user, logout } = useAuth();
   
   // Group modal states
@@ -38,6 +38,13 @@ const ChatPage: React.FC = () => {
   const searchHook = useMessageSearch();
   const userSearchHook = useUserSearch();
   
+  // Load messages for initially selected conversation
+  useEffect(() => {
+    if (chatState.selectedConversation && user) {
+      loadConversationMessages(chatState.selectedConversation);
+    }
+  }, [chatState.selectedConversation, user, loadConversationMessages]);
+
   // Derived state with memoization
   const conversationMessages = useMemo(() => 
     messages.filter(msg => msg.conversationId === chatState.selectedConversation),
@@ -57,8 +64,11 @@ const ChatPage: React.FC = () => {
     });
   };
 
-  const handleConversationSelect = (conversationId: string) => {
+  const handleConversationSelect = async (conversationId: string) => {
     chatState.handleConversationSelect(conversationId);
+    
+    // Load conversation messages when switching conversations
+    await loadConversationMessages(conversationId);
     
     // Clear search when switching conversations
     searchHook.clearSearch();
@@ -86,6 +96,9 @@ const ChatPage: React.FC = () => {
         // Switch to direct messages tab and select the conversation
         chatState.setActiveConversationType('direct');
         chatState.setSelectedConversation(conversation.id);
+        
+        // Load messages for the new conversation
+        loadConversationMessages(conversation.id);
       });
     } catch (error) {
       console.error('Failed to create direct conversation:', error);
@@ -104,6 +117,9 @@ const ChatPage: React.FC = () => {
     // Switch to groups tab and select the new group
     chatState.setActiveConversationType('groups');
     chatState.setSelectedConversation(group.id);
+    
+    // Load messages for the new group
+    loadConversationMessages(group.id);
     
     // Close modal
     setIsCreateGroupModalOpen(false);
@@ -310,7 +326,7 @@ const ChatPage: React.FC = () => {
           </div>
 
           {/* Messages */}
-          <MessageList messages={conversationMessages} currentUserId={user?.id} />
+          <MessageList messages={conversationMessages} currentUserId={user?.id} isLoading={isLoadingMessages} />
 
           {/* Message Input */}
           <div className="border-t border-gray-200 bg-white">
