@@ -31,7 +31,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [messagesLoaded, setMessagesLoaded] = useState(false);
   const [isIntentionalDisconnect, setIsIntentionalDisconnect] = useState(false);
   const [hasShownConnectedToast, setHasShownConnectedToast] = useState(false);
-  const [lastSentMessageId, setLastSentMessageId] = useState<string | null>(null);
+  const [lastSentMessage, setLastSentMessage] = useState<{content: string, timestamp: number} | null>(null);
   const [wasEverConnected, setWasEverConnected] = useState(false);
   const [isLoadingMessages, setIsLoadingMessages] = useState(false);
   const [loadedConversations, setLoadedConversations] = useState<Set<string>>(new Set());
@@ -227,13 +227,13 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     if (socket && isConnected) {
       const messageId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       const messageContent = message.content.trim();
+      const now = Date.now();
       
-      // Create unique identifier for content-based deduplication
-      const contentId = `${messageContent}-${message.conversationId}-${message.senderId}`;
-      
-      // Prevent sending duplicate messages based on content
-      if (lastSentMessageId === contentId) {
-        console.log('Preventing duplicate message send');
+      // Prevent sending duplicate messages within 1 second (rapid clicking prevention)
+      if (lastSentMessage && 
+          lastSentMessage.content === messageContent && 
+          (now - lastSentMessage.timestamp) < 1000) {
+        console.log('Preventing rapid duplicate message send');
         return;
       }
       
@@ -244,7 +244,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         timestamp: new Date().toISOString(),
       };
       
-      setLastSentMessageId(contentId);
+      setLastSentMessage({ content: messageContent, timestamp: now });
       console.log('Sending message:', { id: messageId, content: messageContent.substring(0, 50) });
       socket.send(JSON.stringify(fullMessage));
       // Don't add to messages here - wait for it to come back through WebSocket
