@@ -221,11 +221,12 @@ const ChatPage: React.FC = () => {
       {/* Sidebar - Conversations */}
       <div className={`
         fixed lg:relative lg:translate-x-0 z-50 lg:z-0
-        w-80 lg:w-72 xl:w-80 bg-gray-50 border-r border-gray-200 h-full
+        w-80 lg:w-72 xl:w-80 bg-gray-50 border-r border-gray-200 h-screen
+        flex flex-col
         transition-transform duration-300 ease-in-out
         ${chatState.isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
-        <div className="p-4 border-b border-gray-200">
+        <div className="p-4 border-b border-gray-200 flex-shrink-0">
           <div className="flex items-center justify-between">
             <h1 className="text-lg lg:text-xl font-semibold text-gray-900">Chat Platform</h1>
             <div className="flex items-center space-x-2">
