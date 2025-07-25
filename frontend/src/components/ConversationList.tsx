@@ -129,7 +129,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   return (
     <div className="flex-1 overflow-y-auto">
-      <div className="p-3 sm:p-4">
+      <div className="p-3 sm:p-4 pb-6">
         <ConversationTypeToggle 
           activeType={activeType}
           onTypeChange={onTypeChange}
