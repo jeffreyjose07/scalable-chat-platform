@@ -1,4 +1,5 @@
 import { User, Conversation } from '../types/chat';
+import { tokenStorage } from '../utils/secureStorage';
 
 // Get API base URL from runtime config or environment variables
 const getApiBaseUrl = (): string => {
@@ -30,9 +31,9 @@ const getApiBaseUrl = (): string => {
 
 const API_BASE_URL = getApiBaseUrl();
 
-// Helper function to get auth token
+// Helper function to get auth token from secure storage
 const getAuthToken = (): string | null => {
-  return localStorage.getItem('token');
+  return tokenStorage.get();
 };
 
 // Helper function to make authenticated requests
