@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { useAuth } from './useAuth';
 import { ChatMessage } from '../types/chat';
 import { messageService } from '../services/messageService';
@@ -12,6 +12,8 @@ interface WebSocketContextType {
   messages: ChatMessage[];
   loadConversationMessages: (conversationId: string) => Promise<void>;
   isLoadingMessages: boolean;
+  isReconnecting: boolean;
+  reconnectAttempts: number;
 }
 
 const WebSocketContext = createContext<WebSocketContextType | null>(null);
@@ -35,7 +37,41 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [wasEverConnected, setWasEverConnected] = useState(false);
   const [isLoadingMessages, setIsLoadingMessages] = useState(false);
   const [loadedConversations, setLoadedConversations] = useState<Set<string>>(new Set());
+  const [reconnectAttempts, setReconnectAttempts] = useState(0);
+  const [isReconnecting, setIsReconnecting] = useState(false);
   const { user, token } = useAuth();
+  
+  // Reconnection configuration
+  const MAX_RECONNECT_ATTEMPTS = 5;
+  const BASE_RECONNECT_DELAY = 1000; // 1 second
+  
+  // Reconnection with exponential backoff
+  const attemptReconnect = useCallback(() => {
+    if (isIntentionalDisconnect || !user || !token) {
+      return;
+    }
+    
+    if (reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+      console.log('Max reconnection attempts reached');
+      setIsReconnecting(false);
+      toast.error('Unable to reconnect to chat server. Please refresh the page.');
+      return;
+    }
+    
+    const delay = BASE_RECONNECT_DELAY * Math.pow(2, reconnectAttempts);
+    console.log(`Attempting to reconnect in ${delay}ms (attempt ${reconnectAttempts + 1}/${MAX_RECONNECT_ATTEMPTS})`);
+    
+    setIsReconnecting(true);
+    setReconnectAttempts(prev => prev + 1);
+    
+    setTimeout(() => {
+      if (!isIntentionalDisconnect && !isConnected) {
+        console.log('Executing reconnection attempt');
+        // Force recreation of WebSocket connection
+        setSocket(null);
+      }
+    }, delay);
+  }, [reconnectAttempts, isIntentionalDisconnect, user, token, isConnected]);
 
   // Load conversation messages function
   const loadConversationMessages = async (conversationId: string) => {
@@ -122,8 +158,14 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       setIsIntentionalDisconnect(false);
       setWasEverConnected(true);
       
-      // Only show connected toast once per session or after a disconnect
-      if (!hasShownConnectedToast) {
+      // Reset reconnection state on successful connection
+      setReconnectAttempts(0);
+      setIsReconnecting(false);
+      
+      // Show appropriate toast message
+      if (reconnectAttempts > 0) {
+        toast.success('Reconnected to chat server');
+      } else if (!hasShownConnectedToast) {
         toast.success('Connected to chat server');
         setHasShownConnectedToast(true);
       }
@@ -155,7 +197,10 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       // 2. We were previously connected (not initial connection failures)
       // 3. It's not a normal close code (1000 = normal, 1001 = going away)
       if (!isIntentionalDisconnect && wasEverConnected && event.code !== 1000 && event.code !== 1001) {
-        toast.error('Disconnected from chat server');
+        if (reconnectAttempts === 0) {
+          toast.error('Disconnected from chat server. Attempting to reconnect...');
+        }
+        attemptReconnect();
       }
     };
 
@@ -168,6 +213,18 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           console.log('Message acknowledged:', data.messageId);
         } else if (data.type === 'error') {
           toast.error(data.message);
+        } else if (data.type === 'ping') {
+          // Handle ping message - send pong response
+          console.log('Received ping from server, sending pong');
+          try {
+            const pongResponse = JSON.stringify({
+              type: 'pong',
+              timestamp: data.timestamp
+            });
+            newSocket.send(pongResponse);
+          } catch (error) {
+            console.error('Error sending pong response:', error);
+          }
         } else {
           // Handle regular chat message
           const message: ChatMessage = data;
@@ -252,7 +309,16 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   return (
-    <WebSocketContext.Provider value={{ socket, isConnected, sendMessage, messages, loadConversationMessages, isLoadingMessages }}>
+    <WebSocketContext.Provider value={{ 
+      socket, 
+      isConnected, 
+      sendMessage, 
+      messages, 
+      loadConversationMessages, 
+      isLoadingMessages,
+      isReconnecting,
+      reconnectAttempts
+    }}>
       {children}
     </WebSocketContext.Provider>
   );

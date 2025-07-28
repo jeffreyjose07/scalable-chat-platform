@@ -77,7 +77,9 @@ management:
 app:
   jwt:
     secret: ${JWT_SECRET:mySecretKey-changeInProduction-veryLongRandomString123456789}
-    expiration: ${JWT_EXPIRATION:86400000} # 24 hours
+    expiration: ${JWT_EXPIRATION:14400000} # 4 hours (reduced from 24h)
+    issuer: ${JWT_ISSUER:chat-platform-backend}
+    audience: ${JWT_AUDIENCE:chat-platform-users}
   
   cors:
     allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000,http://localhost:3001}

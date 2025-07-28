@@ -29,13 +29,16 @@ public class AuthService {
     private final UserService userService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final TokenBlacklistService tokenBlacklistService;
     
     public AuthService(UserService userService, 
                       JwtService jwtService,
-                      AuthenticationManager authenticationManager) {
+                      AuthenticationManager authenticationManager,
+                      TokenBlacklistService tokenBlacklistService) {
         this.userService = userService;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
     
     /**
@@ -84,15 +87,25 @@ public class AuthService {
     }
     
     /**
-     * Logout user with graceful error handling
+     * Logout user with token blacklisting and graceful error handling
      */
     public void logout(String token) {
         Optional.ofNullable(token)
-                .map(this::safeGetUserFromToken)
+                .map(this::removeBearerPrefix)
                 .ifPresentOrElse(
-                    user -> {
-                        userService.updateUserOnlineStatus(user.getId(), false);
-                        logger.info("👋 Logout successful for user: {}", user.getUsername());
+                    cleanToken -> {
+                        // Blacklist the token first
+                        tokenBlacklistService.blacklistToken(cleanToken);
+                        
+                        // Then update user status
+                        Optional.ofNullable(safeGetUserFromToken("Bearer " + cleanToken))
+                                .ifPresentOrElse(
+                                    user -> {
+                                        userService.updateUserOnlineStatus(user.getId(), false);
+                                        logger.info("👋 Logout successful for user: {} (token blacklisted)", user.getUsername());
+                                    },
+                                    () -> logger.info("🚫 Token blacklisted successfully (user not found)")
+                                );
                     },
                     () -> logger.warn("⚠️ Logout failed: Invalid token")
                 );
