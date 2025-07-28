@@ -35,6 +35,9 @@ class AuthServiceTest {
     private AuthenticationManager authenticationManager;
     
     @Mock
+    private TokenBlacklistService tokenBlacklistService;
+    
+    @Mock
     private Authentication authentication;
     
     @InjectMocks
@@ -197,11 +200,13 @@ class AuthServiceTest {
         when(jwtService.validateToken("valid-jwt-token")).thenReturn(true);
         when(jwtService.extractUsername("valid-jwt-token")).thenReturn(testUser.getUsername());
         when(userService.findByUsername(testUser.getUsername())).thenReturn(Optional.of(testUser));
+        doNothing().when(tokenBlacklistService).blacklistToken("valid-jwt-token");
         
         // When
         assertDoesNotThrow(() -> authService.logout(token));
         
         // Then
+        verify(tokenBlacklistService).blacklistToken("valid-jwt-token");
         verify(userService).updateUserOnlineStatus(testUser.getId(), false);
     }
     
@@ -209,9 +214,13 @@ class AuthServiceTest {
     void shouldHandleLogoutWithInvalidToken() {
         // Given
         String token = "Bearer invalid-jwt-token";
+        doNothing().when(tokenBlacklistService).blacklistToken("invalid-jwt-token");
         
         // When & Then
         assertDoesNotThrow(() -> authService.logout(token));
+        
+        // Then - token should still be blacklisted even if invalid
+        verify(tokenBlacklistService).blacklistToken("invalid-jwt-token");
         
         // Logout should not throw exception even with invalid token
         // The safeGetUserFromToken method handles this gracefully
