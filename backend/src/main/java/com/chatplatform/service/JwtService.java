@@ -23,6 +23,12 @@ public class JwtService {
     @Value("${app.jwt.expiration}")
     private Long jwtExpiration;
     
+    @Value("${app.jwt.issuer}")
+    private String jwtIssuer;
+    
+    @Value("${app.jwt.audience}")
+    private String jwtAudience;
+    
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
@@ -35,6 +41,10 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
     
+    public String extractJwtId(String token) {
+        return extractClaim(token, Claims::getId);
+    }
+    
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
@@ -43,6 +53,8 @@ public class JwtService {
     private Claims extractAllClaims(String token) {
         return Jwts.parserBuilder()
                 .setSigningKey(getSigningKey())
+                .requireIssuer(jwtIssuer) // Validate issuer
+                .requireAudience(jwtAudience) // Validate audience
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -65,8 +77,11 @@ public class JwtService {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
+                .setIssuer(jwtIssuer)
+                .setAudience(jwtAudience)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .setId(java.util.UUID.randomUUID().toString()) // Add unique JWT ID (jti)
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -84,6 +99,24 @@ public class JwtService {
         try {
             extractAllClaims(token);
             return !isTokenExpired(token);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    /**
+     * Validate token with blacklist checking
+     * This method should be used in security filters
+     */
+    public boolean validateTokenWithBlacklist(String token, UserDetails userDetails, TokenBlacklistService blacklistService) {
+        try {
+            // First check basic validation
+            if (!validateToken(token, userDetails)) {
+                return false;
+            }
+            
+            // Then check if token is blacklisted
+            return !blacklistService.isTokenBlacklisted(token);
         } catch (Exception e) {
             return false;
         }

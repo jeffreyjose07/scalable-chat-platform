@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { getApiBaseUrl } from '../utils/networkUtils';
+import { tokenStorage } from '../utils/secureStorage';
 
 interface User {
   id: string;
@@ -52,7 +53,7 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('token'));
+  const [token, setToken] = useState<string | null>(tokenStorage.get());
   const [isLoading, setIsLoading] = useState(true);
 
   const apiUrl = getApiBaseUrl();
@@ -75,12 +76,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           };
           setUser(user);
         } else {
-          localStorage.removeItem('token');
+          tokenStorage.remove();
           setToken(null);
         }
       })
       .catch(() => {
-        localStorage.removeItem('token');
+        tokenStorage.remove();
         setToken(null);
       })
       .finally(() => {
@@ -112,7 +113,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           avatarUrl: undefined // Backend doesn't have avatarUrl yet
         };
         
-        localStorage.setItem('token', newToken);
+        // Store token securely (sessionStorage for security, localStorage for persistence if needed)
+        tokenStorage.set(newToken, false); // Don't persist by default for security
         setToken(newToken);
         setUser(user);
         
@@ -151,7 +153,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           avatarUrl: undefined // Backend doesn't have avatarUrl yet
         };
         
-        localStorage.setItem('token', newToken);
+        // Store token securely (sessionStorage for security, localStorage for persistence if needed)
+        tokenStorage.set(newToken, false); // Don't persist by default for security
         setToken(newToken);
         setUser(user);
         
@@ -181,7 +184,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     } catch (error) {
       console.warn('Logout request failed:', error);
     } finally {
-      localStorage.removeItem('token');
+      // Securely remove token from all storage locations
+      tokenStorage.remove();
       setToken(null);
       setUser(null);
       if (!token) {
