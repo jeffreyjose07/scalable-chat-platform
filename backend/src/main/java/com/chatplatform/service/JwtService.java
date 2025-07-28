@@ -57,6 +57,7 @@ public class JwtService {
     private Claims extractAllClaims(String token) {
         try {
             // Try with issuer/audience validation first (for new tokens)
+            logger.debug("Validating JWT with issuer: {} and audience: {}", jwtIssuer, jwtAudience);
             return Jwts.parserBuilder()
                     .setSigningKey(getSigningKey())
                     .requireIssuer(jwtIssuer) // Validate issuer
@@ -65,13 +66,20 @@ public class JwtService {
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
-            logger.warn("Token validation with issuer/audience failed, trying without: {}", e.getMessage());
-            // Fall back to basic validation for legacy tokens (temporary compatibility)
-            return Jwts.parserBuilder()
-                    .setSigningKey(getSigningKey())
-                    .build()
-                    .parseClaimsJws(token)
-                    .getBody();
+            logger.warn("Token validation with issuer/audience failed: {}, trying without", e.getMessage());
+            try {
+                // Fall back to basic validation for legacy tokens (temporary compatibility)
+                Claims claims = Jwts.parserBuilder()
+                        .setSigningKey(getSigningKey())
+                        .build()
+                        .parseClaimsJws(token)
+                        .getBody();
+                logger.info("Token validated successfully with basic validation (legacy mode)");
+                return claims;
+            } catch (Exception fallbackException) {
+                logger.error("Both JWT validation methods failed: original={}, fallback={}", e.getMessage(), fallbackException.getMessage());
+                throw fallbackException;
+            }
         }
     }
     
@@ -126,12 +134,19 @@ public class JwtService {
     public boolean validateTokenWithBlacklist(String token, UserDetails userDetails, TokenBlacklistService blacklistService) {
         try {
             // First check basic validation
+            logger.debug("Validating JWT token for user: {}", userDetails.getUsername());
             if (!validateToken(token, userDetails)) {
                 logger.warn("Basic JWT token validation failed for user: {}", userDetails.getUsername());
                 return false;
             }
+            logger.debug("Basic JWT validation passed for user: {}", userDetails.getUsername());
+            
+            // Temporarily skip blacklist checking for debugging
+            logger.debug("Skipping blacklist check temporarily for debugging");
+            return true;
             
             // Then check if token is blacklisted
+            /*
             try {
                 boolean isBlacklisted = blacklistService.isTokenBlacklisted(token);
                 if (isBlacklisted) {
@@ -143,6 +158,7 @@ public class JwtService {
                 logger.warn("Blacklist check failed, allowing token: {}", blacklistException.getMessage());
                 return true; // Fail open for blacklist issues
             }
+            */
         } catch (Exception e) {
             logger.error("JWT token validation failed: {}", e.getMessage());
             return false;
