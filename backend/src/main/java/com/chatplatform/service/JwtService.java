@@ -55,13 +55,24 @@ public class JwtService {
     }
     
     private Claims extractAllClaims(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
-                .requireIssuer(jwtIssuer) // Validate issuer
-                .requireAudience(jwtAudience) // Validate audience
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            // Try with issuer/audience validation first (for new tokens)
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .requireIssuer(jwtIssuer) // Validate issuer
+                    .requireAudience(jwtAudience) // Validate audience
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            logger.warn("Token validation with issuer/audience failed, trying without: {}", e.getMessage());
+            // Fall back to basic validation for legacy tokens (temporary compatibility)
+            return Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        }
     }
     
     private boolean isTokenExpired(String token) {

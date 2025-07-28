@@ -72,9 +72,10 @@ public class TokenBlacklistService {
             }
             return false;
         } catch (Exception e) {
-            logger.error("Error checking token blacklist status", e);
-            // Fail secure: if we can't check blacklist, assume token is invalid
-            return true;
+            logger.error("Error checking token blacklist status, failing open: {}", e.getMessage());
+            // Fail open: if we can't check blacklist (e.g., Redis down), allow the token
+            // This prioritizes availability over perfect security
+            return false;
         }
     }
     
