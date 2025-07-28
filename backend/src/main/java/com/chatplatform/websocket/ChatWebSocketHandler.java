@@ -214,7 +214,14 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         }
         
         try {
-            ChatMessage chatMessage = objectMapper.readValue(message.getPayload(), ChatMessage.class);
+            // First check if this is a ping/pong message
+            String payload = message.getPayload();
+            if (payload.contains("\"type\":\"pong\"") || payload.contains("\"type\":\"ping\"")) {
+                logger.debug("Received ping/pong message, ignoring: {}", payload);
+                return;
+            }
+            
+            ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
             String userId = getUserId(session);
             String username = getUserName(session);
             
