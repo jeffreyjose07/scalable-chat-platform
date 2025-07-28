@@ -106,7 +106,7 @@ JWT_EXPIRATION = 14400000
 JWT_ISSUER = chat-platform-backend
 JWT_AUDIENCE = chat-platform-users
 SPRING_PROFILES_ACTIVE = prod
-CORS_ALLOWED_ORIGINS = https://your-frontend-app.onrender.com
+CORS_ALLOWED_ORIGINS = https://scalable-chat-platform.onrender.com/
 ```
 
 3. **Database URLs** (Render auto-generates these):

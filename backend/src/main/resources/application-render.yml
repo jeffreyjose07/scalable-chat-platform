@@ -63,21 +63,26 @@ server:
         max-age: 3600           # Cache static files for 1 hour
         must-revalidate: true
     
-# CORS Configuration - Allow frontend requests
-cors:
-  allowed-origins: ${CORS_ALLOWED_ORIGINS:*}
-  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
-  allowed-headers: "*"
-  allow-credentials: true
-  
 # WebSocket Configuration
 websocket:
   allowed-origins: ${WEBSOCKET_ALLOWED_ORIGINS:*}
   
-# JWT Configuration
-jwt:
-  secret: ${JWT_SECRET:your-very-secure-jwt-secret-key-change-this-in-production}
-  expiration: 86400000 # 24 hours
+# Application Configuration with JWT Security
+app:
+  jwt:
+    secret: ${JWT_SECRET:your-very-secure-jwt-secret-key-change-this-in-production}
+    expiration: ${JWT_EXPIRATION:14400000} # 4 hours (matches security implementation)
+    issuer: ${JWT_ISSUER:chat-platform-backend}
+    audience: ${JWT_AUDIENCE:chat-platform-users}
+  
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:*}
+  
+  admin:
+    username: ${ADMIN_USERNAME:admin}
+    email: ${ADMIN_EMAIL:admin@chatplatform.com}
+    password: ${ADMIN_PASSWORD:admin123}
+    displayName: ${ADMIN_DISPLAY_NAME:System Administrator}
   
 # Logging Configuration (Optimized for Render)
 logging:
@@ -101,11 +106,6 @@ management:
     health:
       show-details: when-authorized
       
-# Application Configuration
-app:
-  name: Scalable Chat Platform
-  version: 1.0.0
-  description: Real-time chat platform - Single Service Deployment
   
 # Render Optimizations
 spring.jpa.open-in-view: false
