@@ -4,6 +4,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ import java.util.function.Function;
 
 @Service
 public class JwtService {
+    
+    private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
     
     @Value("${app.jwt.secret}")
     private String jwtSecret;
@@ -112,12 +116,24 @@ public class JwtService {
         try {
             // First check basic validation
             if (!validateToken(token, userDetails)) {
+                logger.warn("Basic JWT token validation failed for user: {}", userDetails.getUsername());
                 return false;
             }
             
             // Then check if token is blacklisted
-            return !blacklistService.isTokenBlacklisted(token);
+            try {
+                boolean isBlacklisted = blacklistService.isTokenBlacklisted(token);
+                if (isBlacklisted) {
+                    logger.warn("JWT token is blacklisted for user: {}", userDetails.getUsername());
+                }
+                return !isBlacklisted;
+            } catch (Exception blacklistException) {
+                // If blacklist check fails (e.g., Redis down), log warning and allow token
+                logger.warn("Blacklist check failed, allowing token: {}", blacklistException.getMessage());
+                return true; // Fail open for blacklist issues
+            }
         } catch (Exception e) {
+            logger.error("JWT token validation failed: {}", e.getMessage());
             return false;
         }
     }
