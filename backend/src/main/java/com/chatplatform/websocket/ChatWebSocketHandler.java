@@ -360,7 +360,10 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     
     private void sendAcknowledgment(WebSocketSession session, String messageId) {
         try {
-            String ackJson = "{\"type\":\"ack\",\"messageId\":\"" + messageId + "\"}";
+            Map<String, Object> ackMessage = new HashMap<>();
+            ackMessage.put("type", "ack");
+            ackMessage.put("messageId", messageId);
+            String ackJson = objectMapper.writeValueAsString(ackMessage);
             session.sendMessage(new TextMessage(ackJson));
         } catch (Exception e) {
             logger.error("Error sending acknowledgment", e);
@@ -369,7 +372,10 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     
     private void sendError(WebSocketSession session, String error) {
         try {
-            String errorJson = "{\"type\":\"error\",\"message\":\"" + error + "\"}";
+            Map<String, Object> errorMessage = new HashMap<>();
+            errorMessage.put("type", "error");
+            errorMessage.put("message", error);
+            String errorJson = objectMapper.writeValueAsString(errorMessage);
             session.sendMessage(new TextMessage(errorJson));
         } catch (Exception e) {
             logger.error("Error sending error message", e);
@@ -379,7 +385,10 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private void sendPing(WebSocketSession session) {
         try {
             if (session.isOpen()) {
-                String pingJson = "{\"type\":\"ping\",\"timestamp\":" + System.currentTimeMillis() + "}";
+                Map<String, Object> pingMessage = new HashMap<>();
+                pingMessage.put("type", "ping");
+                pingMessage.put("timestamp", System.currentTimeMillis());
+                String pingJson = objectMapper.writeValueAsString(pingMessage);
                 session.sendMessage(new TextMessage(pingJson));
                 logger.debug("Sent ping to session: {}", session.getId());
             } else {
