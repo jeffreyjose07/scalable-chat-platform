@@ -116,6 +116,9 @@ http://YOUR_IP:3000
 - ✅ **Conversation deletion** with proper message cleanup and role-based permissions
 - ✅ **Unread message tracking** with industry-standard timestamp-based system
 - ✅ **Message search** within conversations with highlighting and pagination
+- ✅ **Advanced search features** with recent searches, filters, and proper z-index handling
+- ✅ **Read receipts system** with WhatsApp-style visual indicators (sent/delivered/read)
+- ✅ **Modern UI/UX** following WhatsApp/Telegram design standards with message bubbles and gradients
 - ✅ **User authentication** (demo mode with JWT tokens)
 - ✅ **Message persistence** (MongoDB with automatic indexing)
 - ✅ **Connection management** (Redis with session tracking)
@@ -250,6 +253,15 @@ docker exec scalable-chat-platform-kafka-1 kafka-topics --list --bootstrap-serve
 | Endpoint | Description |
 |----------|-------------|
 | `/ws/chat` | Real-time messaging and status updates |
+
+### WebSocket Message Types
+| Type | Description |
+|------|-------------|
+| `MESSAGE` | Regular chat message |
+| `MESSAGE_DELIVERED` | Message delivery status update |
+| `MESSAGE_READ` | Message read receipt update |
+| `ack` | Message acknowledgment |
+| `ping/pong` | Connection heartbeat |
 
 ### Role-Based Access Control
 - **OWNER**: Full control (delete group, manage all participants, update settings)
