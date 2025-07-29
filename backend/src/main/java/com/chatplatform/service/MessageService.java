@@ -2,7 +2,9 @@ package com.chatplatform.service;
 
 import com.chatplatform.dto.MessageDistributionEvent;
 import com.chatplatform.model.ChatMessage;
+import com.chatplatform.model.ConversationParticipant;
 import com.chatplatform.repository.mongo.ChatMessageRepository;
+import com.chatplatform.repository.jpa.ConversationParticipantRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
@@ -25,6 +27,7 @@ public class MessageService {
     
     private final ChatMessageRepository messageRepository;
     private final ApplicationEventPublisher eventPublisher;
+    private final ConversationParticipantRepository participantRepository;
     
     // In-memory queue to replace Kafka
     private final BlockingQueue<ChatMessage> messageQueue = new LinkedBlockingQueue<>();
@@ -35,9 +38,11 @@ public class MessageService {
     });
     
     public MessageService(ChatMessageRepository messageRepository,
-                         ApplicationEventPublisher eventPublisher) {
+                         ApplicationEventPublisher eventPublisher,
+                         ConversationParticipantRepository participantRepository) {
         this.messageRepository = messageRepository;
         this.eventPublisher = eventPublisher;
+        this.participantRepository = participantRepository;
     }
     
     @PostConstruct
@@ -79,6 +84,30 @@ public class MessageService {
     
     private void processMessageInternal(ChatMessage message) {
         try {
+            // Initialize message status and set default status to SENT
+            if (message.getStatus() == null) {
+                message.setStatus(ChatMessage.MessageStatus.SENT);
+            }
+            
+            // Initialize delivery tracking for active conversation participants
+            try {
+                List<ConversationParticipant> participants = participantRepository.findByIdConversationIdAndIsActiveTrue(message.getConversationId());
+                
+                for (ConversationParticipant participant : participants) {
+                    String participantUserId = participant.getUserId();
+                    
+                    // Don't mark sender's own message as delivered to themselves
+                    if (!participantUserId.equals(message.getSenderId())) {
+                        message.markAsDeliveredTo(participantUserId);
+                        logger.debug("Marked message {} as delivered to participant: {}", message.getId(), participantUserId);
+                    }
+                }
+                logger.debug("Initialized delivery status for {} participants", participants.size());
+            } catch (Exception e) {
+                logger.warn("Failed to initialize delivery status for message {}: {}", message.getId(), e.getMessage());
+                // Continue with message processing even if delivery initialization fails
+            }
+            
             ChatMessage savedMessage = messageRepository.save(message);
             logger.info("💾 Message saved: {}", savedMessage.getId());
             

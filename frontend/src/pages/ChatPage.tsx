@@ -20,7 +20,7 @@ import { GroupSettingsModal } from '../components/groups/GroupSettingsModal';
 import { api } from '../services/api';
 
 const ChatPage: React.FC = () => {
-  const { messages, sendMessage, isConnected, loadConversationMessages, isLoadingMessages } = useWebSocket();
+  const { messages, sendMessage, sendMessageStatusUpdate, isConnected, loadConversationMessages, isLoadingMessages } = useWebSocket();
   const { user, logout } = useAuth();
   
   // Group modal states
@@ -58,6 +58,31 @@ const ChatPage: React.FC = () => {
     messages.filter(msg => msg.conversationId === chatState.selectedConversation),
     [messages, chatState.selectedConversation]
   );
+
+  // Automatic read receipt handling - mark messages as read when viewing conversation
+  useEffect(() => {
+    if (chatState.selectedConversation && user && conversationMessages.length > 0 && isConnected) {
+      // Small delay to ensure messages are rendered and user has "seen" them
+      const markAsReadTimer = setTimeout(() => {
+        conversationMessages
+          .filter(msg => 
+            msg.senderId !== user.id && // Don't mark own messages as read
+            !msg.readBy?.[user.id]      // Only mark if not already read by this user
+          )
+          .forEach(msg => {
+            console.log(`Marking message ${msg.id} as read by user ${user.id}`);
+            sendMessageStatusUpdate({
+              messageId: msg.id,
+              userId: user.id,
+              statusType: 'READ',
+              timestamp: new Date().toISOString()
+            });
+          });
+      }, 1000); // 1 second delay to ensure user has "seen" the messages
+
+      return () => clearTimeout(markAsReadTimer);
+    }
+  }, [chatState.selectedConversation, conversationMessages, user, isConnected, sendMessageStatusUpdate]);
 
   // Event handlers
   const handleSendMessage = (content: string) => {

@@ -2,11 +2,14 @@ package com.chatplatform.websocket;
 
 import com.chatplatform.model.ChatMessage;
 import com.chatplatform.model.User;
+import com.chatplatform.model.ConversationParticipant;
 import com.chatplatform.dto.MessageStatusUpdate;
 import com.chatplatform.service.ConnectionManager;
 import com.chatplatform.service.MessageService;
 import com.chatplatform.service.MessageStatusService;
 import com.chatplatform.service.UserService;
+import com.chatplatform.repository.jpa.ConversationParticipantRepository;
+import com.chatplatform.repository.mongo.ChatMessageRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
@@ -17,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.HashMap;
 import java.time.Instant;
 import java.util.concurrent.ScheduledExecutorService;
@@ -33,6 +37,8 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private final MessageStatusService messageStatusService;
     private final UserService userService;
     private final ObjectMapper objectMapper;
+    private final ConversationParticipantRepository participantRepository;
+    private final ChatMessageRepository messageRepository;
     
     private final ConcurrentHashMap<String, WebSocketSession> sessions = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<String, ConnectionInfo> connectionInfo = new ConcurrentHashMap<>();
@@ -72,12 +78,16 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
                               MessageService messageService,
                               MessageStatusService messageStatusService,
                               UserService userService,
-                              ObjectMapper objectMapper) {
+                              ObjectMapper objectMapper,
+                              ConversationParticipantRepository participantRepository,
+                              ChatMessageRepository messageRepository) {
         this.connectionManager = connectionManager;
         this.messageService = messageService;
         this.messageStatusService = messageStatusService;
         this.userService = userService;
         this.objectMapper = objectMapper;
+        this.participantRepository = participantRepository;
+        this.messageRepository = messageRepository;
         
         // Start connection monitoring
         initializeConnectionMonitor();
@@ -397,6 +407,15 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
      */
     public void broadcastMessageStatusUpdate(MessageStatusUpdate statusUpdate) {
         try {
+            // Get the conversation ID from the message
+            ChatMessage message = messageRepository.findById(statusUpdate.getMessageId()).orElse(null);
+            if (message == null) {
+                logger.warn("Cannot broadcast status update - message not found: {}", statusUpdate.getMessageId());
+                return;
+            }
+            
+            String conversationId = message.getConversationId();
+            
             // Create WebSocket message wrapper
             Map<String, Object> wsMessage = new HashMap<>();
             wsMessage.put("type", statusUpdate.getStatusType() == MessageStatusUpdate.MessageStatusType.DELIVERED 
@@ -405,20 +424,31 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             
             String json = objectMapper.writeValueAsString(wsMessage);
             
-            // Get all active sessions and send to participants in the same conversation
-            // Note: This is a simplified approach. In a production system, you'd want to
-            // get the conversation participants and only send to them
-            for (WebSocketSession session : sessions.values()) {
-                if (session.isOpen()) {
+            // Get conversation participants and send only to them
+            List<ConversationParticipant> participants = participantRepository.findByIdConversationIdAndIsActiveTrue(conversationId);
+            Set<String> participantUserIds = participants.stream()
+                .map(ConversationParticipant::getUserId)
+                .collect(java.util.stream.Collectors.toSet());
+                
+            int broadcastCount = 0;
+            for (Map.Entry<String, WebSocketSession> entry : sessions.entrySet()) {
+                WebSocketSession session = entry.getValue();
+                String sessionUserId = getUserId(session);
+                
+                // Only send to conversation participants
+                if (session.isOpen() && sessionUserId != null && participantUserIds.contains(sessionUserId)) {
                     try {
                         session.sendMessage(new TextMessage(json));
-                        logger.debug("Broadcasted status update to session: {}", session.getId());
+                        logger.debug("Broadcasted status update to participant {} (session: {})", sessionUserId, session.getId());
+                        broadcastCount++;
                     } catch (Exception e) {
-                        logger.warn("Failed to send status update to session {}: {}", 
-                            session.getId(), e.getMessage());
+                        logger.warn("Failed to send status update to participant {} (session {}): {}", 
+                            sessionUserId, session.getId(), e.getMessage());
                     }
                 }
             }
+            
+            logger.debug("Broadcasted message status update to {} conversation participants", broadcastCount);
             
         } catch (Exception e) {
             logger.error("Error broadcasting message status update: {}", e.getMessage(), e);
