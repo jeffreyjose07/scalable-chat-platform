@@ -84,26 +84,35 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   const getConversationAvatar = (conversation: Conversation) => {
     const displayName = getConversationDisplayName(conversation);
-    console.log('Debug displayName:', displayName, 'type:', typeof displayName);
-    const safeDisplayName = String(displayName || 'U'); // Ensure it's a string
-    console.log('Debug safeDisplayName:', safeDisplayName, 'type:', typeof safeDisplayName);
+    const safeDisplayName = String(displayName || 'U');
+    const avatarColor = `hsl(${safeDisplayName.charCodeAt(0) * 7 % 360}, 70%, 55%)`;
+    
     if (conversation.type === 'DIRECT') {
-      // For direct messages, show user avatar (could be actual image later)
       return (
-        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-          <span className="text-sm font-medium text-white">
-            {safeDisplayName.charAt(0).toUpperCase()}
-          </span>
+        <div className="relative mr-3 flex-shrink-0">
+          <div 
+            className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold shadow-lg"
+            style={{ background: `linear-gradient(135deg, ${avatarColor}, ${avatarColor}dd)` }}
+          >
+            <span className="text-lg">
+              {safeDisplayName.charAt(0).toUpperCase()}
+            </span>
+          </div>
+          {/* Online status indicator */}
+          <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
         </div>
       );
     } else {
-      // For groups, show group icon
       return (
-        <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-          <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
+        <div className="relative mr-3 flex-shrink-0">
+          <div 
+            className="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg"
+            style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}
+          >
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
+            </svg>
+          </div>
         </div>
       );
     }
@@ -170,32 +179,70 @@ const ConversationList: React.FC<ConversationListProps> = ({
             filteredConversations.map((conversation) => (
               <div
                 key={conversation.id}
-                className={`group relative rounded-lg transition-colors ${
+                className={`group relative transition-all duration-200 ${
                   selectedConversation === conversation.id
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'hover:bg-gray-100 text-gray-700'
+                    ? 'bg-green-50 border-r-4 border-green-500 shadow-sm'
+                    : 'hover:bg-gray-50 hover:shadow-sm'
                 }`}
               >
                 <button
                   onClick={() => onSelectConversation(conversation.id)}
-                  className="w-full text-left p-3 rounded-lg"
+                  className="w-full text-left p-4 transition-all duration-200"
                 >
                   <div className="flex items-center">
                     {getConversationAvatar(conversation)}
                     <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between mb-1">
+                        <div className={`font-semibold truncate text-base ${
+                          selectedConversation === conversation.id ? 'text-gray-900' : 'text-gray-800'
+                        }`}>
+                          {String(getConversationDisplayName(conversation))}
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          {conversation.lastMessage && (
+                            <span className="text-xs text-gray-500">
+                              {new Date().toDateString() === new Date(conversation.lastMessage.timestamp || Date.now()).toDateString() 
+                                ? new Date(conversation.lastMessage.timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                : new Date(conversation.lastMessage.timestamp || Date.now()).toLocaleDateString([], { month: 'short', day: 'numeric' })
+                              }
+                            </span>
+                          )}
+                          {unreadCounts[conversation.id] && unreadCounts[conversation.id] > 0 && (
+                            <span className="bg-green-500 text-white text-xs rounded-full px-2.5 py-1 font-semibold shadow-sm">
+                              {unreadCounts[conversation.id] > 99 ? '99+' : unreadCounts[conversation.id]}
+                            </span>
+                          )}
+                        </div>
+                      </div>
                       <div className="flex items-center justify-between">
-                        <div className="font-medium truncate">{String(getConversationDisplayName(conversation))}</div>
-                        {unreadCounts[conversation.id] && unreadCounts[conversation.id] > 0 && (
-                          <span className="bg-blue-500 text-white text-xs rounded-full px-2 py-1 ml-2">
-                            {unreadCounts[conversation.id]}
-                          </span>
+                        {conversation.lastMessage ? (
+                          <div className={`text-sm truncate pr-2 ${
+                            unreadCounts[conversation.id] && unreadCounts[conversation.id] > 0 
+                              ? 'text-gray-700 font-medium' 
+                              : 'text-gray-500'
+                          }`}>
+                            {typeof conversation.lastMessage === 'string' 
+                              ? conversation.lastMessage 
+                              : conversation.lastMessage.content
+                            }
+                          </div>
+                        ) : (
+                          <div className="text-sm text-gray-400 italic">
+                            {conversation.type === 'GROUP' ? 'Group created' : 'Start conversation'}
+                          </div>
+                        )}
+                        {/* Message status for sent messages */}
+                        {conversation.lastMessage && conversation.lastMessage.senderId === currentUserId && (
+                          <div className="flex items-center space-x-0.5 text-gray-400">
+                            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                            <svg className="w-3 h-3 -ml-1" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          </div>
                         )}
                       </div>
-                      {conversation.lastMessage && (
-                        <div className="text-sm text-gray-500 truncate mt-1">
-                          {typeof conversation.lastMessage === 'string' ? conversation.lastMessage : conversation.lastMessage.content}
-                        </div>
-                      )}
                     </div>
                   </div>
                 </button>
