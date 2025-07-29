@@ -320,10 +320,11 @@ const ChatPage: React.FC = () => {
                 <MessageSearchBar
                   isSearchMode={searchHook.isSearchMode}
                   onToggleSearch={searchHook.toggleSearchMode}
-                  onSearch={(query) => searchHook.performSearch(chatState.selectedConversation, query)}
+                  onSearch={(query, filters) => searchHook.performSearch(chatState.selectedConversation, query, filters)}
                   onClearSearch={searchHook.clearSearch}
                   isLoading={searchHook.isSearchLoading}
                   resultsCount={searchHook.searchResult?.totalCount}
+                  enableFilters={true}
                 />
               </div>
             </div>

@@ -34,6 +34,10 @@ public class MessageSearchController {
             @RequestParam String query,
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "20") @Min(1) @Max(100) int size,
+            @RequestParam(required = false) String sender,
+            @RequestParam(required = false) String dateFrom,
+            @RequestParam(required = false) String dateTo,
+            @RequestParam(required = false, defaultValue = "false") boolean hasMedia,
             Authentication authentication) {
         String username = authentication.getName();
         Optional<User> userOpt = userService.findByUsername(username);
@@ -43,7 +47,8 @@ public class MessageSearchController {
         }
         
         String userId = userOpt.get().getId();
-        SearchResultDto results = messageSearchService.searchMessages(conversationId, query, userId, page, size);
+        SearchResultDto results = messageSearchService.searchMessages(
+            conversationId, query, userId, page, size, sender, dateFrom, dateTo, hasMedia);
         return ResponseEntity.ok(results);
     }
     
@@ -60,13 +65,9 @@ public class MessageSearchController {
         }
         
         String userId = userOpt.get().getId();
-        SearchResultDto results = messageSearchService.searchMessages(
-            conversationId, 
-            request.getQuery(), 
-            userId, 
-            request.getPage(), 
-            request.getSize()
-        );
+        
+        // Use the new method that supports advanced filters
+        SearchResultDto results = messageSearchService.searchMessages(conversationId, request, userId);
         return ResponseEntity.ok(results);
     }
     
