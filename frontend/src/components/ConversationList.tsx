@@ -98,8 +98,6 @@ const ConversationList: React.FC<ConversationListProps> = ({
               {safeDisplayName.charAt(0).toUpperCase()}
             </span>
           </div>
-          {/* Online status indicator */}
-          <div className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
         </div>
       );
     } else {

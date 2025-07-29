@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 export interface SearchFilters {
   sender?: string;
@@ -33,7 +34,9 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
   const [showFilters, setShowFilters] = useState(false);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [dropdownPosition, setDropdownPosition] = useState<{ top: number; left: number; width: number } | null>(null);
   const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
   const searchTimeoutRef = useRef<NodeJS.Timeout>();
   const filtersRef = useRef<HTMLDivElement>(null);
 
@@ -56,29 +59,52 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
     }
   }, [isSearchMode]);
 
-  // Handle clicks outside filters panel
+  // Handle clicks outside filters panel and suggestions dropdown
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (filtersRef.current && !filtersRef.current.contains(event.target as Node)) {
+      const target = event.target as Node;
+      
+      // Close filters panel if clicked outside
+      if (filtersRef.current && !filtersRef.current.contains(target)) {
         setShowFilters(false);
+      }
+      
+      // Close suggestions dropdown if clicked outside
+      if (showSuggestions && searchContainerRef.current && !searchContainerRef.current.contains(target)) {
+        setShowSuggestions(false);
+        setDropdownPosition(null);
       }
     };
 
-    if (showFilters) {
+    if (showFilters || showSuggestions) {
       document.addEventListener('mousedown', handleClickOutside);
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }
-  }, [showFilters]);
+  }, [showFilters, showSuggestions]);
 
   // Clear query when search mode is closed
   useEffect(() => {
     if (!isSearchMode) {
       setQuery('');
+      setShowSuggestions(false);
+      setDropdownPosition(null);
       if (searchTimeoutRef.current) {
         clearTimeout(searchTimeoutRef.current);
       }
     }
   }, [isSearchMode]);
+
+  // Calculate dropdown position
+  const calculateDropdownPosition = () => {
+    if (!searchContainerRef.current) return null;
+    
+    const rect = searchContainerRef.current.getBoundingClientRect();
+    return {
+      top: rect.bottom + window.scrollY + 4, // 4px gap (mt-1)
+      left: rect.left + window.scrollX,
+      width: rect.width
+    };
+  };
 
   // Debounced search
   useEffect(() => {
@@ -119,12 +145,15 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
     if (e.key === 'Escape') {
       if (showSuggestions) {
         setShowSuggestions(false);
+        setDropdownPosition(null);
       } else {
         handleClose();
       }
     } else if (e.key === 'Enter' && query.trim()) {
       e.preventDefault();
       performSearch(query.trim());
+      setShowSuggestions(false);
+      setDropdownPosition(null);
     } else if (e.key === 'ArrowDown' && showSuggestions) {
       e.preventDefault();
       // TODO: Implement arrow key navigation for suggestions
@@ -180,7 +209,7 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
 
   return (
     <div className="flex-1 w-full lg:max-w-md">
-      <div className="relative">
+      <div className="relative" ref={searchContainerRef}>
         {/* Search input */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -200,7 +229,15 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
             value={query}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            onFocus={() => setShowSuggestions(recentSearches.length > 0 && !query)}
+            onFocus={() => {
+              if (recentSearches.length > 0 && !query) {
+                const position = calculateDropdownPosition();
+                if (position) {
+                  setDropdownPosition(position);
+                  setShowSuggestions(true);
+                }
+              }
+            }}
             className="w-full pl-10 pr-32 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
           />
           
@@ -258,9 +295,16 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
           </div>
         </div>
         
-        {/* Search suggestions */}
-        {showSuggestions && recentSearches.length > 0 && (
-          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-[9999]">
+        {/* Search suggestions - rendered via Portal */}
+        {showSuggestions && recentSearches.length > 0 && dropdownPosition && createPortal(
+          <div 
+            className="fixed bg-white border border-gray-200 rounded-lg shadow-lg z-[9999]"
+            style={{
+              top: `${dropdownPosition.top}px`,
+              left: `${dropdownPosition.left}px`,
+              width: `${dropdownPosition.width}px`
+            }}
+          >
             <div className="p-2 border-b border-gray-100">
               <span className="text-xs font-medium text-gray-500">Recent searches</span>
             </div>
@@ -270,6 +314,8 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                 onClick={() => {
                   setQuery(search);
                   performSearch(search);
+                  setShowSuggestions(false);
+                  setDropdownPosition(null);
                 }}
                 className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm flex items-center space-x-2"
               >
@@ -279,7 +325,8 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                 <span className="flex-1">{search}</span>
               </button>
             ))}
-          </div>
+          </div>,
+          document.body
         )}
 
         {/* Search tips */}

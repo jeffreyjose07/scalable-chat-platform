@@ -160,29 +160,36 @@ interface MessageStatusIndicatorProps {
 }
 
 const MessageStatusIndicator: React.FC<MessageStatusIndicatorProps> = ({ message, currentUserId }) => {
-  // Get the actual status from the message, with backward compatibility fallback
+  // Get the actual status from the message, with proper read receipt logic
   const getMessageStatus = (): MessageStatus => {
-    // If message has explicit status, use it
+    // If message has explicit status, use it (this is set by backend)
     if (message.status) {
       return message.status as MessageStatus;
     }
     
-    // Backward compatibility: determine status from other fields
-    if (message.readBy && Object.keys(message.readBy).length > 0) {
-      return MessageStatus.READ;
+    // For sender's own messages, show read receipt status based on other participants
+    if (currentUserId && message.senderId === currentUserId) {
+      // Check if any participants have read the message
+      if (message.readBy && Object.keys(message.readBy).length > 0) {
+        return MessageStatus.READ;
+      }
+      
+      // Check if any participants have received the message
+      if (message.deliveredTo && Object.keys(message.deliveredTo).length > 0) {
+        return MessageStatus.DELIVERED;
+      }
+      
+      // Check if message is very recent (last 5 seconds) - show as pending
+      const isRecent = new Date().getTime() - new Date(message.timestamp).getTime() < 5000;
+      if (isRecent) {
+        return MessageStatus.PENDING;
+      }
+      
+      // Default to sent for older messages
+      return MessageStatus.SENT;
     }
     
-    if (message.deliveredTo && Object.keys(message.deliveredTo).length > 0) {
-      return MessageStatus.DELIVERED;
-    }
-    
-    // Check if message is very recent (last 5 seconds) - show as pending
-    const isRecent = new Date().getTime() - new Date(message.timestamp).getTime() < 5000;
-    if (isRecent) {
-      return MessageStatus.PENDING;
-    }
-    
-    // Default to sent for older messages
+    // For received messages, don't show status (only sender sees read receipts)
     return MessageStatus.SENT;
   };
   
