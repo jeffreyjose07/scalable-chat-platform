@@ -209,7 +209,7 @@ const ChatPage: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-white relative">
+    <div className="flex h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 relative">
       {/* Mobile Sidebar Overlay */}
       {chatState.isMobileSidebarOpen && (
         <div 
@@ -221,24 +221,32 @@ const ChatPage: React.FC = () => {
       {/* Sidebar - Conversations */}
       <div className={`
         fixed lg:relative lg:translate-x-0 z-50 lg:z-0
-        w-80 lg:w-72 xl:w-80 bg-gray-50 border-r border-gray-200 h-screen
-        flex flex-col
+        w-80 lg:w-72 xl:w-80 bg-white/80 backdrop-blur-sm border-r border-gray-200/50 h-screen
+        flex flex-col shadow-lg lg:shadow-none
         transition-transform duration-300 ease-in-out
         ${chatState.isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
-        <div className="p-4 border-b border-gray-200 flex-shrink-0">
+        <div className="p-4 border-b border-gray-200/50 flex-shrink-0 bg-gradient-to-r from-green-50 to-blue-50">
           <div className="flex items-center justify-between">
-            <h1 className="text-lg lg:text-xl font-semibold text-gray-900">Chat Platform</h1>
+            <h1 className="text-lg lg:text-xl font-bold text-gray-900 flex items-center">
+              <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mr-2 shadow-md">
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
+                  <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
+                </svg>
+              </div>
+              Chat Platform
+            </h1>
             <div className="flex items-center space-x-2">
               <button
                 onClick={logout}
-                className="text-sm text-gray-500 hover:text-gray-700"
+                className="text-sm text-gray-500 hover:text-gray-700 hover:bg-white/50 px-2 py-1 rounded-md transition-colors"
               >
                 Logout
               </button>
               <button
                 onClick={() => chatState.setIsMobileSidebarOpen(false)}
-                className="lg:hidden p-1 text-gray-500 hover:text-gray-700"
+                className="lg:hidden p-1 text-gray-500 hover:text-gray-700 hover:bg-white/50 rounded-md transition-colors"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -246,15 +254,20 @@ const ChatPage: React.FC = () => {
               </button>
             </div>
           </div>
-          <div className="flex items-center mt-2">
-            <div className={`w-3 h-3 rounded-full mr-2 ${isConnected ? 'bg-green-500' : 'bg-red-500'}`}></div>
-            <span className="text-sm text-gray-600">
+          <div className="flex items-center mt-3">
+            <div className={`w-3 h-3 rounded-full mr-2 shadow-sm ${isConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></div>
+            <span className={`text-sm font-medium ${isConnected ? 'text-green-700' : 'text-red-600'}`}>
               {isConnected ? 'Connected' : 'Disconnected'}
             </span>
           </div>
           {user && (
-            <div className="mt-2 text-sm text-gray-600">
-              Welcome, {user.displayName || user.username}
+            <div className="mt-2 text-sm text-gray-700 bg-white/50 rounded-lg px-3 py-2">
+              <div className="flex items-center">
+                <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-semibold mr-2 shadow-sm">
+                  {(user.displayName || user.username).charAt(0).toUpperCase()}
+                </div>
+                <span className="font-medium">Welcome, {user.displayName || user.username}</span>
+              </div>
             </div>
           )}
         </div>
@@ -280,12 +293,12 @@ const ChatPage: React.FC = () => {
           searchHook.isSearchMode ? 'lg:w-1/2' : 'w-full'
         }`}>
           {/* Chat Header */}
-          <div className="p-4 border-b border-gray-200 bg-white">
+          <div className="p-4 border-b border-gray-200/50 bg-white/90 backdrop-blur-sm shadow-sm">
             <div className="flex items-center justify-between">
               <div className="flex items-center min-w-0 flex-1">
                 <button
                   onClick={() => chatState.setIsMobileSidebarOpen(true)}
-                  className="lg:hidden p-2 -ml-2 text-gray-500 hover:text-gray-700 mr-2 flex-shrink-0"
+                  className="lg:hidden p-2 -ml-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg mr-2 flex-shrink-0 transition-colors"
                 >
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -293,11 +306,23 @@ const ChatPage: React.FC = () => {
                 </button>
                 
                 <div className="min-w-0 flex-1">
-                  <h2 className="text-lg font-medium text-gray-900 truncate">
-                    {chatState.selectedConversation ? getConversationDisplayName(chatState.selectedConversation) : 'No conversation selected'}
-                  </h2>
-                  <div className="text-sm text-gray-500">
-                    {conversationMessages.length} messages
+                  <div className="flex items-center">
+                    {chatState.selectedConversation && (
+                      <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-semibold mr-3 shadow-md">
+                        {getConversationDisplayName(chatState.selectedConversation).charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    <div>
+                      <h2 className="text-lg font-semibold text-gray-900 truncate">
+                        {chatState.selectedConversation ? getConversationDisplayName(chatState.selectedConversation) : 'No conversation selected'}
+                      </h2>
+                      <div className="text-sm text-gray-500 flex items-center">
+                        <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                        {conversationMessages.length} messages
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -334,7 +359,7 @@ const ChatPage: React.FC = () => {
           <MessageList messages={conversationMessages} currentUserId={user?.id} isLoading={isLoadingMessages} />
 
           {/* Message Input */}
-          <div className="border-t border-gray-200 bg-white">
+          <div className="border-t border-gray-200/50 bg-white/90 backdrop-blur-sm">
             <MessageInput 
               key={chatState.selectedConversation} 
               onSendMessage={handleSendMessage} 
