@@ -43,4 +43,7 @@ public interface ChatMessageRepository extends MongoRepository<ChatMessage, Stri
     // Get messages around a specific message (for context)
     @Query("{ 'conversationId': ?0, 'timestamp': { '$gte': ?1, '$lte': ?2 } }")
     List<ChatMessage> findByConversationIdAndTimestampBetween(String conversationId, Instant startTime, Instant endTime);
+    
+    // Find messages in conversation not sent by a specific user (for read status updates)
+    List<ChatMessage> findByConversationIdAndSenderIdNot(String conversationId, String senderId);
 }

@@ -6,6 +6,9 @@ export interface ChatMessage {
   content: string;
   type: MessageType;
   timestamp: string;
+  status?: MessageStatus; // Optional for backward compatibility
+  deliveredTo?: Record<string, string>; // userId -> timestamp (ISO string)
+  readBy?: Record<string, string>; // userId -> timestamp (ISO string)
 }
 
 export enum MessageType {
@@ -13,6 +16,25 @@ export enum MessageType {
   IMAGE = 'IMAGE',
   FILE = 'FILE',
   SYSTEM = 'SYSTEM'
+}
+
+export enum MessageStatus {
+  PENDING = 'PENDING',    // Message being sent/processing
+  SENT = 'SENT',         // Message sent to server successfully  
+  DELIVERED = 'DELIVERED', // Message delivered to recipient(s)
+  READ = 'READ'          // Message read by recipient(s)
+}
+
+export interface MessageStatusUpdate {
+  messageId: string;
+  userId: string;
+  statusType: 'DELIVERED' | 'READ';
+  timestamp: string;
+}
+
+export interface WebSocketMessage {
+  type: 'MESSAGE' | 'MESSAGE_DELIVERED' | 'MESSAGE_READ' | 'CONVERSATION_READ';
+  data: any;
 }
 
 export interface Conversation {
