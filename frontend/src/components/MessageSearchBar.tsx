@@ -260,7 +260,7 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
         
         {/* Search suggestions */}
         {showSuggestions && recentSearches.length > 0 && (
-          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-20">
+          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-[9999]">
             <div className="p-2 border-b border-gray-100">
               <span className="text-xs font-medium text-gray-500">Recent searches</span>
             </div>
@@ -284,7 +284,7 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
 
         {/* Search tips */}
         {isSearchMode && !query && !showSuggestions && (
-          <div className="absolute top-full left-0 right-0 mt-1 p-2 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-600 z-10">
+          <div className="absolute top-full left-0 right-0 mt-1 p-2 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-600 z-[9999]">
             <div className="flex items-center space-x-4">
               <span>💡 Search for messages in this conversation</span>
               <span className="text-gray-400">Press Esc to close</span>
