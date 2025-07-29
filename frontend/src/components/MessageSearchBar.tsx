@@ -313,23 +313,35 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                 key={index}
                 onClick={(e) => {
                   e.preventDefault();
-                  // Clear any pending search timeout
+                  console.log('Recent search clicked:', search);
+                  
+                  // Clear any pending search timeout to prevent interference
                   if (searchTimeoutRef.current) {
                     clearTimeout(searchTimeoutRef.current);
                   }
                   
-                  // Set query and perform search immediately
-                  setQuery(search);
+                  // Hide suggestions immediately
                   setShowSuggestions(false);
                   setDropdownPosition(null);
                   
-                  // Focus input to show the updated query
+                  // Set query state and trigger search directly
+                  setQuery(search);
+                  
+                  // Focus input immediately
                   if (searchInputRef.current) {
                     searchInputRef.current.focus();
                   }
                   
-                  // Perform search immediately - bypass debouncing
-                  performSearch(search);
+                  // Perform search immediately without debouncing
+                  // Save to recent searches
+                  const newRecentSearches = [search, ...recentSearches.filter(s => s !== search)].slice(0, 5);
+                  setRecentSearches(newRecentSearches);
+                  localStorage.setItem('recentSearches', JSON.stringify(newRecentSearches));
+                  
+                  // Trigger the actual search
+                  onSearch(search, Object.keys(filters).length > 0 ? filters : undefined);
+                  
+                  console.log('Search performed for:', search);
                 }}
                 className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm flex items-center space-x-2"
               >

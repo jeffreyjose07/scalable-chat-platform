@@ -66,6 +66,13 @@ const ConversationList: React.FC<ConversationListProps> = ({
     currentUserId
   });
 
+  // Utility function to determine text color based on background brightness
+  const getTextColorForBackground = (hue: number, saturation: number, lightness: number) => {
+    // For light backgrounds (lightness > 60), use dark text
+    // For dark backgrounds (lightness <= 60), use white text
+    return lightness > 60 ? 'text-gray-800' : 'text-white';
+  };
+
   const getConversationDisplayName = (conversation: Conversation) => {
     if (conversation.type === 'DIRECT' && conversation.participants && conversation.participants.length > 0) {
       // Backend returns ConversationParticipantDto objects with nested user property
@@ -85,13 +92,18 @@ const ConversationList: React.FC<ConversationListProps> = ({
   const getConversationAvatar = (conversation: Conversation) => {
     const displayName = getConversationDisplayName(conversation);
     const safeDisplayName = String(displayName || 'U');
-    const avatarColor = `hsl(${safeDisplayName.charCodeAt(0) * 7 % 360}, 70%, 55%)`;
+    const hue = safeDisplayName.charCodeAt(0) * 7 % 360;
+    const saturation = 70;
+    const lightness = 55; // Default lightness
+    
+    const avatarColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    const textColorClass = getTextColorForBackground(hue, saturation, lightness);
     
     if (conversation.type === 'DIRECT') {
       return (
         <div className="relative mr-3 flex-shrink-0">
           <div 
-            className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold shadow-lg"
+            className={`w-12 h-12 rounded-full flex items-center justify-center ${textColorClass} font-semibold shadow-lg`}
             style={{ background: `linear-gradient(135deg, ${avatarColor}, ${avatarColor}dd)` }}
           >
             <span className="text-lg">
