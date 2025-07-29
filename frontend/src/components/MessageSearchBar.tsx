@@ -294,7 +294,7 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
 
         {/* Advanced filters */}
         {showFilters && enableFilters && (
-          <div ref={filtersRef} className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-50 p-4 max-w-sm lg:max-w-md">
+          <div ref={filtersRef} className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-[9999] p-4 max-w-sm lg:max-w-md">
             <div className="flex items-center justify-between mb-3">
               <span className="text-sm font-medium text-gray-700">Search Filters</span>
               {hasActiveFilters && (
