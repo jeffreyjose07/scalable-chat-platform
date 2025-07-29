@@ -311,11 +311,25 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
             {recentSearches.map((search, index) => (
               <button
                 key={index}
-                onClick={() => {
+                onClick={(e) => {
+                  e.preventDefault();
+                  // Clear any pending search timeout
+                  if (searchTimeoutRef.current) {
+                    clearTimeout(searchTimeoutRef.current);
+                  }
+                  
+                  // Set query and perform search immediately
                   setQuery(search);
-                  performSearch(search);
                   setShowSuggestions(false);
                   setDropdownPosition(null);
+                  
+                  // Focus input to show the updated query
+                  if (searchInputRef.current) {
+                    searchInputRef.current.focus();
+                  }
+                  
+                  // Perform search immediately - bypass debouncing
+                  performSearch(search);
                 }}
                 className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm flex items-center space-x-2"
               >
