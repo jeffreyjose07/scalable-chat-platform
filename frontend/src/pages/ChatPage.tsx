@@ -293,7 +293,7 @@ const ChatPage: React.FC = () => {
           searchHook.isSearchMode ? 'lg:w-1/2' : 'w-full'
         }`}>
           {/* Chat Header */}
-          <div className="p-4 border-b border-gray-200/50 bg-white/90 backdrop-blur-sm shadow-sm">
+          <div className="p-4 border-b border-gray-200/50 bg-white/90 backdrop-blur-sm shadow-sm overflow-visible">
             <div className="flex items-center justify-between">
               <div className="flex items-center min-w-0 flex-1">
                 <button
@@ -327,7 +327,7 @@ const ChatPage: React.FC = () => {
                 </div>
               </div>
               
-              <div className="flex items-center space-x-2 flex-shrink-0">
+              <div className="flex items-center space-x-2 flex-shrink-0 relative">
                 {/* Group Settings Button */}
                 {isCurrentConversationGroup() && (
                   <button
