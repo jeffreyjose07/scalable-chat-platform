@@ -84,6 +84,28 @@ interface MessageBubbleProps {
 }
 
 const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isOwn, currentUserId }) => {
+  // Utility function to determine text color based on background brightness
+  const getTextColorForBackground = (hue: number, saturation: number, lightness: number) => {
+    // For light backgrounds (lightness > 60), use dark text
+    // For dark backgrounds (lightness <= 60), use white text
+    return lightness > 60 ? 'text-gray-800' : 'text-white';
+  };
+
+  // Generate consistent avatar colors for users
+  const getAvatarStyle = (username: string) => {
+    const safeUsername = String(username || 'U');
+    const hue = safeUsername.charCodeAt(0) * 7 % 360;
+    const saturation = 70;
+    const lightness = 55;
+    
+    const backgroundColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    const textColorClass = getTextColorForBackground(hue, saturation, lightness);
+    
+    return {
+      backgroundColor,
+      textColorClass
+    };
+  };
   const formatTime = (timestamp: string) => {
     const messageDate = new Date(timestamp);
     const now = new Date();
@@ -104,9 +126,17 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isOwn, currentUs
       {/* Avatar for received messages */}
       {!isOwn && (
         <div className="flex-shrink-0 mr-2 self-end">
-          <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-semibold shadow-md">
-            {(message.senderUsername || 'U').charAt(0).toUpperCase()}
-          </div>
+          {(() => {
+            const avatarStyle = getAvatarStyle(message.senderUsername || 'U');
+            return (
+              <div 
+                className={`w-8 h-8 rounded-full flex items-center justify-center ${avatarStyle.textColorClass} text-xs font-semibold shadow-md`}
+                style={{ backgroundColor: avatarStyle.backgroundColor }}
+              >
+                {(message.senderUsername || 'U').charAt(0).toUpperCase()}
+              </div>
+            );
+          })()}
         </div>
       )}
       
