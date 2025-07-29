@@ -1,13 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+export interface SearchFilters {
+  sender?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  hasMedia?: boolean;
+}
+
 interface MessageSearchBarProps {
   isSearchMode: boolean;
   onToggleSearch: () => void;
-  onSearch: (query: string) => void;
+  onSearch: (query: string, filters?: SearchFilters) => void;
   onClearSearch: () => void;
   isLoading?: boolean;
   resultsCount?: number;
   placeholder?: string;
+  enableFilters?: boolean;
 }
 
 const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
@@ -17,11 +25,29 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
   onClearSearch,
   isLoading = false,
   resultsCount,
-  placeholder = "Search messages..."
+  placeholder = "Search messages...",
+  enableFilters = true
 }) => {
   const [query, setQuery] = useState('');
+  const [filters, setFilters] = useState<SearchFilters>({});
+  const [showFilters, setShowFilters] = useState(false);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchTimeoutRef = useRef<NodeJS.Timeout>();
+  const filtersRef = useRef<HTMLDivElement>(null);
+
+  // Load recent searches from localStorage
+  useEffect(() => {
+    const stored = localStorage.getItem('recentSearches');
+    if (stored) {
+      try {
+        setRecentSearches(JSON.parse(stored));
+      } catch (e) {
+        console.warn('Failed to parse recent searches');
+      }
+    }
+  }, []);
 
   // Focus input when search mode is activated
   useEffect(() => {
@@ -29,6 +55,20 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
       searchInputRef.current.focus();
     }
   }, [isSearchMode]);
+
+  // Handle clicks outside filters panel
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (filtersRef.current && !filtersRef.current.contains(event.target as Node)) {
+        setShowFilters(false);
+      }
+    };
+
+    if (showFilters) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [showFilters]);
 
   // Clear query when search mode is closed
   useEffect(() => {
@@ -48,7 +88,7 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
 
     if (isSearchMode && query.trim()) {
       searchTimeoutRef.current = setTimeout(() => {
-        onSearch(query.trim());
+        performSearch(query.trim());
       }, 300);
     } else if (isSearchMode && query === '') {
       onClearSearch();
@@ -59,7 +99,17 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
         clearTimeout(searchTimeoutRef.current);
       }
     };
-  }, [query, isSearchMode, onSearch, onClearSearch]);
+  }, [query, filters, isSearchMode]);
+
+  const performSearch = (searchQuery: string) => {
+    // Save to recent searches
+    const newRecentSearches = [searchQuery, ...recentSearches.filter(s => s !== searchQuery)].slice(0, 5);
+    setRecentSearches(newRecentSearches);
+    localStorage.setItem('recentSearches', JSON.stringify(newRecentSearches));
+    
+    setShowSuggestions(false);
+    onSearch(searchQuery, Object.keys(filters).length > 0 ? filters : undefined);
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
@@ -67,7 +117,17 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Escape') {
-      handleClose();
+      if (showSuggestions) {
+        setShowSuggestions(false);
+      } else {
+        handleClose();
+      }
+    } else if (e.key === 'Enter' && query.trim()) {
+      e.preventDefault();
+      performSearch(query.trim());
+    } else if (e.key === 'ArrowDown' && showSuggestions) {
+      e.preventDefault();
+      // TODO: Implement arrow key navigation for suggestions
     }
   };
 
@@ -79,11 +139,29 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
 
   const handleClear = () => {
     setQuery('');
+    setFilters({});
+    setShowSuggestions(false);
     onClearSearch();
     if (searchInputRef.current) {
       searchInputRef.current.focus();
     }
   };
+
+  const handleFilterChange = (key: keyof SearchFilters, value: any) => {
+    const newFilters = { ...filters };
+    if (value === '' || value === undefined || value === false) {
+      delete newFilters[key];
+    } else {
+      newFilters[key] = value;
+    }
+    setFilters(newFilters);
+  };
+
+  const clearFilters = () => {
+    setFilters({});
+  };
+
+  const hasActiveFilters = Object.keys(filters).length > 0;
 
   if (!isSearchMode) {
     // Search toggle button
@@ -122,7 +200,8 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
             value={query}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            className="w-full pl-10 pr-20 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+            onFocus={() => setShowSuggestions(recentSearches.length > 0 && !query)}
+            className="w-full pl-10 pr-32 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
           />
           
           <div className="absolute inset-y-0 right-0 flex items-center">
@@ -133,8 +212,28 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
               </span>
             )}
             
+            {/* Filter toggle button */}
+            {enableFilters && (
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className={`p-1 transition-colors mr-1 ${
+                  hasActiveFilters
+                    ? 'text-blue-600 hover:text-blue-700'
+                    : 'text-gray-400 hover:text-gray-600'
+                }`}
+                title="Search filters"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z" />
+                </svg>
+                {hasActiveFilters && (
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-blue-600 rounded-full"></div>
+                )}
+              </button>
+            )}
+            
             {/* Clear button */}
-            {query && (
+            {(query || hasActiveFilters) && (
               <button
                 onClick={handleClear}
                 className="p-1 text-gray-400 hover:text-gray-600 transition-colors mr-1"
@@ -159,12 +258,102 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
           </div>
         </div>
         
+        {/* Search suggestions */}
+        {showSuggestions && recentSearches.length > 0 && (
+          <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-20">
+            <div className="p-2 border-b border-gray-100">
+              <span className="text-xs font-medium text-gray-500">Recent searches</span>
+            </div>
+            {recentSearches.map((search, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  setQuery(search);
+                  performSearch(search);
+                }}
+                className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm flex items-center space-x-2"
+              >
+                <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="flex-1">{search}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
         {/* Search tips */}
-        {isSearchMode && !query && (
+        {isSearchMode && !query && !showSuggestions && (
           <div className="absolute top-full left-0 right-0 mt-1 p-2 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-600 z-10">
             <div className="flex items-center space-x-4">
               <span>💡 Search for messages in this conversation</span>
               <span className="text-gray-400">Press Esc to close</span>
+            </div>
+          </div>
+        )}
+
+        {/* Advanced filters */}
+        {showFilters && enableFilters && (
+          <div ref={filtersRef} className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-20 p-4">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-sm font-medium text-gray-700">Search Filters</span>
+              {hasActiveFilters && (
+                <button
+                  onClick={clearFilters}
+                  className="text-xs text-blue-600 hover:text-blue-700"
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
+            
+            <div className="space-y-3">
+              {/* Sender filter */}
+              <div>
+                <label className="block text-xs font-medium text-gray-600 mb-1">From user</label>
+                <input
+                  type="text"
+                  placeholder="Username..."
+                  value={filters.sender || ''}
+                  onChange={(e) => handleFilterChange('sender', e.target.value)}
+                  className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                />
+              </div>
+              
+              {/* Date range */}
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">From date</label>
+                  <input
+                    type="date"
+                    value={filters.dateFrom || ''}
+                    onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
+                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">To date</label>
+                  <input
+                    type="date"
+                    value={filters.dateTo || ''}
+                    onChange={(e) => handleFilterChange('dateTo', e.target.value)}
+                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+              </div>
+              
+              {/* Media filter */}
+              <div>
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={filters.hasMedia || false}
+                    onChange={(e) => handleFilterChange('hasMedia', e.target.checked)}
+                    className="w-3 h-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                  />
+                  <span className="text-xs text-gray-600">Has attachments</span>
+                </label>
+              </div>
             </div>
           </div>
         )}

@@ -1,5 +1,6 @@
 package com.chatplatform.service;
 
+import com.chatplatform.dto.MessageSearchRequest;
 import com.chatplatform.dto.MessageSearchResultDto;
 import com.chatplatform.dto.SearchResultDto;
 import com.chatplatform.model.ChatMessage;
@@ -12,6 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -34,12 +38,13 @@ public class MessageSearchService {
     }
     
     /**
-     * Search messages within a conversation
+     * Search messages within a conversation with filters
      */
     public SearchResultDto searchMessages(String conversationId, String query, 
-                                        String userId, int page, int size) {
-        logger.debug("Searching messages in conversation: {}, query: '{}', user: {}, page: {}, size: {}", 
-                    conversationId, query, userId, page, size);
+                                        String userId, int page, int size,
+                                        String sender, String dateFrom, String dateTo, boolean hasMedia) {
+        logger.debug("Searching messages in conversation: {}, query: '{}', user: {}, page: {}, size: {}, filters: sender={}, dateFrom={}, dateTo={}, hasMedia={}", 
+                    conversationId, query, userId, page, size, sender, dateFrom, dateTo, hasMedia);
         
         // Validate user access to conversation
         if (!conversationService.hasUserAccess(userId, conversationId)) {
@@ -62,8 +67,50 @@ public class MessageSearchService {
                                          Sort.by(Sort.Direction.DESC, "timestamp"));
         
         try {
-            // Try MongoDB text search first
+            // Try MongoDB text search first with filters
             return performTextSearch(conversationId, sanitizedQuery, validatedPage, validatedSize, pageable);
+        } catch (Exception e) {
+            logger.warn("Text search failed, falling back to regex search: {}", e.getMessage());
+            // Fallback to regex search with filters
+            return performRegexSearch(conversationId, sanitizedQuery, validatedPage, validatedSize, pageable);
+        }
+    }
+    
+    /**
+     * Search messages with advanced filters using MessageSearchRequest
+     */
+    public SearchResultDto searchMessages(String conversationId, MessageSearchRequest request, String userId) {
+        logger.debug("Searching messages with filters in conversation: {}, query: '{}', user: {}", 
+                    conversationId, request.getQuery(), userId);
+        
+        // Validate user access to conversation
+        if (!conversationService.hasUserAccess(userId, conversationId)) {
+            logger.warn("User {} does not have access to conversation {}", userId, conversationId);
+            return createEmptyResult(request.getQuery(), conversationId, request.getPage(), request.getSize());
+        }
+        
+        // Validate and sanitize inputs
+        String sanitizedQuery = sanitizeQuery(request.getQuery());
+        if (sanitizedQuery.isEmpty()) {
+            logger.debug("Empty query after sanitization");
+            return createEmptyResult(request.getQuery(), conversationId, request.getPage(), request.getSize());
+        }
+        
+        int validatedSize = Math.min(Math.max(1, request.getSize()), MAX_PAGE_SIZE);
+        int validatedPage = Math.max(0, request.getPage());
+        
+        // Create pageable
+        Pageable pageable = PageRequest.of(validatedPage, validatedSize, 
+                                         Sort.by(Sort.Direction.DESC, "timestamp"));
+        
+        try {
+            // Check if filters are applied
+            if (hasFilters(request)) {
+                return performAdvancedTextSearch(conversationId, sanitizedQuery, request, validatedPage, validatedSize, pageable);
+            } else {
+                // Use basic search if no filters
+                return performTextSearch(conversationId, sanitizedQuery, validatedPage, validatedSize, pageable);
+            }
         } catch (Exception e) {
             logger.warn("Text search failed, falling back to regex search: {}", e.getMessage());
             // Fallback to regex search
@@ -72,10 +119,18 @@ public class MessageSearchService {
     }
     
     /**
-     * Search messages with default pagination
+     * Search messages with default pagination (backward compatibility)
      */
     public SearchResultDto searchMessages(String conversationId, String query, String userId) {
-        return searchMessages(conversationId, query, userId, 0, DEFAULT_PAGE_SIZE);
+        return searchMessages(conversationId, query, userId, 0, DEFAULT_PAGE_SIZE, null, null, null, false);
+    }
+    
+    
+    /**
+     * Search messages with pagination (backward compatibility)
+     */
+    public SearchResultDto searchMessages(String conversationId, String query, String userId, int page, int size) {
+        return searchMessages(conversationId, query, userId, page, size, null, null, null, false);
     }
     
     /**
@@ -135,50 +190,77 @@ public class MessageSearchService {
     
     // Private helper methods
     
-    private SearchResultDto performTextSearch(String conversationId, String query, 
-                                            int page, int size, Pageable pageable) {
-        logger.debug("Performing MongoDB text search for: '{}'", query);
-        
-        // Get search results
-        List<ChatMessage> messages = messageRepository.findByConversationIdAndTextSearch(
-            conversationId, query, pageable);
-        
-        // Get total count
-        long totalCount = messageRepository.countByConversationIdAndTextSearch(conversationId, query);
-        
-        // Convert to DTOs with highlighting
-        List<MessageSearchResultDto> resultDtos = messages.stream()
-            .map(msg -> convertToSearchResult(msg, query))
-            .collect(Collectors.toList());
-        
-        logger.debug("Text search found {} results out of {} total", resultDtos.size(), totalCount);
-        
-        return new SearchResultDto(resultDtos, (int) totalCount, page, size, query, conversationId);
+    private boolean hasFilters(MessageSearchRequest request) {
+        return (request.getSenderUsername() != null && !request.getSenderUsername().trim().isEmpty()) ||
+               request.getDateFrom() != null || 
+               request.getDateTo() != null || 
+               (request.getHasMedia() != null && request.getHasMedia());
     }
     
-    private SearchResultDto performRegexSearch(String conversationId, String query, 
-                                             int page, int size, Pageable pageable) {
-        logger.debug("Performing regex search for: '{}'", query);
+    private SearchResultDto performAdvancedTextSearch(String conversationId, String query, 
+                                                    MessageSearchRequest request, int page, int size, Pageable pageable) {
+        logger.debug("Performing advanced MongoDB text search for: '{}' with filters", query);
         
-        // Escape special regex characters
-        String escapedQuery = Pattern.quote(query);
+        // Get all matching messages first (without filters applied in query)
+        // Use a larger page size to get more results for filtering
+        Pageable largePageable = PageRequest.of(0, 1000, pageable.getSort());
+        List<ChatMessage> allMessages = messageRepository.findByConversationIdAndTextSearch(
+            conversationId, query, largePageable);
         
-        // Get search results
-        List<ChatMessage> messages = messageRepository.findByConversationIdAndContentRegex(
-            conversationId, escapedQuery, pageable);
+        // Apply filters in memory
+        List<ChatMessage> filteredMessages = applyFilters(allMessages, request);
         
-        // Get total count
-        long totalCount = messageRepository.countByConversationIdAndContentRegex(conversationId, escapedQuery);
+        // Apply pagination to filtered results
+        int start = page * size;
+        int end = Math.min(start + size, filteredMessages.size());
+        List<ChatMessage> pageMessages = start < filteredMessages.size() ? 
+            filteredMessages.subList(start, end) : List.of();
         
         // Convert to DTOs with highlighting
-        List<MessageSearchResultDto> resultDtos = messages.stream()
+        List<MessageSearchResultDto> resultDtos = pageMessages.stream()
             .map(msg -> convertToSearchResult(msg, query))
             .collect(Collectors.toList());
         
-        logger.debug("Regex search found {} results out of {} total", resultDtos.size(), totalCount);
+        logger.debug("Advanced text search found {} results out of {} total", resultDtos.size(), filteredMessages.size());
         
-        return new SearchResultDto(resultDtos, (int) totalCount, page, size, query, conversationId);
+        return new SearchResultDto(resultDtos, filteredMessages.size(), page, size, query, conversationId);
     }
+    
+    private List<ChatMessage> applyFilters(List<ChatMessage> messages, MessageSearchRequest request) {
+        return messages.stream()
+            .filter(msg -> {
+                // Sender filter
+                if (request.getSenderUsername() != null && !request.getSenderUsername().trim().isEmpty()) {
+                    if (!msg.getSenderUsername().toLowerCase().contains(request.getSenderUsername().toLowerCase())) {
+                        return false;
+                    }
+                }
+                
+                // Date from filter
+                if (request.getDateFrom() != null) {
+                    if (msg.getTimestamp().isBefore(request.getDateFrom())) {
+                        return false;
+                    }
+                }
+                
+                // Date to filter
+                if (request.getDateTo() != null) {
+                    // Add 24 hours to include the entire day
+                    Instant endOfDay = request.getDateTo().plusSeconds(24 * 60 * 60);
+                    if (msg.getTimestamp().isAfter(endOfDay)) {
+                        return false;
+                    }
+                }
+                
+                // Media filter (for now, we'll skip this since ChatMessage doesn't have attachment info)
+                // This would require enhancing the ChatMessage model or querying attachments separately
+                
+                return true;
+            })
+            .collect(Collectors.toList());
+    }
+    
+    
     
     private MessageSearchResultDto convertToSearchResult(ChatMessage message, String query) {
         MessageSearchResultDto result = new MessageSearchResultDto(
@@ -233,7 +315,53 @@ public class MessageSearchService {
         return sanitized;
     }
     
+    private SearchResultDto performTextSearch(String conversationId, String query, 
+                                            int page, int size, Pageable pageable) {
+        logger.debug("Performing MongoDB text search for: '{}'", query);
+        
+        // Get search results
+        List<ChatMessage> messages = messageRepository.findByConversationIdAndTextSearch(
+            conversationId, query, pageable);
+        
+        // Get total count
+        long totalCount = messageRepository.countByConversationIdAndTextSearch(conversationId, query);
+        
+        // Convert to DTOs with highlighting
+        List<MessageSearchResultDto> resultDtos = messages.stream()
+            .map(msg -> convertToSearchResult(msg, query))
+            .collect(Collectors.toList());
+        
+        logger.debug("Text search found {} results out of {} total", resultDtos.size(), totalCount);
+        
+        return new SearchResultDto(resultDtos, (int) totalCount, page, size, query, conversationId);
+    }
+    
+    private SearchResultDto performRegexSearch(String conversationId, String query, 
+                                             int page, int size, Pageable pageable) {
+        logger.debug("Performing regex search for: '{}'", query);
+        
+        // Escape special regex characters
+        String escapedQuery = Pattern.quote(query);
+        
+        // Get search results
+        List<ChatMessage> messages = messageRepository.findByConversationIdAndContentRegex(
+            conversationId, escapedQuery, pageable);
+        
+        // Get total count
+        long totalCount = messageRepository.countByConversationIdAndContentRegex(conversationId, escapedQuery);
+        
+        // Convert to DTOs with highlighting
+        List<MessageSearchResultDto> resultDtos = messages.stream()
+            .map(msg -> convertToSearchResult(msg, query))
+            .collect(Collectors.toList());
+        
+        logger.debug("Regex search found {} results out of {} total", resultDtos.size(), totalCount);
+        
+        return new SearchResultDto(resultDtos, (int) totalCount, page, size, query, conversationId);
+    }
+
     private SearchResultDto createEmptyResult(String query, String conversationId, int page, int size) {
         return new SearchResultDto(List.of(), 0, page, size, query, conversationId);
     }
+    
 }
