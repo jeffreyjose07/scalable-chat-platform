@@ -135,15 +135,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isOwn }) => {
           }`}>
             <span>{formatTime(message.timestamp)}</span>
             {isOwn && (
-              <div className="flex items-center space-x-0.5">
-                {/* Delivery status - double checkmark for delivered/read */}
-                <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-                <svg className="w-3 h-3 -ml-1" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                </svg>
-              </div>
+              <MessageStatusIndicator message={message} />
             )}
           </div>
         </div>
@@ -155,6 +147,45 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isOwn }) => {
             : 'left-0 border-r-8 border-r-white border-t-8 border-t-transparent'
         }`}></div>
       </div>
+    </div>
+  );
+};
+
+// Message status indicator component following WhatsApp standards
+interface MessageStatusIndicatorProps {
+  message: ChatMessage;
+}
+
+const MessageStatusIndicator: React.FC<MessageStatusIndicatorProps> = ({ message }) => {
+  // For now, we'll show delivered status for all messages since we don't have backend support
+  // In the future, this should be based on actual delivery/read status from the backend
+  
+  // Check if message is very recent (last 5 seconds) - show as "sending"
+  const isRecent = new Date().getTime() - new Date(message.timestamp).getTime() < 5000;
+  
+  if (isRecent) {
+    // Show clock icon for very recent messages (pending)
+    return (
+      <div className="flex items-center">
+        <svg className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+    );
+  }
+  
+  // For now, show double gray checkmarks (delivered) for all other messages
+  // TODO: Implement proper read/delivered status when backend supports it
+  return (
+    <div className="flex items-center space-x-0.5">
+      {/* Single checkmark */}
+      <svg className="w-3 h-3 opacity-80" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+      </svg>
+      {/* Second checkmark for delivered status */}
+      <svg className="w-3 h-3 -ml-1 opacity-80" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+      </svg>
     </div>
   );
 };
