@@ -53,7 +53,7 @@ export const useUnreadMessages = ({
     }
   }, []);
 
-  // Calculate unread count for a conversation using timestamp comparison
+  // Calculate unread count for a conversation using both read receipts and timestamp comparison
   const calculateUnreadCount = useCallback((conversationId: string): number => {
     if (!currentUserId) return 0;
 
@@ -67,7 +67,12 @@ export const useUnreadMessages = ({
       // Only count messages in this conversation
       if (message.conversationId !== conversationId) return false;
       
-      // Count message as unread if it's newer than last read timestamp
+      // First check if message is already marked as read by this user via read receipts
+      if (message.readBy && message.readBy[currentUserId]) {
+        return false; // Already read via read receipts
+      }
+      
+      // Fallback: Count message as unread if it's newer than last read timestamp
       const messageTimestamp = new Date(message.timestamp).getTime();
       return messageTimestamp > lastReadTimestamp;
     }).length;
