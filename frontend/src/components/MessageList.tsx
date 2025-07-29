@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { ChatMessage, MessageType } from '../types/chat';
+import { ChatMessage, MessageType, MessageStatus } from '../types/chat';
 import { format } from 'date-fns';
 
 interface MessageListProps {
@@ -64,6 +64,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, isLo
                   <MessageBubble
                     message={message}
                     isOwn={isOwn}
+                    currentUserId={currentUserId}
                   />
                 </div>
               );
@@ -79,9 +80,10 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, isLo
 interface MessageBubbleProps {
   message: ChatMessage;
   isOwn: boolean;
+  currentUserId?: string;
 }
 
-const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isOwn }) => {
+const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isOwn, currentUserId }) => {
   const formatTime = (timestamp: string) => {
     const messageDate = new Date(timestamp);
     const now = new Date();
@@ -135,7 +137,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isOwn }) => {
           }`}>
             <span>{formatTime(message.timestamp)}</span>
             {isOwn && (
-              <MessageStatusIndicator message={message} />
+              <MessageStatusIndicator message={message} currentUserId={currentUserId} />
             )}
           </div>
         </div>
@@ -154,40 +156,91 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isOwn }) => {
 // Message status indicator component following WhatsApp standards
 interface MessageStatusIndicatorProps {
   message: ChatMessage;
+  currentUserId?: string;
 }
 
-const MessageStatusIndicator: React.FC<MessageStatusIndicatorProps> = ({ message }) => {
-  // For now, we'll show delivered status for all messages since we don't have backend support
-  // In the future, this should be based on actual delivery/read status from the backend
+const MessageStatusIndicator: React.FC<MessageStatusIndicatorProps> = ({ message, currentUserId }) => {
+  // Get the actual status from the message, with backward compatibility fallback
+  const getMessageStatus = (): MessageStatus => {
+    // If message has explicit status, use it
+    if (message.status) {
+      return message.status as MessageStatus;
+    }
+    
+    // Backward compatibility: determine status from other fields
+    if (message.readBy && Object.keys(message.readBy).length > 0) {
+      return MessageStatus.READ;
+    }
+    
+    if (message.deliveredTo && Object.keys(message.deliveredTo).length > 0) {
+      return MessageStatus.DELIVERED;
+    }
+    
+    // Check if message is very recent (last 5 seconds) - show as pending
+    const isRecent = new Date().getTime() - new Date(message.timestamp).getTime() < 5000;
+    if (isRecent) {
+      return MessageStatus.PENDING;
+    }
+    
+    // Default to sent for older messages
+    return MessageStatus.SENT;
+  };
   
-  // Check if message is very recent (last 5 seconds) - show as "sending"
-  const isRecent = new Date().getTime() - new Date(message.timestamp).getTime() < 5000;
+  const status = getMessageStatus();
   
-  if (isRecent) {
-    // Show clock icon for very recent messages (pending)
-    return (
-      <div className="flex items-center">
-        <svg className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      </div>
-    );
+  // Render based on actual status
+  switch (status) {
+    case MessageStatus.PENDING:
+      return (
+        <div className="flex items-center" title="Sending...">
+          <svg className="w-3 h-3 opacity-60 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+      );
+      
+    case MessageStatus.SENT:
+      return (
+        <div className="flex items-center" title="Sent">
+          <svg className="w-3 h-3 opacity-70" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+          </svg>
+        </div>
+      );
+      
+    case MessageStatus.DELIVERED:
+      return (
+        <div className="flex items-center space-x-0.5" title="Delivered">
+          <svg className="w-3 h-3 opacity-80" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+          </svg>
+          <svg className="w-3 h-3 -ml-1 opacity-80" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+          </svg>
+        </div>
+      );
+      
+    case MessageStatus.READ:
+      return (
+        <div className="flex items-center space-x-0.5" title="Read">
+          <svg className="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+          </svg>
+          <svg className="w-3 h-3 -ml-1 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+          </svg>
+        </div>
+      );
+      
+    default:
+      return (
+        <div className="flex items-center">
+          <svg className="w-3 h-3 opacity-70" fill="currentColor" viewBox="0 0 20 20">
+            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+          </svg>
+        </div>
+      );
   }
-  
-  // For now, show double gray checkmarks (delivered) for all other messages
-  // TODO: Implement proper read/delivered status when backend supports it
-  return (
-    <div className="flex items-center space-x-0.5">
-      {/* Single checkmark */}
-      <svg className="w-3 h-3 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-      </svg>
-      {/* Second checkmark for delivered status */}
-      <svg className="w-3 h-3 -ml-1 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-      </svg>
-    </div>
-  );
 };
 
 export default MessageList;

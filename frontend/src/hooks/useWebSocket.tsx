@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { useAuth } from './useAuth';
-import { ChatMessage } from '../types/chat';
+import { ChatMessage, MessageStatusUpdate, WebSocketMessage } from '../types/chat';
 import { messageService } from '../services/messageService';
 import toast from 'react-hot-toast';
 import { getWebSocketUrl } from '../utils/networkUtils';
@@ -9,6 +9,7 @@ interface WebSocketContextType {
   socket: WebSocket | null;
   isConnected: boolean;
   sendMessage: (message: Omit<ChatMessage, 'id' | 'timestamp'>) => void;
+  sendMessageStatusUpdate: (statusUpdate: MessageStatusUpdate) => void;
   messages: ChatMessage[];
   loadConversationMessages: (conversationId: string) => Promise<void>;
   isLoadingMessages: boolean;
@@ -225,6 +226,37 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           } catch (error) {
             console.error('Error sending pong response:', error);
           }
+        } else if (data.type === 'MESSAGE_DELIVERED' || data.type === 'MESSAGE_READ') {
+          // Handle message status updates
+          console.log('Received message status update:', data);
+          const statusUpdate: MessageStatusUpdate = data.data;
+          
+          // Update the corresponding message's status in our state
+          setMessages(prev => prev.map(msg => {
+            if (msg.id === statusUpdate.messageId) {
+              const updatedMessage = { ...msg };
+              
+              if (data.type === 'MESSAGE_DELIVERED') {
+                updatedMessage.deliveredTo = {
+                  ...updatedMessage.deliveredTo,
+                  [statusUpdate.userId]: statusUpdate.timestamp
+                };
+              } else if (data.type === 'MESSAGE_READ') {
+                // Ensure it's also marked as delivered
+                updatedMessage.deliveredTo = {
+                  ...updatedMessage.deliveredTo,
+                  [statusUpdate.userId]: statusUpdate.timestamp
+                };
+                updatedMessage.readBy = {
+                  ...updatedMessage.readBy,
+                  [statusUpdate.userId]: statusUpdate.timestamp
+                };
+              }
+              
+              return updatedMessage;
+            }
+            return msg;
+          }));
         } else {
           // Handle regular chat message
           const message: ChatMessage = data;
@@ -308,11 +340,27 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
   };
 
+  const sendMessageStatusUpdate = (statusUpdate: MessageStatusUpdate) => {
+    if (socket && isConnected) {
+      const wsMessage: WebSocketMessage = {
+        type: statusUpdate.statusType === 'DELIVERED' ? 'MESSAGE_DELIVERED' : 'MESSAGE_READ',
+        data: {
+          ...statusUpdate,
+          timestamp: new Date().toISOString()
+        }
+      };
+      
+      console.log('Sending message status update:', wsMessage);
+      socket.send(JSON.stringify(wsMessage));
+    }
+  };
+
   return (
     <WebSocketContext.Provider value={{ 
       socket, 
       isConnected, 
       sendMessage, 
+      sendMessageStatusUpdate,
       messages, 
       loadConversationMessages, 
       isLoadingMessages,

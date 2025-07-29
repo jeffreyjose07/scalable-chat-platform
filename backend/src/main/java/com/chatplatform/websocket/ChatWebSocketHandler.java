@@ -2,8 +2,10 @@ package com.chatplatform.websocket;
 
 import com.chatplatform.model.ChatMessage;
 import com.chatplatform.model.User;
+import com.chatplatform.dto.MessageStatusUpdate;
 import com.chatplatform.service.ConnectionManager;
 import com.chatplatform.service.MessageService;
+import com.chatplatform.service.MessageStatusService;
 import com.chatplatform.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
@@ -28,6 +30,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     
     private final ConnectionManager connectionManager;
     private final MessageService messageService;
+    private final MessageStatusService messageStatusService;
     private final UserService userService;
     private final ObjectMapper objectMapper;
     
@@ -67,10 +70,12 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     
     public ChatWebSocketHandler(ConnectionManager connectionManager, 
                               MessageService messageService,
+                              MessageStatusService messageStatusService,
                               UserService userService,
                               ObjectMapper objectMapper) {
         this.connectionManager = connectionManager;
         this.messageService = messageService;
+        this.messageStatusService = messageStatusService;
         this.userService = userService;
         this.objectMapper = objectMapper;
         
@@ -221,6 +226,12 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
                 return;
             }
             
+            // Check if this is a message status update
+            if (payload.contains("\"type\":\"MESSAGE_DELIVERED\"") || payload.contains("\"type\":\"MESSAGE_READ\"")) {
+                handleMessageStatusUpdate(session, payload);
+                return;
+            }
+            
             ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
             String userId = getUserId(session);
             String username = getUserName(session);
@@ -337,6 +348,111 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         if (session != null && session.isOpen()) {
             logger.info("[WS-SESSION] Sending message {} to session {} (userId: {})", message.getId(), sessionId, getUserId(session));
             sendMessage(session, message);
+        }
+    }
+    
+    /**
+     * Handle incoming message status updates from clients
+     */
+    private void handleMessageStatusUpdate(WebSocketSession session, String payload) {
+        try {
+            String userId = getUserId(session);
+            if (userId == null) {
+                logger.error("No userId in session for status update");
+                return;
+            }
+            
+            MessageStatusUpdate statusUpdate = objectMapper.readValue(payload, MessageStatusUpdate.class);
+            logger.debug("Received status update from user {}: {} for message {}", 
+                userId, statusUpdate.getStatusType(), statusUpdate.getMessageId());
+            
+            // Validate that the user ID matches the authenticated user
+            statusUpdate.setUserId(userId);
+            
+            // Process the status update
+            boolean success = false;
+            switch (statusUpdate.getStatusType()) {
+                case DELIVERED:
+                    success = messageStatusService.updateMessageDeliveryStatus(
+                        statusUpdate.getMessageId(), userId);
+                    break;
+                case READ:
+                    success = messageStatusService.updateMessageReadStatus(
+                        statusUpdate.getMessageId(), userId);
+                    break;
+            }
+            
+            if (success) {
+                // Broadcast the status update to all participants in the conversation
+                broadcastMessageStatusUpdate(statusUpdate);
+            }
+            
+        } catch (Exception e) {
+            logger.error("Error handling message status update: {}", e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Broadcast message status update to all participants in the conversation
+     */
+    public void broadcastMessageStatusUpdate(MessageStatusUpdate statusUpdate) {
+        try {
+            // Create WebSocket message wrapper
+            Map<String, Object> wsMessage = new HashMap<>();
+            wsMessage.put("type", statusUpdate.getStatusType() == MessageStatusUpdate.MessageStatusType.DELIVERED 
+                ? "MESSAGE_DELIVERED" : "MESSAGE_READ");
+            wsMessage.put("data", statusUpdate);
+            
+            String json = objectMapper.writeValueAsString(wsMessage);
+            
+            // Get all active sessions and send to participants in the same conversation
+            // Note: This is a simplified approach. In a production system, you'd want to
+            // get the conversation participants and only send to them
+            for (WebSocketSession session : sessions.values()) {
+                if (session.isOpen()) {
+                    try {
+                        session.sendMessage(new TextMessage(json));
+                        logger.debug("Broadcasted status update to session: {}", session.getId());
+                    } catch (Exception e) {
+                        logger.warn("Failed to send status update to session {}: {}", 
+                            session.getId(), e.getMessage());
+                    }
+                }
+            }
+            
+        } catch (Exception e) {
+            logger.error("Error broadcasting message status update: {}", e.getMessage(), e);
+        }
+    }
+    
+    /**
+     * Send status update to specific user's sessions
+     */
+    public void sendMessageStatusUpdateToUser(String userId, MessageStatusUpdate statusUpdate) {
+        try {
+            Map<String, Object> wsMessage = new HashMap<>();
+            wsMessage.put("type", statusUpdate.getStatusType() == MessageStatusUpdate.MessageStatusType.DELIVERED 
+                ? "MESSAGE_DELIVERED" : "MESSAGE_READ");
+            wsMessage.put("data", statusUpdate);
+            
+            String json = objectMapper.writeValueAsString(wsMessage);
+            
+            // Find sessions for the specific user
+            for (Map.Entry<String, WebSocketSession> entry : sessions.entrySet()) {
+                WebSocketSession session = entry.getValue();
+                if (session.isOpen() && userId.equals(getUserId(session))) {
+                    try {
+                        session.sendMessage(new TextMessage(json));
+                        logger.debug("Sent status update to user {} session: {}", userId, session.getId());
+                    } catch (Exception e) {
+                        logger.warn("Failed to send status update to user {} session {}: {}", 
+                            userId, session.getId(), e.getMessage());
+                    }
+                }
+            }
+            
+        } catch (Exception e) {
+            logger.error("Error sending message status update to user {}: {}", userId, e.getMessage(), e);
         }
     }
     
