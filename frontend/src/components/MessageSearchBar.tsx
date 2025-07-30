@@ -330,19 +330,21 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                   setShowSuggestions(false);
                   setDropdownPosition(null);
                   
-                  // Save to recent searches first
-                  const newRecentSearches = [search, ...recentSearches.filter(s => s !== search)].slice(0, 5);
-                  setRecentSearches(newRecentSearches);
-                  localStorage.setItem('recentSearches', JSON.stringify(newRecentSearches));
-                  
-                  // Update query state - this will trigger the useEffect search
+                  // Update query state immediately
                   setQuery(search);
                   if (searchInputRef.current) {
                     searchInputRef.current.value = search;
                     searchInputRef.current.focus();
                   }
                   
-                  // The search will be triggered by the useEffect that watches query changes
+                  // Save to recent searches
+                  const newRecentSearches = [search, ...recentSearches.filter(s => s !== search)].slice(0, 5);
+                  setRecentSearches(newRecentSearches);
+                  localStorage.setItem('recentSearches', JSON.stringify(newRecentSearches));
+                  
+                  // Directly call onSearch to ensure it works immediately
+                  console.log('🔍 Recent search: calling onSearch with:', search);
+                  onSearch(search, Object.keys(filters).length > 0 ? filters : undefined);
                 }}
                 className="w-full text-left px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 text-sm flex items-center space-x-2"
               >

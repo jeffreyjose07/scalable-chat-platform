@@ -23,7 +23,7 @@ import Footer from '../components/Footer';
 import { api } from '../services/api';
 
 const ChatPage: React.FC = () => {
-  const { messages, sendMessage, sendMessageStatusUpdate, isConnected, loadConversationMessages, isLoadingMessages } = useWebSocket();
+  const { messages, sendMessage, sendMessageStatusUpdate, isConnected, loadConversationMessages, isLoadingMessages, isReconnecting } = useWebSocket();
   const { user, logout } = useAuth();
   
   // Group modal states
