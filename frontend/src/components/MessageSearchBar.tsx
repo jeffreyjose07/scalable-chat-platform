@@ -39,6 +39,7 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const searchTimeoutRef = useRef<NodeJS.Timeout>();
   const filtersRef = useRef<HTMLDivElement>(null);
+  const isRecentSearchRef = useRef<boolean>(false);
 
   // Load recent searches from localStorage
   useEffect(() => {
@@ -116,8 +117,14 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
       searchTimeoutRef.current = setTimeout(() => {
         performSearch(query.trim());
       }, 300);
-    } else if (isSearchMode && query === '') {
+    } else if (isSearchMode && query === '' && !isRecentSearchRef.current) {
+      // Only clear search if it's not a recent search being set
       onClearSearch();
+    }
+
+    // Reset the flag after handling
+    if (isRecentSearchRef.current) {
+      isRecentSearchRef.current = false;
     }
 
     return () => {
@@ -319,18 +326,21 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                   e.preventDefault();
                   e.stopPropagation();
                   
-                  console.log('Recent search clicked:', search);
+                  console.log('🔍 Recent search clicked:', search);
                   
                   // Clear any pending timeouts
                   if (searchTimeoutRef.current) {
                     clearTimeout(searchTimeoutRef.current);
                   }
                   
+                  // Set flag to prevent clearing when query is set
+                  isRecentSearchRef.current = true;
+                  
                   // Hide suggestions immediately
                   setShowSuggestions(false);
                   setDropdownPosition(null);
                   
-                  // Update query state immediately
+                  // Update query state and perform search
                   setQuery(search);
                   if (searchInputRef.current) {
                     searchInputRef.current.value = search;
@@ -342,14 +352,14 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                   setRecentSearches(newRecentSearches);
                   localStorage.setItem('recentSearches', JSON.stringify(newRecentSearches));
                   
-                  // Directly call onSearch to ensure it works immediately
-                  console.log('🔍 Recent search clicked:', search, 'filters:', Object.keys(filters).length > 0 ? filters : undefined);
+                  // Perform search immediately
+                  console.log('🔍 Performing recent search:', search, 'with filters:', Object.keys(filters).length > 0 ? filters : undefined);
                   
                   try {
                     onSearch(search, Object.keys(filters).length > 0 ? filters : undefined);
-                    console.log('✅ Recent search onSearch called successfully');
+                    console.log('✅ Recent search executed successfully');
                   } catch (error) {
-                    console.error('❌ Error calling onSearch for recent search:', error);
+                    console.error('❌ Error executing recent search:', error);
                   }
                 }}
                 className="w-full text-left px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 text-sm flex items-center space-x-2"

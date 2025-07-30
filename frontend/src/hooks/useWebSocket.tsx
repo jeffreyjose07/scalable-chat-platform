@@ -75,7 +75,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }, delay);
   }, [reconnectAttempts, isIntentionalDisconnect, user, token, isConnected]);
 
-  // Load conversation messages function
+  // Load conversation messages function with caching
   const loadConversationMessages = async (conversationId: string, forceReload = false) => {
     if (!user || !token) {
       console.log('Skipping conversation load: missing user or token', { user: !!user, token: !!token });
@@ -87,11 +87,51 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       return;
     }
     
+    // Try conversation-specific cache first for instant load
+    const cacheKey = `conversation_messages_${conversationId}`;
+    if (!forceReload) {
+      try {
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) {
+          const parsedCache = JSON.parse(cached);
+          // Use cache if less than 30 seconds old
+          if (Date.now() - parsedCache.timestamp < 30000) {
+            console.log(`📦 Using cached messages for conversation ${conversationId}`);
+            
+            setMessages(prev => {
+              const filteredPrev = prev.filter(msg => msg.conversationId !== conversationId);
+              const combined = [...filteredPrev, ...parsedCache.data];
+              return combined.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+            });
+            
+            setLoadedConversations(prev => {
+              const newSet = new Set(prev);
+              newSet.add(conversationId);
+              return newSet;
+            });
+            return;
+          }
+        }
+      } catch (error) {
+        console.warn(`Failed to load cached conversation ${conversationId}:`, error);
+      }
+    }
+    
     setIsLoadingMessages(true);
     try {
       console.log(`🔄 Loading messages for conversation: ${conversationId}`);
       const conversationMessages = await messageService.fetchConversationMessages(conversationId, token);
       console.log(`✅ Fetched ${conversationMessages.length} messages for conversation: ${conversationId}`);
+      
+      // Cache the conversation messages
+      try {
+        sessionStorage.setItem(cacheKey, JSON.stringify({
+          data: conversationMessages,
+          timestamp: Date.now()
+        }));
+      } catch (error) {
+        console.warn(`Failed to cache conversation ${conversationId}:`, error);
+      }
       
       setMessages(prev => {
         console.log(`📝 Before update: ${prev.length} total messages, ${prev.filter(m => m.conversationId === conversationId).length} from this conversation`);
@@ -132,16 +172,16 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       try {
         console.log('🔄 Loading initial messages...');
         
-        // Disable cache temporarily to debug issues - try cache first for instant load
-        const USE_CACHE = false; // Set to false to disable cache temporarily
+        // Enable smart caching for better performance
+        const USE_CACHE = true; // Smart caching enabled
         
         if (USE_CACHE) {
           try {
             const cached = sessionStorage.getItem('recent_messages');
             if (cached) {
               const parsedCache = JSON.parse(cached);
-              // Use cache if less than 10 seconds old (reduced from 30s)
-              if (Date.now() - parsedCache.timestamp < 10000) {
+              // Use cache if less than 2 minutes old for better performance
+              if (Date.now() - parsedCache.timestamp < 120000) {
                 console.log('📦 Using cached recent messages for instant load');
                 setMessages(parsedCache.data);
                 setMessagesLoaded(true);
@@ -405,14 +445,25 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const clearMessagesCache = () => {
-    console.log('🧹 Clearing messages cache and reloading');
+    console.log('🧹 Clearing all message caches and reloading');
     setMessages([]);
     setMessagesLoaded(false);
     setLoadedConversations(new Set());
     try {
+      // Clear recent messages cache
       sessionStorage.removeItem('recent_messages');
+      
+      // Clear all conversation-specific caches
+      const keys = Object.keys(sessionStorage);
+      keys.forEach(key => {
+        if (key.startsWith('conversation_messages_')) {
+          sessionStorage.removeItem(key);
+        }
+      });
+      
+      console.log('✅ Cleared all message caches');
     } catch (error) {
-      console.warn('Failed to clear message cache:', error);
+      console.warn('Failed to clear message caches:', error);
     }
   };
 

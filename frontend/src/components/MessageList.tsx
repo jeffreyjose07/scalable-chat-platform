@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import { ChatMessage, MessageType, MessageStatus } from '../types/chat';
 import { format } from 'date-fns';
 
@@ -8,7 +8,7 @@ interface MessageListProps {
   isLoading?: boolean;
 }
 
-const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, isLoading = false }) => {
+const MessageList: React.FC<MessageListProps> = memo(({ messages, currentUserId, isLoading = false }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const MessageList: React.FC<MessageListProps> = ({ messages, currentUserId, isLo
       </div>
     </div>
   );
-};
+});
 
 interface MessageBubbleProps {
   message: ChatMessage;
@@ -83,7 +83,7 @@ interface MessageBubbleProps {
   currentUserId?: string;
 }
 
-const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isOwn, currentUserId }) => {
+const MessageBubble: React.FC<MessageBubbleProps> = memo(({ message, isOwn, currentUserId }) => {
   // Utility function to determine text color based on background brightness
   const getTextColorForBackground = (hue: number, saturation: number, lightness: number) => {
     // For light backgrounds (lightness > 60), use dark text
@@ -181,7 +181,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isOwn, currentUs
       </div>
     </div>
   );
-};
+});
 
 // Message status indicator component following WhatsApp standards
 interface MessageStatusIndicatorProps {
@@ -189,7 +189,7 @@ interface MessageStatusIndicatorProps {
   currentUserId?: string;
 }
 
-const MessageStatusIndicator: React.FC<MessageStatusIndicatorProps> = ({ message, currentUserId }) => {
+const MessageStatusIndicator: React.FC<MessageStatusIndicatorProps> = memo(({ message, currentUserId }) => {
   // Get the actual status from the message, with proper read receipt logic
   const getMessageStatus = (): MessageStatus => {
     // If message has explicit status, use it (this is set by backend)
@@ -278,6 +278,6 @@ const MessageStatusIndicator: React.FC<MessageStatusIndicatorProps> = ({ message
         </div>
       );
   }
-};
+});
 
 export default MessageList;
