@@ -326,7 +326,7 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                     clearTimeout(searchTimeoutRef.current);
                   }
                   
-                  // Update query state and input field first
+                  // Update query state and input field
                   setQuery(search);
                   if (searchInputRef.current) {
                     searchInputRef.current.value = search;
@@ -341,8 +341,13 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                     searchInputRef.current.focus();
                   }
                   
-                  // Perform the search using the same logic as performSearch function
-                  performSearch(search);
+                  // Save to recent searches and call onSearch directly with proper parameters
+                  const newRecentSearches = [search, ...recentSearches.filter(s => s !== search)].slice(0, 5);
+                  setRecentSearches(newRecentSearches);
+                  localStorage.setItem('recentSearches', JSON.stringify(newRecentSearches));
+                  
+                  // Call onSearch directly (which will pass conversationId correctly)
+                  onSearch(search, Object.keys(filters).length > 0 ? filters : undefined);
                 }}
                 className="w-full text-left px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 text-sm flex items-center space-x-2"
               >
