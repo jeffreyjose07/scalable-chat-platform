@@ -322,27 +322,20 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                     clearTimeout(searchTimeoutRef.current);
                   }
                   
-                  // Hide suggestions first
+                  // Update query state first
+                  setQuery(search);
+                  
+                  // Hide suggestions
                   setShowSuggestions(false);
                   setDropdownPosition(null);
                   
-                  // Update query state
-                  setQuery(search);
-                  
                   // Focus input
-                  setTimeout(() => {
-                    if (searchInputRef.current) {
-                      searchInputRef.current.focus();
-                    }
-                  }, 0);
+                  if (searchInputRef.current) {
+                    searchInputRef.current.focus();
+                  }
                   
-                  // Save to recent searches (move to top)
-                  const newRecentSearches = [search, ...recentSearches.filter(s => s !== search)].slice(0, 5);
-                  setRecentSearches(newRecentSearches);
-                  localStorage.setItem('recentSearches', JSON.stringify(newRecentSearches));
-                  
-                  // Trigger search directly
-                  onSearch(search, Object.keys(filters).length > 0 ? filters : undefined);
+                  // Use the same performSearch function for consistency
+                  performSearch(search);
                 }}
                 className="w-full text-left px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 text-sm flex items-center space-x-2"
               >
