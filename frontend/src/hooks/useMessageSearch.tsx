@@ -32,8 +32,17 @@ export const useMessageSearch = (): UseMessageSearchReturn => {
   }, []);
 
   const performSearch = useCallback(async (conversationId: string, query: string, filters?: SearchFilters) => {
+    console.log('🔍 performSearch called:', { conversationId, query, filters });
+    
     if (!query.trim()) {
+      console.log('❌ Empty query, clearing search result');
       setSearchResult(null);
+      return;
+    }
+
+    if (!conversationId) {
+      console.log('❌ No conversation selected, cannot search');
+      setSearchError('Please select a conversation to search');
       return;
     }
 
@@ -41,9 +50,11 @@ export const useMessageSearch = (): UseMessageSearchReturn => {
     setSearchError(null);
     
     try {
+      console.log('🔄 Calling API search for conversation:', conversationId, 'query:', query);
       // For now, we'll just use the basic search API
       // TODO: Extend backend API to support filters
       const result = await api.messageSearch.searchMessages(conversationId, query);
+      console.log('✅ Search API returned:', result.totalCount, 'results');
       
       // Client-side filtering as fallback until backend supports filters
       if (filters && result.messages) {
