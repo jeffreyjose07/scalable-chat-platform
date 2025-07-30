@@ -75,16 +75,16 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disabled }) 
   };
 
   return (
-    <div className="relative bg-white border-gray-200">
+    <div className="relative bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
       <form onSubmit={handleSubmit} className="p-3 sm:p-4">
-        <div className="flex items-end space-x-2 bg-gray-50 rounded-2xl p-2 border border-gray-200 focus-within:border-green-400 focus-within:bg-white transition-all duration-200">
+        <div className="flex items-end space-x-2 bg-gray-50 dark:bg-gray-700 rounded-2xl p-2 border border-gray-200 dark:border-gray-600 focus-within:border-green-400 focus-within:bg-white dark:focus-within:bg-gray-600 transition-all duration-200">
           {/* Attachment button - Hidden until feature is implemented */}
           {false && (
             <button
               type="button"
               onClick={handleAttachment}
               disabled={disabled}
-              className="flex-shrink-0 p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors disabled:opacity-50"
+              className="flex-shrink-0 p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-full transition-colors disabled:opacity-50"
               title="Attach file"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,7 +103,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disabled }) 
               placeholder={disabled ? "Connecting..." : "Type a message..."}
               disabled={disabled}
               rows={1}
-              className="w-full px-2 py-2 bg-transparent border-none focus:outline-none resize-none text-sm sm:text-base placeholder-gray-500 max-h-24"
+              className="w-full px-2 py-2 bg-transparent border-none focus:outline-none resize-none text-sm sm:text-base text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 max-h-24"
               style={{ minHeight: '24px' }}
             />
           </div>
@@ -114,7 +114,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disabled }) 
               type="button"
               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
               disabled={disabled}
-              className="flex-shrink-0 p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors disabled:opacity-50"
+              className="flex-shrink-0 p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 rounded-full transition-colors disabled:opacity-50"
               title="Add emoji"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -126,23 +126,23 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disabled }) 
             {showEmojiPicker && (
               <div
                 ref={emojiPickerRef}
-                className="absolute bottom-full right-0 mb-2 bg-white border border-gray-200 rounded-xl shadow-lg p-3 z-50 min-w-[280px]"
+                className="absolute bottom-full right-0 mb-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl shadow-lg p-3 z-50 min-w-[280px]"
               >
-                <div className="text-xs font-medium text-gray-600 mb-2">Frequently used</div>
+                <div className="text-xs font-medium text-gray-600 dark:text-gray-300 mb-2">Frequently used</div>
                 <div className="grid grid-cols-6 gap-1">
                   {commonEmojis.map((emoji, index) => (
                     <button
                       key={index}
                       type="button"
                       onClick={() => handleEmojiSelect(emoji)}
-                      className="w-8 h-8 flex items-center justify-center text-lg hover:bg-gray-100 rounded-lg transition-colors"
+                      className="w-8 h-8 flex items-center justify-center text-lg hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
                     >
                       {emoji}
                     </button>
                   ))}
                 </div>
-                <div className="mt-2 pt-2 border-t border-gray-100">
-                  <div className="text-xs text-gray-500 text-center">More emojis coming soon!</div>
+                <div className="mt-2 pt-2 border-t border-gray-100 dark:border-gray-700">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 text-center">More emojis coming soon!</div>
                 </div>
               </div>
             )}
@@ -155,7 +155,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disabled }) 
             className={`flex-shrink-0 p-2 rounded-full transition-all duration-200 ${
               message.trim() && !disabled
                 ? 'bg-green-500 text-white hover:bg-green-600 shadow-md hover:shadow-lg transform hover:scale-105'
-                : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                : 'bg-gray-200 dark:bg-gray-600 text-gray-400 dark:text-gray-500 cursor-not-allowed'
             }`}
             title="Send message"
           >
@@ -167,7 +167,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disabled }) 
 
         {/* Character count indicator for long messages */}
         {message.length > 1000 && (
-          <div className="text-xs text-gray-500 text-right mt-1 mr-2">
+          <div className="text-xs text-gray-500 dark:text-gray-400 text-right mt-1 mr-2">
             {message.length}/2000
           </div>
         )}
