@@ -41,19 +41,36 @@ const ChatPage: React.FC = () => {
   const searchHook = useMessageSearch();
   const userSearchHook = useUserSearch();
   
-  // Auto-select first available conversation if none selected and preload its messages
+  // Auto-select first available conversation of the active type if none selected and preload its messages
   useEffect(() => {
     if (!chatState.selectedConversation && conversationHook.conversations.length > 0) {
-      const firstConversation = conversationHook.conversations[0];
-      chatState.setSelectedConversation(firstConversation.id);
+      // Filter conversations based on active type
+      const filteredConversations = conversationHook.conversations.filter(conv => {
+        if (chatState.activeConversationType === 'groups') {
+          return conv.type === 'GROUP';
+        } else {
+          return conv.type === 'DIRECT';
+        }
+      });
       
-      // Immediately start loading messages for the first conversation to reduce perceived loading time
-      if (user) {
-        console.log('🚀 Preloading messages for first conversation:', firstConversation.id);
-        loadConversationMessages(firstConversation.id);
+      console.log('🔍 Auto-selecting conversation:', {
+        activeType: chatState.activeConversationType,
+        totalConversations: conversationHook.conversations.length,
+        filteredConversations: filteredConversations.length
+      });
+      
+      if (filteredConversations.length > 0) {
+        const firstConversation = filteredConversations[0];
+        chatState.setSelectedConversation(firstConversation.id);
+        
+        // Immediately start loading messages for the first conversation to reduce perceived loading time
+        if (user) {
+          console.log('🚀 Preloading messages for first filtered conversation:', firstConversation.id, 'type:', firstConversation.type);
+          loadConversationMessages(firstConversation.id);
+        }
       }
     }
-  }, [chatState.selectedConversation, conversationHook.conversations, chatState, user, loadConversationMessages]);
+  }, [chatState.selectedConversation, conversationHook.conversations, chatState.activeConversationType, chatState, user, loadConversationMessages]);
 
   // Load messages for selected conversation (if not already loaded)
   useEffect(() => {
