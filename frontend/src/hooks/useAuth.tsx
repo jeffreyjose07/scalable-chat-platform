@@ -188,6 +188,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       tokenStorage.remove();
       setToken(null);
       setUser(null);
+      
+      // Clear all cached data on logout for security and fresh start
+      try {
+        sessionStorage.removeItem('cached_conversations');
+        sessionStorage.removeItem('recent_messages');
+        console.log('🧹 Cleared all cached data on logout');
+      } catch (error) {
+        console.warn('Failed to clear cache on logout:', error);
+      }
+      
       if (!token) {
         toast.success('Logged out successfully');
       }
