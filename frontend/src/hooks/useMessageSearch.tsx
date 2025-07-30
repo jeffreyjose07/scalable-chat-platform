@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { api, SearchResult } from '../services/api';
-import { SearchFilters } from '../components/MessageSearchBar';
+import { SearchFilters } from '../components/NewMessageSearchBar';
 
 interface UseMessageSearchReturn {
   isSearchMode: boolean;
