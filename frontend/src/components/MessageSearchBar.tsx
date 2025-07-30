@@ -311,7 +311,7 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
             {recentSearches.map((search, index) => (
               <button
                 key={index}
-                onClick={React.useCallback((e) => {
+                onClick={React.useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
                   e.preventDefault();
                   e.stopPropagation();
                   
