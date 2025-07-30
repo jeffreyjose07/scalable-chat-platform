@@ -4,6 +4,7 @@ import com.chatplatform.model.ChatMessage;
 import com.chatplatform.model.User;
 import com.chatplatform.model.ConversationParticipant;
 import com.chatplatform.dto.MessageStatusUpdate;
+import com.chatplatform.dto.WebSocketMessage;
 import com.chatplatform.service.ConnectionManager;
 import com.chatplatform.service.MessageService;
 import com.chatplatform.service.MessageStatusService;
@@ -11,6 +12,7 @@ import com.chatplatform.service.UserService;
 import com.chatplatform.repository.jpa.ConversationParticipantRepository;
 import com.chatplatform.repository.mongo.ChatMessageRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -372,7 +374,27 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
                 return;
             }
             
-            MessageStatusUpdate statusUpdate = objectMapper.readValue(payload, MessageStatusUpdate.class);
+            // First deserialize the payload into a WebSocketMessage wrapper
+            WebSocketMessage wsMessage = objectMapper.readValue(payload, WebSocketMessage.class);
+            if (wsMessage == null || wsMessage.getData() == null) {
+                logger.error("Invalid WebSocket message structure for status update");
+                return;
+            }
+            
+            // Extract the data field and deserialize into MessageStatusUpdate
+            MessageStatusUpdate statusUpdate = objectMapper.treeToValue(wsMessage.getData(), MessageStatusUpdate.class);
+            if (statusUpdate == null) {
+                logger.error("Failed to deserialize MessageStatusUpdate from WebSocket message data");
+                return;
+            }
+            
+            // Additional null checks
+            if (statusUpdate.getMessageId() == null || statusUpdate.getStatusType() == null) {
+                logger.error("Invalid status update - messageId or statusType is null. MessageId: {}, StatusType: {}", 
+                    statusUpdate.getMessageId(), statusUpdate.getStatusType());
+                return;
+            }
+            
             logger.debug("Received status update from user {}: {} for message {}", 
                 userId, statusUpdate.getStatusType(), statusUpdate.getMessageId());
             
@@ -390,11 +412,17 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
                     success = messageStatusService.updateMessageReadStatus(
                         statusUpdate.getMessageId(), userId);
                     break;
+                default:
+                    logger.warn("Unknown status type: {}", statusUpdate.getStatusType());
+                    return;
             }
             
             if (success) {
                 // Broadcast the status update to all participants in the conversation
                 broadcastMessageStatusUpdate(statusUpdate);
+            } else {
+                logger.warn("Failed to update message status for message {} with status {}", 
+                    statusUpdate.getMessageId(), statusUpdate.getStatusType());
             }
             
         } catch (Exception e) {
