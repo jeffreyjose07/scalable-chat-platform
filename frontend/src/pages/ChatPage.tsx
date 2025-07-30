@@ -247,7 +247,7 @@ const ChatPage: React.FC = () => {
       {/* Sidebar - Conversations */}
       <div className={`
         fixed lg:relative lg:translate-x-0 z-50 lg:z-0
-        w-80 lg:w-72 xl:w-80 bg-white/80 backdrop-blur-sm border-r border-gray-200/50 h-screen
+        w-80 lg:w-72 xl:w-80 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-r border-gray-200/50 dark:border-gray-700/50 h-screen
         flex flex-col shadow-lg lg:shadow-none
         transition-transform duration-300 ease-in-out
         ${chatState.isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
