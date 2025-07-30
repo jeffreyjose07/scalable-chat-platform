@@ -68,9 +68,9 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   // Utility function to determine text color based on background brightness
   const getTextColorForBackground = (hue: number, saturation: number, lightness: number) => {
-    // For light backgrounds (lightness > 60), use dark text
-    // For dark backgrounds (lightness <= 60), use white text
-    return lightness > 60 ? 'text-gray-800 dark:text-gray-200' : 'text-white dark:text-gray-100';
+    // For light backgrounds (lightness > 70), use dark text
+    // For dark backgrounds (lightness <= 70), use white text
+    return lightness > 70 ? 'text-gray-800 dark:text-gray-200' : 'text-white dark:text-gray-100';
   };
 
   const getConversationDisplayName = (conversation: Conversation) => {
@@ -93,8 +93,8 @@ const ConversationList: React.FC<ConversationListProps> = ({
     const displayName = getConversationDisplayName(conversation);
     const safeDisplayName = String(displayName || 'U');
     const hue = safeDisplayName.charCodeAt(0) * 7 % 360;
-    const saturation = 70;
-    const lightness = 55; // Default lightness
+    const saturation = 75;
+    const lightness = 45; // Darker for better visibility
     
     const avatarColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     const textColorClass = getTextColorForBackground(hue, saturation, lightness);
@@ -103,8 +103,8 @@ const ConversationList: React.FC<ConversationListProps> = ({
       return (
         <div className="relative mr-3 flex-shrink-0">
           <div 
-            className={`w-12 h-12 rounded-full flex items-center justify-center ${textColorClass} font-semibold shadow-lg`}
-            style={{ background: `linear-gradient(135deg, ${avatarColor}, ${avatarColor}dd)` }}
+            className={`w-12 h-12 rounded-full flex items-center justify-center ${textColorClass} font-semibold shadow-lg border-2 border-white/20 dark:border-gray-600/30`}
+            style={{ background: `linear-gradient(135deg, ${avatarColor}, hsl(${hue}, ${saturation}%, ${lightness - 10}%))` }}
           >
             <span className="text-lg">
               {safeDisplayName.charAt(0).toUpperCase()}
@@ -116,7 +116,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
       return (
         <div className="relative mr-3 flex-shrink-0">
           <div 
-            className="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg"
+            className="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg border-2 border-white/20 dark:border-gray-600/30"
             style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}
           >
             <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
