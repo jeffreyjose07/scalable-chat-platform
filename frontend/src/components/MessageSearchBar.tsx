@@ -188,6 +188,10 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
 
   const clearFilters = () => {
     setFilters({});
+    // If there's a current query, re-search without filters
+    if (query.trim()) {
+      performSearch(query.trim());
+    }
   };
 
   const hasActiveFilters = Object.keys(filters).length > 0;
