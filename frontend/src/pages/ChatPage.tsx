@@ -290,9 +290,22 @@ const ChatPage: React.FC = () => {
           {user && (
             <div className="mt-2 text-sm text-gray-700 dark:text-gray-200 bg-white/50 dark:bg-gray-700/50 rounded-lg px-3 py-2">
               <div className="flex items-center">
-                <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-semibold mr-2 shadow-sm">
-                  {(user.displayName || user.username).charAt(0).toUpperCase()}
-                </div>
+                {(() => {
+                  const displayName = user.displayName || user.username;
+                  const hue = displayName.charCodeAt(0) * 7 % 360;
+                  const saturation = 75;
+                  const lightness = 45;
+                  const avatarColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+                  
+                  return (
+                    <div 
+                      className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-semibold mr-2 shadow-sm border border-white/20 dark:border-gray-600/30"
+                      style={{ background: `linear-gradient(135deg, ${avatarColor}, hsl(${hue}, ${saturation}%, ${lightness - 10}%))` }}
+                    >
+                      {displayName.charAt(0).toUpperCase()}
+                    </div>
+                  );
+                })()}
                 <span className="font-medium">Welcome, {user.displayName || user.username}</span>
               </div>
             </div>
@@ -334,11 +347,22 @@ const ChatPage: React.FC = () => {
                 
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center">
-                    {chatState.selectedConversation && (
-                      <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center text-white font-semibold mr-3 shadow-md">
-                        {getConversationDisplayName(chatState.selectedConversation).charAt(0).toUpperCase()}
-                      </div>
-                    )}
+                    {chatState.selectedConversation && (() => {
+                      const displayName = getConversationDisplayName(chatState.selectedConversation);
+                      const hue = displayName.charCodeAt(0) * 7 % 360;
+                      const saturation = 75;
+                      const lightness = 45;
+                      const avatarColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+                      
+                      return (
+                        <div 
+                          className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold mr-3 shadow-md border-2 border-white/20 dark:border-gray-600/30"
+                          style={{ background: `linear-gradient(135deg, ${avatarColor}, hsl(${hue}, ${saturation}%, ${lightness - 10}%))` }}
+                        >
+                          {displayName.charAt(0).toUpperCase()}
+                        </div>
+                      );
+                    })()}
                     <div>
                       <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 truncate">
                         {chatState.selectedConversation ? getConversationDisplayName(chatState.selectedConversation) : 'No conversation selected'}

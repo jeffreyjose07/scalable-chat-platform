@@ -170,11 +170,24 @@ const SearchResultsList: React.FC<SearchResultsListProps> = ({
                 <div className="flex items-start space-x-3">
                   {/* User Avatar */}
                   <div className="flex-shrink-0">
-                    <div className="w-9 h-9 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-md">
-                      <span className="text-white text-sm font-semibold">
-                        {result.senderUsername.charAt(0).toUpperCase()}
-                      </span>
-                    </div>
+                    {(() => {
+                      const displayName = result.senderUsername;
+                      const hue = displayName.charCodeAt(0) * 7 % 360;
+                      const saturation = 75;
+                      const lightness = 45;
+                      const avatarColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+                      
+                      return (
+                        <div 
+                          className="w-9 h-9 rounded-full flex items-center justify-center shadow-md border-2 border-white/20 dark:border-gray-600/30"
+                          style={{ background: `linear-gradient(135deg, ${avatarColor}, hsl(${hue}, ${saturation}%, ${lightness - 10}%))` }}
+                        >
+                          <span className="text-white text-sm font-semibold">
+                            {displayName.charAt(0).toUpperCase()}
+                          </span>
+                        </div>
+                      );
+                    })()}
                   </div>
                   
                   {/* Message Content */}
@@ -186,11 +199,6 @@ const SearchResultsList: React.FC<SearchResultsListProps> = ({
                       <span className="text-xs text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
                         {formatRelativeTime(result.timestamp)}
                       </span>
-                      {result.score && result.score > 0.7 && (
-                        <span className="text-xs text-green-600 bg-green-100 px-2 py-0.5 rounded-full font-medium">
-                          High match
-                        </span>
-                      )}
                     </div>
                     
                     {/* Highlighted message content */}
