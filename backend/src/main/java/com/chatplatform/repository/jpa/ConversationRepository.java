@@ -42,4 +42,8 @@ public interface ConversationRepository extends JpaRepository<Conversation, Stri
     
     // Find conversations by type
     List<Conversation> findByTypeOrderByUpdatedAtDesc(ConversationType type);
+    
+    // Get all conversation IDs for cleanup purposes
+    @Query("SELECT c.id FROM Conversation c")
+    List<String> findAllConversationIds();
 }

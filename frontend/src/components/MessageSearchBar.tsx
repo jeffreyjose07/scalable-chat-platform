@@ -343,8 +343,14 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                   localStorage.setItem('recentSearches', JSON.stringify(newRecentSearches));
                   
                   // Directly call onSearch to ensure it works immediately
-                  console.log('🔍 Recent search: calling onSearch with:', search);
-                  onSearch(search, Object.keys(filters).length > 0 ? filters : undefined);
+                  console.log('🔍 Recent search clicked:', search, 'filters:', Object.keys(filters).length > 0 ? filters : undefined);
+                  
+                  try {
+                    onSearch(search, Object.keys(filters).length > 0 ? filters : undefined);
+                    console.log('✅ Recent search onSearch called successfully');
+                  } catch (error) {
+                    console.error('❌ Error calling onSearch for recent search:', error);
+                  }
                 }}
                 className="w-full text-left px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 text-sm flex items-center space-x-2"
               >

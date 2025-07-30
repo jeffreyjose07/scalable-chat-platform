@@ -23,7 +23,7 @@ import Footer from '../components/Footer';
 import { api } from '../services/api';
 
 const ChatPage: React.FC = () => {
-  const { messages, sendMessage, sendMessageStatusUpdate, isConnected, loadConversationMessages, isLoadingMessages, isReconnecting } = useWebSocket();
+  const { messages, sendMessage, sendMessageStatusUpdate, isConnected, loadConversationMessages, isLoadingMessages, isReconnecting, clearMessagesCache } = useWebSocket();
   const { user, logout } = useAuth();
   
   // Group modal states
@@ -413,7 +413,20 @@ const ChatPage: React.FC = () => {
                 <MessageSearchBar
                   isSearchMode={searchHook.isSearchMode}
                   onToggleSearch={searchHook.toggleSearchMode}
-                  onSearch={(query, filters) => searchHook.performSearch(chatState.selectedConversation, query, filters)}
+                  onSearch={(query, filters) => {
+                    console.log('🔍 ChatPage onSearch called:', { 
+                      query, 
+                      filters, 
+                      selectedConversationId: chatState.selectedConversation 
+                    });
+                    
+                    if (!chatState.selectedConversation) {
+                      console.error('❌ No conversation selected for search');
+                      return;
+                    }
+                    
+                    searchHook.performSearch(chatState.selectedConversation, query, filters);
+                  }}
                   onClearSearch={searchHook.clearSearch}
                   isLoading={searchHook.isSearchLoading}
                   resultsCount={searchHook.searchResult?.totalCount}

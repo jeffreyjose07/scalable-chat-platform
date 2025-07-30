@@ -11,10 +11,11 @@ interface WebSocketContextType {
   sendMessage: (message: Omit<ChatMessage, 'id' | 'timestamp'>) => void;
   sendMessageStatusUpdate: (statusUpdate: MessageStatusUpdate) => void;
   messages: ChatMessage[];
-  loadConversationMessages: (conversationId: string) => Promise<void>;
+  loadConversationMessages: (conversationId: string, forceReload?: boolean) => Promise<void>;
   isLoadingMessages: boolean;
   isReconnecting: boolean;
   reconnectAttempts: number;
+  clearMessagesCache: () => void;
 }
 
 const WebSocketContext = createContext<WebSocketContextType | null>(null);
@@ -75,74 +76,102 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   }, [reconnectAttempts, isIntentionalDisconnect, user, token, isConnected]);
 
   // Load conversation messages function
-  const loadConversationMessages = async (conversationId: string) => {
-    if (!user || !token || loadedConversations.has(conversationId)) {
-      console.log('Skipping conversation load:', { user: !!user, token: !!token, alreadyLoaded: loadedConversations.has(conversationId) });
+  const loadConversationMessages = async (conversationId: string, forceReload = false) => {
+    if (!user || !token) {
+      console.log('Skipping conversation load: missing user or token', { user: !!user, token: !!token });
+      return;
+    }
+    
+    if (!forceReload && loadedConversations.has(conversationId)) {
+      console.log('Conversation already loaded, skipping:', conversationId);
       return;
     }
     
     setIsLoadingMessages(true);
     try {
-      console.log(`Loading messages for conversation: ${conversationId}`);
+      console.log(`🔄 Loading messages for conversation: ${conversationId}`);
       const conversationMessages = await messageService.fetchConversationMessages(conversationId, token);
+      console.log(`✅ Fetched ${conversationMessages.length} messages for conversation: ${conversationId}`);
       
       setMessages(prev => {
+        console.log(`📝 Before update: ${prev.length} total messages, ${prev.filter(m => m.conversationId === conversationId).length} from this conversation`);
+        
         // Remove any existing messages from this conversation to avoid duplicates
         const filteredPrev = prev.filter(msg => msg.conversationId !== conversationId);
+        console.log(`🗑️ After filtering out conversation ${conversationId}: ${filteredPrev.length} messages remaining`);
+        
         // Add the new conversation messages
         const combined = [...filteredPrev, ...conversationMessages];
+        console.log(`➕ After adding new messages: ${combined.length} total messages`);
+        
         // Sort by timestamp to maintain chronological order
-        return combined.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+        const sorted = combined.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+        console.log(`🔄 After sorting: ${sorted.length} messages, conversation ${conversationId} has ${sorted.filter(m => m.conversationId === conversationId).length} messages`);
+        
+        return sorted;
       });
       
       setLoadedConversations(prev => {
         const newSet = new Set(prev);
         newSet.add(conversationId);
+        console.log(`📚 Marked conversation ${conversationId} as loaded. Total loaded: ${newSet.size}`);
         return newSet;
       });
-      console.log(`Loaded ${conversationMessages.length} messages for conversation: ${conversationId}`);
     } catch (error) {
-      console.error(`Error loading messages for conversation ${conversationId}:`, error);
+      console.error(`❌ Error loading messages for conversation ${conversationId}:`, error);
     } finally {
       setIsLoadingMessages(false);
     }
   };
 
-  // Load recent messages only on initial load (for quick start) with caching
+  // Load recent messages only on initial load (with optional caching)
   useEffect(() => {
     if (!user || !token || messagesLoaded) return;
     
     const loadInitialMessages = async () => {
       try {
-        // Try cache first for instant load
-        try {
-          const cached = sessionStorage.getItem('recent_messages');
-          if (cached) {
-            const parsedCache = JSON.parse(cached);
-            // Use cache if less than 30 seconds old
-            if (Date.now() - parsedCache.timestamp < 30000) {
-              console.log('📦 Using cached recent messages for instant load');
-              setMessages(parsedCache.data);
-              setMessagesLoaded(true);
-              return; // Skip API call if cache is fresh
+        console.log('🔄 Loading initial messages...');
+        
+        // Disable cache temporarily to debug issues - try cache first for instant load
+        const USE_CACHE = false; // Set to false to disable cache temporarily
+        
+        if (USE_CACHE) {
+          try {
+            const cached = sessionStorage.getItem('recent_messages');
+            if (cached) {
+              const parsedCache = JSON.parse(cached);
+              // Use cache if less than 10 seconds old (reduced from 30s)
+              if (Date.now() - parsedCache.timestamp < 10000) {
+                console.log('📦 Using cached recent messages for instant load');
+                setMessages(parsedCache.data);
+                setMessagesLoaded(true);
+                return; // Skip API call if cache is fresh
+              } else {
+                console.log('📦 Cache expired, loading fresh messages');
+              }
             }
+          } catch (error) {
+            console.warn('Failed to load cached messages:', error);
           }
-        } catch (error) {
-          console.warn('Failed to load cached messages:', error);
+        } else {
+          console.log('📦 Cache disabled, loading fresh messages');
         }
         
         const recentMessages = await messageService.fetchRecentMessages(token);
+        console.log(`✅ Loaded ${recentMessages.length} recent messages`);
         setMessages(recentMessages);
         setMessagesLoaded(true);
         
-        // Cache for next time
-        try {
-          sessionStorage.setItem('recent_messages', JSON.stringify({
-            data: recentMessages,
-            timestamp: Date.now()
-          }));
-        } catch (error) {
-          console.warn('Failed to cache messages:', error);
+        // Cache for next time (if enabled)
+        if (USE_CACHE) {
+          try {
+            sessionStorage.setItem('recent_messages', JSON.stringify({
+              data: recentMessages,
+              timestamp: Date.now()
+            }));
+          } catch (error) {
+            console.warn('Failed to cache messages:', error);
+          }
         }
         
         console.log('Initial recent messages loaded on component mount');
@@ -375,6 +404,18 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
   };
 
+  const clearMessagesCache = () => {
+    console.log('🧹 Clearing messages cache and reloading');
+    setMessages([]);
+    setMessagesLoaded(false);
+    setLoadedConversations(new Set());
+    try {
+      sessionStorage.removeItem('recent_messages');
+    } catch (error) {
+      console.warn('Failed to clear message cache:', error);
+    }
+  };
+
   return (
     <WebSocketContext.Provider value={{ 
       socket, 
@@ -385,7 +426,8 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       loadConversationMessages, 
       isLoadingMessages,
       isReconnecting,
-      reconnectAttempts
+      reconnectAttempts,
+      clearMessagesCache
     }}>
       {children}
     </WebSocketContext.Provider>
