@@ -311,38 +311,39 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
             {recentSearches.map((search, index) => (
               <button
                 key={index}
-                onClick={(e) => {
+                onClick={React.useCallback((e) => {
                   e.preventDefault();
+                  e.stopPropagation();
+                  
                   console.log('Recent search clicked:', search);
                   
-                  // Clear any pending search timeout to prevent interference
+                  // Clear any pending timeouts
                   if (searchTimeoutRef.current) {
                     clearTimeout(searchTimeoutRef.current);
                   }
                   
-                  // Hide suggestions immediately
+                  // Hide suggestions first
                   setShowSuggestions(false);
                   setDropdownPosition(null);
                   
-                  // Set query state and trigger search directly
+                  // Update query state
                   setQuery(search);
                   
-                  // Focus input immediately
-                  if (searchInputRef.current) {
-                    searchInputRef.current.focus();
-                  }
+                  // Focus input
+                  setTimeout(() => {
+                    if (searchInputRef.current) {
+                      searchInputRef.current.focus();
+                    }
+                  }, 0);
                   
-                  // Perform search immediately without debouncing
-                  // Save to recent searches
+                  // Save to recent searches (move to top)
                   const newRecentSearches = [search, ...recentSearches.filter(s => s !== search)].slice(0, 5);
                   setRecentSearches(newRecentSearches);
                   localStorage.setItem('recentSearches', JSON.stringify(newRecentSearches));
                   
-                  // Trigger the actual search
+                  // Trigger search directly
                   onSearch(search, Object.keys(filters).length > 0 ? filters : undefined);
-                  
-                  console.log('Search performed for:', search);
-                }}
+                }, [search, recentSearches, filters, onSearch])}
                 className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm flex items-center space-x-2"
               >
                 <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
