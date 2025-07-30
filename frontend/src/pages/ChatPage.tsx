@@ -18,6 +18,8 @@ import { ConversationType } from '../components/ConversationTypeToggle';
 import { CreateGroupModal } from '../components/groups/CreateGroupModal';
 import { GroupSettingsModal } from '../components/groups/GroupSettingsModal';
 import ThemeToggle from '../components/ThemeToggle';
+import VersionInfo from '../components/VersionInfo';
+import Footer from '../components/Footer';
 import { api } from '../services/api';
 
 const ChatPage: React.FC = () => {
@@ -235,7 +237,8 @@ const ChatPage: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative">
+    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="flex flex-1 relative">
       {/* Mobile Sidebar Overlay */}
       {chatState.isMobileSidebarOpen && (
         <div 
@@ -247,7 +250,8 @@ const ChatPage: React.FC = () => {
       {/* Sidebar - Conversations */}
       <div className={`
         fixed lg:relative lg:translate-x-0 z-50 lg:z-0
-        w-80 lg:w-72 xl:w-80 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-r border-gray-200/50 dark:border-gray-700/50 h-screen
+        w-80 lg:w-72 xl:w-80 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-r border-gray-200/50 dark:border-gray-700/50 
+        ${chatState.isMobileSidebarOpen ? 'h-screen' : 'h-full'}
         flex flex-col shadow-lg lg:shadow-none
         transition-transform duration-300 ease-in-out
         ${chatState.isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
@@ -262,6 +266,7 @@ const ChatPage: React.FC = () => {
                 </svg>
               </div>
               Chat Platform
+              <VersionInfo className="ml-2" clickable />
             </h1>
             <div className="flex items-center space-x-2">
               <ThemeToggle />
@@ -500,7 +505,10 @@ const ChatPage: React.FC = () => {
           }}
         />
       )}
+      </div>
       
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

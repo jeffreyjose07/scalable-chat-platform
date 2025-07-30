@@ -326,28 +326,23 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                     clearTimeout(searchTimeoutRef.current);
                   }
                   
-                  // Update query state and input field
-                  setQuery(search);
-                  if (searchInputRef.current) {
-                    searchInputRef.current.value = search;
-                  }
-                  
-                  // Hide suggestions
+                  // Hide suggestions immediately
                   setShowSuggestions(false);
                   setDropdownPosition(null);
                   
-                  // Focus input
-                  if (searchInputRef.current) {
-                    searchInputRef.current.focus();
-                  }
-                  
-                  // Save to recent searches and call onSearch directly with proper parameters
+                  // Save to recent searches first
                   const newRecentSearches = [search, ...recentSearches.filter(s => s !== search)].slice(0, 5);
                   setRecentSearches(newRecentSearches);
                   localStorage.setItem('recentSearches', JSON.stringify(newRecentSearches));
                   
-                  // Call onSearch directly (which will pass conversationId correctly)
-                  onSearch(search, Object.keys(filters).length > 0 ? filters : undefined);
+                  // Update query state - this will trigger the useEffect search
+                  setQuery(search);
+                  if (searchInputRef.current) {
+                    searchInputRef.current.value = search;
+                    searchInputRef.current.focus();
+                  }
+                  
+                  // The search will be triggered by the useEffect that watches query changes
                 }}
                 className="w-full text-left px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 text-sm flex items-center space-x-2"
               >
