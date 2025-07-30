@@ -70,7 +70,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
   const getTextColorForBackground = (hue: number, saturation: number, lightness: number) => {
     // For light backgrounds (lightness > 60), use dark text
     // For dark backgrounds (lightness <= 60), use white text
-    return lightness > 60 ? 'text-gray-800' : 'text-white';
+    return lightness > 60 ? 'text-gray-800 dark:text-gray-200' : 'text-white dark:text-gray-100';
   };
 
   const getConversationDisplayName = (conversation: Conversation) => {

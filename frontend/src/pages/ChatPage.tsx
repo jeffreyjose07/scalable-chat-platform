@@ -17,6 +17,7 @@ import SearchResultsList from '../components/SearchResultsList';
 import { ConversationType } from '../components/ConversationTypeToggle';
 import { CreateGroupModal } from '../components/groups/CreateGroupModal';
 import { GroupSettingsModal } from '../components/groups/GroupSettingsModal';
+import ThemeToggle from '../components/ThemeToggle';
 import { api } from '../services/api';
 
 const ChatPage: React.FC = () => {
@@ -234,7 +235,7 @@ const ChatPage: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 relative">
+    <div className="flex h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 relative">
       {/* Mobile Sidebar Overlay */}
       {chatState.isMobileSidebarOpen && (
         <div 
@@ -263,6 +264,7 @@ const ChatPage: React.FC = () => {
               Chat Platform
             </h1>
             <div className="flex items-center space-x-2">
+              <ThemeToggle />
               <button
                 onClick={logout}
                 className="text-sm text-gray-500 hover:text-gray-700 hover:bg-white/50 px-2 py-1 rounded-md transition-colors"
@@ -318,7 +320,7 @@ const ChatPage: React.FC = () => {
           searchHook.isSearchMode ? 'lg:w-1/2' : 'w-full'
         }`}>
           {/* Chat Header */}
-          <div className="p-4 border-b border-gray-200/50 bg-white shadow-sm overflow-visible" style={{isolation: 'auto'}}>
+          <div className="p-4 border-b border-gray-200/50 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-visible" style={{isolation: 'auto'}}>
             <div className="flex items-center justify-between">
               <div className="flex items-center min-w-0 flex-1">
                 <button
