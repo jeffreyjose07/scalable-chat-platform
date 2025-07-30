@@ -37,14 +37,31 @@ const SearchResultsList: React.FC<SearchResultsListProps> = ({
 
   const renderHighlightedContent = (result: MessageSearchResult) => {
     if (result.highlightedContent) {
+      // SECURITY FIX: Sanitize HTML content to prevent XSS attacks
+      // Only allow safe HTML tags and properly escape all content
+      const sanitizeHtml = (html: string): string => {
+        // Remove all HTML tags except <mark> and </mark>
+        let sanitized = html
+          .replace(/<(?!\/?(mark)(?:\s[^>]*)?\/?>)[^>]+>/gi, '') // Remove all tags except mark
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#x27;');
+        
+        // Now safely restore only mark tags with proper CSS classes
+        sanitized = sanitized
+          .replace(/&lt;mark&gt;/g, '<mark class="bg-yellow-300 dark:bg-yellow-600 text-yellow-900 dark:text-yellow-100 px-1 py-0.5 rounded font-medium shadow-sm">')
+          .replace(/&lt;\/mark&gt;/g, '</mark>');
+        
+        return sanitized;
+      };
+
       return (
         <div 
           className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed"
           dangerouslySetInnerHTML={{ 
-            __html: result.highlightedContent.replace(
-              /<mark>/g, 
-              '<mark class="bg-yellow-300 dark:bg-yellow-600 text-yellow-900 dark:text-yellow-100 px-1 py-0.5 rounded font-medium shadow-sm">'
-            )
+            __html: sanitizeHtml(result.highlightedContent)
           }}
         />
       );

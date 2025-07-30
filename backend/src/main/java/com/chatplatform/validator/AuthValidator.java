@@ -22,7 +22,7 @@ public class AuthValidator {
     private static final Pattern USERNAME_PATTERN = 
         Pattern.compile("^[a-zA-Z0-9_]{3,20}$");
     
-    private static final int MIN_PASSWORD_LENGTH = 6;
+    private static final int MIN_PASSWORD_LENGTH = 8;
     private static final int MAX_DISPLAY_NAME_LENGTH = 50;
 
     /**
@@ -75,7 +75,7 @@ public class AuthValidator {
         } else if (password.length() < MIN_PASSWORD_LENGTH) {
             errors.put("password", "Password must be at least " + MIN_PASSWORD_LENGTH + " characters long");
         } else if (isWeakPassword(password)) {
-            errors.put("password", "Password must contain at least one letter and one number");
+            errors.put("password", "Password must contain at least 3 of the following: lowercase letter, uppercase letter, number, or special character (!@#$%^&*()_+-=[]{}|;:,.<>?)");
         }
     }
 
@@ -88,9 +88,20 @@ public class AuthValidator {
     }
 
     private boolean isWeakPassword(String password) {
-        boolean hasLetter = password.chars().anyMatch(Character::isLetter);
+        // Enhanced password strength requirements
+        boolean hasLowerCase = password.chars().anyMatch(Character::isLowerCase);
+        boolean hasUpperCase = password.chars().anyMatch(Character::isUpperCase);
         boolean hasDigit = password.chars().anyMatch(Character::isDigit);
-        return !(hasLetter && hasDigit);
+        boolean hasSpecialChar = password.chars().anyMatch(ch -> "!@#$%^&*()_+-=[]{}|;:,.<>?".indexOf(ch) >= 0);
+        
+        // Require at least 3 of the 4 character types for strong password
+        int strengthScore = 0;
+        if (hasLowerCase) strengthScore++;
+        if (hasUpperCase) strengthScore++;
+        if (hasDigit) strengthScore++;
+        if (hasSpecialChar) strengthScore++;
+        
+        return strengthScore < 3;
     }
 
     private String formatErrorMessage(Map<String, String> errors) {
