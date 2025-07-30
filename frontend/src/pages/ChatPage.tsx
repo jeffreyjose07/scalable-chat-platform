@@ -252,9 +252,9 @@ const ChatPage: React.FC = () => {
         transition-transform duration-300 ease-in-out
         ${chatState.isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
-        <div className="p-4 border-b border-gray-200/50 flex-shrink-0 bg-gradient-to-r from-green-50 to-blue-50">
+        <div className="p-4 border-b border-gray-200/50 dark:border-gray-700 flex-shrink-0 bg-gradient-to-r from-green-50 to-blue-50 dark:from-gray-800 dark:to-gray-700">
           <div className="flex items-center justify-between">
-            <h1 className="text-lg lg:text-xl font-bold text-gray-900 flex items-center">
+            <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center">
               <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mr-2 shadow-md">
                 <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
@@ -267,7 +267,7 @@ const ChatPage: React.FC = () => {
               <ThemeToggle />
               <button
                 onClick={logout}
-                className="text-sm text-gray-500 hover:text-gray-700 hover:bg-white/50 px-2 py-1 rounded-md transition-colors"
+                className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-white/50 dark:hover:bg-gray-600/50 px-2 py-1 rounded-md transition-colors"
               >
                 Logout
               </button>
@@ -283,12 +283,12 @@ const ChatPage: React.FC = () => {
           </div>
           <div className="flex items-center mt-3">
             <div className={`w-3 h-3 rounded-full mr-2 shadow-sm ${isConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></div>
-            <span className={`text-sm font-medium ${isConnected ? 'text-green-700' : 'text-red-600'}`}>
+            <span className={`text-sm font-medium ${isConnected ? 'text-green-700 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
               {isConnected ? 'Connected' : 'Disconnected'}
             </span>
           </div>
           {user && (
-            <div className="mt-2 text-sm text-gray-700 bg-white/50 rounded-lg px-3 py-2">
+            <div className="mt-2 text-sm text-gray-700 dark:text-gray-200 bg-white/50 dark:bg-gray-700/50 rounded-lg px-3 py-2">
               <div className="flex items-center">
                 <div className="w-6 h-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xs font-semibold mr-2 shadow-sm">
                   {(user.displayName || user.username).charAt(0).toUpperCase()}

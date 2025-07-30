@@ -2,16 +2,10 @@ import React from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
 const ThemeToggle: React.FC = () => {
-  const { theme, effectiveTheme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
 
   const getIcon = () => {
-    if (theme === 'system') {
-      return (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      );
-    } else if (effectiveTheme === 'dark') {
+    if (theme === 'dark') {
       return (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
@@ -27,9 +21,7 @@ const ThemeToggle: React.FC = () => {
   };
 
   const getTooltip = () => {
-    if (theme === 'light') return 'Switch to dark mode';
-    if (theme === 'dark') return 'Switch to system theme';
-    return 'Switch to light mode';
+    return theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode';
   };
 
   return (
