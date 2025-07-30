@@ -197,7 +197,7 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
     return (
       <button
         onClick={onToggleSearch}
-        className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+        className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
         title="Search messages"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -238,13 +238,13 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                 }
               }
             }}
-            className="w-full pl-10 pr-32 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+            className="w-full pl-10 pr-32 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
           />
           
           <div className="absolute inset-y-0 right-0 flex items-center">
             {/* Results count */}
             {resultsCount !== undefined && query && (
-              <span className="text-xs text-gray-500 mr-2">
+              <span className="text-xs text-gray-500 dark:text-gray-400 mr-2">
                 {resultsCount} {resultsCount === 1 ? 'result' : 'results'}
               </span>
             )}
@@ -255,8 +255,8 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                 onClick={() => setShowFilters(!showFilters)}
                 className={`p-1 transition-colors mr-1 ${
                   hasActiveFilters
-                    ? 'text-blue-600 hover:text-blue-700'
-                    : 'text-gray-400 hover:text-gray-600'
+                    ? 'text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300'
+                    : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'
                 }`}
                 title="Search filters"
               >
@@ -273,7 +273,7 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
             {(query || hasActiveFilters) && (
               <button
                 onClick={handleClear}
-                className="p-1 text-gray-400 hover:text-gray-600 transition-colors mr-1"
+                className="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors mr-1"
                 title="Clear search"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -285,7 +285,7 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
             {/* Close button */}
             <button
               onClick={handleClose}
-              className="p-1 text-gray-400 hover:text-gray-600 transition-colors mr-2"
+              className="p-1 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 transition-colors mr-2"
               title="Close search"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -298,15 +298,15 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
         {/* Search suggestions - rendered via Portal */}
         {showSuggestions && recentSearches.length > 0 && dropdownPosition && createPortal(
           <div 
-            className="fixed bg-white border border-gray-200 rounded-lg shadow-lg z-[9999]"
+            className="fixed bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-[9999]"
             style={{
               top: `${dropdownPosition.top}px`,
               left: `${dropdownPosition.left}px`,
               width: `${dropdownPosition.width}px`
             }}
           >
-            <div className="p-2 border-b border-gray-100">
-              <span className="text-xs font-medium text-gray-500">Recent searches</span>
+            <div className="p-2 border-b border-gray-100 dark:border-gray-700">
+              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Recent searches</span>
             </div>
             {recentSearches.map((search, index) => (
               <button
@@ -351,23 +351,23 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
 
         {/* Search tips */}
         {isSearchMode && !query && !showSuggestions && (
-          <div className="absolute top-full left-0 right-0 mt-1 p-2 bg-gray-50 border border-gray-200 rounded-lg text-xs text-gray-600 z-[9999]">
+          <div className="absolute top-full left-0 right-0 mt-1 p-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-xs text-gray-600 dark:text-gray-300 z-[9999]">
             <div className="flex items-center space-x-4">
               <span>💡 Search for messages in this conversation</span>
-              <span className="text-gray-400">Press Esc to close</span>
+              <span className="text-gray-400 dark:text-gray-500">Press Esc to close</span>
             </div>
           </div>
         )}
 
         {/* Advanced filters */}
         {showFilters && enableFilters && (
-          <div ref={filtersRef} className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl z-[9999] p-4 max-w-sm lg:max-w-md">
+          <div ref={filtersRef} className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-xl z-[9999] p-4 max-w-sm lg:max-w-md">
             <div className="flex items-center justify-between mb-3">
-              <span className="text-sm font-medium text-gray-700">Search Filters</span>
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Search Filters</span>
               {hasActiveFilters && (
                 <button
                   onClick={clearFilters}
-                  className="text-xs text-blue-600 hover:text-blue-700"
+                  className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
                 >
                   Clear all
                 </button>
@@ -377,34 +377,34 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
             <div className="space-y-3">
               {/* Sender filter */}
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">From user</label>
+                <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">From user</label>
                 <input
                   type="text"
                   placeholder="Username..."
                   value={filters.sender || ''}
                   onChange={(e) => handleFilterChange('sender', e.target.value)}
-                  className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-2 py-1 text-xs border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
               
               {/* Date range */}
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">From date</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">From date</label>
                   <input
                     type="date"
                     value={filters.dateFrom || ''}
                     onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
-                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-2 py-1 text-xs border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-gray-600 mb-1">To date</label>
+                  <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">To date</label>
                   <input
                     type="date"
                     value={filters.dateTo || ''}
                     onChange={(e) => handleFilterChange('dateTo', e.target.value)}
-                    className="w-full px-2 py-1 text-xs border border-gray-300 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-2 py-1 text-xs border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
               </div>
@@ -418,7 +418,7 @@ const MessageSearchBar: React.FC<MessageSearchBarProps> = ({
                     onChange={(e) => handleFilterChange('hasMedia', e.target.checked)}
                     className="w-3 h-3 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
                   />
-                  <span className="text-xs text-gray-600">Has attachments</span>
+                  <span className="text-xs text-gray-600 dark:text-gray-400">Has attachments</span>
                 </label>
               </div>
             </div>

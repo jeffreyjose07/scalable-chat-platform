@@ -386,7 +386,7 @@ const ChatPage: React.FC = () => {
           <MessageList messages={conversationMessages} currentUserId={user?.id} isLoading={isLoadingMessages} />
 
           {/* Message Input */}
-          <div className="border-t border-gray-200/50 bg-white/90 backdrop-blur-sm">
+          <div className="border-t border-gray-200/50 dark:border-gray-700 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
             <MessageInput 
               key={chatState.selectedConversation} 
               onSendMessage={handleSendMessage} 

@@ -155,14 +155,14 @@ const ConversationList: React.FC<ConversationListProps> = ({
         />
         
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold text-gray-700">
+          <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
             {activeType === 'groups' ? 'Group Conversations' : 'Direct Messages'}
           </h3>
           
           {activeType === 'direct' && (
             <button
               onClick={onNewDirectMessage}
-              className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              className="p-1.5 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
               title="New Direct Message"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -174,7 +174,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
           {activeType === 'groups' && onNewGroup && (
             <button
               onClick={onNewGroup}
-              className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              className="p-1.5 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
               title="Create New Group"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -191,8 +191,8 @@ const ConversationList: React.FC<ConversationListProps> = ({
                 key={conversation.id}
                 className={`group relative transition-all duration-200 ${
                   selectedConversation === conversation.id
-                    ? 'bg-green-50 border-r-4 border-green-500 shadow-sm'
-                    : 'hover:bg-gray-50 hover:shadow-sm'
+                    ? 'bg-green-50 dark:bg-green-900/20 border-r-4 border-green-500 shadow-sm'
+                    : 'hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:shadow-sm'
                 }`}
               >
                 <button
@@ -260,7 +260,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                         onDeleteConversation(conversation.id);
                       }
                     }}
-                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded"
+                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 rounded"
                     title={`Delete ${conversation.type === 'GROUP' ? 'group' : 'conversation'}`}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -279,7 +279,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                 <div className="mt-2">
                   <button
                     onClick={onNewDirectMessage}
-                    className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
                   >
                     Start a conversation
                   </button>
@@ -289,7 +289,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                 <div className="mt-2">
                   <button
                     onClick={onNewGroup}
-                    className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
                   >
                     Create a group
                   </button>
