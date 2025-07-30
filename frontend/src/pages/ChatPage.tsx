@@ -41,15 +41,21 @@ const ChatPage: React.FC = () => {
   const searchHook = useMessageSearch();
   const userSearchHook = useUserSearch();
   
-  // Auto-select first available conversation if none selected
+  // Auto-select first available conversation if none selected and preload its messages
   useEffect(() => {
     if (!chatState.selectedConversation && conversationHook.conversations.length > 0) {
       const firstConversation = conversationHook.conversations[0];
       chatState.setSelectedConversation(firstConversation.id);
+      
+      // Immediately start loading messages for the first conversation to reduce perceived loading time
+      if (user) {
+        console.log('🚀 Preloading messages for first conversation:', firstConversation.id);
+        loadConversationMessages(firstConversation.id);
+      }
     }
-  }, [chatState.selectedConversation, conversationHook.conversations, chatState]);
+  }, [chatState.selectedConversation, conversationHook.conversations, chatState, user, loadConversationMessages]);
 
-  // Load messages for initially selected conversation
+  // Load messages for selected conversation (if not already loaded)
   useEffect(() => {
     if (chatState.selectedConversation && user) {
       loadConversationMessages(chatState.selectedConversation);
@@ -287,9 +293,15 @@ const ChatPage: React.FC = () => {
             </div>
           </div>
           <div className="flex items-center mt-3">
-            <div className={`w-3 h-3 rounded-full mr-2 shadow-sm ${isConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`}></div>
-            <span className={`text-sm font-medium ${isConnected ? 'text-green-700 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-              {isConnected ? 'Connected' : 'Disconnected'}
+            <div className={`w-3 h-3 rounded-full mr-2 shadow-sm ${
+              isConnected ? 'bg-green-500 animate-pulse' : 
+              isReconnecting ? 'bg-yellow-500 animate-spin' : 'bg-red-500'
+            }`}></div>
+            <span className={`text-sm font-medium ${
+              isConnected ? 'text-green-700 dark:text-green-400' : 
+              isReconnecting ? 'text-yellow-600 dark:text-yellow-400' : 'text-red-600 dark:text-red-400'
+            }`}>
+              {isConnected ? 'Connected' : isReconnecting ? 'Reconnecting...' : 'Disconnected'}
             </span>
           </div>
           {user && (
@@ -412,7 +424,11 @@ const ChatPage: React.FC = () => {
           </div>
 
           {/* Messages */}
-          <MessageList messages={conversationMessages} currentUserId={user?.id} isLoading={isLoadingMessages} />
+          <MessageList 
+            messages={conversationMessages} 
+            currentUserId={user?.id} 
+            isLoading={isLoadingMessages || conversationHook.isLoading || !isConnected} 
+          />
 
           {/* Message Input */}
           <div className="border-t border-gray-200/50 dark:border-gray-700 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">

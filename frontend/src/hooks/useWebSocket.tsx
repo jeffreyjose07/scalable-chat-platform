@@ -42,9 +42,9 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [isReconnecting, setIsReconnecting] = useState(false);
   const { user, token } = useAuth();
   
-  // Reconnection configuration
-  const MAX_RECONNECT_ATTEMPTS = 5;
-  const BASE_RECONNECT_DELAY = 1000; // 1 second
+  // Reconnection configuration - optimized for faster reconnection
+  const MAX_RECONNECT_ATTEMPTS = 8;
+  const BASE_RECONNECT_DELAY = 300; // 300ms instead of 1 second
   
   // Reconnection with exponential backoff
   const attemptReconnect = useCallback(() => {
@@ -108,15 +108,43 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
   };
 
-  // Load recent messages only on initial load (for quick start)
+  // Load recent messages only on initial load (for quick start) with caching
   useEffect(() => {
     if (!user || !token || messagesLoaded) return;
     
     const loadInitialMessages = async () => {
       try {
+        // Try cache first for instant load
+        try {
+          const cached = sessionStorage.getItem('recent_messages');
+          if (cached) {
+            const parsedCache = JSON.parse(cached);
+            // Use cache if less than 30 seconds old
+            if (Date.now() - parsedCache.timestamp < 30000) {
+              console.log('📦 Using cached recent messages for instant load');
+              setMessages(parsedCache.data);
+              setMessagesLoaded(true);
+              return; // Skip API call if cache is fresh
+            }
+          }
+        } catch (error) {
+          console.warn('Failed to load cached messages:', error);
+        }
+        
         const recentMessages = await messageService.fetchRecentMessages(token);
         setMessages(recentMessages);
         setMessagesLoaded(true);
+        
+        // Cache for next time
+        try {
+          sessionStorage.setItem('recent_messages', JSON.stringify({
+            data: recentMessages,
+            timestamp: Date.now()
+          }));
+        } catch (error) {
+          console.warn('Failed to cache messages:', error);
+        }
+        
         console.log('Initial recent messages loaded on component mount');
       } catch (error) {
         console.error('Error loading initial messages:', error);
@@ -133,8 +161,8 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
 
     // Prevent creating multiple connections
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      console.log('WebSocket already connected, skipping new connection');
+    if (socket && (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CONNECTING)) {
+      console.log('WebSocket already connected/connecting, skipping new connection');
       return;
     }
 
@@ -171,17 +199,9 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         setHasShownConnectedToast(true);
       }
       
-      // Load recent messages when connected (if not already loaded)
-      if (!messagesLoaded) {
-        try {
-          const recentMessages = await messageService.fetchRecentMessages(token);
-          setMessages(recentMessages);
-          setMessagesLoaded(true);
-          console.log('Recent messages loaded on WebSocket connection');
-        } catch (error) {
-          console.error('Error loading recent messages:', error);
-        }
-      }
+      // Skip loading messages here - they're already loaded by the initial useEffect
+      // This eliminates duplicate loading and speeds up connection
+      console.log('WebSocket connected - messages already loaded, skipping duplicate load');
     };
 
     newSocket.onclose = (event) => {
