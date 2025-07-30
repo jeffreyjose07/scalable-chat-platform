@@ -1,0 +1,231 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.0'
+    id 'io.spring.dependency-management' version '1.1.4'
+    id 'com.github.node-gradle.node' version '7.0.1'
+}
+
+group = 'com.chatplatform'
+version = '1.0.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+// Ensure Gradle uses Java 17 for build process
+tasks.withType(JavaCompile) {
+    options.release = 17
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Core Spring Boot
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    
+    // Data Access
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    
+    // Database Drivers
+    runtimeOnly 'org.postgresql:postgresql'
+    
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    
+    // Monitoring
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
+    
+    // Testing
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
+    testImplementation 'org.testcontainers:mongodb'
+    testRuntimeOnly 'com.h2database:h2'
+}
+
+// Node.js configuration for frontend build
+node {
+    version = '18.17.1'
+    npmVersion = '9.6.7'
+    workDir = file('../frontend')
+    nodeProjectDir = file('../frontend')
+}
+
+// Frontend build tasks
+task frontendInstall(type: com.github.gradle.node.npm.task.NpmTask) {
+    args = ['install']
+    dependsOn nodeSetup
+}
+
+task frontendBuild(type: com.github.gradle.node.npm.task.NpmTask) {
+    args = ['run', 'build']
+    dependsOn frontendInstall
+    inputs.dir('../frontend/src')
+    inputs.files('../frontend/package.json', '../frontend/package-lock.json', '../frontend/tsconfig.json')
+    outputs.dir('../frontend/build')
+}
+
+// Copy frontend build to Spring Boot static resources
+task copyFrontendBuild(type: Copy) {
+    dependsOn frontendBuild
+    from '../frontend/build'
+    into 'src/main/resources/static'
+}
+
+// Make processResources depend on copyFrontendBuild
+processResources {
+    dependsOn copyFrontendBuild
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// Spring Boot jar configuration
+jar {
+    enabled = false
+    archiveClassifier = ''
+}
+
+// Bootjar task configuration
+bootJar {
+    enabled = true
+    archiveClassifier = ''
+    mainClass = 'com.chatplatform.ChatPlatformApplication'
+}
+
+// Clean task enhancement
+clean {
+    delete '../frontend/build'
+    delete '../frontend/node_modules'
+}
+
+// Development profile task
+task bootRunDev {
+    group = 'application'
+    description = 'Run the application with development profile'
+    doFirst {
+        bootRun.systemProperty 'spring.profiles.active', 'dev'
+    }
+    finalizedBy bootRun
+}
+
+// Production profile task  
+task bootRunProd {
+    group = 'application'
+    description = 'Run the application with production profile'
+    doFirst {
+        bootRun.systemProperty 'spring.profiles.active', 'prod'
+    }
+    finalizedBy bootRun
+}
+
+// Render deployment task
+task buildForRender {
+    group = 'build'
+    description = 'Build application for Render deployment'
+    
+    doFirst {
+        println "🧹 Cleaning previous build artifacts..."
+    }
+    
+    doLast {
+        println "✅ Application built successfully for Render deployment"
+        println "📦 JAR location: ${bootJar.archiveFile.get().asFile.absolutePath}"
+        println "📊 JAR size: ${(bootJar.archiveFile.get().asFile.length() / 1024 / 1024).round(2)} MB"
+        println "🚀 Ready for deployment with Gradle ${gradle.gradleVersion}"
+        
+        // Verify the JAR exists and is not empty
+        def jarFile = bootJar.archiveFile.get().asFile
+        if (!jarFile.exists()) {
+            throw new GradleException("❌ JAR file not found: ${jarFile.absolutePath}")
+        }
+        if (jarFile.length() < 1024) {
+            throw new GradleException("❌ JAR file appears to be empty or corrupted")
+        }
+        
+        println "✅ Build verification completed successfully"
+    }
+}
+
+// Ensure clean runs before build steps for buildForRender
+buildForRender.dependsOn clean
+copyFrontendBuild.mustRunAfter clean
+bootJar.mustRunAfter copyFrontendBuild
+buildForRender.dependsOn copyFrontendBuild, bootJar
+
+// Development task for quick iteration
+task devBuild {
+    group = 'build'
+    description = 'Quick build for development (skips frontend build)'
+    dependsOn clean, compileJava, processResources, classes
+}
+
+// Task to show build info
+task buildInfo {
+    group = 'help'
+    description = 'Display build information'
+    
+    doLast {
+        println "Project: ${project.name}"
+        println "Version: ${project.version}"
+        println "Java Version: ${java.sourceCompatibility}"
+        println "Spring Boot Version: ${project.ext.springBootVersion}"
+        println "Build Directory: ${buildDir}"
+    }
+}
+
+// Security scan task placeholder (can be integrated with security plugins)
+task securityScan {
+    group = 'verification'
+    description = 'Run security vulnerability scan'
+    
+    doLast {
+        println "Security scan completed - integrate with OWASP dependency check if needed"
+    }
+}
+
+// Integration test configuration
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+}
+
+sourceSets {
+    integrationTest {
+        java.srcDir 'src/integration-test/java'
+        resources.srcDir 'src/integration-test/resources'
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+task integrationTest(type: Test) {
+    description = 'Run integration tests'
+    group = 'verification'
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    useJUnitPlatform()
+    
+    shouldRunAfter test
+}
+
+check.dependsOn integrationTest

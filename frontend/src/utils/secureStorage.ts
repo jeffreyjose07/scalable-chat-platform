@@ -78,13 +78,11 @@ class SecureStorage {
         }
         
         // Basic fingerprint check (detect if browser environment changed)
-        // TEMPORARILY DISABLED: After security headers update, fingerprints may have changed
-        // Users will need to re-login once, then this can be re-enabled
         if (meta.fingerprint && meta.fingerprint !== this.generateFingerprint()) {
-          console.warn('Token fingerprint mismatch detected - likely due to security updates. Allowing token to work.');
-          // Temporarily disabled to prevent all users from being logged out after security updates
-          // this.removeToken();
-          // return null;
+          console.warn('Token fingerprint mismatch - security environment changed, requiring re-authentication');
+          this.markTokenRemovedForSecurity();
+          this.removeToken();
+          return null;
         }
       }
       
@@ -148,6 +146,43 @@ class SecureStorage {
       console.debug('All secure storage cleared');
     } catch (error) {
       console.error('Failed to clear secure storage:', error);
+    }
+  }
+
+  /**
+   * Mark that a token was removed for security reasons
+   */
+  markTokenRemovedForSecurity(): void {
+    try {
+      const securityFlag = this.prefix + 'security_logout';
+      sessionStorage.setItem(securityFlag, 'true');
+    } catch (error) {
+      console.error('Failed to set security logout flag:', error);
+    }
+  }
+
+  /**
+   * Check if a token was previously removed for security reasons
+   */
+  wasTokenRemoved(): boolean {
+    try {
+      const securityFlag = this.prefix + 'security_logout';
+      return sessionStorage.getItem(securityFlag) === 'true';
+    } catch (error) {
+      console.error('Failed to check security logout flag:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Clear the security logout flag
+   */
+  clearSecurityFlag(): void {
+    try {
+      const securityFlag = this.prefix + 'security_logout';
+      sessionStorage.removeItem(securityFlag);
+    } catch (error) {
+      console.error('Failed to clear security logout flag:', error);
     }
   }
 
@@ -229,7 +264,9 @@ export const tokenStorage = {
   get: () => secureStorage.getToken(),
   remove: () => secureStorage.removeToken(),
   exists: () => secureStorage.hasToken(),
-  clear: () => secureStorage.clearAll()
+  clear: () => secureStorage.clearAll(),
+  wasTokenRemoved: () => secureStorage.wasTokenRemoved(),
+  clearSecurityFlag: () => secureStorage.clearSecurityFlag()
 };
 
 // Auto-cleanup on page unload for security

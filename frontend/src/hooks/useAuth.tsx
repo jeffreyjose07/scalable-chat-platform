@@ -39,6 +39,8 @@ interface AuthContextType {
   register: (username: string, email: string, password: string, displayName: string) => Promise<void>;
   logout: () => void;
   isLoading: boolean;
+  securityLogout: boolean;
+  dismissSecurityNotification: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -53,10 +55,21 @@ export const useAuth = () => {
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(tokenStorage.get());
+  const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [securityLogout, setSecurityLogout] = useState(false);
 
   const apiUrl = getApiBaseUrl();
+
+  // Initialize token with security checking
+  useEffect(() => {
+    const initialToken = tokenStorage.get();
+    if (initialToken === null && tokenStorage.wasTokenRemoved()) {
+      // Token was removed due to security check
+      setSecurityLogout(true);
+    }
+    setToken(initialToken);
+  }, []);
 
   useEffect(() => {
     if (token) {
@@ -81,6 +94,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       })
       .catch(() => {
+        // Check if token was removed due to security reasons
+        if (tokenStorage.wasTokenRemoved()) {
+          setSecurityLogout(true);
+        }
         tokenStorage.remove();
         setToken(null);
       })
@@ -204,8 +221,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const dismissSecurityNotification = () => {
+    setSecurityLogout(false);
+    tokenStorage.clearSecurityFlag();
+  };
+
   return (
-    <AuthContext.Provider value={{ user, token, login, register, logout, isLoading }}>
+    <AuthContext.Provider value={{ 
+      user, 
+      token, 
+      login, 
+      register, 
+      logout, 
+      isLoading, 
+      securityLogout, 
+      dismissSecurityNotification 
+    }}>
       {children}
     </AuthContext.Provider>
   );
