@@ -204,13 +204,13 @@ const ConversationList: React.FC<ConversationListProps> = ({
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between mb-1">
                         <div className={`font-semibold truncate text-base ${
-                          selectedConversation === conversation.id ? 'text-gray-900' : 'text-gray-800'
+                          selectedConversation === conversation.id ? 'text-gray-900 dark:text-gray-100' : 'text-gray-800 dark:text-gray-200'
                         }`}>
                           {String(getConversationDisplayName(conversation))}
                         </div>
                         <div className="flex items-center space-x-2">
                           {conversation.lastMessage && (
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
                               {new Date().toDateString() === new Date(conversation.lastMessage.timestamp || Date.now()).toDateString() 
                                 ? new Date(conversation.lastMessage.timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                                 : new Date(conversation.lastMessage.timestamp || Date.now()).toLocaleDateString([], { month: 'short', day: 'numeric' })
@@ -228,8 +228,8 @@ const ConversationList: React.FC<ConversationListProps> = ({
                         {conversation.lastMessage ? (
                           <div className={`text-sm truncate pr-2 ${
                             unreadCounts[conversation.id] && unreadCounts[conversation.id] > 0 
-                              ? 'text-gray-700 font-medium' 
-                              : 'text-gray-500'
+                              ? 'text-gray-700 dark:text-gray-300 font-medium' 
+                              : 'text-gray-500 dark:text-gray-400'
                           }`}>
                             {typeof conversation.lastMessage === 'string' 
                               ? conversation.lastMessage 
@@ -271,7 +271,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
               </div>
             ))
           ) : (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
               {activeType === 'groups' 
                 ? 'No group conversations yet' 
                 : 'No direct messages yet'}

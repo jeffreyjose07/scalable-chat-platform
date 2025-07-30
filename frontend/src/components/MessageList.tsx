@@ -151,7 +151,7 @@ const MessageBubble: React.FC<MessageBubbleProps> = ({ message, isOwn, currentUs
         }`}>
           {/* Sender name for group chats */}
           {!isOwn && (
-            <div className="text-xs font-semibold mb-1" style={{ color: `hsl(${message.senderUsername ? message.senderUsername.charCodeAt(0) * 7 % 360 : 0}, 70%, 45%)` }}>
+            <div className="text-xs font-semibold mb-1 text-gray-600 dark:text-gray-300">
               {message.senderUsername || 'Unknown User'}
             </div>
           )}
