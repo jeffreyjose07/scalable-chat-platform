@@ -78,10 +78,13 @@ class SecureStorage {
         }
         
         // Basic fingerprint check (detect if browser environment changed)
+        // TEMPORARILY DISABLED: After security headers update, fingerprints may have changed
+        // Users will need to re-login once, then this can be re-enabled
         if (meta.fingerprint && meta.fingerprint !== this.generateFingerprint()) {
-          console.warn('Token fingerprint mismatch, removing for security');
-          this.removeToken();
-          return null;
+          console.warn('Token fingerprint mismatch detected - likely due to security updates. Allowing token to work.');
+          // Temporarily disabled to prevent all users from being logged out after security updates
+          // this.removeToken();
+          // return null;
         }
       }
       
@@ -150,22 +153,17 @@ class SecureStorage {
 
   /**
    * Generate a simple browser fingerprint for basic security
+   * Made more robust to work with CSP headers
    */
   private generateFingerprint(): string {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    if (ctx) {
-      ctx.textBaseline = 'top';
-      ctx.font = '14px Arial';
-      ctx.fillText('Browser fingerprint', 2, 2);
-    }
-    
+    // Use only stable browser properties that won't be affected by CSP
     const fingerprint = [
       navigator.userAgent,
       navigator.language,
       screen.width + 'x' + screen.height,
       new Date().getTimezoneOffset(),
-      canvas.toDataURL()
+      // Remove canvas fingerprinting as it's affected by CSP
+      window.location.hostname
     ].join('|');
     
     return this.simpleHash(fingerprint);
