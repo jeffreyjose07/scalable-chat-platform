@@ -12,7 +12,7 @@ import MessageInput from '../components/MessageInput';
 import ConversationList from '../components/ConversationList';
 import UserSearchModal from '../components/UserSearchModal';
 import { User } from '../types/chat';
-import MessageSearchBar from '../components/MessageSearchBar';
+import NewMessageSearchBar from '../components/NewMessageSearchBar';
 import SearchResultsList from '../components/SearchResultsList';
 import { ConversationType } from '../components/ConversationTypeToggle';
 import { CreateGroupModal } from '../components/groups/CreateGroupModal';
@@ -427,7 +427,7 @@ const ChatPage: React.FC = () => {
                   </button>
                 )}
                 
-                <MessageSearchBar
+                <NewMessageSearchBar
                   isSearchMode={searchHook.isSearchMode}
                   onToggleSearch={searchHook.toggleSearchMode}
                   onSearch={(query, filters) => {
