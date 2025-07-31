@@ -141,7 +141,28 @@ public class MessageService {
     }
     
     public void deleteConversationMessages(String conversationId) {
-        messageRepository.deleteByConversationId(conversationId);
+        try {
+            // Get count before deletion for logging
+            long messageCount = messageRepository.countByConversationId(conversationId);
+            logger.info("Deleting {} messages for conversation: {}", messageCount, conversationId);
+            
+            // Perform deletion
+            messageRepository.deleteByConversationId(conversationId);
+            
+            // Verify deletion
+            long remainingCount = messageRepository.countByConversationId(conversationId);
+            logger.info("Conversation {} message deletion completed. Remaining messages: {}", 
+                       conversationId, remainingCount);
+            
+            if (remainingCount > 0) {
+                logger.warn("Warning: {} messages still remain for conversation {} after deletion", 
+                           remainingCount, conversationId);
+            }
+            
+        } catch (Exception e) {
+            logger.error("Failed to delete messages for conversation {}", conversationId, e);
+            throw e; // Re-throw to ensure conversation deletion fails if message deletion fails
+        }
     }
     
     private String getServerId() {
