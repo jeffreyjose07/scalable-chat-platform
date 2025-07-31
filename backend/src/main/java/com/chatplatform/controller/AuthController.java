@@ -1,6 +1,7 @@
 package com.chatplatform.controller;
 
 import com.chatplatform.dto.AuthResponse;
+import com.chatplatform.dto.ChangePasswordRequest;
 import com.chatplatform.dto.LoginRequest;
 import com.chatplatform.dto.MessageResponse;
 import com.chatplatform.dto.RegisterRequest;
@@ -14,6 +15,7 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -131,5 +133,88 @@ public class AuthController {
             logger.warn("Password reset failed for token: {} - {}", token, e.getMessage());
             return ResponseUtils.badRequest("Invalid or expired reset token", (Void) null);
         }
+    }
+    
+    /**
+     * Change user password with security validation
+     */
+    @PostMapping("/change-password")
+    public ResponseEntity<MessageResponse<Void>> changePassword(
+            @Valid @RequestBody ChangePasswordRequest request,
+            BindingResult bindingResult,
+            Authentication authentication) {
+        
+        String userId = authentication.getName();
+        logger.info("Password change requested by user: {}", userId);
+        
+        try {
+            // Validate request
+            if (bindingResult.hasErrors()) {
+                throw new ValidationException("Invalid password change request: " + bindingResult.getFieldError().getDefaultMessage());
+            }
+            
+            // Additional password strength validation
+            if (!isPasswordStrong(request.getNewPassword())) {
+                return ResponseUtils.badRequest("Password does not meet security requirements", (Void) null);
+            }
+            
+            // Check if new password is different from current
+            if (request.getCurrentPassword().equals(request.getNewPassword())) {
+                return ResponseUtils.badRequest("New password must be different from current password", (Void) null);
+            }
+            
+            // Change password via auth service
+            authService.changePassword(userId, request.getCurrentPassword(), request.getNewPassword());
+            
+            logger.info("Password changed successfully for user: {}", userId);
+            return ResponseUtils.success("Password changed successfully");
+            
+        } catch (AuthenticationException e) {
+            logger.warn("Password change failed - invalid current password for user: {}", userId);
+            return ResponseUtils.badRequest("Current password is incorrect", (Void) null);
+        } catch (ValidationException e) {
+            logger.warn("Password change validation failed for user: {} - {}", userId, e.getMessage());
+            return ResponseUtils.badRequest(e.getMessage(), (Void) null);
+        } catch (Exception e) {
+            logger.error("Unexpected error during password change for user: {}", userId, e);
+            return ResponseUtils.internalServerError("Password change failed", (Void) null);
+        }
+    }
+    
+    /**
+     * Validate password strength
+     */
+    private boolean isPasswordStrong(String password) {
+        if (password == null || password.length() < 8) {
+            return false;
+        }
+        
+        boolean hasLower = password.chars().anyMatch(Character::isLowerCase);
+        boolean hasUpper = password.chars().anyMatch(Character::isUpperCase);
+        boolean hasDigit = password.chars().anyMatch(Character::isDigit);
+        boolean hasSpecial = password.chars().anyMatch(ch -> "!@#$%^&*(),.?\":{}|<>".indexOf(ch) >= 0);
+        
+        // Check for common weak passwords
+        String lowerPassword = password.toLowerCase();
+        String[] weakPasswords = {"password", "123456", "qwerty", "admin", "letmein", "welcome"};
+        for (String weak : weakPasswords) {
+            if (lowerPassword.contains(weak)) {
+                return false;
+            }
+        }
+        
+        // Check for repeated characters
+        if (password.matches("(.)\\1{2,}")) {
+            return false;
+        }
+        
+        // Require at least 3 of 4 character types
+        int typesCount = 0;
+        if (hasLower) typesCount++;
+        if (hasUpper) typesCount++;
+        if (hasDigit) typesCount++;
+        if (hasSpecial) typesCount++;
+        
+        return typesCount >= 3;
     }
 }

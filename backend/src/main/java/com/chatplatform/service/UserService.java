@@ -88,4 +88,18 @@ public class UserService implements UserDetailsService {
     public boolean validatePassword(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
     }
+    
+    /**
+     * Update user password with encoded password
+     */
+    public void updateUserPassword(String userId, String encodedPassword) {
+        Optional<User> userOpt = userRepository.findById(userId);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            user.setPassword(encodedPassword);
+            userRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("User not found with ID: " + userId);
+        }
+    }
 }

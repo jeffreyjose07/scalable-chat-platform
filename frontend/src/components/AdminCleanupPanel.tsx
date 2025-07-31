@@ -162,7 +162,7 @@ const AdminCleanupPanel: React.FC = () => {
               {isLoading ? 'Loading...' : '🔍 Preview Cleanup'}
             </button>
             
-            {cleanupReport && !cleanupReport.dryRun && (
+            {cleanupReport && (
               <button
                 onClick={() => setShowConfirmation(true)}
                 disabled={isLoading}

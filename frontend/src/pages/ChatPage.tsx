@@ -20,15 +20,17 @@ import { GroupSettingsModal } from '../components/groups/GroupSettingsModal';
 import ThemeToggle from '../components/ThemeToggle';
 import VersionInfo from '../components/VersionInfo';
 import Footer from '../components/Footer';
+import PasswordChangeModal from '../components/PasswordChangeModal';
 import { api } from '../services/api';
 
 const ChatPage: React.FC = () => {
   const { messages, sendMessage, sendMessageStatusUpdate, isConnected, loadConversationMessages, isLoadingMessages, isReconnecting, clearMessagesCache } = useWebSocket();
   const { user, logout } = useAuth();
   
-  // Group modal states
+  // Modal states
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   const [isGroupSettingsModalOpen, setIsGroupSettingsModalOpen] = useState(false);
+  const [isPasswordChangeModalOpen, setIsPasswordChangeModalOpen] = useState(false);
   
   // Custom hooks for state management
   const chatState = useChatState();
@@ -260,8 +262,8 @@ const ChatPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      <div className="flex flex-1 relative">
+    <div className="h-screen flex flex-col bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden">
+      <div className="flex flex-1 relative min-h-0">
       {/* Mobile Sidebar Overlay */}
       {chatState.isMobileSidebarOpen && (
         <div 
@@ -361,9 +363,9 @@ const ChatPage: React.FC = () => {
       </div>
 
       {/* Main Chat Area */}
-      <div className="flex-1 flex lg:ml-0">
+      <div className="flex-1 flex lg:ml-0 min-h-0">
         {/* Chat Column */}
-        <div className={`flex flex-col transition-all duration-300 ${
+        <div className={`flex flex-col transition-all duration-300 min-h-0 ${
           searchHook.isSearchMode ? 'lg:w-1/2' : 'w-full'
         }`}>
           {/* Chat Header */}
@@ -453,15 +455,17 @@ const ChatPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Messages */}
-          <MessageList 
-            messages={conversationMessages} 
-            currentUserId={user?.id} 
-            isLoading={isLoadingMessages || conversationHook.isLoading || !isConnected} 
-          />
+          {/* Messages - Fixed Height Container */}
+          <div className="flex-1 min-h-0">
+            <MessageList 
+              messages={conversationMessages} 
+              currentUserId={user?.id} 
+              isLoading={isLoadingMessages || conversationHook.isLoading || !isConnected} 
+            />
+          </div>
 
-          {/* Message Input */}
-          <div className="border-t border-gray-200/50 dark:border-gray-700 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
+          {/* Message Input - Fixed at Bottom */}
+          <div className="flex-shrink-0 border-t border-gray-200/50 dark:border-gray-700 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
             <MessageInput 
               key={chatState.selectedConversation} 
               onSendMessage={handleSendMessage} 
@@ -551,10 +555,21 @@ const ChatPage: React.FC = () => {
           }}
         />
       )}
+      
+      {/* Password Change Modal */}
+      <PasswordChangeModal
+        isOpen={isPasswordChangeModalOpen}
+        onClose={() => setIsPasswordChangeModalOpen(false)}
+        onSuccess={() => {
+          alert('Password changed successfully!');
+        }}
+      />
       </div>
       
-      {/* Footer */}
-      <Footer />
+      {/* Footer - Fixed at Bottom */}
+      <div className="flex-shrink-0">
+        <Footer />
+      </div>
     </div>
   );
 };
