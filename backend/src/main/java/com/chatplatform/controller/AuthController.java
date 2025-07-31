@@ -7,6 +7,7 @@ import com.chatplatform.dto.MessageResponse;
 import com.chatplatform.dto.RegisterRequest;
 import com.chatplatform.model.User;
 import com.chatplatform.service.AuthService;
+import com.chatplatform.service.UserService;
 import com.chatplatform.validator.AuthValidator;
 import com.chatplatform.exception.ValidationException;
 import com.chatplatform.exception.AuthenticationException;
@@ -19,19 +20,23 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001", "http://localhost:3002"})
 public class AuthController {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private final AuthService authService;
     private final AuthValidator authValidator;
+    private final UserService userService;
 
-    public AuthController(AuthService authService, AuthValidator authValidator) {
+    public AuthController(AuthService authService, AuthValidator authValidator, UserService userService) {
         this.authService = authService;
         this.authValidator = authValidator;
+        this.userService = userService;
     }
 
     @PostMapping("/login")
@@ -216,5 +221,51 @@ public class AuthController {
         if (hasSpecial) typesCount++;
         
         return typesCount >= 3;
+    }
+    
+    /**
+     * Update user profile information
+     */
+    @PutMapping("/profile")
+    public ResponseEntity<MessageResponse<User>> updateProfile(
+            @RequestBody Map<String, Object> updates,
+            Authentication authentication) {
+        
+        String userId = authentication.getName();
+        logger.info("Profile update requested by user: {}", userId);
+        
+        try {
+            // Find user by username (userId in our case is username)
+            Optional<User> userOptional = userService.findByUsername(userId);
+            if (userOptional.isEmpty()) {
+                return ResponseUtils.notFound("User not found", (User) null);
+            }
+            
+            User user = userOptional.get();
+            boolean hasChanges = false;
+            
+            // Update displayName if provided
+            if (updates.containsKey("displayName")) {
+                String newDisplayName = (String) updates.get("displayName");
+                if (newDisplayName != null && !newDisplayName.trim().isEmpty()) {
+                    user.setDisplayName(newDisplayName.trim());
+                    hasChanges = true;
+                }
+            }
+            
+            // Save changes if any
+            if (hasChanges) {
+                User updatedUser = userService.updateUser(user);
+                logger.info("Profile updated successfully for user: {}", userId);
+                return ResponseUtils.success("Profile updated successfully", updatedUser);
+            } else {
+                logger.info("No changes to update for user: {}", userId);
+                return ResponseUtils.success("No changes to update", user);
+            }
+            
+        } catch (Exception e) {
+            logger.error("Unexpected error during profile update for user: {}", userId, e);
+            return ResponseUtils.internalServerError("Profile update failed", (User) null);
+        }
     }
 }

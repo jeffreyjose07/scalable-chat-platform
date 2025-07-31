@@ -26,6 +26,9 @@ public class Conversation {
     @Column(name = "updated_at")
     private Instant updatedAt;
     
+    @Column(name = "deleted_at")
+    private Instant deletedAt;
+    
     @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<ConversationParticipant> participants = new HashSet<>();
     
@@ -103,6 +106,18 @@ public class Conversation {
     
     public void setUpdatedAt(Instant updatedAt) {
         this.updatedAt = updatedAt;
+    }
+    
+    public Instant getDeletedAt() {
+        return deletedAt;
+    }
+    
+    public void setDeletedAt(Instant deletedAt) {
+        this.deletedAt = deletedAt;
+    }
+    
+    public boolean isDeleted() {
+        return deletedAt != null;
     }
     
     public Set<ConversationParticipant> getParticipants() {

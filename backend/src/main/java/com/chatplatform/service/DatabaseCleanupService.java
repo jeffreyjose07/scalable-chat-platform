@@ -9,6 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -60,8 +61,8 @@ public class DatabaseCleanupService {
      */
     private int cleanupOrphanedMessages() {
         try {
-            // Get all existing conversation IDs
-            List<String> existingConversationIds = conversationRepository.findAllConversationIds();
+            // Get all active (non-deleted) conversation IDs
+            List<String> existingConversationIds = conversationRepository.findAllActiveConversationIds();
             logger.info("Found {} active conversations for cleanup comparison", existingConversationIds.size());
             
             // Log first few conversation IDs for debugging
@@ -97,27 +98,27 @@ public class DatabaseCleanupService {
      */
     private int cleanupSoftDeletedConversations() {
         try {
-            // If you implement soft delete with a deletedAt field, uncomment below:
-            /*
-            LocalDateTime thirtyDaysAgo = LocalDateTime.now().minusDays(30);
-            List<Conversation> oldDeletedConversations = conversationRepository
+            // Clean up conversations that have been soft-deleted for more than 30 days
+            Instant thirtyDaysAgo = Instant.now().minusSeconds(30 * 24 * 60 * 60); // 30 days in seconds
+            List<com.chatplatform.model.Conversation> oldDeletedConversations = conversationRepository
                 .findByDeletedAtIsNotNullAndDeletedAtBefore(thirtyDaysAgo);
             
-            for (Conversation conversation : oldDeletedConversations) {
+            int deletedCount = 0;
+            for (com.chatplatform.model.Conversation conversation : oldDeletedConversations) {
+                logger.info("Permanently deleting soft-deleted conversation: {} (deleted on: {})", 
+                           conversation.getId(), conversation.getDeletedAt());
+                
                 // Delete associated messages first
                 chatMessageRepository.deleteByConversationId(conversation.getId());
-                // Then delete the conversation
+                logger.debug("Deleted messages for conversation {}", conversation.getId());
+                
+                // Then delete the conversation permanently
                 conversationRepository.delete(conversation);
+                deletedCount++;
             }
             
-            logger.debug("Permanently deleted {} old soft-deleted conversations", 
-                        oldDeletedConversations.size());
-            return oldDeletedConversations.size();
-            */
-            
-            // For now, since soft delete might not be implemented, return 0
-            logger.debug("Soft delete cleanup skipped - not implemented");
-            return 0;
+            logger.info("Permanently deleted {} old soft-deleted conversations", deletedCount);
+            return deletedCount;
             
         } catch (Exception e) {
             logger.error("Error cleaning up soft-deleted conversations", e);
