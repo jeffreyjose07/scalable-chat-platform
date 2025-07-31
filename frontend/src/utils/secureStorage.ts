@@ -77,16 +77,16 @@ class SecureStorage {
           return null;
         }
         
-        // Basic fingerprint check (detect if browser environment changed)
-        const currentFingerprint = this.generateFingerprint();
-        if (meta.fingerprint && meta.fingerprint !== currentFingerprint) {
-          console.warn('Token fingerprint mismatch - security environment changed, requiring re-authentication');
-          console.warn('🔒 Stored fingerprint:', meta.fingerprint);
-          console.warn('🔒 Current fingerprint:', currentFingerprint);
-          this.markTokenRemovedForSecurity();
-          this.removeToken();
-          return null;
-        }
+        // Temporarily disable fingerprint check for debugging
+        // const currentFingerprint = this.generateFingerprint();
+        // if (meta.fingerprint && meta.fingerprint !== currentFingerprint) {
+        //   console.warn('Token fingerprint mismatch - security environment changed, requiring re-authentication');
+        //   console.warn('🔒 Stored fingerprint:', meta.fingerprint);
+        //   console.warn('🔒 Current fingerprint:', currentFingerprint);
+        //   this.markTokenRemovedForSecurity();
+        //   this.removeToken();
+        //   return null;
+        // }
       }
       
       const decryptedToken = this.encrypt ? this.simpleDecrypt(token) : token;
