@@ -59,6 +59,9 @@ dependencies {
     testImplementation 'org.testcontainers:postgresql'
     testImplementation 'org.testcontainers:mongodb'
     testRuntimeOnly 'com.h2database:h2'
+    
+    // Explicit JUnit 5 dependencies to avoid deprecation warnings
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 // Node.js configuration for frontend build
@@ -203,12 +206,7 @@ task securityScan {
     }
 }
 
-// Integration test configuration
-configurations {
-    integrationTestImplementation.extendsFrom testImplementation
-    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
-}
-
+// Integration test configuration - Create source set first
 sourceSets {
     integrationTest {
         java.srcDir 'src/integration-test/java'
@@ -216,6 +214,12 @@ sourceSets {
         compileClasspath += main.output + test.output
         runtimeClasspath += main.output + test.output
     }
+}
+
+// Configure integration test dependencies after source set creation
+configurations {
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 task integrationTest(type: Test) {
