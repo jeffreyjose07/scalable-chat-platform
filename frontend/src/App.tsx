@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 
@@ -21,6 +21,21 @@ const queryClient = new QueryClient({
     },
   },
 });
+
+// Component to handle root route redirection
+const RootRedirect: React.FC = () => {
+  const { user, isLoading } = useAuth();
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
+      </div>
+    );
+  }
+
+  return user ? <Navigate to="/chat" replace /> : <Navigate to="/login" replace />;
+};
 
 const AppContent: React.FC = () => {
   const { securityLogout, dismissSecurityNotification } = useAuth();
@@ -50,7 +65,7 @@ const AppContent: React.FC = () => {
                   </ProtectedRoute>
                 } 
               />
-              <Route path="/" element={<LoginPage />} />
+              <Route path="/" element={<RootRedirect />} />
             </Routes>
             <Toaster position="top-right" />
             {securityLogout && (
