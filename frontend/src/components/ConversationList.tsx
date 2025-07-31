@@ -152,6 +152,8 @@ const ConversationList: React.FC<ConversationListProps> = ({
         <ConversationTypeToggle 
           activeType={activeType}
           onTypeChange={onTypeChange}
+          conversations={conversations}
+          unreadCounts={unreadCounts}
         />
         
         <div className="flex items-center justify-between mb-3">
@@ -208,7 +210,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                         }`}>
                           {String(getConversationDisplayName(conversation))}
                         </div>
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2 mr-8">
                           {conversation.lastMessage && (
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {new Date().toDateString() === new Date(conversation.lastMessage.timestamp || Date.now()).toDateString() 

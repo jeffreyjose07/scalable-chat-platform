@@ -20,7 +20,7 @@ import { GroupSettingsModal } from '../components/groups/GroupSettingsModal';
 import ThemeToggle from '../components/ThemeToggle';
 import VersionInfo from '../components/VersionInfo';
 import Footer from '../components/Footer';
-import PasswordChangeModal from '../components/PasswordChangeModal';
+import UserSettingsModal from '../components/UserSettingsModal';
 import { api } from '../services/api';
 
 const ChatPage: React.FC = () => {
@@ -30,7 +30,7 @@ const ChatPage: React.FC = () => {
   // Modal states
   const [isCreateGroupModalOpen, setIsCreateGroupModalOpen] = useState(false);
   const [isGroupSettingsModalOpen, setIsGroupSettingsModalOpen] = useState(false);
-  const [isPasswordChangeModalOpen, setIsPasswordChangeModalOpen] = useState(false);
+  const [isUserSettingsModalOpen, setIsUserSettingsModalOpen] = useState(false);
   
   // Custom hooks for state management
   const chatState = useChatState();
@@ -296,6 +296,16 @@ const ChatPage: React.FC = () => {
             <div className="flex items-center space-x-2">
               <ThemeToggle />
               <button
+                onClick={() => setIsUserSettingsModalOpen(true)}
+                className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-white/50 dark:hover:bg-gray-600/50 px-2 py-1 rounded-md transition-colors"
+                title="Settings"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
+              <button
                 onClick={logout}
                 className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-white/50 dark:hover:bg-gray-600/50 px-2 py-1 rounded-md transition-colors"
               >
@@ -556,13 +566,10 @@ const ChatPage: React.FC = () => {
         />
       )}
       
-      {/* Password Change Modal */}
-      <PasswordChangeModal
-        isOpen={isPasswordChangeModalOpen}
-        onClose={() => setIsPasswordChangeModalOpen(false)}
-        onSuccess={() => {
-          alert('Password changed successfully!');
-        }}
+      {/* User Settings Modal */}
+      <UserSettingsModal
+        isOpen={isUserSettingsModalOpen}
+        onClose={() => setIsUserSettingsModalOpen(false)}
       />
       </div>
       
