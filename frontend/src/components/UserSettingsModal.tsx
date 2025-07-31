@@ -27,16 +27,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
 
   // Preferences form state
   const [preferences, setPreferences] = useState({
-    theme: localStorage.getItem('theme') || 'auto',
-    notifications: {
-      sound: localStorage.getItem('notifications-sound') !== 'false',
-      desktop: localStorage.getItem('notifications-desktop') !== 'false',
-      email: localStorage.getItem('notifications-email') !== 'false'
-    },
-    privacy: {
-      onlineStatus: localStorage.getItem('privacy-online-status') !== 'false',
-      readReceipts: localStorage.getItem('privacy-read-receipts') !== 'false'
-    }
+    theme: localStorage.getItem('theme') || 'auto'
   });
 
   const handleProfileSubmit = async (e: React.FormEvent) => {
@@ -73,13 +64,8 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
     setSuccess(null);
 
     try {
-      // Save preferences to localStorage
+      // Save theme preference to localStorage
       localStorage.setItem('theme', preferences.theme);
-      localStorage.setItem('notifications-sound', preferences.notifications.sound.toString());
-      localStorage.setItem('notifications-desktop', preferences.notifications.desktop.toString());
-      localStorage.setItem('notifications-email', preferences.notifications.email.toString());
-      localStorage.setItem('privacy-online-status', preferences.privacy.onlineStatus.toString());
-      localStorage.setItem('privacy-read-receipts', preferences.privacy.readReceipts.toString());
 
       // Apply theme immediately
       if (preferences.theme === 'dark') {
@@ -95,7 +81,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
         }
       }
 
-      setSuccess('Preferences saved successfully!');
+      setSuccess('Theme preferences saved successfully!');
     } catch (error: any) {
       console.error('Failed to save preferences:', error);
       setError('Failed to save preferences');
@@ -341,79 +327,6 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                     </div>
                   </div>
 
-                  {/* Notifications */}
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Notifications</h4>
-                    <div className="space-y-3">
-                      <label className="flex items-center justify-between">
-                        <span className="text-sm text-gray-700 dark:text-gray-300">Sound notifications</span>
-                        <input
-                          type="checkbox"
-                          checked={preferences.notifications.sound}
-                          onChange={(e) => setPreferences(prev => ({
-                            ...prev,
-                            notifications: { ...prev.notifications, sound: e.target.checked }
-                          }))}
-                          className="rounded"
-                        />
-                      </label>
-                      <label className="flex items-center justify-between">
-                        <span className="text-sm text-gray-700 dark:text-gray-300">Desktop notifications</span>
-                        <input
-                          type="checkbox"
-                          checked={preferences.notifications.desktop}
-                          onChange={(e) => setPreferences(prev => ({
-                            ...prev,
-                            notifications: { ...prev.notifications, desktop: e.target.checked }
-                          }))}
-                          className="rounded"
-                        />
-                      </label>
-                      <label className="flex items-center justify-between">
-                        <span className="text-sm text-gray-700 dark:text-gray-300">Email notifications</span>
-                        <input
-                          type="checkbox"
-                          checked={preferences.notifications.email}
-                          onChange={(e) => setPreferences(prev => ({
-                            ...prev,
-                            notifications: { ...prev.notifications, email: e.target.checked }
-                          }))}
-                          className="rounded"
-                        />
-                      </label>
-                    </div>
-                  </div>
-
-                  {/* Privacy */}
-                  <div>
-                    <h4 className="font-medium text-gray-900 dark:text-gray-100 mb-3">Privacy</h4>
-                    <div className="space-y-3">
-                      <label className="flex items-center justify-between">
-                        <span className="text-sm text-gray-700 dark:text-gray-300">Show online status</span>
-                        <input
-                          type="checkbox"
-                          checked={preferences.privacy.onlineStatus}
-                          onChange={(e) => setPreferences(prev => ({
-                            ...prev,
-                            privacy: { ...prev.privacy, onlineStatus: e.target.checked }
-                          }))}
-                          className="rounded"
-                        />
-                      </label>
-                      <label className="flex items-center justify-between">
-                        <span className="text-sm text-gray-700 dark:text-gray-300">Send read receipts</span>
-                        <input
-                          type="checkbox"
-                          checked={preferences.privacy.readReceipts}
-                          onChange={(e) => setPreferences(prev => ({
-                            ...prev,
-                            privacy: { ...prev.privacy, readReceipts: e.target.checked }
-                          }))}
-                          className="rounded"
-                        />
-                      </label>
-                    </div>
-                  </div>
 
                   <button
                     type="submit"
