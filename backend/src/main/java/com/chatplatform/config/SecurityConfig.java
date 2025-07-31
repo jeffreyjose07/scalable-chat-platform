@@ -3,6 +3,7 @@ package com.chatplatform.config;
 import com.chatplatform.security.JwtAuthenticationFilter;
 import com.chatplatform.security.RateLimitingFilter;
 import com.chatplatform.service.UserService;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,14 +24,12 @@ import org.springframework.web.cors.CorsConfigurationSource;
 public class SecurityConfig {
     
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final RateLimitingFilter rateLimitingFilter;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, RateLimitingFilter rateLimitingFilter, 
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter, 
                          UserService userService, PasswordEncoder passwordEncoder) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-        this.rateLimitingFilter = rateLimitingFilter;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -86,7 +85,6 @@ public class SecurityConfig {
                 .anyRequest().permitAll() // Allow everything else (frontend resources)
             )
             .authenticationProvider(authenticationProvider())
-            .addFilterBefore(rateLimitingFilter, JwtAuthenticationFilter.class)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         
         return http.build();
@@ -110,5 +108,14 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+    
+    @Bean
+    public FilterRegistrationBean<RateLimitingFilter> rateLimitingFilter() {
+        FilterRegistrationBean<RateLimitingFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(new RateLimitingFilter());
+        registrationBean.addUrlPatterns("/api/*");
+        registrationBean.setOrder(1); // Set order to run before other filters
+        return registrationBean;
     }
 }
