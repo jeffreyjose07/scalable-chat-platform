@@ -33,6 +33,8 @@ export const useMessageSearch = (): UseMessageSearchReturn => {
 
   const performSearch = useCallback(async (conversationId: string, query: string, filters?: SearchFilters) => {
     console.log('🔍 performSearch called:', { conversationId, query, filters });
+    console.log('🔍 Current search result state:', searchResult);
+    console.log('🔍 Current loading state:', isSearchLoading);
     
     if (!query.trim()) {
       console.log('❌ Empty query, clearing search result');
@@ -46,6 +48,7 @@ export const useMessageSearch = (): UseMessageSearchReturn => {
       return;
     }
 
+    console.log('🔍 Setting loading state to true');
     setIsSearchLoading(true);
     setSearchError(null);
     

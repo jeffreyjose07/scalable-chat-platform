@@ -1,0 +1,41 @@
+spring:
+  # MongoDB Configuration for search testing
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/chatdb
+      auto-index-creation: true
+
+  # Disable other databases
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+      - org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+
+server:
+  port: 8080
+
+# CORS Configuration
+cors:
+  allowed-origins: http://localhost:3000
+
+# WebSocket Configuration
+websocket:
+  allowed-origins: http://localhost:3000
+
+# JWT Configuration (minimal for testing)
+app:
+  jwt:
+    secret: test-secret-key-for-search-debugging-only
+    expiration: 86400000
+    issuer: test-issuer
+    audience: test-audience
+
+# Logging Configuration
+logging:
+  level:
+    com.chatplatform: DEBUG
+    org.springframework.data.mongodb: DEBUG
+    org.mongodb: DEBUG
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

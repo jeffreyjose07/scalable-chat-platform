@@ -131,8 +131,11 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
 
   // Execute search function
   const executeSearch = useCallback((searchQuery: string, searchFilters?: SearchFilters) => {
+    console.log('🔍 executeSearch called with:', { searchQuery, searchFilters });
+    
     const trimmed = searchQuery.trim();
     if (!trimmed) {
+      console.log('🔍 Empty query, clearing search');
       onClearSearch();
       return;
     }
@@ -146,7 +149,8 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
     setShowRecentDropdown(false);
     setDropdownPosition(null);
     
-    // Execute search
+    // Execute search via parent callback
+    console.log('🔍 Calling parent onSearch with:', { query: trimmed, filters: searchFilters });
     onSearch(trimmed, searchFilters);
   }, [onSearch, onClearSearch, saveToRecentSearches]);
 
@@ -186,16 +190,27 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
   // Handle recent search selection
   const handleRecentSearchSelect = useCallback((searchQuery: string) => {
     console.log('🔍 Recent search selected:', searchQuery);
+    console.log('🔍 Current query state before update:', query);
+    console.log('🔍 Input ref current value:', searchInputRef.current?.value);
     
-    // Update input
+    // Update state first
     setQuery(searchQuery);
+    
+    // Update input field directly and focus
     if (searchInputRef.current) {
       searchInputRef.current.value = searchQuery;
+      searchInputRef.current.focus();
+      console.log('🔍 Input updated and focused. New value:', searchInputRef.current.value);
     }
     
-    // Execute search immediately
+    // Close dropdown
+    setShowRecentDropdown(false);
+    setDropdownPosition(null);
+    
+    // Execute search immediately with the provided query
+    console.log('🔍 About to execute search with query:', searchQuery);
     executeSearch(searchQuery, Object.keys(filters).length > 0 ? filters : undefined);
-  }, [executeSearch, filters]);
+  }, [executeSearch, filters, query]);
 
   // Handle key events
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
