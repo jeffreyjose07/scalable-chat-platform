@@ -190,94 +190,22 @@ interface MessageStatusIndicatorProps {
 }
 
 const MessageStatusIndicator: React.FC<MessageStatusIndicatorProps> = memo(({ message, currentUserId }) => {
-  // Get the actual status from the message, with proper read receipt logic
-  const getMessageStatus = (): MessageStatus => {
-    // If message has explicit status, use it (this is set by backend)
-    if (message.status) {
-      return message.status as MessageStatus;
-    }
-    
-    // For sender's own messages, show read receipt status based on other participants
-    if (currentUserId && message.senderId === currentUserId) {
-      // Check if any participants have read the message
-      if (message.readBy && Object.keys(message.readBy).length > 0) {
-        return MessageStatus.READ;
-      }
-      
-      // Check if any participants have received the message
-      if (message.deliveredTo && Object.keys(message.deliveredTo).length > 0) {
-        return MessageStatus.DELIVERED;
-      }
-      
-      // Check if message is very recent (last 5 seconds) - show as pending
-      const isRecent = new Date().getTime() - new Date(message.timestamp).getTime() < 5000;
-      if (isRecent) {
-        return MessageStatus.PENDING;
-      }
-      
-      // Default to sent for older messages
-      return MessageStatus.SENT;
-    }
-    
-    // For received messages, don't show status (only sender sees read receipts)
-    return MessageStatus.SENT;
-  };
+  // Simplified: just show "sent" status when message is saved in MongoDB
+  // This means the message was successfully stored and will be picked up by receivers
+  const showStatus = currentUserId && message.senderId === currentUserId;
   
-  const status = getMessageStatus();
-  
-  // Render based on actual status
-  switch (status) {
-    case MessageStatus.PENDING:
-      return (
-        <div className="flex items-center" title="Sending...">
-          <svg className="w-3 h-3 opacity-60 animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </div>
-      );
-      
-    case MessageStatus.SENT:
-      return (
-        <div className="flex items-center" title="Sent">
-          <svg className="w-3 h-3 opacity-70" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      );
-      
-    case MessageStatus.DELIVERED:
-      return (
-        <div className="flex items-center space-x-0.5" title="Delivered">
-          <svg className="w-3 h-3 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-          </svg>
-          <svg className="w-3 h-3 -ml-1 opacity-80" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      );
-      
-    case MessageStatus.READ:
-      return (
-        <div className="flex items-center space-x-0.5" title="Read">
-          <svg className="w-3 h-3 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-          </svg>
-          <svg className="w-3 h-3 -ml-1 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      );
-      
-    default:
-      return (
-        <div className="flex items-center">
-          <svg className="w-3 h-3 opacity-70" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-          </svg>
-        </div>
-      );
+  if (!showStatus) {
+    return null; // Don't show status for received messages
   }
+  
+  // Simple "sent" indicator - message is saved in MongoDB and will be picked up by receivers
+  return (
+    <div className="flex items-center" title="Sent">
+      <svg className="w-3 h-3 opacity-70" fill="currentColor" viewBox="0 0 20 20">
+        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+      </svg>
+    </div>
+  );
 });
 
 export default MessageList;

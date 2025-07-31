@@ -10,6 +10,8 @@ interface User {
   email: string;
   displayName: string;
   avatarUrl?: string;
+  createdAt?: string;
+  lastSeenAt?: string;
 }
 
 interface MessageResponse<T> {
@@ -38,6 +40,7 @@ interface AuthContextType {
   login: (email: string, password: string) => Promise<void>;
   register: (username: string, email: string, password: string, displayName: string) => Promise<void>;
   logout: () => void;
+  updateUserProfile: (updates: Partial<User>) => Promise<void>;
   isLoading: boolean;
   securityLogout: boolean;
   dismissSecurityNotification: () => void;
@@ -85,7 +88,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             username: messageResponse.data.username,
             email: messageResponse.data.email,
             displayName: messageResponse.data.displayName,
-            avatarUrl: undefined // Backend doesn't have avatarUrl yet
+            avatarUrl: undefined, // Backend doesn't have avatarUrl yet
+            createdAt: (messageResponse.data as any).createdAt,
+            lastSeenAt: (messageResponse.data as any).lastSeenAt
           };
           setUser(user);
         } else {
@@ -130,8 +135,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           avatarUrl: undefined // Backend doesn't have avatarUrl yet
         };
         
-        // Store token securely (sessionStorage for security, localStorage for persistence if needed)
-        tokenStorage.set(newToken, false); // Don't persist by default for security
+        // Store token persistently so it survives page reloads
+        tokenStorage.set(newToken, true); // Persist for better UX
         setToken(newToken);
         setUser(user);
         
@@ -170,8 +175,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           avatarUrl: undefined // Backend doesn't have avatarUrl yet
         };
         
-        // Store token securely (sessionStorage for security, localStorage for persistence if needed)
-        tokenStorage.set(newToken, false); // Don't persist by default for security
+        // Store token persistently so it survives page reloads
+        tokenStorage.set(newToken, true); // Persist for better UX
         setToken(newToken);
         setUser(user);
         
@@ -221,6 +226,44 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const updateUserProfile = async (updates: Partial<User>) => {
+    if (!token) {
+      throw new Error('No authentication token available');
+    }
+
+    try {
+      const response = await axios.put(`${apiUrl}/api/auth/profile`, updates, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      const messageResponse = response.data as MessageResponse<User>;
+      
+      if (messageResponse.success && messageResponse.data) {
+        // Update local user state with the updated data from server
+        const updatedUser: User = {
+          id: messageResponse.data.id,
+          username: messageResponse.data.username,
+          email: messageResponse.data.email,
+          displayName: messageResponse.data.displayName,
+          avatarUrl: messageResponse.data.avatarUrl,
+          createdAt: (messageResponse.data as any).createdAt,
+          lastSeenAt: (messageResponse.data as any).lastSeenAt
+        };
+        setUser(updatedUser);
+      } else {
+        throw new Error(messageResponse.message || 'Failed to update profile');
+      }
+    } catch (error: any) {
+      console.error('Failed to update profile:', error);
+      if (error.response?.status === 401) {
+        // Token expired, trigger logout
+        logout();
+        throw new Error('Session expired. Please log in again.');
+      }
+      throw error;
+    }
+  };
+
   const dismissSecurityNotification = () => {
     setSecurityLogout(false);
     tokenStorage.clearSecurityFlag();
@@ -233,6 +276,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       login, 
       register, 
       logout, 
+      updateUserProfile,
       isLoading, 
       securityLogout, 
       dismissSecurityNotification 

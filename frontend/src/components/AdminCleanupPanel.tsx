@@ -65,7 +65,8 @@ const AdminCleanupPanel: React.FC = () => {
     
     try {
       const response = await api.get('/api/admin/cleanup/preview');
-      setCleanupReport(response.data);
+      console.log('Cleanup preview response:', response.data);
+      setCleanupReport(response.data.data || response.data);
     } catch (error: any) {
       console.error('Failed to get cleanup preview:', error);
       setError(error.response?.data?.error || 'Failed to get cleanup preview');
@@ -170,6 +171,15 @@ const AdminCleanupPanel: React.FC = () => {
               >
                 🗑️ Execute Cleanup
               </button>
+            )}
+            {/* Debug info */}
+            {process.env.NODE_ENV === 'development' && (
+              <div className="text-xs text-gray-500 mt-2">
+                Debug: cleanupReport = {cleanupReport ? 'exists' : 'null'}
+                {cleanupReport && (
+                  <span> | dryRun: {cleanupReport.dryRun ? 'true' : 'false'}</span>
+                )}
+              </div>
             )}
           </div>
 
