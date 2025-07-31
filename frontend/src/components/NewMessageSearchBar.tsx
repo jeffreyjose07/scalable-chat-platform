@@ -89,10 +89,25 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
         setShowFilters(false);
       }
       
-      // Close recent searches dropdown if clicked outside
-      if (showRecentDropdown && searchContainerRef.current && !searchContainerRef.current.contains(target)) {
-        setShowRecentDropdown(false);
-        setDropdownPosition(null);
+      // For recent searches dropdown, we need to check if the click is on a dropdown item
+      // If it is, don't close the dropdown here as the click handler will handle it
+      if (showRecentDropdown) {
+        // Find the dropdown element
+        const dropdownElements = document.querySelectorAll('[data-recent-dropdown]');
+        let isInsideDropdown = false;
+        
+        dropdownElements.forEach(dropdown => {
+          if (dropdown.contains(target)) {
+            isInsideDropdown = true;
+          }
+        });
+        
+        // Only close if not inside dropdown and not inside search container
+        if (!isInsideDropdown && searchContainerRef.current && !searchContainerRef.current.contains(target)) {
+          console.log('🔍 Closing dropdown due to outside click');
+          setShowRecentDropdown(false);
+          setDropdownPosition(null);
+        }
       }
     };
 
@@ -178,11 +193,17 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
 
   // Handle input focus
   const handleInputFocus = useCallback(() => {
+    console.log('🔍 Input focused, recent searches length:', recentSearches.length);
+    console.log('🔍 Current query:', query);
+    console.log('🔍 Recent searches:', recentSearches);
+    
     if (recentSearches.length > 0 && !query.trim()) {
       const position = calculateDropdownPosition();
+      console.log('🔍 Calculated dropdown position:', position);
       if (position) {
         setDropdownPosition(position);
         setShowRecentDropdown(true);
+        console.log('🔍 Showing recent dropdown');
       }
     }
   }, [recentSearches.length, query, calculateDropdownPosition]);
@@ -424,13 +445,21 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
       </div>
 
       {/* Recent searches dropdown */}
-      {showRecentDropdown && dropdownPosition && recentSearches.length > 0 && createPortal(
+      {(() => {
+        console.log('🔍 Dropdown render check:', {
+          showRecentDropdown,
+          dropdownPosition,
+          recentSearchesLength: recentSearches.length
+        });
+        return showRecentDropdown && dropdownPosition && recentSearches.length > 0;
+      })() && createPortal(
         <div
+          data-recent-dropdown="true"
           className="absolute bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-50 max-h-48 overflow-y-auto"
           style={{
-            top: dropdownPosition.top,
-            left: dropdownPosition.left,
-            width: dropdownPosition.width
+            top: dropdownPosition?.top || 0,
+            left: dropdownPosition?.left || 0,
+            width: dropdownPosition?.width || 'auto'
           }}
         >
           <div className="p-2 border-b border-gray-100 dark:border-gray-700">
@@ -439,7 +468,19 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
           {recentSearches.map((search, index) => (
             <button
               key={index}
-              onClick={() => handleRecentSearchSelect(search)}
+              onClick={(e) => {
+                console.log('🔍 Recent search button clicked:', search);
+                console.log('🔍 Event target:', e.target);
+                console.log('🔍 Event current target:', e.currentTarget);
+                e.preventDefault();
+                e.stopPropagation();
+                handleRecentSearchSelect(search);
+              }}
+              onMouseDown={(e) => {
+                console.log('🔍 Recent search button mousedown:', search);
+                e.preventDefault();
+                e.stopPropagation();
+              }}
               className="w-full text-left px-3 py-2 hover:bg-gray-50 dark:hover:bg-gray-600 text-sm flex items-center space-x-2 transition-colors"
             >
               <svg className="w-4 h-4 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
