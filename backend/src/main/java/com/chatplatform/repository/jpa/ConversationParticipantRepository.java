@@ -3,6 +3,7 @@ package com.chatplatform.repository.jpa;
 import com.chatplatform.model.ConversationParticipant;
 import com.chatplatform.model.ConversationParticipantId;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -47,6 +48,7 @@ public interface ConversationParticipantRepository extends JpaRepository<Convers
     @Query("SELECT COUNT(p) FROM ConversationParticipant p WHERE p.id.conversationId NOT IN :conversationIds")
     long countByIdConversationIdNotIn(@Param("conversationIds") List<String> conversationIds);
     
+    @Modifying
     @Query("DELETE FROM ConversationParticipant p WHERE p.id.conversationId NOT IN :conversationIds")
     long deleteByIdConversationIdNotIn(@Param("conversationIds") List<String> conversationIds);
     

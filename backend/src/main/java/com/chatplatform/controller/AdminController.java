@@ -180,8 +180,8 @@ public class AdminController {
     private boolean isAdminUser(String userId) {
         try {
             // Check if user is admin in the database
-            var user = userService.findByUsername(userId);
-            boolean isAdmin = user != null && "admin".equalsIgnoreCase(user.getUsername());
+            var userOptional = userService.findByUsername(userId);
+            boolean isAdmin = userOptional.isPresent() && "admin".equalsIgnoreCase(userOptional.get().getUsername());
             
             logger.debug("Admin check for user {}: {}", userId, isAdmin);
             return isAdmin;
