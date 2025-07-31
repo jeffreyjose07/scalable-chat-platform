@@ -1,20 +1,28 @@
-# Multi-stage build for Spring Boot application
-FROM maven:3.9.4-eclipse-temurin-17 AS builder
+# Multi-stage build for Spring Boot application with Gradle
+FROM eclipse-temurin:17-jdk AS builder
 
 # Set working directory
 WORKDIR /app
 
-# Copy pom.xml first to leverage Docker cache
-COPY pom.xml .
+# Copy Gradle wrapper and build files first to leverage Docker cache
+COPY gradle/ ./gradle/
+COPY gradlew .
+COPY gradlew.bat .
+COPY build.gradle .
+COPY settings.gradle .
+COPY gradle.properties .
+
+# Make gradlew executable
+RUN chmod +x ./gradlew
 
 # Download dependencies
-RUN mvn dependency:go-offline -B
+RUN ./gradlew dependencies --no-daemon
 
 # Copy source code
 COPY src ./src
 
 # Build application (skip tests for faster builds)
-RUN mvn clean package -DskipTests
+RUN ./gradlew bootJar -x test --no-daemon
 
 # Runtime stage
 FROM eclipse-temurin:17-jre
@@ -30,7 +38,7 @@ RUN groupadd -g 1001 appuser && \
 WORKDIR /app
 
 # Copy JAR file from builder stage
-COPY --from=builder /app/target/*.jar app.jar
+COPY --from=builder /app/build/libs/*.jar app.jar
 
 # Change ownership to app user
 RUN chown -R appuser:appuser /app

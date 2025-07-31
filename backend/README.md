@@ -33,7 +33,7 @@ A comprehensive Spring Boot backend for a scalable chat platform with real-time 
 ## 📋 Requirements
 
 - Java 17+
-- Maven 3.8+
+- Gradle 8.5+ (wrapper included)
 - Docker & Docker Compose (for dependencies)
 
 ## 🛠️ Quick Start
@@ -47,7 +47,7 @@ A comprehensive Spring Boot backend for a scalable chat platform with real-time 
 ### 2. Run Backend
 ```bash
 cd backend
-./mvnw spring-boot:run
+./gradlew bootRun
 ```
 
 ### 3. Verify Setup
@@ -247,22 +247,22 @@ KAFKA_BOOTSTRAP_SERVERS=localhost:9092
 ### Unit Tests
 ```bash
 # Run all tests
-./mvnw test
+./gradlew test
 
 # Run specific test class
-./mvnw test -Dtest=ConversationServiceTest
+./gradlew test --tests ConversationServiceTest
 
 # Run tests with coverage
-./mvnw test jacoco:report
+./gradlew test jacocoTestReport
 ```
 
 ### Integration Tests
 ```bash
 # Run integration tests
-./mvnw test -Dtest=*IT
+./gradlew integrationTest
 
 # Run with test containers
-./mvnw test -Dspring.profiles.active=test
+./gradlew test -Dspring.profiles.active=test
 ```
 
 ### API Testing

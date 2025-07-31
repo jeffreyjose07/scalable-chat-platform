@@ -45,7 +45,7 @@ A real-time chat platform built with Spring Boot backend and React frontend, des
 2. **Start Backend**
    ```bash
    cd backend
-   mvn spring-boot:run
+   ./gradlew bootRun
    ```
 
 3. **Start Frontend**
