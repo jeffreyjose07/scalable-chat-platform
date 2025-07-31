@@ -75,9 +75,9 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disabled }) 
   };
 
   return (
-    <div className="relative bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
-      <form onSubmit={handleSubmit} className="p-3 sm:p-4">
-        <div className="flex items-end space-x-2 bg-gray-50 dark:bg-gray-700 rounded-2xl p-2 border border-gray-200 dark:border-gray-600 focus-within:border-green-400 focus-within:bg-white dark:focus-within:bg-gray-600 transition-all duration-200">
+    <div className="relative bg-white dark:bg-gray-800">
+      <form onSubmit={handleSubmit} className="p-4">
+        <div className="flex items-end space-x-3 bg-gray-50 dark:bg-gray-700 rounded-2xl p-3 border border-gray-200 dark:border-gray-600 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/20 transition-all duration-200">
           {/* Attachment button - Hidden until feature is implemented */}
           {false && (
             <button
