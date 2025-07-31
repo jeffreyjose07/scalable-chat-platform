@@ -46,4 +46,7 @@ public interface ConversationRepository extends JpaRepository<Conversation, Stri
     // Get all conversation IDs for cleanup purposes
     @Query("SELECT c.id FROM Conversation c")
     List<String> findAllConversationIds();
+    
+    // Admin cleanup method to delete conversations by ID list
+    void deleteByIdIn(List<String> conversationIds);
 }

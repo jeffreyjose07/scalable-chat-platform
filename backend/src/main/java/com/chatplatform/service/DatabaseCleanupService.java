@@ -62,11 +62,26 @@ public class DatabaseCleanupService {
         try {
             // Get all existing conversation IDs
             List<String> existingConversationIds = conversationRepository.findAllConversationIds();
+            logger.info("Found {} active conversations for cleanup comparison", existingConversationIds.size());
+            
+            // Log first few conversation IDs for debugging
+            if (!existingConversationIds.isEmpty()) {
+                logger.debug("Sample active conversation IDs: {}", 
+                    existingConversationIds.stream().limit(3).toList());
+            }
+            
+            // Get total message count before deletion
+            long totalMessagesBefore = chatMessageRepository.count();
+            logger.info("Total messages in MongoDB before cleanup: {}", totalMessagesBefore);
             
             // Delete messages that don't belong to any existing conversation
             long deletedCount = chatMessageRepository.deleteByConversationIdNotIn(existingConversationIds);
             
-            logger.debug("Deleted {} orphaned messages", deletedCount);
+            // Get total message count after deletion
+            long totalMessagesAfter = chatMessageRepository.count();
+            logger.info("Deleted {} orphaned messages. Messages before: {}, after: {}", 
+                       deletedCount, totalMessagesBefore, totalMessagesAfter);
+            
             return (int) deletedCount;
             
         } catch (Exception e) {
