@@ -278,7 +278,7 @@ const ChatPage: React.FC = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 overflow-hidden">
+    <div className="h-screen flex flex-col bg-gray-50 dark:bg-gray-900 overflow-hidden">
       <div className="flex flex-1 relative min-h-0">
       {/* Mobile Sidebar Overlay */}
       {chatState.isMobileSidebarOpen && (
@@ -291,13 +291,13 @@ const ChatPage: React.FC = () => {
       {/* Sidebar - Conversations */}
       <div className={`
         fixed lg:relative lg:translate-x-0 z-50 lg:z-0
-        w-80 lg:w-72 xl:w-80 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border-r border-gray-200/50 dark:border-gray-700/50 
+        w-80 lg:w-72 xl:w-80 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 
         ${chatState.isMobileSidebarOpen ? 'h-screen' : 'h-full'}
         flex flex-col shadow-lg lg:shadow-none
         transition-transform duration-300 ease-in-out
         ${chatState.isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
-        <div className="p-4 border-b border-gray-200/50 dark:border-gray-700 flex-shrink-0 bg-gradient-to-r from-green-50 to-blue-50 dark:from-gray-800 dark:to-gray-700">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex-shrink-0 bg-white dark:bg-gray-800">
           <div className="flex items-center justify-between">
             <h1 className="text-lg lg:text-xl font-bold text-gray-900 dark:text-gray-100 flex items-center">
               <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-lg flex items-center justify-center mr-2 shadow-md">
@@ -434,7 +434,7 @@ const ChatPage: React.FC = () => {
           searchHook.isSearchMode ? 'lg:w-1/2' : 'w-full'
         }`}>
           {/* Chat Header */}
-          <div className="p-4 border-b border-gray-200/50 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm overflow-visible" style={{isolation: 'auto'}}>
+          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 overflow-visible">
             <div className="flex items-center justify-between">
               <div className="flex items-center min-w-0 flex-1">
                 <button
@@ -530,7 +530,7 @@ const ChatPage: React.FC = () => {
           </div>
 
           {/* Message Input - Fixed at Bottom */}
-          <div className="flex-shrink-0 border-t border-gray-200/50 dark:border-gray-700 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm">
+          <div className="flex-shrink-0 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
             <MessageInput 
               key={chatState.selectedConversation} 
               onSendMessage={handleSendMessage} 

@@ -191,15 +191,15 @@ const ConversationList: React.FC<ConversationListProps> = ({
             filteredConversations.map((conversation) => (
               <div
                 key={conversation.id}
-                className={`group relative transition-all duration-200 ${
+                className={`group relative transition-all duration-200 rounded-lg mx-2 ${
                   selectedConversation === conversation.id
-                    ? 'bg-green-50 dark:bg-green-900/20 border-r-4 border-green-500 shadow-sm'
-                    : 'hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:shadow-sm'
+                    ? 'bg-green-50 dark:bg-green-900/30 ring-2 ring-green-500/20'
+                    : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
                 }`}
               >
                 <button
                   onClick={() => onSelectConversation(conversation.id)}
-                  className="w-full text-left p-4 transition-all duration-200"
+                  className="w-full text-left p-3 transition-all duration-200 rounded-lg"
                 >
                   <div className="flex items-center">
                     {getConversationAvatar(conversation)}
