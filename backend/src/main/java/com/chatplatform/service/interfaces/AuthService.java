@@ -61,4 +61,31 @@ public interface AuthService {
      * @throws com.chatplatform.exception.AuthenticationException if token cannot be refreshed
      */
     String refreshToken(String token);
+    
+    /**
+     * Change user password
+     * 
+     * @param userId user identifier
+     * @param currentPassword current password for verification
+     * @param newPassword new password to set
+     * @throws com.chatplatform.exception.AuthenticationException if current password is incorrect
+     * @throws com.chatplatform.exception.ValidationException if new password is invalid
+     */
+    void changePassword(String userId, String currentPassword, String newPassword);
+    
+    /**
+     * Send password reset email
+     * 
+     * @param email user email address
+     */
+    void sendPasswordResetEmail(String email);
+    
+    /**
+     * Reset password using token
+     * 
+     * @param token password reset token
+     * @param newPassword new password to set
+     * @throws com.chatplatform.exception.AuthenticationException if token is invalid or expired
+     */
+    void resetPassword(String token, String newPassword);
 }

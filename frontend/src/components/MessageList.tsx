@@ -30,7 +30,7 @@ const MessageList: React.FC<MessageListProps> = memo(({ messages, currentUserId,
   }, [messages, currentUserId]);
 
   return (
-    <div className="flex-1 flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <div className="h-full flex flex-col bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       <div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-1">
         {isLoading && messages.length === 0 ? (
           <div className="flex-1 flex items-center justify-center">
