@@ -32,7 +32,7 @@ class AuthValidatorTest {
         RegisterRequest validRequest = RegisterRequest.builder()
             .username("validuser")
             .email("valid@example.com")
-            .password("password123")
+            .password("Password123!") // Strong password with 4 character types
             .displayName("Valid User")
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -61,7 +61,7 @@ class AuthValidatorTest {
             authValidator.validateRegistrationRequest(invalidRequest, bindingResult);
         });
 
-        assertTrue(exception.getMessage().contains("Invalid email format"));
+        assertTrue(exception.getMessage().contains("Please enter a valid email address"));
     }
 
     @Test
@@ -80,7 +80,7 @@ class AuthValidatorTest {
             authValidator.validateRegistrationRequest(invalidRequest, bindingResult);
         });
 
-        assertTrue(exception.getMessage().contains("Username must be 3-20 characters"));
+        assertTrue(exception.getMessage().contains("Username should be 3-20 characters"));
     }
 
     @Test
@@ -99,7 +99,7 @@ class AuthValidatorTest {
             authValidator.validateRegistrationRequest(invalidRequest, bindingResult);
         });
 
-        assertTrue(exception.getMessage().contains("Username must be 3-20 characters"));
+        assertTrue(exception.getMessage().contains("Username should be 3-20 characters"));
     }
 
     @Test
@@ -118,7 +118,7 @@ class AuthValidatorTest {
             authValidator.validateRegistrationRequest(invalidRequest, bindingResult);
         });
 
-        assertTrue(exception.getMessage().contains("Password must be at least 6 characters"));
+        assertTrue(exception.getMessage().contains("Password needs at least 8 characters"));
     }
 
     @Test
@@ -137,7 +137,7 @@ class AuthValidatorTest {
             authValidator.validateRegistrationRequest(invalidRequest, bindingResult);
         });
 
-        assertTrue(exception.getMessage().contains("Password must contain at least one letter and one number"));
+        assertTrue(exception.getMessage().contains("Create a stronger password"));
     }
 
     @Test
@@ -157,7 +157,7 @@ class AuthValidatorTest {
             authValidator.validateRegistrationRequest(invalidRequest, bindingResult);
         });
 
-        assertTrue(exception.getMessage().contains("Display name must be less than 50 characters"));
+        assertTrue(exception.getMessage().contains("Display name should be under 50 characters"));
     }
 
     @Test
@@ -177,7 +177,7 @@ class AuthValidatorTest {
         });
 
         String message = exception.getMessage();
-        assertTrue(message.contains("Email is required"));
+        assertTrue(message.contains("Email address is required"));
         assertTrue(message.contains("Username is required"));
         assertTrue(message.contains("Password is required"));
         assertTrue(message.contains("Display name is required"));
@@ -234,7 +234,7 @@ class AuthValidatorTest {
         RegisterRequest validRequest = RegisterRequest.builder()
             .username("validuser")
             .email("valid@example.com")
-            .password("abc123")
+            .password("Abc123!@") // Strong password with all 4 character types
             .displayName("Valid User")
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -251,7 +251,7 @@ class AuthValidatorTest {
         RegisterRequest validRequest = RegisterRequest.builder()
             .username("valid_user_123")
             .email("valid@example.com")
-            .password("password123")
+            .password("Password123!") // Strong password with 4 character types
             .displayName("Valid User")
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -269,7 +269,7 @@ class AuthValidatorTest {
         RegisterRequest validRequest = RegisterRequest.builder()
             .username("validuser")
             .email("valid@example.com")
-            .password("password123")
+            .password("Password123!") // Strong password with 4 character types
             .displayName(maxDisplayName)
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -287,7 +287,7 @@ class AuthValidatorTest {
         RegisterRequest validRequest = RegisterRequest.builder()
             .username(maxUsername)
             .email("valid@example.com")
-            .password("password123")
+            .password("Password123!") // Strong password with 4 character types
             .displayName("Valid User")
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);

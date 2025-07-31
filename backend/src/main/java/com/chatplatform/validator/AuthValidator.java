@@ -55,35 +55,35 @@ public class AuthValidator {
 
     private void validateEmail(String email, Map<String, String> errors) {
         if (email == null || email.trim().isEmpty()) {
-            errors.put("email", "Email is required");
+            errors.put("email", "📧 Email address is required");
         } else if (!EMAIL_PATTERN.matcher(email).matches()) {
-            errors.put("email", "Invalid email format");
+            errors.put("email", "📧 Please enter a valid email address (like user@example.com)");
         }
     }
 
     private void validateUsername(String username, Map<String, String> errors) {
         if (username == null || username.trim().isEmpty()) {
-            errors.put("username", "Username is required");
+            errors.put("username", "👤 Username is required");
         } else if (!USERNAME_PATTERN.matcher(username).matches()) {
-            errors.put("username", "Username must be 3-20 characters long and contain only letters, numbers, and underscores");
+            errors.put("username", "👤 Username should be 3-20 characters using letters, numbers, and underscores only");
         }
     }
 
     private void validatePassword(String password, Map<String, String> errors) {
         if (password == null || password.trim().isEmpty()) {
-            errors.put("password", "Password is required");
+            errors.put("password", "🔒 Password is required");
         } else if (password.length() < MIN_PASSWORD_LENGTH) {
-            errors.put("password", "Password must be at least " + MIN_PASSWORD_LENGTH + " characters long");
+            errors.put("password", "🔒 Password needs at least " + MIN_PASSWORD_LENGTH + " characters to keep your account secure");
         } else if (isWeakPassword(password)) {
-            errors.put("password", "Password must contain at least 3 of the following: lowercase letter, uppercase letter, number, or special character (!@#$%^&*()_+-=[]{}|;:,.<>?)");
+            errors.put("password", "🔐 Create a stronger password! Mix at least 3 of these: lowercase letters, UPPERCASE LETTERS, numbers (123), or symbols (!@#$)");
         }
     }
 
     private void validateDisplayName(String displayName, Map<String, String> errors) {
         if (displayName == null || displayName.trim().isEmpty()) {
-            errors.put("displayName", "Display name is required");
+            errors.put("displayName", "✨ Display name is required - this is how others will see you");
         } else if (displayName.length() > MAX_DISPLAY_NAME_LENGTH) {
-            errors.put("displayName", "Display name must be less than " + MAX_DISPLAY_NAME_LENGTH + " characters");
+            errors.put("displayName", "✨ Display name should be under " + MAX_DISPLAY_NAME_LENGTH + " characters to look great everywhere");
         }
     }
 
