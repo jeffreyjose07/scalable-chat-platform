@@ -81,10 +81,12 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
 
   const checkAdminStatus = async () => {
     try {
+      console.log('🛡️ Checking admin status for user:', user?.username);
       const response = await api.get('/admin/status');
+      console.log('🛡️ Admin status response:', response.data);
       setAdminStatus(response.data);
     } catch (error) {
-      console.error('Failed to check admin status:', error);
+      console.error('🛡️ Failed to check admin status:', error);
       setAdminStatus({ isAdmin: false, userId: user?.id || '' });
     }
   };
@@ -275,23 +277,26 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                 </div>
               </button>
               
-              {adminStatus?.isAdmin && (
-                <button
-                  onClick={() => { setActiveTab('admin'); clearMessages(); }}
-                  className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                    activeTab === 'admin'
-                      ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
-                      : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
-                  }`}
-                >
-                  <div className="flex items-center">
-                    <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                    </svg>
-                    Admin
-                  </div>
-                </button>
-              )}
+              {(() => {
+                console.log('🛡️ Admin tab render check:', { adminStatus, isAdmin: adminStatus?.isAdmin });
+                return adminStatus?.isAdmin && (
+                  <button
+                    onClick={() => { setActiveTab('admin'); clearMessages(); }}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      activeTab === 'admin'
+                        ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
+                    }`}
+                  >
+                    <div className="flex items-center">
+                      <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                      </svg>
+                      Admin
+                    </div>
+                  </button>
+                );
+              })()}
             </nav>
           </div>
 

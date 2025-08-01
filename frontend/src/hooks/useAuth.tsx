@@ -77,6 +77,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     setToken(initialToken);
     console.log('🔐 Set initial token state:', initialToken ? 'TOKEN_SET' : 'NO_TOKEN_SET');
+    
+    // If no token, immediately stop loading to prevent login page flash
+    if (!initialToken) {
+      console.log('🔐 No token found, setting isLoading to false immediately');
+      setIsLoading(false);
+    }
   }, []);
 
   useEffect(() => {
