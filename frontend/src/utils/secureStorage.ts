@@ -23,7 +23,8 @@ class SecureStorage {
    */
   setToken(token: string, persistent: boolean = false): void {
     const key = this.prefix + 'token';
-    const storage = persistent ? localStorage : sessionStorage;
+    // Always use sessionStorage for better security - user must login on new session
+    const storage = sessionStorage;
     
     try {
       const encryptedToken = this.encrypt ? this.simpleEncrypt(token) : token;
@@ -32,7 +33,7 @@ class SecureStorage {
       // Store token metadata for security checks
       const metadata = {
         timestamp: Date.now(),
-        persistent,
+        persistent: false, // Always false since we use sessionStorage
         fingerprint: this.generateFingerprint()
       };
       storage.setItem(key + '_meta', JSON.stringify(metadata));

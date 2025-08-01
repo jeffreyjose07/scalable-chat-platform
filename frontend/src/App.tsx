@@ -26,7 +26,8 @@ const queryClient = new QueryClient({
 const RootRedirect: React.FC = () => {
   const { user, isLoading, token } = useAuth();
 
-  console.log('🏠 RootRedirect:', { 
+  console.log('🏠 RootRedirect rendered at URL:', window.location.href);
+  console.log('🏠 Auth State:', { 
     isLoading, 
     hasUser: !!user, 
     hasToken: !!token,
@@ -34,16 +35,21 @@ const RootRedirect: React.FC = () => {
   });
 
   if (isLoading) {
-    console.log('🏠 RootRedirect: Showing loading...');
+    console.log('🏠 RootRedirect: Showing loading spinner...');
     return (
-      <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
+      <div className="flex items-center justify-center h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="flex flex-col items-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500"></div>
+          <div className="text-gray-600 dark:text-gray-400">Loading...</div>
+        </div>
       </div>
     );
   }
 
   const redirect = user ? '/chat' : '/login';
-  console.log('🏠 RootRedirect: Redirecting to:', redirect);
+  console.log('🏠 RootRedirect: About to redirect to:', redirect);
+  console.log('🏠 Current URL before redirect:', window.location.href);
+  
   return user ? <Navigate to="/chat" replace /> : <Navigate to="/login" replace />;
 };
 
