@@ -69,7 +69,24 @@ const authenticatedFetch = async (url: string, options: RequestInit = {}): Promi
         statusText: response.statusText,
         duration: `${duration}ms`
       });
-      throw new Error(`HTTP error! status: ${response.status}`);
+      
+      // Try to extract error message from response body
+      let errorMessage = `HTTP error! status: ${response.status}`;
+      let errorData = {};
+      
+      try {
+        errorData = await response.json();
+        if ((errorData as any).message) {
+          errorMessage = (errorData as any).message;
+        }
+      } catch (parseError) {
+        // If we can't parse the response body, use the generic error message
+      }
+      
+      const error = new Error(errorMessage);
+      (error as any).status = response.status;
+      (error as any).response = { data: errorData };
+      throw error;
     }
     
     console.log(`✅ API Success: ${options.method || 'GET'} ${url}`, {

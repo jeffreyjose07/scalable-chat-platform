@@ -24,6 +24,7 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [showPasswords, setShowPasswords] = useState({
     current: false,
     new: false,
@@ -71,9 +72,29 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
       score = Math.max(0, score - 1);
     }
 
-    if (/^(password|123456|qwerty|admin)/i.test(password)) {
+    // Enhanced common password check to match backend
+    const commonPasswords = ['password', '123456', 'qwerty', 'admin', 'letmein', 'welcome'];
+    const lowerPassword = password.toLowerCase();
+    if (commonPasswords.some(common => lowerPassword.includes(common))) {
       feedback.push('Avoid common passwords');
       score = 0;
+    }
+
+    // Check for sequential characters
+    if (/123|234|345|456|567|678|789|890|abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz/i.test(password)) {
+      feedback.push('Avoid sequential characters');
+      score = Math.max(0, score - 1);
+    }
+
+    // Check for keyboard patterns
+    if (/qwert|asdf|zxcv|1234|!@#\$/i.test(password)) {
+      feedback.push('Avoid keyboard patterns');
+      score = Math.max(0, score - 1);
+    }
+
+    // Check minimum length more strictly
+    if (password.length < 12 && score >= 3) {
+      feedback.push('Consider using 12+ characters for better security');
     }
 
     const colors = ['bg-red-500', 'bg-red-400', 'bg-yellow-500', 'bg-blue-500', 'bg-green-500'];
@@ -92,14 +113,15 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccess(null);
 
     // Validation
-    if (!currentPassword) {
+    if (!currentPassword || currentPassword.trim() === '') {
       setError('Current password is required');
       return;
     }
 
-    if (!newPassword) {
+    if (!newPassword || newPassword.trim() === '') {
       setError('New password is required');
       return;
     }
@@ -109,13 +131,14 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
       return;
     }
 
-    if (passwordStrength.score < 3) {
-      setError('Password is too weak. Please choose a stronger password.');
+    if (currentPassword === newPassword) {
+      setError('New password must be different from current password');
       return;
     }
 
-    if (currentPassword === newPassword) {
-      setError('New password must be different from current password');
+    if (passwordStrength.score < 3) {
+      const weaknessReasons = passwordStrength.feedback.join(', ');
+      setError(`Password is too weak. ${weaknessReasons}`);
       return;
     }
 
@@ -127,17 +150,43 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
         newPassword
       });
 
+      // Show success message briefly before closing
+      setSuccess('Password changed successfully!');
+      
       // Clear form
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
       
-      onSuccess();
-      onClose();
+      // Wait a moment to show success message, then close
+      setTimeout(() => {
+        onSuccess();
+        onClose();
+      }, 1500);
 
     } catch (error: any) {
       console.error('Failed to change password:', error);
-      setError(error.response?.data?.message || 'Failed to change password');
+      
+      // Extract error message from different possible error formats
+      let errorMessage = 'Failed to change password';
+      
+      if (error.message) {
+        // Direct error message from our updated API client
+        errorMessage = error.message;
+      } else if (error.response?.data?.message) {
+        // Wrapped response format
+        errorMessage = error.response.data.message;
+      } else if (error.response?.data) {
+        // Direct data format
+        errorMessage = typeof error.response.data === 'string' 
+          ? error.response.data 
+          : error.response.data.message || errorMessage;
+      } else if (error.data?.message) {
+        // Alternative data format
+        errorMessage = error.data.message;
+      }
+      
+      setError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -291,10 +340,27 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
               )}
             </div>
 
+            {/* Success Display */}
+            {success && (
+              <div className="bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 rounded-lg p-3">
+                <div className="flex items-start">
+                  <svg className="w-5 h-5 text-green-600 dark:text-green-400 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p className="text-green-800 dark:text-green-200 text-sm leading-relaxed">{success}</p>
+                </div>
+              </div>
+            )}
+
             {/* Error Display */}
             {error && (
               <div className="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg p-3">
-                <p className="text-red-800 dark:text-red-200 text-sm">{error}</p>
+                <div className="flex items-start">
+                  <svg className="w-5 h-5 text-red-600 dark:text-red-400 mt-0.5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p className="text-red-800 dark:text-red-200 text-sm leading-relaxed">{error}</p>
+                </div>
               </div>
             )}
 
@@ -315,10 +381,10 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
             <div className="flex gap-3 pt-4">
               <button
                 type="submit"
-                disabled={isLoading || passwordStrength.score < 3 || newPassword !== confirmPassword}
+                disabled={isLoading || !!success || passwordStrength.score < 3 || newPassword !== confirmPassword}
                 className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {isLoading ? 'Changing...' : 'Change Password'}
+                {isLoading ? 'Changing...' : success ? 'Success!' : 'Change Password'}
               </button>
               <button
                 type="button"

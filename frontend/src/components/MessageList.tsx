@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, memo } from 'react';
+import React, { useEffect, useRef, memo, useCallback } from 'react';
 import { ChatMessage, MessageType, MessageStatus } from '../types/chat';
 import { format } from 'date-fns';
 
@@ -10,10 +10,55 @@ interface MessageListProps {
 
 const MessageList: React.FC<MessageListProps> = memo(({ messages, currentUserId, isLoading = false }) => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  // Handle jump to message functionality
+  const handleJumpToMessage = useCallback((event: CustomEvent) => {
+    const { messageId } = event.detail;
+    console.log('🔍 Jump to message requested:', messageId);
+    
+    const messageElement = document.getElementById(`message-${messageId}`);
+    if (messageElement) {
+      console.log('✅ Found message element, scrolling to it');
+      
+      // First scroll the message into view
+      messageElement.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center',
+        inline: 'nearest'
+      });
+      
+      // Add a highlight effect to make the message stand out
+      messageElement.classList.add('message-highlight');
+      
+      // Remove highlight after animation
+      setTimeout(() => {
+        messageElement.classList.remove('message-highlight');
+      }, 3000);
+    } else {
+      console.log('❌ Message element not found:', `message-${messageId}`);
+      // If message is not found, it might not be loaded yet
+      // For now, we'll just scroll to the bottom
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, []);
+
+  // Add event listener for jump to message
+  useEffect(() => {
+    const handleJumpEvent = (event: Event) => {
+      handleJumpToMessage(event as CustomEvent);
+    };
+    
+    window.addEventListener('jumpToMessage', handleJumpEvent);
+    
+    return () => {
+      window.removeEventListener('jumpToMessage', handleJumpEvent);
+    };
+  }, [handleJumpToMessage]);
 
   // Debug logging
   useEffect(() => {
@@ -31,7 +76,7 @@ const MessageList: React.FC<MessageListProps> = memo(({ messages, currentUserId,
 
   return (
     <div className="h-full flex flex-col bg-gray-50 dark:bg-gray-900">
-      <div className="flex-1 overflow-y-auto p-4 space-y-2">
+      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-2">
         {isLoading && messages.length === 0 ? (
           <div className="flex-1 flex items-center justify-center">
             <div className="flex flex-col items-center space-y-4">
@@ -58,7 +103,8 @@ const MessageList: React.FC<MessageListProps> = memo(({ messages, currentUserId,
               return (
                 <div
                   key={message.id}
-                  className="animate-fadeIn"
+                  id={`message-${message.id}`}
+                  className="animate-fadeIn message-container"
                   style={{ animationDelay: `${Math.min(index * 50, 500)}ms` }}
                 >
                   <MessageBubble
