@@ -55,4 +55,10 @@ public interface ChatMessageRepository extends MongoRepository<ChatMessage, Stri
     
     // Delete messages where conversation ID is not in the provided list (for cleanup)
     long deleteByConversationIdNotIn(List<String> conversationIds);
+    
+    // Count messages where conversation ID is in the provided list (for soft-deleted conversation analysis)
+    long countByConversationIdIn(List<String> conversationIds);
+    
+    // Delete messages where conversation ID is in the provided list (for soft-deleted conversation cleanup)
+    long deleteByConversationIdIn(List<String> conversationIds);
 }

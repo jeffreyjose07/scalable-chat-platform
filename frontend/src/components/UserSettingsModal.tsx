@@ -14,6 +14,11 @@ interface CleanupReport {
     orphanedMessagesCount: number;
     healthyMessagesCount: number;
   };
+  softDeletedMessages: {
+    softDeletedConversations: number;
+    messagesInSoftDeletedConversations: number;
+    sampleSoftDeletedConversations: string[];
+  };
   orphanedParticipants: {
     totalParticipants: number;
     orphanedParticipantsCount: number;
@@ -33,6 +38,7 @@ interface CleanupReport {
   timestamp: string;
   deletionCounts?: {
     orphanedMessages: number;
+    softDeletedMessages: number;
     orphanedParticipants: number;
     emptyConversations: number;
   };
@@ -515,6 +521,12 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                               </div>
                             </div>
                             <div>
+                              <div className="font-medium text-gray-700 dark:text-gray-300">Soft-Deleted Messages</div>
+                              <div className="text-gray-600 dark:text-gray-400">
+                                {cleanupReport.softDeletedMessages?.messagesInSoftDeletedConversations || 0} messages in {cleanupReport.softDeletedMessages?.softDeletedConversations || 0} deleted conversations
+                              </div>
+                            </div>
+                            <div>
                               <div className="font-medium text-gray-700 dark:text-gray-300">Orphaned Participants</div>
                               <div className="text-gray-600 dark:text-gray-400">
                                 {cleanupReport.orphanedParticipants.orphanedParticipantsCount} of {cleanupReport.orphanedParticipants.totalParticipants} total
@@ -526,11 +538,12 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                                 {cleanupReport.emptyConversations.emptyConversationsCount} of {cleanupReport.emptyConversations.totalConversations} total
                               </div>
                             </div>
-                            <div>
-                              <div className="font-medium text-gray-700 dark:text-gray-300">Database Health</div>
-                              <div className="text-gray-600 dark:text-gray-400">
-                                {cleanupReport.finalStats.totalUsers} users, {cleanupReport.finalStats.totalMessages} messages
-                              </div>
+                          </div>
+                          
+                          <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded">
+                            <div className="font-medium text-blue-800 dark:text-blue-200 mb-1">Database Health</div>
+                            <div className="text-sm text-blue-700 dark:text-blue-300">
+                              {cleanupReport.finalStats.totalUsers} users, {cleanupReport.finalStats.totalConversations} conversations, {cleanupReport.finalStats.totalMessages} messages
                             </div>
                           </div>
                           
@@ -538,7 +551,8 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                             <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded">
                               <div className="font-medium text-green-800 dark:text-green-200 mb-2">✅ Cleanup Completed</div>
                               <div className="text-sm text-green-700 dark:text-green-300">
-                                Deleted: {cleanupReport.deletionCounts.orphanedMessages} messages, 
+                                Deleted: {cleanupReport.deletionCounts.orphanedMessages} orphaned messages, 
+                                {cleanupReport.deletionCounts.softDeletedMessages || 0} soft-deleted messages,
                                 {cleanupReport.deletionCounts.orphanedParticipants} participants, 
                                 {cleanupReport.deletionCounts.emptyConversations} conversations
                               </div>

@@ -64,11 +64,15 @@ public class AdminDatabaseCleanupService {
             var orphanedParticipantsReport = analyzeOrphanedParticipants();
             report.put("orphanedParticipants", orphanedParticipantsReport);
             
-            // 3. Find conversations with no participants (should not exist but safety check)
+            // 3. Find messages from soft-deleted conversations
+            var softDeletedMessagesReport = analyzeSoftDeletedConversationMessages();
+            report.put("softDeletedMessages", softDeletedMessagesReport);
+            
+            // 4. Find conversations with no participants (should not exist but safety check)
             var emptyConversationsReport = analyzeEmptyConversations();
             report.put("emptyConversations", emptyConversationsReport);
             
-            // 4. Find duplicate conversation participants (same user in same conversation multiple times)
+            // 5. Find duplicate conversation participants (same user in same conversation multiple times)
             var duplicateParticipantsReport = analyzeDuplicateParticipants();
             report.put("duplicateParticipants", duplicateParticipantsReport);
             
@@ -78,6 +82,7 @@ public class AdminDatabaseCleanupService {
                 
                 // Execute cleanup operations in safe order
                 deletionCounts.put("orphanedMessages", cleanupOrphanedMessages());
+                deletionCounts.put("softDeletedMessages", cleanupSoftDeletedConversationMessages());
                 deletionCounts.put("orphanedParticipants", cleanupOrphanedParticipants());
                 deletionCounts.put("emptyConversations", cleanupEmptyConversations());
                 deletionCounts.put("duplicateParticipants", cleanupDuplicateParticipants());
@@ -169,6 +174,38 @@ public class AdminDatabaseCleanupService {
     }
     
     /**
+     * Analyze messages from soft-deleted conversations
+     */
+    private Map<String, Object> analyzeSoftDeletedConversationMessages() {
+        Map<String, Object> report = new HashMap<>();
+        
+        try {
+            // Get all soft-deleted conversation IDs
+            List<String> softDeletedConversationIds = conversationRepository.findAllSoftDeletedConversationIds();
+            logger.info("Found {} soft-deleted conversations", softDeletedConversationIds.size());
+            
+            // Count messages in these soft-deleted conversations
+            long messagesInSoftDeletedConversations = 0;
+            if (!softDeletedConversationIds.isEmpty()) {
+                messagesInSoftDeletedConversations = chatMessageRepository.countByConversationIdIn(softDeletedConversationIds);
+            }
+            
+            report.put("softDeletedConversations", softDeletedConversationIds.size());
+            report.put("messagesInSoftDeletedConversations", messagesInSoftDeletedConversations);
+            report.put("sampleSoftDeletedConversations", softDeletedConversationIds.stream().limit(5).toList());
+            
+            logger.info("Soft-deleted messages analysis: {} conversations with {} messages to clean", 
+                       softDeletedConversationIds.size(), messagesInSoftDeletedConversations);
+            
+        } catch (Exception e) {
+            logger.error("Error analyzing soft-deleted conversation messages", e);
+            report.put("error", e.getMessage());
+        }
+        
+        return report;
+    }
+    
+    /**
      * Analyze conversations with no participants
      */
     private Map<String, Object> analyzeEmptyConversations() {
@@ -236,6 +273,30 @@ public class AdminDatabaseCleanupService {
             
         } catch (Exception e) {
             logger.error("CRITICAL ERROR: Failed to cleanup orphaned messages", e);
+            return 0;
+        }
+    }
+    
+    /**
+     * CRITICAL: Cleanup messages from soft-deleted conversations in MongoDB
+     */
+    private int cleanupSoftDeletedConversationMessages() {
+        try {
+            List<String> softDeletedConversationIds = conversationRepository.findAllSoftDeletedConversationIds();
+            
+            if (softDeletedConversationIds.isEmpty()) {
+                logger.info("No soft-deleted conversations found, skipping message cleanup");
+                return 0;
+            }
+            
+            long deletedCount = chatMessageRepository.deleteByConversationIdIn(softDeletedConversationIds);
+            
+            logger.warn("DELETED {} messages from {} soft-deleted conversations in MongoDB", 
+                       deletedCount, softDeletedConversationIds.size());
+            return (int) deletedCount;
+            
+        } catch (Exception e) {
+            logger.error("CRITICAL ERROR: Failed to cleanup soft-deleted conversation messages", e);
             return 0;
         }
     }
