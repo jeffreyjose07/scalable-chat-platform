@@ -66,12 +66,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Initialize token with security checking
   useEffect(() => {
+    console.log('🔐 AuthProvider initializing...');
     const initialToken = tokenStorage.get();
+    console.log('🔐 Retrieved token from storage:', initialToken ? 'TOKEN_EXISTS' : 'NO_TOKEN');
+    
     if (initialToken === null && tokenStorage.wasTokenRemoved()) {
       // Token was removed due to security check
+      console.log('🔐 Token was removed for security reasons');
       setSecurityLogout(true);
     }
     setToken(initialToken);
+    console.log('🔐 Set initial token state:', initialToken ? 'TOKEN_SET' : 'NO_TOKEN_SET');
   }, []);
 
   useEffect(() => {

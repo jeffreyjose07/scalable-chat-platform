@@ -24,9 +24,17 @@ const queryClient = new QueryClient({
 
 // Component to handle root route redirection
 const RootRedirect: React.FC = () => {
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, token } = useAuth();
+
+  console.log('🏠 RootRedirect:', { 
+    isLoading, 
+    hasUser: !!user, 
+    hasToken: !!token,
+    userDetails: user ? { id: user.id, username: user.username } : null 
+  });
 
   if (isLoading) {
+    console.log('🏠 RootRedirect: Showing loading...');
     return (
       <div className="flex items-center justify-center h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-500"></div>
@@ -34,6 +42,8 @@ const RootRedirect: React.FC = () => {
     );
   }
 
+  const redirect = user ? '/chat' : '/login';
+  console.log('🏠 RootRedirect: Redirecting to:', redirect);
   return user ? <Navigate to="/chat" replace /> : <Navigate to="/login" replace />;
 };
 
