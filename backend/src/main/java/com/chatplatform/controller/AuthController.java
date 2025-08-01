@@ -153,19 +153,33 @@ public class AuthController {
         logger.info("Password change requested by user: {}", userId);
         
         try {
-            // Validate request
+            // Validate request fields
             if (bindingResult.hasErrors()) {
-                throw new ValidationException("Invalid password change request: " + bindingResult.getFieldError().getDefaultMessage());
+                String errorMessage = bindingResult.getFieldErrors().stream()
+                    .map(error -> error.getDefaultMessage())
+                    .findFirst()
+                    .orElse("Invalid password change request");
+                return ResponseUtils.badRequest(errorMessage, (Void) null);
             }
             
-            // Additional password strength validation
-            if (!isPasswordStrong(request.getNewPassword())) {
-                return ResponseUtils.badRequest("Password does not meet security requirements", (Void) null);
+            // Validate request data
+            if (request.getCurrentPassword() == null || request.getCurrentPassword().trim().isEmpty()) {
+                return ResponseUtils.badRequest("Current password is required", (Void) null);
             }
             
-            // Check if new password is different from current
+            if (request.getNewPassword() == null || request.getNewPassword().trim().isEmpty()) {
+                return ResponseUtils.badRequest("New password is required", (Void) null);
+            }
+            
+            // Check if new password is different from current (plain text comparison)
             if (request.getCurrentPassword().equals(request.getNewPassword())) {
                 return ResponseUtils.badRequest("New password must be different from current password", (Void) null);
+            }
+            
+            // Additional password strength validation with detailed message
+            String passwordValidationError = validatePasswordStrength(request.getNewPassword());
+            if (passwordValidationError != null) {
+                return ResponseUtils.badRequest(passwordValidationError, (Void) null);
             }
             
             // Change password via auth service
@@ -175,23 +189,26 @@ public class AuthController {
             return ResponseUtils.success("Password changed successfully");
             
         } catch (AuthenticationException e) {
-            logger.warn("Password change failed - invalid current password for user: {}", userId);
-            return ResponseUtils.badRequest("Current password is incorrect", (Void) null);
+            logger.warn("Password change failed - authentication error for user: {} - {}", userId, e.getMessage());
+            return ResponseUtils.badRequest(e.getMessage(), (Void) null);
         } catch (ValidationException e) {
             logger.warn("Password change validation failed for user: {} - {}", userId, e.getMessage());
             return ResponseUtils.badRequest(e.getMessage(), (Void) null);
+        } catch (IllegalArgumentException e) {
+            logger.warn("Password change failed - invalid argument for user: {} - {}", userId, e.getMessage());
+            return ResponseUtils.badRequest(e.getMessage(), (Void) null);
         } catch (Exception e) {
             logger.error("Unexpected error during password change for user: {}", userId, e);
-            return ResponseUtils.internalServerError("Password change failed", (Void) null);
+            return ResponseUtils.internalServerError("An unexpected error occurred. Please try again later.", (Void) null);
         }
     }
     
     /**
-     * Validate password strength
+     * Validate password strength with detailed error messages
      */
-    private boolean isPasswordStrong(String password) {
+    private String validatePasswordStrength(String password) {
         if (password == null || password.length() < 8) {
-            return false;
+            return "Password must be at least 8 characters long";
         }
         
         boolean hasLower = password.chars().anyMatch(Character::isLowerCase);
@@ -204,13 +221,13 @@ public class AuthController {
         String[] weakPasswords = {"password", "123456", "qwerty", "admin", "letmein", "welcome"};
         for (String weak : weakPasswords) {
             if (lowerPassword.contains(weak)) {
-                return false;
+                return "Password contains commonly used patterns. Please choose a more unique password.";
             }
         }
         
         // Check for repeated characters
         if (password.matches("(.)\\1{2,}")) {
-            return false;
+            return "Password cannot contain more than 2 consecutive identical characters";
         }
         
         // Require at least 3 of 4 character types
@@ -220,7 +237,29 @@ public class AuthController {
         if (hasDigit) typesCount++;
         if (hasSpecial) typesCount++;
         
-        return typesCount >= 3;
+        if (typesCount < 3) {
+            StringBuilder message = new StringBuilder("Password must contain at least 3 of the following: ");
+            if (!hasLower) message.append("lowercase letters, ");
+            if (!hasUpper) message.append("uppercase letters, ");
+            if (!hasDigit) message.append("numbers, ");
+            if (!hasSpecial) message.append("special characters (!@#$%^&*), ");
+            
+            // Remove trailing comma and space
+            String result = message.toString();
+            if (result.endsWith(", ")) {
+                result = result.substring(0, result.length() - 2);
+            }
+            return result;
+        }
+        
+        return null; // Password is valid
+    }
+    
+    /**
+     * Legacy method for backward compatibility
+     */
+    private boolean isPasswordStrong(String password) {
+        return validatePasswordStrength(password) == null;
     }
     
     /**
