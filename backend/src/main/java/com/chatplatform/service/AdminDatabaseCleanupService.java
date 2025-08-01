@@ -110,9 +110,9 @@ public class AdminDatabaseCleanupService {
         Map<String, Object> report = new HashMap<>();
         
         try {
-            // Get all valid conversation IDs from PostgreSQL
-            List<String> validConversationIds = conversationRepository.findAllConversationIds();
-            logger.info("Found {} valid conversations", validConversationIds.size());
+            // Get all ACTIVE (non-soft-deleted) conversation IDs from PostgreSQL
+            List<String> validConversationIds = conversationRepository.findAllActiveConversationIds();
+            logger.info("Found {} active conversations (excluding soft-deleted)", validConversationIds.size());
             
             // Count total messages in MongoDB
             long totalMessages = chatMessageRepository.count();
@@ -144,8 +144,8 @@ public class AdminDatabaseCleanupService {
         Map<String, Object> report = new HashMap<>();
         
         try {
-            // Get all valid conversation IDs
-            List<String> validConversationIds = conversationRepository.findAllConversationIds();
+            // Get all ACTIVE (non-soft-deleted) conversation IDs
+            List<String> validConversationIds = conversationRepository.findAllActiveConversationIds();
             
             // Count total participants
             long totalParticipants = participantRepository.count();
@@ -177,7 +177,7 @@ public class AdminDatabaseCleanupService {
         try {
             // Find conversations that have no participants
             List<String> conversationsWithParticipants = participantRepository.findDistinctConversationIds();
-            List<String> allConversationIds = conversationRepository.findAllConversationIds();
+            List<String> allConversationIds = conversationRepository.findAllActiveConversationIds();
             
             // Find conversations without participants
             List<String> emptyConversationIds = allConversationIds.stream()
@@ -228,7 +228,7 @@ public class AdminDatabaseCleanupService {
      */
     private int cleanupOrphanedMessages() {
         try {
-            List<String> validConversationIds = conversationRepository.findAllConversationIds();
+            List<String> validConversationIds = conversationRepository.findAllActiveConversationIds();
             long deletedCount = chatMessageRepository.deleteByConversationIdNotIn(validConversationIds);
             
             logger.warn("DELETED {} orphaned messages from MongoDB", deletedCount);
@@ -245,7 +245,7 @@ public class AdminDatabaseCleanupService {
      */
     private int cleanupOrphanedParticipants() {
         try {
-            List<String> validConversationIds = conversationRepository.findAllConversationIds();
+            List<String> validConversationIds = conversationRepository.findAllActiveConversationIds();
             long deletedCount = participantRepository.deleteByIdConversationIdNotIn(validConversationIds);
             
             logger.warn("DELETED {} orphaned participants from PostgreSQL", deletedCount);
@@ -263,7 +263,7 @@ public class AdminDatabaseCleanupService {
     private int cleanupEmptyConversations() {
         try {
             List<String> conversationsWithParticipants = participantRepository.findDistinctConversationIds();
-            List<String> allConversationIds = conversationRepository.findAllConversationIds();
+            List<String> allConversationIds = conversationRepository.findAllActiveConversationIds();
             
             List<String> emptyConversationIds = allConversationIds.stream()
                 .filter(id -> !conversationsWithParticipants.contains(id))

@@ -56,33 +56,38 @@ export const useAuth = () => {
   return context;
 };
 
+// Initialize token synchronously to prevent race conditions
+const initializeAuth = () => {
+  const initialToken = tokenStorage.get();
+  const wasRemoved = tokenStorage.wasTokenRemoved();
+  
+  console.log('🔐 AuthProvider initializing synchronously...');
+  console.log('🔐 Retrieved token from storage:', initialToken ? 'TOKEN_EXISTS' : 'NO_TOKEN');
+  
+  return {
+    token: initialToken,
+    securityLogout: initialToken === null && wasRemoved,
+    isLoading: !!initialToken // Only show loading if we have a token to validate
+  };
+};
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const initialAuthState = initializeAuth();
+  
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [securityLogout, setSecurityLogout] = useState(false);
+  const [token, setToken] = useState<string | null>(initialAuthState.token);
+  const [isLoading, setIsLoading] = useState(initialAuthState.isLoading);
+  const [securityLogout, setSecurityLogout] = useState(initialAuthState.securityLogout);
 
   const apiUrl = getApiBaseUrl();
 
-  // Initialize token with security checking
+  // Log the initial state
   useEffect(() => {
-    console.log('🔐 AuthProvider initializing...');
-    const initialToken = tokenStorage.get();
-    console.log('🔐 Retrieved token from storage:', initialToken ? 'TOKEN_EXISTS' : 'NO_TOKEN');
-    
-    if (initialToken === null && tokenStorage.wasTokenRemoved()) {
-      // Token was removed due to security check
-      console.log('🔐 Token was removed for security reasons');
-      setSecurityLogout(true);
-    }
-    setToken(initialToken);
-    console.log('🔐 Set initial token state:', initialToken ? 'TOKEN_SET' : 'NO_TOKEN_SET');
-    
-    // If no token, immediately stop loading to prevent login page flash
-    if (!initialToken) {
-      console.log('🔐 No token found, setting isLoading to false immediately');
-      setIsLoading(false);
-    }
+    console.log('🔐 AuthProvider initialized with:', {
+      hasToken: !!token,
+      isLoading,
+      securityLogout
+    });
   }, []);
 
   useEffect(() => {
