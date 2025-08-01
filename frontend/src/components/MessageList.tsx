@@ -75,8 +75,17 @@ const MessageList: React.FC<MessageListProps> = memo(({ messages, currentUserId,
   }, [messages, currentUserId]);
 
   return (
-    <div className="h-full flex flex-col bg-gray-50 dark:bg-gray-900">
-      <div ref={messagesContainerRef} className="flex-1 overflow-y-auto p-4 space-y-2">
+    <div className="h-full w-full">
+      <div 
+        ref={messagesContainerRef} 
+        className="h-full w-full space-y-4"
+        style={{
+          // For iOS momentum scrolling
+          WebkitOverflowScrolling: 'touch',
+          // Smooth scrolling
+          scrollBehavior: 'smooth',
+        }}
+      >
         {isLoading && messages.length === 0 ? (
           <div className="flex-1 flex items-center justify-center">
             <div className="flex flex-col items-center space-y-4">
@@ -117,7 +126,7 @@ const MessageList: React.FC<MessageListProps> = memo(({ messages, currentUserId,
             })}
           </>
         )}
-        <div ref={messagesEndRef} />
+        <div ref={messagesEndRef} className="h-4" />
       </div>
     </div>
   );
