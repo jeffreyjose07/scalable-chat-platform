@@ -122,7 +122,7 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
     setIsLoading(true);
 
     try {
-      await api.post('/api/auth/change-password', {
+      await api.post('/auth/change-password', {
         currentPassword,
         newPassword
       });
