@@ -81,7 +81,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
 
   const checkAdminStatus = async () => {
     try {
-      const response = await api.get('/api/admin/status');
+      const response = await api.get('/admin/status');
       setAdminStatus(response.data);
     } catch (error) {
       console.error('Failed to check admin status:', error);
@@ -94,7 +94,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
     setError(null);
     
     try {
-      const response = await api.get('/api/admin/cleanup/preview');
+      const response = await api.get('/admin/cleanup/preview');
       const reportData = response.data.data || response.data;
       setCleanupReport(reportData);
       setSuccess('Cleanup preview generated successfully');
@@ -116,7 +116,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
     setError(null);
 
     try {
-      const response = await api.post('/api/admin/cleanup/execute', {
+      const response = await api.post('/admin/cleanup/execute', {
         confirmed: true,
         confirmationText: 'DELETE_ORPHANED_DATA'
       });
