@@ -29,29 +29,33 @@ public class DatabaseCleanupService {
     private ChatMessageRepository chatMessageRepository;
     
     /**
-     * Scheduled cleanup task that runs every hour
+     * Scheduled cleanup task that runs every 20 days
      * Cleans up:
      * 1. Messages from conversations that no longer exist
-     * 2. Old deleted conversations (if soft delete is implemented)
+     * 2. Messages from soft-deleted conversations (immediate cleanup)
+     * 3. Old deleted conversations (permanently remove after 30 days)
      */
-    @Scheduled(fixedRate = 3600000) // Run every hour (3600000 milliseconds)
+    @Scheduled(fixedRate = 1728000000L) // Run every 20 days (20 * 24 * 60 * 60 * 1000 milliseconds)
     @Transactional
-    public void performHourlyCleanup() {
-        logger.info("Starting hourly database cleanup task");
+    public void performScheduledCleanup() {
+        logger.info("Starting scheduled database cleanup task (every 20 days)");
         
         try {
-            // Clean up orphaned messages
+            // Clean up orphaned messages (messages from conversations that don't exist)
             int orphanedMessagesDeleted = cleanupOrphanedMessages();
             
-            // Clean up old soft-deleted conversations (if applicable)
+            // Clean up messages from soft-deleted conversations (immediate cleanup)
+            int softDeletedMessagesDeleted = cleanupSoftDeletedConversationMessages();
+            
+            // Clean up old soft-deleted conversations (permanently remove after 30 days)
             int deletedConversationsRemoved = cleanupSoftDeletedConversations();
             
-            logger.info("Hourly cleanup completed. Orphaned messages deleted: {}, " +
-                       "Soft-deleted conversations removed: {}", 
-                       orphanedMessagesDeleted, deletedConversationsRemoved);
+            logger.info("Scheduled cleanup completed. Orphaned messages deleted: {}, " +
+                       "Soft-deleted messages deleted: {}, Conversations permanently removed: {}", 
+                       orphanedMessagesDeleted, softDeletedMessagesDeleted, deletedConversationsRemoved);
                        
         } catch (Exception e) {
-            logger.error("Error during hourly cleanup", e);
+            logger.error("Error during scheduled cleanup", e);
         }
     }
     
@@ -87,6 +91,36 @@ public class DatabaseCleanupService {
             
         } catch (Exception e) {
             logger.error("Error cleaning up orphaned messages", e);
+            return 0;
+        }
+    }
+    
+    /**
+     * Clean up messages from soft-deleted conversations (immediate cleanup)
+     * @return number of messages deleted from soft-deleted conversations
+     */
+    private int cleanupSoftDeletedConversationMessages() {
+        try {
+            // Get all soft-deleted conversation IDs
+            List<String> softDeletedConversationIds = conversationRepository.findAllSoftDeletedConversationIds();
+            
+            if (softDeletedConversationIds.isEmpty()) {
+                logger.info("No soft-deleted conversations found, skipping message cleanup");
+                return 0;
+            }
+            
+            logger.info("Found {} soft-deleted conversations with messages to clean", softDeletedConversationIds.size());
+            
+            // Delete messages from soft-deleted conversations
+            long deletedCount = chatMessageRepository.deleteByConversationIdIn(softDeletedConversationIds);
+            
+            logger.info("Deleted {} messages from {} soft-deleted conversations", 
+                       deletedCount, softDeletedConversationIds.size());
+            
+            return (int) deletedCount;
+            
+        } catch (Exception e) {
+            logger.error("Error cleaning up soft-deleted conversation messages", e);
             return 0;
         }
     }
@@ -132,7 +166,7 @@ public class DatabaseCleanupService {
      */
     public void performManualCleanup() {
         logger.info("Starting manual database cleanup");
-        performHourlyCleanup();
+        performScheduledCleanup();
     }
     
     /**
