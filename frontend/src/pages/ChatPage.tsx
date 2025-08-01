@@ -521,7 +521,7 @@ const ChatPage: React.FC = () => {
           </div>
 
           {/* Messages - Scrollable Area */}
-          <div className="flex-1 overflow-y-auto -mt-16 pt-16 pb-4 px-4 sm:px-6" style={{
+          <div className="flex-1 overflow-y-auto pb-4 px-4 sm:px-6" style={{
             WebkitOverflowScrolling: 'touch',
             scrollBehavior: 'smooth',
             scrollPaddingTop: '4rem',
