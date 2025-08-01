@@ -58,4 +58,8 @@ public interface ConversationRepository extends JpaRepository<Conversation, Stri
     // Get all active (non-deleted) conversation IDs for cleanup purposes
     @Query("SELECT c.id FROM Conversation c WHERE c.deletedAt IS NULL")
     List<String> findAllActiveConversationIds();
+    
+    // Get all soft-deleted conversation IDs for cleanup purposes
+    @Query("SELECT c.id FROM Conversation c WHERE c.deletedAt IS NOT NULL")
+    List<String> findAllSoftDeletedConversationIds();
 }
