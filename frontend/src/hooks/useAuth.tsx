@@ -80,11 +80,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   useEffect(() => {
+    console.log('🔐 Token effect triggered, token exists:', !!token);
     if (token) {
+      console.log('🔐 Validating token with /api/auth/me...');
       axios.get(`${apiUrl}/api/auth/me`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       .then(response => {
+        console.log('🔐 /api/auth/me success:', response.data);
         const messageResponse = response.data as MessageResponse<User>;
         if (messageResponse.success && messageResponse.data) {
           // Map backend User to frontend User interface
@@ -97,13 +100,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             createdAt: (messageResponse.data as any).createdAt,
             lastSeenAt: (messageResponse.data as any).lastSeenAt
           };
+          console.log('🔐 Setting user:', user);
           setUser(user);
         } else {
+          console.log('🔐 Invalid response, removing token');
           tokenStorage.remove();
           setToken(null);
         }
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log('🔐 /api/auth/me failed:', error);
         // Check if token was removed due to security reasons
         if (tokenStorage.wasTokenRemoved()) {
           setSecurityLogout(true);
@@ -112,9 +118,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setToken(null);
       })
       .finally(() => {
+        console.log('🔐 Setting isLoading to false');
         setIsLoading(false);
       });
     } else {
+      console.log('🔐 No token, setting isLoading to false');
       setIsLoading(false);
     }
   }, [token, apiUrl]);

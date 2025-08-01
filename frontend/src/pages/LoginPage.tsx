@@ -20,9 +20,18 @@ const LoginPage: React.FC = () => {
   const { login, register, user } = useAuth();
   const apiUrl = getApiBaseUrl();
 
+  console.log('🔑 LoginPage: Checking auth state:', { 
+    hasUser: !!user, 
+    userDetails: user ? { id: user.id, username: user.username } : null,
+    currentURL: window.location.href
+  });
+  
   if (user) {
+    console.log('🔑 LoginPage: User authenticated, redirecting to /chat');
     return <Navigate to="/chat" replace />;
   }
+  
+  console.log('🔑 LoginPage: No user, showing login form');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
