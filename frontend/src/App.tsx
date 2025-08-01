@@ -8,7 +8,6 @@ import { WebSocketProvider } from './hooks/useWebSocket';
 import { ThemeProvider } from './contexts/ThemeContext';
 import LoginPage from './pages/LoginPage';
 import ChatPage from './pages/ChatPage';
-import AdminPage from './pages/AdminPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary, { ChatErrorBoundary } from './components/ErrorBoundary';
 import SecurityNotification from './components/SecurityNotification';
@@ -70,14 +69,6 @@ const AppContent: React.FC = () => {
                     <ChatErrorBoundary>
                       <ChatPage />
                     </ChatErrorBoundary>
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/admin" 
-                element={
-                  <ProtectedRoute>
-                    <AdminPage />
                   </ProtectedRoute>
                 } 
               />
