@@ -1,5 +1,7 @@
 package com.chatplatform.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -12,6 +14,8 @@ import java.util.List;
 
 @Component
 public class MongoIndexConfiguration {
+    
+    private static final Logger logger = LoggerFactory.getLogger(MongoIndexConfiguration.class);
 
     @Autowired
     private MongoTemplate mongoTemplate;
@@ -57,7 +61,7 @@ public class MongoIndexConfiguration {
 
         } catch (Exception e) {
             // Log error but don't fail application startup
-            System.err.println("Warning: Could not create/update TTL index: " + e.getMessage());
+            logger.warn("Could not create/update TTL index: {}", e.getMessage());
         }
     }
 
