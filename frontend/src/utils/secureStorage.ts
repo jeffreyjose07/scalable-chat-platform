@@ -199,7 +199,7 @@ class SecureStorage {
     const components = [
       navigator.userAgent,
       navigator.language,
-      screen.width + 'x' + screen.height,
+      window.screen.width + 'x' + window.screen.height,
       // Removed timezone offset as it could be unstable in some environments
       window.location.hostname
     ];
