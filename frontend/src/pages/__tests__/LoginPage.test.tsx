@@ -28,6 +28,9 @@ describe('LoginPage', () => {
       login: mockLogin,
       register: mockRegister,
       logout: jest.fn(),
+      updateUserProfile: jest.fn(),
+      securityLogout: false,
+      dismissSecurityNotification: jest.fn(),
       isLoading: false
     });
   });
@@ -132,6 +135,9 @@ describe('LoginPage', () => {
       login: mockLogin,
       register: mockRegister,
       logout: jest.fn(),
+      updateUserProfile: jest.fn(),
+      securityLogout: false,
+      dismissSecurityNotification: jest.fn(),
       isLoading: true
     });
 
@@ -148,6 +154,9 @@ describe('LoginPage', () => {
       login: mockLogin,
       register: mockRegister,
       logout: jest.fn(),
+      updateUserProfile: jest.fn(),
+      securityLogout: false,
+      dismissSecurityNotification: jest.fn(),
       isLoading: true
     });
 
@@ -172,6 +181,9 @@ describe('LoginPage', () => {
       login: mockLogin,
       register: mockRegister,
       logout: jest.fn(),
+      updateUserProfile: jest.fn(),
+      securityLogout: false,
+      dismissSecurityNotification: jest.fn(),
       isLoading: false
     });
 

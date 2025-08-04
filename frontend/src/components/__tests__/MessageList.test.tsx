@@ -132,7 +132,7 @@ describe('MessageList', () => {
   it('handles missing senderId gracefully', () => {
     const messageWithoutIds = {
       ...mockMessages[1],
-      senderId: undefined,
+      senderId: '',
       senderUsername: undefined,
     };
     

@@ -4,6 +4,7 @@ import { useWebSocket, WebSocketProvider } from '../useWebSocket';
 import { useAuth } from '../useAuth';
 import { messageService } from '../../services/messageService';
 import { getWebSocketUrl } from '../../utils/networkUtils';
+import { MessageType } from '../../types/chat';
 
 // Mock dependencies
 jest.mock('../useAuth');
@@ -251,7 +252,7 @@ describe('useWebSocket', () => {
       senderId: 'user1',
       senderUsername: 'testuser',
       content: 'Hello World',
-      type: 'TEXT' as const,
+      type: MessageType.TEXT,
     };
 
     await act(async () => {
@@ -278,7 +279,7 @@ describe('useWebSocket', () => {
       senderId: 'user1',
       senderUsername: 'testuser',
       content: '   ',
-      type: 'TEXT' as const,
+      type: MessageType.TEXT,
     };
 
     await act(async () => {
@@ -296,7 +297,7 @@ describe('useWebSocket', () => {
       senderId: 'user1',
       senderUsername: 'testuser',
       content: 'Hello World',
-      type: 'TEXT' as const,
+      type: MessageType.TEXT,
     };
 
     await act(async () => {
@@ -406,7 +407,7 @@ describe('useWebSocket', () => {
       senderId: 'user1',
       senderUsername: 'testuser',
       content: 'Hello World',
-      type: 'TEXT' as const,
+      type: MessageType.TEXT,
     };
 
     await act(async () => {

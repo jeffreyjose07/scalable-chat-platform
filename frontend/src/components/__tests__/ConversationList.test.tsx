@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ConversationList from '../ConversationList';
-import { Conversation, ConversationType, User } from '../../types/chat';
+import { Conversation, ConversationType, User, ConversationParticipant, ParticipantRole } from '../../types/chat';
 
 // Mock ConversationTypeToggle component
 jest.mock('../ConversationTypeToggle', () => ({
@@ -49,7 +49,10 @@ const mockDirectConversation: Conversation = {
   id: 'conv1',
   name: '',
   type: ConversationType.DIRECT,
-  participants: [mockCurrentUser, mockOtherUser],
+  participants: [
+    { user: mockCurrentUser, role: ParticipantRole.MEMBER },
+    { user: mockOtherUser, role: ParticipantRole.MEMBER }
+  ],
   updatedAt: '2023-01-01T00:00:00Z',
   createdAt: '2023-01-01T00:00:00Z',
 };
@@ -58,7 +61,10 @@ const mockGroupConversation: Conversation = {
   id: 'conv2',
   name: 'Test Group',
   type: ConversationType.GROUP,
-  participants: [mockCurrentUser, mockOtherUser],
+  participants: [
+    { user: mockCurrentUser, role: ParticipantRole.OWNER },
+    { user: mockOtherUser, role: ParticipantRole.MEMBER }
+  ],
   updatedAt: '2023-01-01T00:00:00Z',
   createdAt: '2023-01-01T00:00:00Z',
 };
@@ -197,7 +203,7 @@ describe('ConversationList', () => {
       {
         ...mockDirectConversation,
         id: 'conv3',
-        participants: [mockCurrentUser],
+        participants: [{ user: mockCurrentUser, role: ParticipantRole.MEMBER }],
       },
     ];
     
