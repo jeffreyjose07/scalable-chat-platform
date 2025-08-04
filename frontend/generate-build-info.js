@@ -14,6 +14,9 @@ const generateBuildInfo = () => {
     gitBranch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim();
   } catch (error) {
     console.warn('Could not get git information:', error.message);
+    // Try to get from environment variables (common in CI/CD)
+    gitCommit = process.env.RENDER_GIT_COMMIT || process.env.GITHUB_SHA || gitCommit;
+    gitBranch = process.env.RENDER_GIT_BRANCH || process.env.GITHUB_REF_NAME || gitBranch;
   }
   
   const buildInfo = {
