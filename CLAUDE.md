@@ -1,10 +1,13 @@
 # Claude Instructions
 
-## Commit Guidelines
+# ⚠️  CRITICAL COMMIT GUIDELINES ⚠️
+## NEVER ADD CLAUDE AS AUTHOR IN ANY COMMITS
 - Never include Claude as author in commits
-- Always use the user's identity for git commits
+- Always use the user's identity for git commits  
 - Never add "Co-Authored-By: Claude" to commit messages
+- Never add "Generated with Claude Code" to commit messages
 - Keep commit messages concise and focused
+- A git hook will reject commits with Claude authorship
 
 ## Development Preferences
 - Follow existing code patterns and conventions
@@ -23,6 +26,7 @@
 ```bash
 cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/frontend
 npm run build
+# NEVER ADD CLAUDE AS AUTHOR
 ```
 
 ### Backend (Spring Boot + Gradle)
@@ -30,6 +34,7 @@ npm run build
 export JAVA_HOME=/Users/jeffrey.jose/Library/Java/JavaVirtualMachines/corretto-17.0.15/Contents/Home
 cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/backend
 ./gradlew build -x test
+# NEVER ADD CLAUDE AS AUTHOR
 ```
 
 ### Full Build (Both)
@@ -38,6 +43,7 @@ cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/backend
 export JAVA_HOME=/Users/jeffrey.jose/Library/Java/JavaVirtualMachines/corretto-17.0.15/Contents/Home
 cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/backend
 ./gradlew build -x test
+# NEVER ADD CLAUDE AS AUTHOR
 ```
 
 ## Common Issues & Fixes
