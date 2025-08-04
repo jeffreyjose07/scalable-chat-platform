@@ -90,3 +90,11 @@ cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/backend
 - **Base URL**: `/api` prefix automatically added by api service
 - **Authentication**: Bearer token in Authorization header
 - **Response format**: `{success: boolean, message: string, data: T}`
+
+## UI Components
+
+### CreateGroupModal Search Implementation
+- **Location**: `frontend/src/components/groups/CreateGroupModal.tsx:188-195`
+- **Feature**: Real-time search filtering for participants when creating groups
+- **Implementation**: Filters users by `displayName` and `email` using case-insensitive matching
+- **State Management**: Uses `searchTerm` state with proper cleanup on form reset/cancel

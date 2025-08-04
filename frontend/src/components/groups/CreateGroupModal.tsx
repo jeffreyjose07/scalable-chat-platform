@@ -19,10 +19,16 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
   const [isPublic, setIsPublic] = useState(false);
   const [maxParticipants, setMaxParticipants] = useState(100);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const { users } = useUsers();
+
+  const filteredUsers = users.filter(user => 
+    user.displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    user.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleUserToggle = (userId: string) => {
     setSelectedUsers(prev => 
@@ -74,6 +80,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
       setIsPublic(false);
       setMaxParticipants(100);
       setSelectedUsers([]);
+      setSearchTerm('');
       
       onClose();
     } catch (error: any) {
@@ -90,6 +97,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
     setIsPublic(false);
     setMaxParticipants(100);
     setSelectedUsers([]);
+    setSearchTerm('');
     setError(null);
     onClose();
   };
@@ -177,11 +185,22 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Add Participants (optional)
               </label>
+              <div className="mb-2">
+                <input
+                  type="text"
+                  placeholder="Search participants..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                />
+              </div>
               <div className="max-h-40 overflow-y-auto border border-gray-300 rounded-md p-2">
                 {users.length === 0 ? (
                   <p className="text-gray-500 text-sm">Loading users...</p>
+                ) : filteredUsers.length === 0 ? (
+                  <p className="text-gray-500 text-sm">No participants found</p>
                 ) : (
-                  users.map((user: User) => (
+                  filteredUsers.map((user: User) => (
                     <div key={user.id} className="flex items-center p-2 hover:bg-gray-100 rounded">
                       <input
                         type="checkbox"
