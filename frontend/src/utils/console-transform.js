@@ -3,9 +3,6 @@
  * This script replaces console statements with production-safe alternatives
  */
 
-const fs = require('fs');
-const path = require('path');
-
 const isProduction = process.env.NODE_ENV === 'production';
 
 // Transform console.log, console.debug, console.info to no-ops in production
