@@ -209,4 +209,124 @@ The system logs security events at appropriate levels:
 
 ---
 
-**Security Notice**: This implementation follows industry best practices for JWT security. Regular security audits and updates are recommended to maintain security posture.
+## 🚨 GitGuardian Secret Detection & Remediation
+
+### Hardcoded Secrets Prevention
+
+This project is protected by GitGuardian to prevent hardcoded secrets in the codebase:
+
+#### ✅ **What We Fixed**
+1. **application-render.yml**: Removed default JWT secret and admin password values
+2. **Test Files**: Updated test passwords to avoid generic password detection  
+3. **Environment Configuration**: All secrets now require environment variables
+
+#### 🔒 **Mandatory Environment Variables**
+The following environment variables MUST be set in production:
+
+```bash
+# JWT Security (CRITICAL - No defaults provided)
+JWT_SECRET=<your-256-bit-secret-key>
+JWT_EXPIRATION=14400000
+JWT_ISSUER=chat-platform-backend  
+JWT_AUDIENCE=chat-platform-users
+
+# Admin Account (CRITICAL - No defaults provided)
+ADMIN_USERNAME=<secure-admin-username>
+ADMIN_EMAIL=<admin-email>
+ADMIN_PASSWORD=<secure-admin-password>
+
+# Database Configuration
+DATABASE_URL=<postgresql-connection-url>
+DATABASE_USERNAME=<db-username>
+DATABASE_PASSWORD=<secure-db-password>
+MONGODB_URI=<mongodb-connection-uri>
+REDIS_URL=<redis-connection-url>
+```
+
+#### 🛡️ **Secret Generation Best Practices**
+
+**JWT Secret Generation:**
+```bash
+# Generate cryptographically secure JWT secret
+openssl rand -base64 64
+# OR
+node -e "console.log(require('crypto').randomBytes(64).toString('base64'))"
+```
+
+**Password Requirements:**
+- Minimum 12 characters for admin passwords
+- Include uppercase, lowercase, numbers, and special characters
+- Use password managers for generation and storage
+
+#### ⚠️ **Security Incident Response**
+
+If secrets are accidentally committed:
+
+1. **Immediate Actions**:
+   - Rotate ALL affected secrets immediately
+   - Update production environment variables
+   - Review access logs for unauthorized usage
+
+2. **Git History Cleanup**:
+   ```bash
+   # Remove secrets from git history (DANGEROUS - coordinate with team)
+   git filter-branch --force --index-filter \
+   'git rm --cached --ignore-unmatch <file-with-secrets>' \
+   --prune-empty --tag-name-filter cat -- --all
+   
+   # Force push to update remote (coordinate with team first)
+   git push origin --force --all
+   ```
+
+3. **Prevention Setup**:
+   ```bash
+   # Install GitGuardian pre-commit hook
+   pip install detect-secrets
+   pre-commit install
+   ```
+
+#### 📋 **Configuration File Security Status**
+
+| File | Security Status | Notes |
+|------|----------------|--------|
+| `application.yml` | ✅ Secure | Uses env variables only |
+| `application-render.yml` | ✅ Fixed | Removed hardcoded defaults |
+| `application-docker.yml` | ✅ Secure | Uses env variables only |
+| `application-test.yml` | ✅ Secure | Test-only mock values |
+| `.env.example` | ✅ Secure | Template with placeholders |
+
+#### 🔍 **Pre-Commit Security Checks**
+
+The project includes pre-commit hooks that scan for:
+- Hardcoded passwords and API keys
+- JWT secrets and tokens
+- Database connection strings
+- Email addresses in configuration
+- Common secret patterns
+
+#### 📚 **Environment Setup Guide**
+
+1. **Copy Environment Template**:
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Generate Required Secrets**:
+   ```bash
+   # Generate JWT secret
+   echo "JWT_SECRET=$(openssl rand -base64 64)" >> .env
+   
+   # Set other required variables
+   echo "ADMIN_USERNAME=your_admin_username" >> .env
+   echo "ADMIN_PASSWORD=$(openssl rand -base64 32)" >> .env
+   ```
+
+3. **Validate Configuration**:
+   ```bash
+   # Ensure no defaults are used in production
+   grep -r "CHANGE_THIS\|admin123\|password123" src/ || echo "✅ No hardcoded secrets found"
+   ```
+
+---
+
+**Security Notice**: This implementation follows industry best practices for JWT security and secret management. All secrets must be provided via environment variables. Regular security audits and GitGuardian monitoring help maintain security posture.
