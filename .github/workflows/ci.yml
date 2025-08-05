@@ -46,6 +46,12 @@ jobs:
         java-version: '17'
         distribution: 'corretto'
 
+    - name: Verify Java version
+      run: |
+        echo "JAVA_HOME: $JAVA_HOME"
+        java -version
+        javac -version
+
     - name: Cache Gradle packages
       uses: actions/cache@v4
       with:
@@ -60,6 +66,29 @@ jobs:
       working-directory: ./backend
       run: chmod +x ./gradlew
 
+    - name: Stop existing Gradle daemons
+      working-directory: ./backend
+      run: ./gradlew --stop || true
+
+    - name: Validate environment variables
+      run: |
+        echo "Checking required environment variables..."
+        echo "JWT_SECRET: [HIDDEN]"
+        echo "JWT_EXPIRATION: ${JWT_EXPIRATION:-NOT_SET}"
+        echo "JWT_ISSUER: ${JWT_ISSUER:-NOT_SET}"
+        echo "JWT_AUDIENCE: ${JWT_AUDIENCE:-NOT_SET}"
+        echo "ADMIN_USERNAME: ${ADMIN_USERNAME:-NOT_SET}"
+        echo "ADMIN_EMAIL: ${ADMIN_EMAIL:-NOT_SET}"
+        echo "ADMIN_PASSWORD: [HIDDEN]"
+      env:
+        JWT_SECRET: test-jwt-secret-key-for-ci-testing-only
+        JWT_EXPIRATION: 86400000
+        JWT_ISSUER: chat-platform-backend-test
+        JWT_AUDIENCE: chat-platform-users-test
+        ADMIN_USERNAME: testadmin
+        ADMIN_EMAIL: test@example.com
+        ADMIN_PASSWORD: TestPassword123!
+
     - name: Build backend
       working-directory: ./backend
       run: ./gradlew build -x test
@@ -73,9 +102,19 @@ jobs:
         ADMIN_EMAIL: test@example.com
         ADMIN_PASSWORD: TestPassword123!
 
+    - name: Wait for services to be ready
+      run: |
+        echo "Waiting for PostgreSQL..."
+        timeout 60 bash -c 'until pg_isready -h localhost -p 5432; do sleep 1; done' || echo "PostgreSQL timeout"
+        echo "Waiting for MongoDB..."
+        timeout 60 bash -c 'until nc -z localhost 27017; do sleep 1; done' || echo "MongoDB timeout"
+        echo "Waiting for Redis..."
+        timeout 60 bash -c 'until nc -z localhost 6379; do sleep 1; done' || echo "Redis timeout"
+        echo "All services ready"
+
     - name: Run backend tests
       working-directory: ./backend
-      run: ./gradlew test
+      run: ./gradlew test --info --stacktrace
       env:
         SPRING_PROFILES_ACTIVE: test
         SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/testdb
@@ -227,6 +266,12 @@ jobs:
         java-version: '17'
         distribution: 'corretto'
 
+    - name: Verify Java version
+      run: |
+        echo "JAVA_HOME: $JAVA_HOME"
+        java -version
+        javac -version
+
     - name: Cache SonarCloud packages
       uses: actions/cache@v4
       with:
@@ -247,6 +292,10 @@ jobs:
     - name: Make gradlew executable
       working-directory: ./backend
       run: chmod +x ./gradlew
+
+    - name: Stop existing Gradle daemons
+      working-directory: ./backend
+      run: ./gradlew --stop || true
 
     - name: Run tests and collect coverage
       working-directory: ./backend
