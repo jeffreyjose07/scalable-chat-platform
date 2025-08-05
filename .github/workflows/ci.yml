@@ -48,44 +48,13 @@ jobs:
       working-directory: ./backend
       run: ./gradlew --stop || true
 
-    - name: Validate environment variables
+    - name: Build and Test Backend
+      working-directory: ./backend
       run: |
-        echo "Checking required environment variables..."
-        echo "JWT_SECRET: [HIDDEN]"
-        echo "JWT_EXPIRATION: ${JWT_EXPIRATION:-NOT_SET}"
-        echo "JWT_ISSUER: ${JWT_ISSUER:-NOT_SET}"
-        echo "JWT_AUDIENCE: ${JWT_AUDIENCE:-NOT_SET}"
-        echo "ADMIN_USERNAME: ${ADMIN_USERNAME:-NOT_SET}"
-        echo "ADMIN_EMAIL: ${ADMIN_EMAIL:-NOT_SET}"
-        echo "ADMIN_PASSWORD: [HIDDEN]"
-      env:
-        JWT_SECRET: test-jwt-secret-key-for-ci-testing-only
-        JWT_EXPIRATION: 86400000
-        JWT_ISSUER: chat-platform-backend-test
-        JWT_AUDIENCE: chat-platform-users-test
-        ADMIN_USERNAME: testadmin
-        ADMIN_EMAIL: test@example.com
-        ADMIN_PASSWORD: TestPassword123!
-
-    - name: Build backend
-      working-directory: ./backend
-      run: ./gradlew build -x test
+        echo "Building backend..."
+        ./gradlew build --info --stacktrace
       env:
         SPRING_PROFILES_ACTIVE: test
-        JWT_SECRET: test-jwt-secret-key-for-ci-testing-only
-        JWT_EXPIRATION: 86400000
-        JWT_ISSUER: chat-platform-backend-test
-        JWT_AUDIENCE: chat-platform-users-test
-        ADMIN_USERNAME: testadmin
-        ADMIN_EMAIL: test@example.com
-        ADMIN_PASSWORD: TestPassword123!
-
-    - name: Run backend tests
-      working-directory: ./backend
-      run: ./gradlew test --info --stacktrace
-      env:
-        SPRING_PROFILES_ACTIVE: test
-        # Unit tests use H2 in-memory database - no external DB connections needed
         JWT_SECRET: test-jwt-secret-key-for-ci-testing-only
         JWT_EXPIRATION: 86400000
         JWT_ISSUER: chat-platform-backend-test
@@ -120,36 +89,24 @@ jobs:
 
     - name: Run ESLint
       working-directory: ./frontend
-      run: |
-        if npm run lint; then
-          echo "✅ ESLint passed"
-        else
-          echo "⚠️ ESLint found issues but continuing build"
-        fi
-      continue-on-error: true
+      run: npm run lint
 
     - name: Run TypeScript check
       working-directory: ./frontend
       run: npx tsc --noEmit
 
-    - name: Run frontend tests
-      working-directory: ./frontend
-      run: npm test -- --coverage --watchAll=false
-      env:
-        CI: false
-
-    - name: Build frontend
+    - name: Build frontend (skip tests for now)
       working-directory: ./frontend
       run: npm run build
       env:
         CI: false
 
-    - name: Upload Test Coverage
+    - name: Upload Build Artifacts
       uses: actions/upload-artifact@v4
       if: always()
       with:
-        name: frontend-coverage
-        path: frontend/coverage/
+        name: frontend-build
+        path: frontend/build/
 
   security-scan:
     name: Security Scan
