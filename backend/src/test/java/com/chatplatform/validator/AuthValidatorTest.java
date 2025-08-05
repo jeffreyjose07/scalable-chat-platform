@@ -32,7 +32,7 @@ class AuthValidatorTest {
         RegisterRequest validRequest = RegisterRequest.builder()
             .username("validuser")
             .email("valid@example.com")
-            .password("Password123!") // Strong password with 4 character types
+            .password("StrongP@ss1") // Strong password with 4 character types
             .displayName("Valid User")
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -51,7 +51,7 @@ class AuthValidatorTest {
         RegisterRequest invalidRequest = RegisterRequest.builder()
             .username("user")
             .email("invalid-email")
-            .password("password123")
+            .password("testP@ss1")
             .displayName("User Name")
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -70,7 +70,7 @@ class AuthValidatorTest {
         RegisterRequest invalidRequest = RegisterRequest.builder()
             .username("ab")
             .email("valid@example.com")
-            .password("password123")
+            .password("testP@ss1")
             .displayName("User Name")
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -89,7 +89,7 @@ class AuthValidatorTest {
         RegisterRequest invalidRequest = RegisterRequest.builder()
             .username("user@name")
             .email("valid@example.com")
-            .password("password123")
+            .password("testP@ss1")
             .displayName("User Name")
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -147,7 +147,7 @@ class AuthValidatorTest {
         RegisterRequest invalidRequest = RegisterRequest.builder()
             .username("validuser")
             .email("valid@example.com")
-            .password("password123")
+            .password("testP@ss1")
             .displayName(longDisplayName)
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -234,7 +234,7 @@ class AuthValidatorTest {
         RegisterRequest validRequest = RegisterRequest.builder()
             .username("validuser")
             .email("valid@example.com")
-            .password("Abc123!@") // Strong password with all 4 character types
+            .password("T3st!Pwd") // Strong password with all 4 character types
             .displayName("Valid User")
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -251,7 +251,7 @@ class AuthValidatorTest {
         RegisterRequest validRequest = RegisterRequest.builder()
             .username("valid_user_123")
             .email("valid@example.com")
-            .password("Password123!") // Strong password with 4 character types
+            .password("StrongP@ss1") // Strong password with 4 character types
             .displayName("Valid User")
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -269,7 +269,7 @@ class AuthValidatorTest {
         RegisterRequest validRequest = RegisterRequest.builder()
             .username("validuser")
             .email("valid@example.com")
-            .password("Password123!") // Strong password with 4 character types
+            .password("StrongP@ss1") // Strong password with 4 character types
             .displayName(maxDisplayName)
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
@@ -287,7 +287,7 @@ class AuthValidatorTest {
         RegisterRequest validRequest = RegisterRequest.builder()
             .username(maxUsername)
             .email("valid@example.com")
-            .password("Password123!") // Strong password with 4 character types
+            .password("StrongP@ss1") // Strong password with 4 character types
             .displayName("Valid User")
             .build();
         when(bindingResult.hasErrors()).thenReturn(false);
