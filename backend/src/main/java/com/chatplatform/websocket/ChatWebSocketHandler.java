@@ -224,72 +224,136 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
-        // Update activity tracking
-        ConnectionInfo info = connectionInfo.get(session.getId());
-        if (info != null) {
-            info.updateActivity();
-        }
+        updateConnectionActivity(session);
         
         try {
-            // First check if this is a ping/pong message
             String payload = message.getPayload();
-            if (payload.contains("\"type\":\"pong\"") || payload.contains("\"type\":\"ping\"")) {
-                logger.debug("Received ping/pong message, ignoring: {}", payload);
+            
+            if (isControlMessage(payload)) {
+                handleControlMessage(session, payload);
                 return;
             }
             
-            // Check if this is a message status update
-            if (payload.contains("\"type\":\"MESSAGE_DELIVERED\"") || payload.contains("\"type\":\"MESSAGE_READ\"")) {
-                handleMessageStatusUpdate(session, payload);
-                return;
-            }
-            
-            ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
-            String userId = getUserId(session);
-            String username = getUserName(session);
-            
-            logger.info("Processing message from authenticated user");
-            
-            if (userId == null) {
-                logger.error("No userId in session - rejecting message");
-                sendError(session, "Authentication error");
-                return;
-            }
-            
-            // Always set senderId to authenticated user (security measure)
-            chatMessage.setSenderId(userId);
-            
-            // Backend is source of truth for username - always fetch from database
-            User sender = userService.findById(userId).orElse(null);
-            if (sender != null) {
-                chatMessage.setSenderUsername(sender.getUsername());
-                logger.debug("Set senderUsername for authenticated user");
-            } else {
-                logger.warn("Could not find user, setting fallback username");
-                chatMessage.setSenderUsername("Unknown User");
-            }
-            
-            // Validate required fields
-            if (chatMessage.getContent() == null || chatMessage.getContent().trim().isEmpty()) {
-                sendError(session, "Message content cannot be empty");
-                return;
-            }
-            
-            if (chatMessage.getConversationId() == null || chatMessage.getConversationId().trim().isEmpty()) {
-                sendError(session, "Conversation ID is required");
-                return;
-            }
-            
-            logger.info("Processing message for conversation: {}", chatMessage.getConversationId());
-            
-            sendAcknowledgment(session, chatMessage.getId());
-            
-            messageService.processMessage(chatMessage);
+            processChatMessage(session, payload);
             
         } catch (Exception e) {
             logger.error("Error handling message from session: {}", session.getId(), e);
             sendError(session, "Failed to process message: " + e.getMessage());
         }
+    }
+    
+    /**
+     * Update connection activity tracking
+     */
+    private void updateConnectionActivity(WebSocketSession session) {
+        ConnectionInfo info = connectionInfo.get(session.getId());
+        if (info != null) {
+            info.updateActivity();
+        }
+    }
+    
+    /**
+     * Check if message is a control message (ping/pong or status update)
+     */
+    private boolean isControlMessage(String payload) {
+        return isPingPongMessage(payload) || isStatusUpdateMessage(payload);
+    }
+    
+    /**
+     * Check if message is a ping/pong message
+     */
+    private boolean isPingPongMessage(String payload) {
+        return payload.contains("\"type\":\"pong\"") || payload.contains("\"type\":\"ping\"");
+    }
+    
+    /**
+     * Check if message is a status update message
+     */
+    private boolean isStatusUpdateMessage(String payload) {
+        return payload.contains("\"type\":\"MESSAGE_DELIVERED\"") || payload.contains("\"type\":\"MESSAGE_READ\"");
+    }
+    
+    /**
+     * Handle control messages (ping/pong and status updates)
+     */
+    private void handleControlMessage(WebSocketSession session, String payload) {
+        if (isPingPongMessage(payload)) {
+            logger.debug("Received ping/pong message, ignoring: {}", payload);
+            return;
+        }
+        
+        if (isStatusUpdateMessage(payload)) {
+            handleMessageStatusUpdate(session, payload);
+        }
+    }
+    
+    /**
+     * Process regular chat messages
+     */
+    private void processChatMessage(WebSocketSession session, String payload) throws Exception {
+        ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
+        String userId = getUserId(session);
+        
+        logger.info("Processing message from authenticated user");
+        
+        if (!isValidSession(session, userId)) {
+            return;
+        }
+        
+        prepareMessage(chatMessage, userId);
+        
+        if (!validateMessage(session, chatMessage)) {
+            return;
+        }
+        
+        logger.info("Processing message for conversation: {}", chatMessage.getConversationId());
+        sendAcknowledgment(session, chatMessage.getId());
+        messageService.processMessage(chatMessage);
+    }
+    
+    /**
+     * Validate session has valid user ID
+     */
+    private boolean isValidSession(WebSocketSession session, String userId) {
+        if (userId == null) {
+            logger.error("No userId in session - rejecting message");
+            sendError(session, "Authentication error");
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Prepare message with sender information
+     */
+    private void prepareMessage(ChatMessage chatMessage, String userId) {
+        chatMessage.setSenderId(userId);
+        
+        User sender = userService.findById(userId).orElse(null);
+        if (sender != null) {
+            chatMessage.setSenderUsername(sender.getUsername());
+            logger.debug("Set senderUsername for authenticated user");
+        } else {
+            logger.warn("Could not find user, setting fallback username");
+            chatMessage.setSenderUsername("Unknown User");
+        }
+    }
+    
+    /**
+     * Validate message content and conversation ID
+     */
+    private boolean validateMessage(WebSocketSession session, ChatMessage chatMessage) {
+        if (chatMessage.getContent() == null || chatMessage.getContent().trim().isEmpty()) {
+            sendError(session, "Message content cannot be empty");
+            return false;
+        }
+        
+        if (chatMessage.getConversationId() == null || chatMessage.getConversationId().trim().isEmpty()) {
+            sendError(session, "Conversation ID is required");
+            return false;
+        }
+        
+        return true;
     }
     
     @Override

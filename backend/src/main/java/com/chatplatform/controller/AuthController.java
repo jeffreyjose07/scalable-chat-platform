@@ -153,36 +153,11 @@ public class AuthController {
         logger.info("Password change requested by user: {}", userId);
         
         try {
-            // Validate request fields
-            if (bindingResult.hasErrors()) {
-                String errorMessage = bindingResult.getFieldErrors().stream()
-                    .map(error -> error.getDefaultMessage())
-                    .findFirst()
-                    .orElse("Invalid password change request");
-                return ResponseUtils.badRequest(errorMessage, (Void) null);
+            ResponseEntity<MessageResponse<Void>> validationResult = validatePasswordChangeRequest(request, bindingResult);
+            if (validationResult != null) {
+                return validationResult;
             }
             
-            // Validate request data
-            if (request.getCurrentPassword() == null || request.getCurrentPassword().trim().isEmpty()) {
-                return ResponseUtils.badRequest("Current password is required", (Void) null);
-            }
-            
-            if (request.getNewPassword() == null || request.getNewPassword().trim().isEmpty()) {
-                return ResponseUtils.badRequest("New password is required", (Void) null);
-            }
-            
-            // Check if new password is different from current (plain text comparison)
-            if (request.getCurrentPassword().equals(request.getNewPassword())) {
-                return ResponseUtils.badRequest("New password must be different from current password", (Void) null);
-            }
-            
-            // Additional password strength validation with detailed message
-            String passwordValidationError = validatePasswordStrength(request.getNewPassword());
-            if (passwordValidationError != null) {
-                return ResponseUtils.badRequest(passwordValidationError, (Void) null);
-            }
-            
-            // Change password via auth service
             authService.changePassword(userId, request.getCurrentPassword(), request.getNewPassword());
             
             logger.info("Password changed successfully for user: {}", userId);
@@ -204,55 +179,135 @@ public class AuthController {
     }
     
     /**
+     * Validate password change request parameters
+     */
+    private ResponseEntity<MessageResponse<Void>> validatePasswordChangeRequest(
+            ChangePasswordRequest request, BindingResult bindingResult) {
+        
+        if (bindingResult.hasErrors()) {
+            String errorMessage = bindingResult.getFieldErrors().stream()
+                .map(error -> error.getDefaultMessage())
+                .findFirst()
+                .orElse("Invalid password change request");
+            return ResponseUtils.badRequest(errorMessage, (Void) null);
+        }
+        
+        if (request.getCurrentPassword() == null || request.getCurrentPassword().trim().isEmpty()) {
+            return ResponseUtils.badRequest("Current password is required", (Void) null);
+        }
+        
+        if (request.getNewPassword() == null || request.getNewPassword().trim().isEmpty()) {
+            return ResponseUtils.badRequest("New password is required", (Void) null);
+        }
+        
+        if (request.getCurrentPassword().equals(request.getNewPassword())) {
+            return ResponseUtils.badRequest("New password must be different from current password", (Void) null);
+        }
+        
+        String passwordValidationError = validatePasswordStrength(request.getNewPassword());
+        if (passwordValidationError != null) {
+            return ResponseUtils.badRequest(passwordValidationError, (Void) null);
+        }
+        
+        return null; // Validation passed
+    }
+    
+    /**
      * Validate password strength with detailed error messages
      */
     private String validatePasswordStrength(String password) {
+        String basicValidationError = validateBasicPasswordRequirements(password);
+        if (basicValidationError != null) {
+            return basicValidationError;
+        }
+        
+        String weakPasswordError = checkForWeakPasswords(password);
+        if (weakPasswordError != null) {
+            return weakPasswordError;
+        }
+        
+        String characterTypeError = validateCharacterTypes(password);
+        if (characterTypeError != null) {
+            return characterTypeError;
+        }
+        
+        return null; // Password is valid
+    }
+    
+    /**
+     * Validate basic password requirements (length, repeated characters)
+     */
+    private String validateBasicPasswordRequirements(String password) {
         if (password == null || password.length() < 8) {
             return "Password must be at least 8 characters long";
         }
         
-        boolean hasLower = password.chars().anyMatch(Character::isLowerCase);
-        boolean hasUpper = password.chars().anyMatch(Character::isUpperCase);
-        boolean hasDigit = password.chars().anyMatch(Character::isDigit);
-        boolean hasSpecial = password.chars().anyMatch(ch -> "!@#$%^&*(),.?\":{}|<>".indexOf(ch) >= 0);
+        if (password.matches("(.)\\1{2,}")) {
+            return "Password cannot contain more than 2 consecutive identical characters";
+        }
         
-        // Check for common weak passwords
+        return null;
+    }
+    
+    /**
+     * Check for commonly used weak passwords
+     */
+    private String checkForWeakPasswords(String password) {
         String lowerPassword = password.toLowerCase();
         String[] weakPasswords = {"password", "123456", "qwerty", "admin", "letmein", "welcome"};
+        
         for (String weak : weakPasswords) {
             if (lowerPassword.contains(weak)) {
                 return "Password contains commonly used patterns. Please choose a more unique password.";
             }
         }
         
-        // Check for repeated characters
-        if (password.matches("(.)\\1{2,}")) {
-            return "Password cannot contain more than 2 consecutive identical characters";
-        }
+        return null;
+    }
+    
+    /**
+     * Validate password contains required character types
+     */
+    private String validateCharacterTypes(String password) {
+        boolean hasLower = password.chars().anyMatch(Character::isLowerCase);
+        boolean hasUpper = password.chars().anyMatch(Character::isUpperCase);
+        boolean hasDigit = password.chars().anyMatch(Character::isDigit);
+        boolean hasSpecial = password.chars().anyMatch(ch -> "!@#$%^&*(),.?\":{}|<>".indexOf(ch) >= 0);
         
-        // Require at least 3 of 4 character types
-        int typesCount = 0;
-        if (hasLower) typesCount++;
-        if (hasUpper) typesCount++;
-        if (hasDigit) typesCount++;
-        if (hasSpecial) typesCount++;
+        int typesCount = countCharacterTypes(hasLower, hasUpper, hasDigit, hasSpecial);
         
         if (typesCount < 3) {
-            StringBuilder message = new StringBuilder("Password must contain at least 3 of the following: ");
-            if (!hasLower) message.append("lowercase letters, ");
-            if (!hasUpper) message.append("uppercase letters, ");
-            if (!hasDigit) message.append("numbers, ");
-            if (!hasSpecial) message.append("special characters (!@#$%^&*), ");
-            
-            // Remove trailing comma and space
-            String result = message.toString();
-            if (result.endsWith(", ")) {
-                result = result.substring(0, result.length() - 2);
-            }
-            return result;
+            return buildCharacterTypeErrorMessage(hasLower, hasUpper, hasDigit, hasSpecial);
         }
         
-        return null; // Password is valid
+        return null;
+    }
+    
+    /**
+     * Count the number of character types present in password
+     */
+    private int countCharacterTypes(boolean hasLower, boolean hasUpper, boolean hasDigit, boolean hasSpecial) {
+        int count = 0;
+        if (hasLower) count++;
+        if (hasUpper) count++;
+        if (hasDigit) count++;
+        if (hasSpecial) count++;
+        return count;
+    }
+    
+    /**
+     * Build error message for missing character types
+     */
+    private String buildCharacterTypeErrorMessage(boolean hasLower, boolean hasUpper, boolean hasDigit, boolean hasSpecial) {
+        StringBuilder message = new StringBuilder("Password must contain at least 3 of the following: ");
+        
+        if (!hasLower) message.append("lowercase letters, ");
+        if (!hasUpper) message.append("uppercase letters, ");
+        if (!hasDigit) message.append("numbers, ");
+        if (!hasSpecial) message.append("special characters (!@#$%^&*), ");
+        
+        String result = message.toString();
+        return result.endsWith(", ") ? result.substring(0, result.length() - 2) : result;
     }
     
     /**
