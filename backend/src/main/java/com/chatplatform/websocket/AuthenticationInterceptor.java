@@ -34,8 +34,7 @@ public class AuthenticationInterceptor implements HandshakeInterceptor {
         try {
             // Extract token from query parameters or headers
             String token = extractTokenFromRequest(request);
-            logger.info("WebSocket handshake attempt from: {}", request.getRemoteAddress());
-            logger.info("Request URI: {}", request.getURI());
+            logger.info("WebSocket handshake attempt received");
             logger.info("Token present: {}", token != null);
             
             if (token == null) {
@@ -51,12 +50,12 @@ public class AuthenticationInterceptor implements HandshakeInterceptor {
             
             // Extract username from token
             String username = jwtService.extractUsername(token);
-            logger.info("Valid token for username: {}", username);
+            logger.info("Valid token received for authentication");
             
             // Find user in database
             Optional<User> userOpt = userService.findByUsername(username);
             if (userOpt.isEmpty()) {
-                logger.warn("User not found in database for username: {}", username);
+                logger.warn("User not found in database during WebSocket handshake");
                 return false;
             }
             
@@ -65,7 +64,7 @@ public class AuthenticationInterceptor implements HandshakeInterceptor {
             attributes.put("username", user.getUsername());
             attributes.put("token", token);
             
-            logger.info("WebSocket handshake successful for user: {} (ID: {})", username, user.getId());
+            logger.info("WebSocket handshake successful for authenticated user");
             return true;
             
         } catch (Exception e) {

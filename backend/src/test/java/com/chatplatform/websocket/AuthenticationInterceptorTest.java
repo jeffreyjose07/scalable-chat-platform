@@ -67,7 +67,6 @@ class AuthenticationInterceptorTest {
         String username = "testuser";
         URI uri = new URI("ws://localhost/ws?token=" + token);
 
-        when(request.getRemoteAddress()).thenReturn(new InetSocketAddress("127.0.0.1", 8080));
         when(request.getURI()).thenReturn(uri);
         when(jwtService.validateToken(token)).thenReturn(true);
         when(jwtService.extractUsername(token)).thenReturn(username);

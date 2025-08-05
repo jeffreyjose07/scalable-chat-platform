@@ -129,7 +129,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
                 WebSocketSession session = sessions.get(sessionId);
                 if (session != null) {
                     try {
-                        logger.debug("Closing timed out connection for user: {} ({})", info.username, info.userId);
+                        logger.debug("Closing timed out connection for authenticated user");
                         session.close(CloseStatus.SESSION_NOT_RELIABLE.withReason("Connection timeout"));
                         cleanedUp++;
                     } catch (Exception e) {
@@ -177,10 +177,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         String userId = getUserId(session);
         String username = getUserName(session);
         String serverId = getServerId();
-        logger.info("[WS-SESSION] Connection established - Session ID: {}, User ID: {}, Username: {}, Server ID: {}", session.getId(), userId, username, serverId);
+        logger.info("[WS-SESSION] Connection established - Session ID: {}, Server ID: {}", session.getId(), serverId);
         
-        logger.info("WebSocket connection established - Session ID: {}, User ID: {}, Username: {}", 
-            session.getId(), userId, username);
+        logger.info("WebSocket connection established - Session ID: {}", session.getId());
         
         if (userId == null) {
             logger.error("No userId found in session attributes - closing connection");
@@ -197,12 +196,12 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         connectionInfo.put(session.getId(), new ConnectionInfo(userId, username));
         connectionManager.registerConnection(userId, serverId, session.getId());
         
-        logger.info("WebSocket connection registered for user: {} ({})", username, userId);
+        logger.info("WebSocket connection registered for authenticated user");
         
         // Send pending messages with a small delay to ensure connection is ready
         List<ChatMessage> pendingMessages = messageService.getPendingMessages(userId);
         if (pendingMessages != null && !pendingMessages.isEmpty()) {
-            logger.info("Sending {} pending messages to user: {}", pendingMessages.size(), username);
+            logger.info("Sending {} pending messages to authenticated user", pendingMessages.size());
             // Add a small delay to ensure connection is fully established
             new Thread(() -> {
                 try {
@@ -212,7 +211,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
                             try {
                                 sendMessage(session, msg);
                             } catch (Exception e) {
-                                logger.warn("Failed to send pending message to user {}: {}", username, e.getMessage());
+                                logger.warn("Failed to send pending message to authenticated user: {}", e.getMessage());
                             }
                         });
                     }
@@ -249,7 +248,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             String userId = getUserId(session);
             String username = getUserName(session);
             
-            logger.info("Processing message from user: {} ({})", username, userId);
+            logger.info("Processing message from authenticated user");
             
             if (userId == null) {
                 logger.error("No userId in session - rejecting message");
@@ -264,9 +263,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             User sender = userService.findById(userId).orElse(null);
             if (sender != null) {
                 chatMessage.setSenderUsername(sender.getUsername());
-                logger.debug("Set senderUsername to: {} for user ID: {}", sender.getUsername(), userId);
+                logger.debug("Set senderUsername for authenticated user");
             } else {
-                logger.warn("Could not find user with ID: {}, setting fallback username", userId);
+                logger.warn("Could not find user, setting fallback username");
                 chatMessage.setSenderUsername("Unknown User");
             }
             
@@ -281,10 +280,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
                 return;
             }
             
-            logger.info("Processing message from user: {} ({}), content: '{}', conversation: {}", 
-                chatMessage.getSenderUsername(), userId, 
-                chatMessage.getContent().substring(0, Math.min(50, chatMessage.getContent().length())),
-                chatMessage.getConversationId());
+            logger.info("Processing message for conversation: {}", chatMessage.getConversationId());
             
             sendAcknowledgment(session, chatMessage.getId());
             
@@ -305,10 +301,10 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         
         if (info != null) {
             long connectionDuration = java.time.Duration.between(info.connectedAt, Instant.now()).toMinutes();
-            logger.info("WebSocket connection closed for user: {} ({}) - Duration: {} minutes, Status: {}", 
-                info.username, userId, connectionDuration, status);
+            logger.info("WebSocket connection closed for authenticated user - Duration: {} minutes, Status: {}", 
+                connectionDuration, status);
         } else {
-            logger.info("WebSocket connection closed for user: {} - Status: {}", userId, status);
+            logger.info("WebSocket connection closed for authenticated user - Status: {}", status);
         }
     }
     
@@ -359,7 +355,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     public void sendMessageToSession(String sessionId, ChatMessage message) {
         WebSocketSession session = sessions.get(sessionId);
         if (session != null && session.isOpen()) {
-            logger.info("[WS-SESSION] Sending message {} to session {} (userId: {})", message.getId(), sessionId, getUserId(session));
+            logger.info("[WS-SESSION] Sending message {} to session {}", message.getId(), sessionId);
             sendMessage(session, message);
         }
     }
@@ -502,16 +498,16 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
                 if (session.isOpen() && userId.equals(getUserId(session))) {
                     try {
                         session.sendMessage(new TextMessage(json));
-                        logger.debug("Sent status update to user {} session: {}", userId, session.getId());
+                        logger.debug("Sent status update to session: {}", session.getId());
                     } catch (Exception e) {
-                        logger.warn("Failed to send status update to user {} session {}: {}", 
-                            userId, session.getId(), e.getMessage());
+                        logger.warn("Failed to send status update to session {}: {}", 
+                            session.getId(), e.getMessage());
                     }
                 }
             }
             
         } catch (Exception e) {
-            logger.error("Error sending message status update to user {}: {}", userId, e.getMessage(), e);
+            logger.error("Error sending message status update: {}", e.getMessage(), e);
         }
     }
     

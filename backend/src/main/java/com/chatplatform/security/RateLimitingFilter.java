@@ -44,7 +44,7 @@ public class RateLimitingFilter extends OncePerRequestFilter {
         int rateLimit = getRateLimitForEndpoint(requestPath);
         
         if (rateLimit > 0 && isRateLimitExceeded(clientIp, rateLimit)) {
-            logger.warn("Rate limit exceeded for IP: {} on endpoint: {}", clientIp, requestPath);
+            logger.warn("Rate limit exceeded for endpoint type: {}", getEndpointType(requestPath));
             
             // Return 429 Too Many Requests
             response.setStatus(429);
@@ -87,6 +87,17 @@ public class RateLimitingFilter extends OncePerRequestFilter {
         
         // No rate limiting for static resources
         return 0;
+    }
+    
+    private String getEndpointType(String requestPath) {
+        if (requestPath.startsWith("/api/auth/")) {
+            return "AUTH";
+        } else if (requestPath.startsWith("/ws/")) {
+            return "WEBSOCKET";
+        } else if (requestPath.startsWith("/api/")) {
+            return "API";
+        }
+        return "STATIC";
     }
     
     private boolean isRateLimitExceeded(String clientIp, int rateLimit) {
