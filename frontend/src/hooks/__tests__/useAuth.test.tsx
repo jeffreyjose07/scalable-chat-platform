@@ -63,10 +63,11 @@ describe('useAuth Hook', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('user')).toHaveTextContent('null');
-      expect(screen.getByTestId('token')).toHaveTextContent('null');
       expect(screen.getByTestId('loading')).toHaveTextContent('false');
     });
+    
+    expect(screen.getByTestId('user')).toHaveTextContent('null');
+    expect(screen.getByTestId('token')).toHaveTextContent('null');
   });
 
   it('should fetch user data when token exists in localStorage', async () => {
@@ -92,10 +93,11 @@ describe('useAuth Hook', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('user')).toHaveTextContent('testuser');
-      expect(screen.getByTestId('token')).toHaveTextContent('test-token');
       expect(screen.getByTestId('loading')).toHaveTextContent('false');
     });
+    
+    expect(screen.getByTestId('user')).toHaveTextContent('testuser');
+    expect(screen.getByTestId('token')).toHaveTextContent('test-token');
 
     expect(mockedAxios.get).toHaveBeenCalledWith('http://localhost:8080/api/auth/me', {
       headers: { Authorization: 'Bearer test-token' }
@@ -116,10 +118,11 @@ describe('useAuth Hook', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('user')).toHaveTextContent('null');
-      expect(screen.getByTestId('token')).toHaveTextContent('null');
       expect(screen.getByTestId('loading')).toHaveTextContent('false');
     });
+    
+    expect(screen.getByTestId('user')).toHaveTextContent('null');
+    expect(screen.getByTestId('token')).toHaveTextContent('null');
 
     expect(localStorage.getItem('token')).toBeNull();
   });
@@ -157,8 +160,9 @@ describe('useAuth Hook', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('user')).toHaveTextContent('testuser');
-      expect(screen.getByTestId('token')).toHaveTextContent('new-token');
     });
+    
+    expect(screen.getByTestId('token')).toHaveTextContent('new-token');
 
     expect(mockedAxios.post).toHaveBeenCalledWith('http://localhost:8080/api/auth/login', {
       email: 'test@example.com',
@@ -236,8 +240,9 @@ describe('useAuth Hook', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('user')).toHaveTextContent('testuser');
-      expect(screen.getByTestId('token')).toHaveTextContent('new-token');
     });
+    
+    expect(screen.getByTestId('token')).toHaveTextContent('new-token');
 
     expect(mockedAxios.post).toHaveBeenCalledWith('http://localhost:8080/api/auth/register', {
       username: 'testuser',
@@ -315,8 +320,9 @@ describe('useAuth Hook', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('user')).toHaveTextContent('null');
-      expect(screen.getByTestId('token')).toHaveTextContent('null');
     });
+    
+    expect(screen.getByTestId('token')).toHaveTextContent('null');
 
     expect(mockedAxios.post).toHaveBeenCalledWith('http://localhost:8080/api/auth/logout', {}, {
       headers: { Authorization: 'Bearer test-token' }
@@ -357,8 +363,9 @@ describe('useAuth Hook', () => {
     // Should still logout locally even if API call fails
     await waitFor(() => {
       expect(screen.getByTestId('user')).toHaveTextContent('null');
-      expect(screen.getByTestId('token')).toHaveTextContent('null');
     });
+    
+    expect(screen.getByTestId('token')).toHaveTextContent('null');
 
     expect(mockedToast.success).toHaveBeenCalledWith('Logged out successfully');
     expect(localStorage.getItem('token')).toBeNull();
