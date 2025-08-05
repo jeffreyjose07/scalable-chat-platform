@@ -11,6 +11,7 @@ import ChatPage from './pages/ChatPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary, { ChatErrorBoundary } from './components/ErrorBoundary';
 import SecurityNotification from './components/SecurityNotification';
+import { logger } from './utils/logger';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,8 +26,8 @@ const queryClient = new QueryClient({
 const RootRedirect: React.FC = () => {
   const { user, isLoading, token } = useAuth();
 
-  console.log('🏠 RootRedirect rendered at URL:', window.location.href);
-  console.log('🏠 Auth State:', { 
+  logger.debug('🏠 RootRedirect rendered at URL:', window.location.href);
+  logger.debug('🏠 Auth State:', { 
     isLoading, 
     hasUser: !!user, 
     hasToken: !!token,
@@ -34,7 +35,7 @@ const RootRedirect: React.FC = () => {
   });
 
   if (isLoading) {
-    console.log('🏠 RootRedirect: Showing loading spinner...');
+    logger.debug('🏠 RootRedirect: Showing loading spinner...');
     return (
       <div className="flex items-center justify-center h-screen bg-gray-50 dark:bg-gray-900">
         <div className="flex flex-col items-center space-y-4">
@@ -46,8 +47,8 @@ const RootRedirect: React.FC = () => {
   }
 
   const redirect = user ? '/chat' : '/login';
-  console.log('🏠 RootRedirect: About to redirect to:', redirect);
-  console.log('🏠 Current URL before redirect:', window.location.href);
+  logger.debug('🏠 RootRedirect: About to redirect to:', redirect);
+  logger.debug('🏠 Current URL before redirect:', window.location.href);
   
   return user ? <Navigate to="/chat" replace /> : <Navigate to="/login" replace />;
 };
