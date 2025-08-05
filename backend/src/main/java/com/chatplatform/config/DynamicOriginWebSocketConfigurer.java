@@ -36,7 +36,7 @@ public class DynamicOriginWebSocketConfigurer implements HandshakeInterceptor {
         ServerHttpRequest request, 
         ServerHttpResponse response,
         WebSocketHandler wsHandler, 
-        Map<String, Object> attributes) throws Exception {
+        Map<String, Object> attributes) {
         
         String origin = request.getHeaders().getOrigin();
         

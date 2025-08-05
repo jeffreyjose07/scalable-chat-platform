@@ -27,7 +27,7 @@ public class MessageMigrationService implements CommandLineRunner {
     }
     
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         // Only run migration if enabled
         String runMigration = System.getProperty("chat.migration.enabled", "false");
         if (!"true".equalsIgnoreCase(runMigration)) {

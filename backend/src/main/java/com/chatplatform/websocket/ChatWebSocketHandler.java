@@ -223,7 +223,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     }
     
     @Override
-    protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+    protected void handleTextMessage(WebSocketSession session, TextMessage message) {
         // Update activity tracking
         ConnectionInfo info = connectionInfo.get(session.getId());
         if (info != null) {

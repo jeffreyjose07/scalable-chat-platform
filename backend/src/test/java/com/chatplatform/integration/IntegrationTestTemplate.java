@@ -27,17 +27,17 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 public class IntegrationTestTemplate {
     
     @Container
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15")
+    static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15")
             .withDatabaseName("testdb")
             .withUsername("testuser")
             .withPassword("testpass");
     
     @Container
-    static MongoDBContainer mongodb = new MongoDBContainer("mongo:7.0")
+    static final MongoDBContainer mongodb = new MongoDBContainer("mongo:7.0")
             .withExposedPorts(27017);
     
     @Container
-    static GenericContainer<?> redis = new GenericContainer<>("redis:7.2")
+    static final GenericContainer<?> redis = new GenericContainer<>("redis:7.2")
             .withExposedPorts(6379);
     
     @DynamicPropertySource
