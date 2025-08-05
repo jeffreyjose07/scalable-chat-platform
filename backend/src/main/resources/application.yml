@@ -5,11 +5,16 @@ spring:
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:local}
   
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  
   datasource:
     url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/chatdb}
     username: ${SPRING_DATASOURCE_USERNAME:chatuser}
     password: ${SPRING_DATASOURCE_PASSWORD:chatpass}
     driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${DB_POOL_SIZE:10}
   
   jpa:
     hibernate:
@@ -64,6 +69,9 @@ spring:
 
 server:
   port: ${SERVER_PORT:8080}
+  shutdown: graceful
+  compression:
+    enabled: true
 
 management:
   endpoints:
@@ -89,8 +97,9 @@ app:
     email: ${ADMIN_EMAIL:admin@chatplatform.com}
     password: ${ADMIN_PASSWORD:admin123}
     displayName: ${ADMIN_DISPLAY_NAME:System Administrator}
+  
 
 logging:
   level:
-    com.chatplatform: DEBUG
-    org.springframework.web.socket: DEBUG
+    root: ${LOG_LEVEL_ROOT:INFO}
+    com.chatplatform: ${LOG_LEVEL_APP:DEBUG}
