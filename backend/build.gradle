@@ -3,7 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'com.github.node-gradle.node' version '7.0.1'
-    id 'org.sonarqube' version '4.4.1.3373'
+    id 'org.sonarqube' version '6.2.0.5505'
     id 'jacoco'
 }
 
@@ -254,7 +254,7 @@ jacocoTestReport {
     }
 }
 
-// SonarQube configuration for SonarCloud (free for open source)
+// SonarQube configuration for SonarCloud
 sonar {
     properties {
         property "sonar.projectKey", "jeffreyjose07_scalable-chat-platform"
@@ -264,20 +264,23 @@ sonar {
         property "sonar.projectVersion", version
         property "sonar.sources", "src/main/java"
         property "sonar.tests", "src/test/java"
-        property "sonar.java.source", "17"
+        property "sonar.java.source", "17" 
         property "sonar.sourceEncoding", "UTF-8"
         
         // Coverage settings
         property "sonar.java.coveragePlugin", "jacoco"
         property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
+        property "sonar.junit.reportPaths", "build/test-results/test"
         
         // Exclude generated files and static resources
-        property "sonar.exclusions", "**/build/**,**/static/**,**/node_modules/**,**/generated/**"
+        property "sonar.exclusions", "**/build/**,**/static/**,**/node_modules/**,**/generated/**,**/*.js,**/*.css"
         property "sonar.test.exclusions", "**/build/**,**/static/**,**/generated/**"
         
-        // Language-specific settings
+        // Language-specific settings  
         property "sonar.java.binaries", "build/classes/java/main"
         property "sonar.java.test.binaries", "build/classes/java/test"
+        property "sonar.java.libraries", configurations.compileClasspath.files.join(",")
+        property "sonar.java.test.libraries", configurations.testCompileClasspath.files.join(",")
     }
 }
 
