@@ -11,30 +11,8 @@ jobs:
     name: Backend Build & Test
     runs-on: ubuntu-latest
     
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_PASSWORD: testpass
-          POSTGRES_USER: testuser
-          POSTGRES_DB: testdb
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-      
-      mongodb:
-        image: mongo:7
-        ports:
-          - 27017:27017
-      
-      redis:
-        image: redis:7
-        ports:
-          - 6379:6379
+    # No services needed - unit tests use H2 in-memory database
+    # Integration tests (when enabled) use Testcontainers for real databases
 
     steps:
     - name: Checkout code
@@ -102,27 +80,12 @@ jobs:
         ADMIN_EMAIL: test@example.com
         ADMIN_PASSWORD: TestPassword123!
 
-    - name: Wait for services to be ready
-      run: |
-        echo "Waiting for PostgreSQL..."
-        timeout 60 bash -c 'until pg_isready -h localhost -p 5432; do sleep 1; done' || echo "PostgreSQL timeout"
-        echo "Waiting for MongoDB..."
-        timeout 60 bash -c 'until nc -z localhost 27017; do sleep 1; done' || echo "MongoDB timeout"
-        echo "Waiting for Redis..."
-        timeout 60 bash -c 'until nc -z localhost 6379; do sleep 1; done' || echo "Redis timeout"
-        echo "All services ready"
-
     - name: Run backend tests
       working-directory: ./backend
       run: ./gradlew test --info --stacktrace
       env:
         SPRING_PROFILES_ACTIVE: test
-        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/testdb
-        SPRING_DATASOURCE_USERNAME: testuser
-        SPRING_DATASOURCE_PASSWORD: testpass
-        SPRING_DATA_MONGODB_URI: mongodb://localhost:27017/testdb
-        SPRING_REDIS_HOST: localhost
-        SPRING_REDIS_PORT: 6379
+        # Unit tests use H2 in-memory database - no external DB connections needed
         JWT_SECRET: test-jwt-secret-key-for-ci-testing-only
         JWT_EXPIRATION: 86400000
         JWT_ISSUER: chat-platform-backend-test
@@ -229,30 +192,7 @@ jobs:
     needs: backend-build
     if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main'
     
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_PASSWORD: testpass
-          POSTGRES_USER: testuser
-          POSTGRES_DB: testdb
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-      
-      mongodb:
-        image: mongo:7
-        ports:
-          - 27017:27017
-      
-      redis:
-        image: redis:7
-        ports:
-          - 6379:6379
+    # No services needed - SonarCloud analysis uses H2 in-memory database from unit tests
 
     steps:
     - name: Checkout code
@@ -302,12 +242,7 @@ jobs:
       run: ./gradlew test jacocoTestReport
       env:
         SPRING_PROFILES_ACTIVE: test
-        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/testdb
-        SPRING_DATASOURCE_USERNAME: testuser
-        SPRING_DATASOURCE_PASSWORD: testpass
-        SPRING_DATA_MONGODB_URI: mongodb://localhost:27017/testdb
-        SPRING_REDIS_HOST: localhost
-        SPRING_REDIS_PORT: 6379
+        # Unit tests use H2 in-memory database for SonarCloud analysis
         JWT_SECRET: test-jwt-secret-key-for-ci-testing-only
         JWT_EXPIRATION: 86400000
         JWT_ISSUER: chat-platform-backend-test
@@ -323,12 +258,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SPRING_PROFILES_ACTIVE: test
-        SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/testdb
-        SPRING_DATASOURCE_USERNAME: testuser
-        SPRING_DATASOURCE_PASSWORD: testpass
-        SPRING_DATA_MONGODB_URI: mongodb://localhost:27017/testdb
-        SPRING_REDIS_HOST: localhost
-        SPRING_REDIS_PORT: 6379
+        # SonarCloud analysis uses H2 in-memory database
         JWT_SECRET: test-jwt-secret-key-for-ci-testing-only
         JWT_EXPIRATION: 86400000
         JWT_ISSUER: chat-platform-backend-test
