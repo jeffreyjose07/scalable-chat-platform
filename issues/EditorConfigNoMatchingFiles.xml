@@ -1,0 +1,122 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/array.prototype.flat/.editorconfig</file>
+  <line>19</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/array.prototype.flat/.editorconfig" />
+  <problem_class id="EditorConfigNoMatchingFiles" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">No matching files</problem_class>
+  <description>No files under 'array.prototype.flat' folder match this pattern</description>
+  <highlighted_element>[Makefile]</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/array.prototype.reduce/.editorconfig</file>
+  <line>19</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/array.prototype.reduce/.editorconfig" />
+  <problem_class id="EditorConfigNoMatchingFiles" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">No matching files</problem_class>
+  <description>No files under 'array.prototype.reduce' folder match this pattern</description>
+  <highlighted_element>[Makefile]</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/deep-equal/.editorconfig</file>
+  <line>19</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/deep-equal/.editorconfig" />
+  <problem_class id="EditorConfigNoMatchingFiles" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">No matching files</problem_class>
+  <description>No files under 'deep-equal' folder match this pattern</description>
+  <highlighted_element>[Makefile]</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/.editorconfig</file>
+  <line>23</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/.editorconfig" />
+  <problem_class id="EditorConfigNoMatchingFiles" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">No matching files</problem_class>
+  <description>No files under 'resolve' folder match this pattern</description>
+  <highlighted_element>[CHANGELOG.md]</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/functions-have-names/.editorconfig</file>
+  <line>19</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/functions-have-names/.editorconfig" />
+  <problem_class id="EditorConfigNoMatchingFiles" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">No matching files</problem_class>
+  <description>No files under 'functions-have-names' folder match this pattern</description>
+  <highlighted_element>[Makefile]</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/is-arrayish/.editorconfig</file>
+  <line>10</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/is-arrayish/.editorconfig" />
+  <problem_class id="EditorConfigNoMatchingFiles" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">No matching files</problem_class>
+  <description>No files under 'is-arrayish' folder match this pattern</description>
+  <highlighted_element>[*.coffee]</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/is-callable/.editorconfig</file>
+  <line>25</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/is-callable/.editorconfig" />
+  <problem_class id="EditorConfigNoMatchingFiles" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">No matching files</problem_class>
+  <description>No files under 'is-callable' folder match this pattern</description>
+  <highlighted_element>[Makefile]</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/is-callable/.editorconfig</file>
+  <line>28</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/is-callable/.editorconfig" />
+  <problem_class id="EditorConfigNoMatchingFiles" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">No matching files</problem_class>
+  <description>No files under 'is-callable' folder match this pattern</description>
+  <highlighted_element>[coverage*/**/*]</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>16</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/string.prototype.trim/.editorconfig</file>
+  <line>19</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/string.prototype.trim/.editorconfig" />
+  <problem_class id="EditorConfigNoMatchingFiles" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">No matching files</problem_class>
+  <description>No files under 'string.prototype.trim' folder match this pattern</description>
+  <highlighted_element>[Makefile]</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/which-boxed-primitive/.editorconfig</file>
+  <line>19</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/which-boxed-primitive/.editorconfig" />
+  <problem_class id="EditorConfigNoMatchingFiles" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">No matching files</problem_class>
+  <description>No files under 'which-boxed-primitive' folder match this pattern</description>
+  <highlighted_element>[Makefile]</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>10</length>
+</problem>
+</problems>

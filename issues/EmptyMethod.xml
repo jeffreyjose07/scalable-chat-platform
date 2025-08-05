@@ -1,0 +1,18 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/integration/IntegrationTestTemplate.java</file>
+  <line>63</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.integration</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.integration.IntegrationTestTemplate void contextLoads()" />
+  <problem_class id="EmptyMethod" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Empty method</problem_class>
+  <hints>
+    <hint value="false" />
+  </hints>
+  <description>The method is empty</description>
+  <highlighted_element>contextLoads</highlighted_element>
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>12</length>
+</problem>
+</problems>

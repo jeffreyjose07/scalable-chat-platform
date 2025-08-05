@@ -1,0 +1,3827 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/ChatPlatformApplication.java</file>
+  <line>18</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.ChatPlatformApplication void main(java.lang.String[] args)" />
+  <language>JAVA</language>
+  <offset>23</offset>
+  <length>4</length>
+  <highlighted_element>main</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/service/UserService.java</file>
+  <line>17</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.service.UserService" />
+  <language>JAVA</language>
+  <offset>13</offset>
+  <length>11</length>
+  <highlighted_element>UserService</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/service/UserService.java</file>
+  <line>22</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserService UserService(com.chatplatform.repository.jpa.UserRepository userRepository, org.springframework.security.crypto.password.PasswordEncoder passwordEncoder)" />
+  <language>JAVA</language>
+  <offset>11</offset>
+  <length>11</length>
+  <highlighted_element>UserService</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Constructor is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>30</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.controller.AuthControllerTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>18</length>
+  <highlighted_element>AuthControllerTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>50</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void setUp()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>5</length>
+  <highlighted_element>setUp</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>74</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldLoginSuccessfully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>23</length>
+  <highlighted_element>shouldLoginSuccessfully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>91</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldReturnUnauthorizedWhenLoginFails()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>38</length>
+  <highlighted_element>shouldReturnUnauthorizedWhenLoginFails</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>108</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldReturnInternalServerErrorWhenUnexpectedExceptionOccurs()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>60</length>
+  <highlighted_element>shouldReturnInternalServerErrorWhenUnexpectedExceptionOccurs</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>125</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldRegisterSuccessfully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>26</length>
+  <highlighted_element>shouldRegisterSuccessfully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>144</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldReturnBadRequestWhenValidationFails()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>41</length>
+  <highlighted_element>shouldReturnBadRequestWhenValidationFails</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>162</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldReturnConflictWhenRegistrationFails()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>41</length>
+  <highlighted_element>shouldReturnConflictWhenRegistrationFails</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>181</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldReturnInternalServerErrorWhenRegistrationThrowsUnexpectedException()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>72</length>
+  <highlighted_element>shouldReturnInternalServerErrorWhenRegistrationThrowsUnexpectedException</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>200</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldGetCurrentUserSuccessfully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>32</length>
+  <highlighted_element>shouldGetCurrentUserSuccessfully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>217</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldReturnUnauthorizedWhenTokenIsInvalid()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>42</length>
+  <highlighted_element>shouldReturnUnauthorizedWhenTokenIsInvalid</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>234</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldReturnInternalServerErrorWhenGetCurrentUserThrowsUnexpectedException()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>74</length>
+  <highlighted_element>shouldReturnInternalServerErrorWhenGetCurrentUserThrowsUnexpectedException</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>251</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldLogoutSuccessfully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>24</length>
+  <highlighted_element>shouldLogoutSuccessfully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>267</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldHandleLogoutFailure()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>25</length>
+  <highlighted_element>shouldHandleLogoutFailure</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>283</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldHandleNullAuthHeaderForGetCurrentUser()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>43</length>
+  <highlighted_element>shouldHandleNullAuthHeaderForGetCurrentUser</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>300</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldHandleNullAuthHeaderForLogout()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>35</length>
+  <highlighted_element>shouldHandleNullAuthHeaderForLogout</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>316</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldVerifyCorrectExceptionTypesAreHandled()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>43</length>
+  <highlighted_element>shouldVerifyCorrectExceptionTypesAreHandled</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>328</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldVerifyAuthenticationExceptionIsHandled()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>44</length>
+  <highlighted_element>shouldVerifyAuthenticationExceptionIsHandled</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/controller/AuthControllerTest.java</file>
+  <line>340</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.AuthControllerTest void shouldVerifyIllegalArgumentExceptionIsHandled()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>45</length>
+  <highlighted_element>shouldVerifyIllegalArgumentExceptionIsHandled</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>11</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>23</length>
+  <highlighted_element>AuthResponseBuilderTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>17</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void setUp()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>5</length>
+  <highlighted_element>setUp</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>29</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldBuildSuccessfulAuthResponseWithAllFields()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>46</length>
+  <highlighted_element>shouldBuildSuccessfulAuthResponseWithAllFields</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>51</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldBuildWithDefaultValues()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>28</length>
+  <highlighted_element>shouldBuildWithDefaultValues</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>68</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldBuildFailedAuthResponse()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>29</length>
+  <highlighted_element>shouldBuildFailedAuthResponse</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>83</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldBuildSuccessfulAuthResponseWithConvenienceMethod()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>54</length>
+  <highlighted_element>shouldBuildSuccessfulAuthResponseWithConvenienceMethod</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>98</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldBuildWithCustomType()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>25</length>
+  <highlighted_element>shouldBuildWithCustomType</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>113</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldBuildWithUserInfo()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>23</length>
+  <highlighted_element>shouldBuildWithUserInfo</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>132</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldBuildWithValidationSuccess()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>32</length>
+  <highlighted_element>shouldBuildWithValidationSuccess</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>145</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldThrowExceptionWhenBuildingWithValidationAndMissingToken()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>61</length>
+  <highlighted_element>shouldThrowExceptionWhenBuildingWithValidationAndMissingToken</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>158</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldThrowExceptionWhenBuildingWithValidationAndMissingUser()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>60</length>
+  <highlighted_element>shouldThrowExceptionWhenBuildingWithValidationAndMissingUser</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>171</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldAllowValidationForFailedResponse()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>38</length>
+  <highlighted_element>shouldAllowValidationForFailedResponse</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>184</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldCreateBuilderFromExistingResponse()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>39</length>
+  <highlighted_element>shouldCreateBuilderFromExistingResponse</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>206</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldAllowMethodChaining()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>25</length>
+  <highlighted_element>shouldAllowMethodChaining</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>225</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldCreateSensitiveDataMaskedVersion()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>38</length>
+  <highlighted_element>shouldCreateSensitiveDataMaskedVersion</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>242</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldCompareBuilderCreatedObjectsWithFactoryMethod()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>51</length>
+  <highlighted_element>shouldCompareBuilderCreatedObjectsWithFactoryMethod</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>262</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldHandleNullTokenGracefully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>31</length>
+  <highlighted_element>shouldHandleNullTokenGracefully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>276</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldHandleEmptyTokenGracefully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>32</length>
+  <highlighted_element>shouldHandleEmptyTokenGracefully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/AuthResponseBuilderTest.java</file>
+  <line>290</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.AuthResponseBuilderTest void shouldBuildResponseWithoutUser()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>30</length>
+  <highlighted_element>shouldBuildResponseWithoutUser</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>6</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>26</length>
+  <highlighted_element>RegisterRequestBuilderTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>9</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldBuildValidRegisterRequestWithAllFields()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>44</length>
+  <highlighted_element>shouldBuildValidRegisterRequestWithAllFields</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>27</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldBuildWithFluentAPI()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>24</length>
+  <highlighted_element>shouldBuildWithFluentAPI</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>44</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldBuildWithPartialFields()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>28</length>
+  <highlighted_element>shouldBuildWithPartialFields</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>62</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldBuildWithValidationSuccess()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>32</length>
+  <highlighted_element>shouldBuildWithValidationSuccess</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>77</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldThrowExceptionWhenBuildingWithValidationAndMissingUsername()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>64</length>
+  <highlighted_element>shouldThrowExceptionWhenBuildingWithValidationAndMissingUsername</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>91</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldThrowExceptionWhenBuildingWithValidationAndMissingEmail()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>61</length>
+  <highlighted_element>shouldThrowExceptionWhenBuildingWithValidationAndMissingEmail</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>105</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldThrowExceptionWhenBuildingWithValidationAndMissingPassword()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>64</length>
+  <highlighted_element>shouldThrowExceptionWhenBuildingWithValidationAndMissingPassword</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>119</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldThrowExceptionWhenBuildingWithValidationAndMissingDisplayName()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>67</length>
+  <highlighted_element>shouldThrowExceptionWhenBuildingWithValidationAndMissingDisplayName</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>133</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldCreateBuilderFromExistingRequest()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>38</length>
+  <highlighted_element>shouldCreateBuilderFromExistingRequest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>156</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldAllowMethodChaining()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>25</length>
+  <highlighted_element>shouldAllowMethodChaining</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>174</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldCreateMaskedVersionFromBuilder()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>36</length>
+  <highlighted_element>shouldCreateMaskedVersionFromBuilder</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>194</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldHandleNullValuesGracefully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>32</length>
+  <highlighted_element>shouldHandleNullValuesGracefully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/dto/RegisterRequestBuilderTest.java</file>
+  <line>213</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.dto</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.dto.RegisterRequestBuilderTest void shouldCompareBuilderCreatedObjectsWithFactoryMethod()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>51</length>
+  <highlighted_element>shouldCompareBuilderCreatedObjectsWithFactoryMethod</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>23</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>26</length>
+  <highlighted_element>GlobalExceptionHandlerTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>35</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleValidationException()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>31</length>
+  <highlighted_element>shouldHandleValidationException</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>52</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleAuthenticationException()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>35</length>
+  <highlighted_element>shouldHandleAuthenticationException</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>69</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleMethodArgumentNotValidException()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>43</length>
+  <highlighted_element>shouldHandleMethodArgumentNotValidException</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>91</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleMethodArgumentNotValidExceptionWithSingleError()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>58</length>
+  <highlighted_element>shouldHandleMethodArgumentNotValidExceptionWithSingleError</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>111</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleMethodArgumentNotValidExceptionWithNoErrors()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>55</length>
+  <highlighted_element>shouldHandleMethodArgumentNotValidExceptionWithNoErrors</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>129</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleBindException()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>25</length>
+  <highlighted_element>shouldHandleBindException</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>149</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleBindExceptionWithNoErrors()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>37</length>
+  <highlighted_element>shouldHandleBindExceptionWithNoErrors</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>167</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleIllegalArgumentException()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>36</length>
+  <highlighted_element>shouldHandleIllegalArgumentException</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>184</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleGenericException()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>28</length>
+  <highlighted_element>shouldHandleGenericException</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>201</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleNullPointerException()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>32</length>
+  <highlighted_element>shouldHandleNullPointerException</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>218</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleValidationExceptionWithNullMessage()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>46</length>
+  <highlighted_element>shouldHandleValidationExceptionWithNullMessage</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>235</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleAuthenticationExceptionWithNullMessage()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>50</length>
+  <highlighted_element>shouldHandleAuthenticationExceptionWithNullMessage</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>252</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleIllegalArgumentExceptionWithNullMessage()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>51</length>
+  <highlighted_element>shouldHandleIllegalArgumentExceptionWithNullMessage</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>269</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldHandleExceptionWithCause()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>30</length>
+  <highlighted_element>shouldHandleExceptionWithCause</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/exception/GlobalExceptionHandlerTest.java</file>
+  <line>287</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.exception</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.exception.GlobalExceptionHandlerTest void shouldCreateConsistentErrorResponseStructure()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>44</length>
+  <highlighted_element>shouldCreateConsistentErrorResponseStructure</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/integration/IntegrationTestTemplate.java</file>
+  <line>27</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.integration</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.integration.IntegrationTestTemplate" />
+  <language>JAVA</language>
+  <offset>13</offset>
+  <length>23</length>
+  <highlighted_element>IntegrationTestTemplate</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/integration/IntegrationTestTemplate.java</file>
+  <line>63</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.integration</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.integration.IntegrationTestTemplate void contextLoads()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>12</length>
+  <highlighted_element>contextLoads</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/model/ConversationTest.java</file>
+  <line>6</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.model</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.model.ConversationTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>16</length>
+  <highlighted_element>ConversationTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/model/ConversationTest.java</file>
+  <line>9</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.model</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.model.ConversationTest void testConversationCreation()" />
+  <language>JAVA</language>
+  <offset>16</offset>
+  <length>24</length>
+  <highlighted_element>testConversationCreation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/model/ConversationTest.java</file>
+  <line>25</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.model</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.model.ConversationTest void testDirectConversationCreation()" />
+  <language>JAVA</language>
+  <offset>16</offset>
+  <length>30</length>
+  <highlighted_element>testDirectConversationCreation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/model/ConversationTest.java</file>
+  <line>38</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.model</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.model.ConversationTest void testConversationParticipantId()" />
+  <language>JAVA</language>
+  <offset>16</offset>
+  <length>29</length>
+  <highlighted_element>testConversationParticipantId</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/model/ConversationTest.java</file>
+  <line>54</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.model</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.model.ConversationTest void testConversationParticipantCreation()" />
+  <language>JAVA</language>
+  <offset>16</offset>
+  <length>35</length>
+  <highlighted_element>testConversationParticipantCreation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/repository/ConversationRepositoryTest.java</file>
+  <line>13</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.repository</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.repository.ConversationRepositoryTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>26</length>
+  <highlighted_element>ConversationRepositoryTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/repository/ConversationRepositoryTest.java</file>
+  <line>16</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.repository</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.repository.ConversationRepositoryTest void testConversationCreation()" />
+  <language>JAVA</language>
+  <offset>16</offset>
+  <length>24</length>
+  <highlighted_element>testConversationCreation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/repository/ConversationRepositoryTest.java</file>
+  <line>35</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.repository</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.repository.ConversationRepositoryTest void testDirectConversationCreation()" />
+  <language>JAVA</language>
+  <offset>16</offset>
+  <length>30</length>
+  <highlighted_element>testDirectConversationCreation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>26</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.service.AuthServiceTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>15</length>
+  <highlighted_element>AuthServiceTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>51</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void setUp()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>5</length>
+  <highlighted_element>setUp</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>69</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void shouldLoginSuccessfully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>23</length>
+  <highlighted_element>shouldLoginSuccessfully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>94</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void shouldThrowExceptionWhenUserNotFound()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>36</length>
+  <highlighted_element>shouldThrowExceptionWhenUserNotFound</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>109</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void shouldRegisterSuccessfully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>26</length>
+  <highlighted_element>shouldRegisterSuccessfully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>136</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void shouldThrowExceptionWhenRegistrationFails()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>41</length>
+  <highlighted_element>shouldThrowExceptionWhenRegistrationFails</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>152</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void shouldGetUserFromValidToken()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>27</length>
+  <highlighted_element>shouldGetUserFromValidToken</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>170</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void shouldThrowExceptionForInvalidToken()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>35</length>
+  <highlighted_element>shouldThrowExceptionForInvalidToken</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>186</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void shouldThrowExceptionForEmptyToken()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>33</length>
+  <highlighted_element>shouldThrowExceptionForEmptyToken</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>197</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void shouldLogoutSuccessfully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>24</length>
+  <highlighted_element>shouldLogoutSuccessfully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>214</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void shouldHandleLogoutWithInvalidToken()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>34</length>
+  <highlighted_element>shouldHandleLogoutWithInvalidToken</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>230</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void shouldValidateLoginRequest()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>26</length>
+  <highlighted_element>shouldValidateLoginRequest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>241</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void shouldValidateRegisterRequest()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>29</length>
+  <highlighted_element>shouldValidateRegisterRequest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/AuthServiceTest.java</file>
+  <line>262</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AuthServiceTest void shouldCreateMaskedRegisterRequest()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>33</length>
+  <highlighted_element>shouldCreateMaskedRegisterRequest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>31</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.service.ConversationServiceTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>23</length>
+  <highlighted_element>ConversationServiceTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>52</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void setUp()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>5</length>
+  <highlighted_element>setUp</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>62</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCreateDirectConversation_NewConversation()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>44</length>
+  <highlighted_element>testCreateDirectConversation_NewConversation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>91</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCreateDirectConversation_ExistingConversation()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>49</length>
+  <highlighted_element>testCreateDirectConversation_ExistingConversation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>115</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCreateDirectConversation_ConsistentIdOrdering()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>49</length>
+  <highlighted_element>testCreateDirectConversation_ConsistentIdOrdering</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>134</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCreateDirectConversation_UserNotFound()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>41</length>
+  <highlighted_element>testCreateDirectConversation_UserNotFound</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>148</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testGetUserConversations()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>24</length>
+  <highlighted_element>testGetUserConversations</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>176</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testGetUserConversationsByType()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>30</length>
+  <highlighted_element>testGetUserConversationsByType</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>196</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testHasUserAccess()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>17</length>
+  <highlighted_element>testHasUserAccess</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>209</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testGetConversationForUser_WithAccess()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>37</length>
+  <highlighted_element>testGetConversationForUser_WithAccess</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>227</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testGetConversationForUser_WithoutAccess()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>40</length>
+  <highlighted_element>testGetConversationForUser_WithoutAccess</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>240</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testAddUserToConversation_NewParticipant()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>40</length>
+  <highlighted_element>testAddUserToConversation_NewParticipant</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>256</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testAddUserToConversation_ReactivateUser()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>40</length>
+  <highlighted_element>testAddUserToConversation_ReactivateUser</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>275</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testAddUserToConversation_DirectConversation()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>44</length>
+  <highlighted_element>testAddUserToConversation_DirectConversation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>289</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testRemoveUserFromConversation()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>30</length>
+  <highlighted_element>testRemoveUserFromConversation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>306</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testRemoveUserFromConversation_UserNotParticipant()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>49</length>
+  <highlighted_element>testRemoveUserFromConversation_UserNotParticipant</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>321</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCreateGroup_Success()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>23</length>
+  <highlighted_element>testCreateGroup_Success</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>354</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCreateGroup_CreatorNotFound()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>31</length>
+  <highlighted_element>testCreateGroup_CreatorNotFound</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>369</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCreateGroup_ParticipantNotFound()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>35</length>
+  <highlighted_element>testCreateGroup_ParticipantNotFound</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>392</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCreateGroup_WithEmptyParticipants()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>37</length>
+  <highlighted_element>testCreateGroup_WithEmptyParticipants</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>413</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCanManageParticipants_Owner()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>31</length>
+  <highlighted_element>testCanManageParticipants_Owner</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>427</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCanManageParticipants_Admin()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>31</length>
+  <highlighted_element>testCanManageParticipants_Admin</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>441</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCanManageParticipants_Member()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>32</length>
+  <highlighted_element>testCanManageParticipants_Member</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>455</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCanManageParticipants_NotParticipant()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>40</length>
+  <highlighted_element>testCanManageParticipants_NotParticipant</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>468</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCanUpdateSettings_Owner()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>27</length>
+  <highlighted_element>testCanUpdateSettings_Owner</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>482</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCanUpdateSettings_Admin()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>27</length>
+  <highlighted_element>testCanUpdateSettings_Admin</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>496</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCanUpdateSettings_Member()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>28</length>
+  <highlighted_element>testCanUpdateSettings_Member</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>510</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testIsOwner_Owner()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>17</length>
+  <highlighted_element>testIsOwner_Owner</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>524</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testIsOwner_Admin()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>17</length>
+  <highlighted_element>testIsOwner_Admin</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>538</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testGetUserRole_Success()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>23</length>
+  <highlighted_element>testGetUserRole_Success</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>553</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testGetUserRole_NotParticipant()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>30</length>
+  <highlighted_element>testGetUserRole_NotParticipant</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>568</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testUpdateGroupSettings_Success()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>31</length>
+  <highlighted_element>testUpdateGroupSettings_Success</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>591</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testUpdateGroupSettings_PartialUpdate()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>37</length>
+  <highlighted_element>testUpdateGroupSettings_PartialUpdate</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>614</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testUpdateGroupSettings_ConversationNotFound()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>44</length>
+  <highlighted_element>testUpdateGroupSettings_ConversationNotFound</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>631</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testUpdateGroupSettings_NotGroupConversation()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>44</length>
+  <highlighted_element>testUpdateGroupSettings_NotGroupConversation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>650</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testCreateGroup_CreatorAsParticipant()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>36</length>
+  <highlighted_element>testCreateGroup_CreatorAsParticipant</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/ConversationServiceTest.java</file>
+  <line>675</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.ConversationServiceTest void testAddUserToConversation_AlreadyActiveParticipant()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>50</length>
+  <highlighted_element>testAddUserToConversation_AlreadyActiveParticipant</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/JwtServiceTest.java</file>
+  <line>16</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.service.JwtServiceTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>14</length>
+  <highlighted_element>JwtServiceTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/JwtServiceTest.java</file>
+  <line>24</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.JwtServiceTest void setUp()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>5</length>
+  <highlighted_element>setUp</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/JwtServiceTest.java</file>
+  <line>36</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.JwtServiceTest void shouldGenerateValidToken()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>24</length>
+  <highlighted_element>shouldGenerateValidToken</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/JwtServiceTest.java</file>
+  <line>47</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.JwtServiceTest void shouldExtractUsernameFromToken()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>30</length>
+  <highlighted_element>shouldExtractUsernameFromToken</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/JwtServiceTest.java</file>
+  <line>59</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.JwtServiceTest void shouldExtractExpirationFromToken()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>32</length>
+  <highlighted_element>shouldExtractExpirationFromToken</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/JwtServiceTest.java</file>
+  <line>72</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.JwtServiceTest void shouldValidateTokenWithValidUserDetails()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>39</length>
+  <highlighted_element>shouldValidateTokenWithValidUserDetails</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/JwtServiceTest.java</file>
+  <line>84</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.JwtServiceTest void shouldRejectTokenWithDifferentUser()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>34</length>
+  <highlighted_element>shouldRejectTokenWithDifferentUser</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/JwtServiceTest.java</file>
+  <line>98</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.JwtServiceTest void shouldValidateTokenWithoutUserDetails()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>37</length>
+  <highlighted_element>shouldValidateTokenWithoutUserDetails</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/JwtServiceTest.java</file>
+  <line>110</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.JwtServiceTest void shouldRejectInvalidToken()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>24</length>
+  <highlighted_element>shouldRejectInvalidToken</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/JwtServiceTest.java</file>
+  <line>122</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.JwtServiceTest void shouldRejectExpiredToken()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>24</length>
+  <highlighted_element>shouldRejectExpiredToken</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/JwtServiceTest.java</file>
+  <line>138</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.JwtServiceTest void shouldExtractClaimsCorrectly()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>28</length>
+  <highlighted_element>shouldExtractClaimsCorrectly</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>27</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.service.MessageSearchServiceTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>24</length>
+  <highlighted_element>MessageSearchServiceTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>45</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void setUp()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>5</length>
+  <highlighted_element>setUp</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>63</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testSearchMessages_WithValidAccess()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>34</length>
+  <highlighted_element>testSearchMessages_WithValidAccess</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>109</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testSearchMessages_WithoutAccess()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>32</length>
+  <highlighted_element>testSearchMessages_WithoutAccess</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>129</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testSearchMessages_EmptyQuery()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>29</length>
+  <highlighted_element>testSearchMessages_EmptyQuery</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>146</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testSearchMessages_NullQuery()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>28</length>
+  <highlighted_element>testSearchMessages_NullQuery</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>163</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testSearchMessages_WhitespaceQuery()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>34</length>
+  <highlighted_element>testSearchMessages_WhitespaceQuery</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>180</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testSearchMessages_FallbackToRegexSearch()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>40</length>
+  <highlighted_element>testSearchMessages_FallbackToRegexSearch</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>207</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testSearchMessages_PaginationValidation()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>39</length>
+  <highlighted_element>testSearchMessages_PaginationValidation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>235</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testSearchMessages_DefaultPagination()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>36</length>
+  <highlighted_element>testSearchMessages_DefaultPagination</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>260</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testSearchMessages_HasMoreResults()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>33</length>
+  <highlighted_element>testSearchMessages_HasMoreResults</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>282</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testGetMessageContext_ValidMessage()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>34</length>
+  <highlighted_element>testGetMessageContext_ValidMessage</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>310</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testGetMessageContext_MessageNotFound()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>37</length>
+  <highlighted_element>testGetMessageContext_MessageNotFound</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>327</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testGetMessageContext_NoAccess()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>30</length>
+  <highlighted_element>testGetMessageContext_NoAccess</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>347</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testHighlightText()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>17</length>
+  <highlighted_element>testHighlightText</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>375</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testQuerySanitization()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>21</length>
+  <highlighted_element>testQuerySanitization</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/MessageSearchServiceTest.java</file>
+  <line>399</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageSearchServiceTest void testLongQueryTruncation()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>23</length>
+  <highlighted_element>testLongQueryTruncation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>26</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.service.UserSearchServiceTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>21</length>
+  <highlighted_element>UserSearchServiceTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>40</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void setUp()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>5</length>
+  <highlighted_element>setUp</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>57</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testSearchUsers_WithValidQuery()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>30</length>
+  <highlighted_element>testSearchUsers_WithValidQuery</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>89</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testSearchUsers_WithEmptyQuery()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>30</length>
+  <highlighted_element>testSearchUsers_WithEmptyQuery</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>106</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testSearchUsers_WithNullQuery()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>29</length>
+  <highlighted_element>testSearchUsers_WithNullQuery</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>123</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testSearchUsers_WithWhitespaceQuery()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>35</length>
+  <highlighted_element>testSearchUsers_WithWhitespaceQuery</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>140</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testSearchUsers_QuerySanitization()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>33</length>
+  <highlighted_element>testSearchUsers_QuerySanitization</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>165</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testSearchUsers_LimitValidation()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>31</length>
+  <highlighted_element>testSearchUsers_LimitValidation</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>190</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testSearchUsers_NegativeLimit()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>29</length>
+  <highlighted_element>testSearchUsers_NegativeLimit</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>215</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testSearchUsers_DefaultLimit()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>28</length>
+  <highlighted_element>testSearchUsers_DefaultLimit</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>239</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testSearchUsers_MultipleResults()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>31</length>
+  <highlighted_element>testSearchUsers_MultipleResults</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>262</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testGetUserSuggestions()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>22</length>
+  <highlighted_element>testGetUserSuggestions</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>285</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testGetUserSuggestions_DefaultLimit()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>35</length>
+  <highlighted_element>testGetUserSuggestions_DefaultLimit</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>307</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testUserExists()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>14</length>
+  <highlighted_element>testUserExists</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>321</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testUserExists_NotFound()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>23</length>
+  <highlighted_element>testUserExists_NotFound</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>335</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testGetUserById()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>15</length>
+  <highlighted_element>testGetUserById</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>353</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testGetUserById_NotFound()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>24</length>
+  <highlighted_element>testGetUserById_NotFound</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserSearchServiceTest.java</file>
+  <line>367</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserSearchServiceTest void testUserDtoConversion()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>21</length>
+  <highlighted_element>testUserDtoConversion</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>26</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.service.UserServiceTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>15</length>
+  <highlighted_element>UserServiceTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>40</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void setUp()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>5</length>
+  <highlighted_element>setUp</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>52</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldLoadUserByUsername()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>24</length>
+  <highlighted_element>shouldLoadUserByUsername</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>67</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldThrowExceptionWhenUserNotFoundByUsername()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>46</length>
+  <highlighted_element>shouldThrowExceptionWhenUserNotFoundByUsername</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>81</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldCreateUserSuccessfully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>28</length>
+  <highlighted_element>shouldCreateUserSuccessfully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>100</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldThrowExceptionWhenUsernameExists()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>38</length>
+  <highlighted_element>shouldThrowExceptionWhenUsernameExists</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>115</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldThrowExceptionWhenEmailExists()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>35</length>
+  <highlighted_element>shouldThrowExceptionWhenEmailExists</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>132</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldFindUserByUsername()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>24</length>
+  <highlighted_element>shouldFindUserByUsername</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>146</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldFindUserByEmail()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>21</length>
+  <highlighted_element>shouldFindUserByEmail</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>160</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldFindUserById()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>18</length>
+  <highlighted_element>shouldFindUserById</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>174</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldFindAllUsers()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>18</length>
+  <highlighted_element>shouldFindAllUsers</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>189</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldUpdateUser()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>16</length>
+  <highlighted_element>shouldUpdateUser</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>202</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldUpdateUserOnlineStatus()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>28</length>
+  <highlighted_element>shouldUpdateUserOnlineStatus</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>220</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldDeleteUser()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>16</length>
+  <highlighted_element>shouldDeleteUser</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>229</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldValidatePassword()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>22</length>
+  <highlighted_element>shouldValidatePassword</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/service/UserServiceTest.java</file>
+  <line>242</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.UserServiceTest void shouldRejectInvalidPassword()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>27</length>
+  <highlighted_element>shouldRejectInvalidPassword</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>15</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.util.ResponseUtilsTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>17</length>
+  <highlighted_element>ResponseUtilsTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>21</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void setUp()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>5</length>
+  <highlighted_element>setUp</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>36</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldCreateSuccessResponseWithData()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>35</length>
+  <highlighted_element>shouldCreateSuccessResponseWithData</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>50</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldCreateSuccessResponseWithoutData()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>38</length>
+  <highlighted_element>shouldCreateSuccessResponseWithoutData</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>64</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldCreateCreatedResponse()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>27</length>
+  <highlighted_element>shouldCreateCreatedResponse</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>78</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldCreateBadRequestResponse()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>30</length>
+  <highlighted_element>shouldCreateBadRequestResponse</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>93</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldCreateUnauthorizedResponse()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>32</length>
+  <highlighted_element>shouldCreateUnauthorizedResponse</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>108</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldCreateConflictResponse()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>28</length>
+  <highlighted_element>shouldCreateConflictResponse</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>123</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldCreateInternalServerErrorResponse()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>39</length>
+  <highlighted_element>shouldCreateInternalServerErrorResponse</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>138</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldCreateGenericUnauthorizedResponse()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>39</length>
+  <highlighted_element>shouldCreateGenericUnauthorizedResponse</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>152</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldCreateGenericBadRequestResponse()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>37</length>
+  <highlighted_element>shouldCreateGenericBadRequestResponse</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>166</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldCreateGenericInternalServerErrorResponse()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>46</length>
+  <highlighted_element>shouldCreateGenericInternalServerErrorResponse</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>180</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldCreateGenericConflictResponse()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>35</length>
+  <highlighted_element>shouldCreateGenericConflictResponse</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>194</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldHandleNullMessagesGracefully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>34</length>
+  <highlighted_element>shouldHandleNullMessagesGracefully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>208</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldHandleNullDataGracefully()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>30</length>
+  <highlighted_element>shouldHandleNullDataGracefully</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/util/ResponseUtilsTest.java</file>
+  <line>222</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.util</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.util.ResponseUtilsTest void shouldCreateConsistentErrorResponseStructure()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>44</length>
+  <highlighted_element>shouldCreateConsistentErrorResponseStructure</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>21</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="class" FQNAME="com.chatplatform.validator.AuthValidatorTest" />
+  <language>JAVA</language>
+  <offset>6</offset>
+  <length>17</length>
+  <highlighted_element>AuthValidatorTest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Class is not instantiated.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>30</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldValidateValidRegistrationRequest()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>38</length>
+  <highlighted_element>shouldValidateValidRegistrationRequest</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>49</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldThrowValidationExceptionForInvalidEmail()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>45</length>
+  <highlighted_element>shouldThrowValidationExceptionForInvalidEmail</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>68</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldThrowValidationExceptionForShortUsername()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>46</length>
+  <highlighted_element>shouldThrowValidationExceptionForShortUsername</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>87</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldThrowValidationExceptionForInvalidUsernameCharacters()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>58</length>
+  <highlighted_element>shouldThrowValidationExceptionForInvalidUsernameCharacters</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>106</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldThrowValidationExceptionForShortPassword()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>46</length>
+  <highlighted_element>shouldThrowValidationExceptionForShortPassword</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>125</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldThrowValidationExceptionForWeakPassword()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>45</length>
+  <highlighted_element>shouldThrowValidationExceptionForWeakPassword</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>144</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldThrowValidationExceptionForLongDisplayName()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>48</length>
+  <highlighted_element>shouldThrowValidationExceptionForLongDisplayName</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>164</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldThrowValidationExceptionForEmptyFields()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>44</length>
+  <highlighted_element>shouldThrowValidationExceptionForEmptyFields</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>187</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldIncludeBindingResultErrors()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>32</length>
+  <highlighted_element>shouldIncludeBindingResultErrors</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>209</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldCombineMultipleValidationErrors()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>37</length>
+  <highlighted_element>shouldCombineMultipleValidationErrors</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>232</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldAcceptValidPasswordWithLettersAndNumbers()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>46</length>
+  <highlighted_element>shouldAcceptValidPasswordWithLettersAndNumbers</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>249</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldAcceptUsernameWithUnderscores()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>35</length>
+  <highlighted_element>shouldAcceptUsernameWithUnderscores</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>266</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldAcceptMaxLengthDisplayName()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>32</length>
+  <highlighted_element>shouldAcceptMaxLengthDisplayName</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/validator/AuthValidatorTest.java</file>
+  <line>284</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.validator</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.validator.AuthValidatorTest void shouldAcceptMaxLengthUsername()" />
+  <language>JAVA</language>
+  <offset>9</offset>
+  <length>29</length>
+  <highlighted_element>shouldAcceptMaxLengthUsername</highlighted_element>
+  <problem_class id="" severity="WARNING" attribute_key="NOT_USED_ELEMENT_ATTRIBUTES">unused declaration</problem_class>
+  <hints>
+    <hint value="comment" />
+    <hint value="delete" />
+  </hints>
+  <description>Method is never used.</description>
+</problem>
+</problems>

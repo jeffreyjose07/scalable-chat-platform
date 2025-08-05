@@ -1,0 +1,354 @@
+<problems>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework:spring-webmvc:6.1.1 is vulnerable , safe version 6.1.14&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38819?utm_source=JetBrains&quot;&gt;CVE-2024-38819&lt;/a&gt; 7.5 Information Leak / Disclosure &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38819?utm_source=JetBrains&quot;&gt;CVE-2024-38819&lt;/a&gt; 7.5 Information Leak / Disclosure &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38816?utm_source=JetBrains&quot;&gt;CVE-2024-38816&lt;/a&gt; 7.5 Path Traversal &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38816?utm_source=JetBrains&quot;&gt;CVE-2024-38816&lt;/a&gt; 7.5 Path Traversal &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework:spring-webmvc:6.1.1" vulnerabilityIds="32400b61-db43-489c-a34a-15b2bb93634c,32400b61-db43-489c-a34a-15b2bb93634c,e6ba330e-166a-4a2b-8126-6ef1c92f6391,e6ba330e-166a-4a2b-8126-6ef1c92f6391" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework:spring-web:6.1.1 is vulnerable , safe version 6.2.8&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22262?utm_source=JetBrains&quot;&gt;CVE-2024-22262&lt;/a&gt; 8.1 Server-Side Request Forgery (SSRF) &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22259?utm_source=JetBrains&quot;&gt;CVE-2024-22259&lt;/a&gt; 8.1 URL Redirection to Untrusted Site ('Open Redirect') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22243?utm_source=JetBrains&quot;&gt;CVE-2024-22243&lt;/a&gt; 8.1 URL Redirection to Untrusted Site ('Open Redirect') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22262?utm_source=JetBrains&quot;&gt;CVE-2024-22262&lt;/a&gt; 8.1 Server-Side Request Forgery (SSRF) &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22259?utm_source=JetBrains&quot;&gt;CVE-2024-22259&lt;/a&gt; 8.1 URL Redirection to Untrusted Site ('Open Redirect') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22243?utm_source=JetBrains&quot;&gt;CVE-2024-22243&lt;/a&gt; 8.1 URL Redirection to Untrusted Site ('Open Redirect') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38809?utm_source=JetBrains&quot;&gt;CVE-2024-38809&lt;/a&gt; 5.3 Uncontrolled Resource Consumption ('Resource Exhaustion') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38809?utm_source=JetBrains&quot;&gt;CVE-2024-38809&lt;/a&gt; 5.3 Uncontrolled Resource Consumption ('Resource Exhaustion') &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework:spring-web:6.1.1" vulnerabilityIds="156de737-9d19-4bf5-aeb5-15f42997a498,56babfcc-960b-48f7-ae75-2e1ba68843b5,1666fd71-e177-4924-9525-c68faa8cf36c,156de737-9d19-4bf5-aeb5-15f42997a498,56babfcc-960b-48f7-ae75-2e1ba68843b5,1666fd71-e177-4924-9525-c68faa8cf36c,8ffd024a-a8ce-4858-a828-eaee9384bef6,8ffd024a-a8ce-4858-a828-eaee9384bef6" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework.security:spring-security-web:6.2.0 is vulnerable , safe version 6.3.5&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38821?utm_source=JetBrains&quot;&gt;CVE-2024-38821&lt;/a&gt; 9.1 Allocation of Resources Without Limits or Throttling &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38821?utm_source=JetBrains&quot;&gt;CVE-2024-38821&lt;/a&gt; 9.1 Allocation of Resources Without Limits or Throttling &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38821?utm_source=JetBrains&quot;&gt;CVE-2024-38821&lt;/a&gt; 9.1 Allocation of Resources Without Limits or Throttling &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22234?utm_source=JetBrains&quot;&gt;CVE-2024-22234&lt;/a&gt; 7.4 Improper Access Control &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22234?utm_source=JetBrains&quot;&gt;CVE-2024-22234&lt;/a&gt; 7.4 Improper Access Control &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22234?utm_source=JetBrains&quot;&gt;CVE-2024-22234&lt;/a&gt; 7.4 Improper Access Control &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework.security:spring-security-web:6.2.0" vulnerabilityIds="1f18d5b5-4777-410b-8f04-50307fe909e4,1f18d5b5-4777-410b-8f04-50307fe909e4,1f18d5b5-4777-410b-8f04-50307fe909e4,13100160-0950-48a8-b95d-4c7cc4fbcbf1,13100160-0950-48a8-b95d-4c7cc4fbcbf1,13100160-0950-48a8-b95d-4c7cc4fbcbf1,3f07ad40-7a79-4881-81d3-12fb778f13e6,3f07ad40-7a79-4881-81d3-12fb778f13e6,3f07ad40-7a79-4881-81d3-12fb778f13e6" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework.security:spring-security-config:6.2.0 is vulnerable , safe version 6.3.5&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework.security:spring-security-config:6.2.0" vulnerabilityIds="3f07ad40-7a79-4881-81d3-12fb778f13e6" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:com.jayway.jsonpath:json-path:2.8.0 is vulnerable , safe version 2.9.0&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2023-51074?utm_source=JetBrains&quot;&gt;CVE-2023-51074&lt;/a&gt; 5.3 Out-of-bounds Write &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:com.jayway.jsonpath:json-path:2.8.0" vulnerabilityIds="445bbb4f-fedc-4e87-93fe-9dc79f202b2e" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:net.minidev:json-smart:2.5.0 is vulnerable , safe version 2.5.2&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-57699?utm_source=JetBrains&quot;&gt;CVE-2024-57699&lt;/a&gt; 7.5 Insufficient Information &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:net.minidev:json-smart:2.5.0" vulnerabilityIds="a59bbf31-458b-4b59-85e7-4841e239c53c" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.xmlunit:xmlunit-core:2.9.1 is vulnerable , safe version 2.10.0&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-31573?utm_source=JetBrains&quot;&gt;CVE-2024-31573&lt;/a&gt; 5.6 Insufficient Information &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.xmlunit:xmlunit-core:2.9.1" vulnerabilityIds="8369b290-9c99-4197-865e-9081e285ca47" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework:spring-context:6.1.1 is vulnerable , safe version 6.2.7&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38820?utm_source=JetBrains&quot;&gt;CVE-2024-38820&lt;/a&gt; 3.1 Improper Handling of Case Sensitivity &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework:spring-context:6.1.1" vulnerabilityIds="76d226f2-ecb9-4976-b2e2-17a07c77dbfd" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.apache.tomcat.embed:tomcat-embed-websocket:10.1.16 is vulnerable , safe version 11.0.0-M17&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-23672?utm_source=JetBrains&quot;&gt;CVE-2024-23672&lt;/a&gt; 6.3 Incomplete Cleanup &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.apache.tomcat.embed:tomcat-embed-websocket:10.1.16" vulnerabilityIds="068e2618-8b95-40c0-9393-dc97fc63db22" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.apache.tomcat.embed:tomcat-embed-core:10.1.16 is vulnerable , safe version 11.0.8&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-50379?utm_source=JetBrains&quot;&gt;CVE-2024-50379&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-56337?utm_source=JetBrains&quot;&gt;CVE-2024-56337&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2025-24813?utm_source=JetBrains&quot;&gt;CVE-2025-24813&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-52316?utm_source=JetBrains&quot;&gt;CVE-2024-52316&lt;/a&gt; 9.8 Unchecked Error Condition &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-50379?utm_source=JetBrains&quot;&gt;CVE-2024-50379&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-56337?utm_source=JetBrains&quot;&gt;CVE-2024-56337&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2025-24813?utm_source=JetBrains&quot;&gt;CVE-2025-24813&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-52316?utm_source=JetBrains&quot;&gt;CVE-2024-52316&lt;/a&gt; 9.8 Unchecked Error Condition &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-50379?utm_source=JetBrains&quot;&gt;CVE-2024-50379&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-56337?utm_source=JetBrains&quot;&gt;CVE-2024-56337&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.apache.tomcat.embed:tomcat-embed-core:10.1.16" vulnerabilityIds="53dd7760-9c02-4990-8b66-2f61b53a40ec,a8770419-945b-41b4-9ec4-d2a9797344eb,d497a549-f3e5-4cba-9831-5b140357d600,405df489-68b7-486a-a84b-90dcbde43bd6,53dd7760-9c02-4990-8b66-2f61b53a40ec,a8770419-945b-41b4-9ec4-d2a9797344eb,d497a549-f3e5-4cba-9831-5b140357d600,405df489-68b7-486a-a84b-90dcbde43bd6,53dd7760-9c02-4990-8b66-2f61b53a40ec,a8770419-945b-41b4-9ec4-d2a9797344eb,d497a549-f3e5-4cba-9831-5b140357d600,405df489-68b7-486a-a84b-90dcbde43bd6,53dd7760-9c02-4990-8b66-2f61b53a40ec,a8770419-945b-41b4-9ec4-d2a9797344eb,d497a549-f3e5-4cba-9831-5b140357d600,405df489-68b7-486a-a84b-90dcbde43bd6,53dd7760-9c02-4990-8b66-2f61b53a40ec,a8770419-945b-41b4-9ec4-d2a9797344eb,d497a549-f3e5-4cba-9831-5b140357d600,405df489-68b7-486a-a84b-90dcbde43bd6,53dd7760-9c02-4990-8b66-2f61b53a40ec,a8770419-945b-41b4-9ec4-d2a9797344eb,d497a549-f3e5-4cba-9831-5b140357d600,405df489-68b7-486a-a84b-90dcbde43bd6,b6e39b08-44cb-4925-b729-16def1338c28,b6e39b08-44cb-4925-b729-16def1338c28,b6e39b08-44cb-4925-b729-16def1338c28,b6e39b08-44cb-4925-b729-16def1338c28,b6e39b08-44cb-4925-b729-16def1338c28,b6e39b08-44cb-4925-b729-16def1338c28,4e3e6ef2-2ec8-434f-8754-8a9c79cb8ebe,902ab799-7fd6-4e07-b5cd-ac2d3fc3a992,4e3e6ef2-2ec8-434f-8754-8a9c79cb8ebe,902ab799-7fd6-4e07-b5cd-ac2d3fc3a992,902ab799-7fd6-4e07-b5cd-ac2d3fc3a992,4e3e6ef2-2ec8-434f-8754-8a9c79cb8ebe,4e3e6ef2-2ec8-434f-8754-8a9c79cb8ebe,902ab799-7fd6-4e07-b5cd-ac2d3fc3a992,4e3e6ef2-2ec8-434f-8754-8a9c79cb8ebe,902ab799-7fd6-4e07-b5cd-ac2d3fc3a992,902ab799-7fd6-4e07-b5cd-ac2d3fc3a992,4e3e6ef2-2ec8-434f-8754-8a9c79cb8ebe,afc962b3-65f5-48a9-bee4-643eaa3ac9b3,afc962b3-65f5-48a9-bee4-643eaa3ac9b3,afc962b3-65f5-48a9-bee4-643eaa3ac9b3,afc962b3-65f5-48a9-bee4-643eaa3ac9b3,afc962b3-65f5-48a9-bee4-643eaa3ac9b3,afc962b3-65f5-48a9-bee4-643eaa3ac9b3" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework.security:spring-security-core:6.2.0 is vulnerable , safe version 6.4.4&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22257?utm_source=JetBrains&quot;&gt;CVE-2024-22257&lt;/a&gt; 8.2 Missing Authorization &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22257?utm_source=JetBrains&quot;&gt;CVE-2024-22257&lt;/a&gt; 8.2 Missing Authorization &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22234?utm_source=JetBrains&quot;&gt;CVE-2024-22234&lt;/a&gt; 7.4 Improper Access Control &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22234?utm_source=JetBrains&quot;&gt;CVE-2024-22234&lt;/a&gt; 7.4 Improper Access Control &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework.security:spring-security-core:6.2.0" vulnerabilityIds="b05ba94a-9a8d-4cf9-a9d5-9e2433e36183,b05ba94a-9a8d-4cf9-a9d5-9e2433e36183,13100160-0950-48a8-b95d-4c7cc4fbcbf1,13100160-0950-48a8-b95d-4c7cc4fbcbf1,3f07ad40-7a79-4881-81d3-12fb778f13e6,3f07ad40-7a79-4881-81d3-12fb778f13e6" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:io.netty:netty-handler:4.1.101.Final is vulnerable , safe version 4.1.118.Final&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2025-24970?utm_source=JetBrains&quot;&gt;CVE-2025-24970&lt;/a&gt; 7.5 SslHandler doesn't correctly validate packets which can lead to native crash when using native SSLEngine &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:io.netty:netty-handler:4.1.101.Final" vulnerabilityIds="486f3c75-3c5a-4d32-9c5d-dc310847fca1" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:io.netty:netty-common:4.1.101.Final is vulnerable , safe version 4.1.118.Final&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-47535?utm_source=JetBrains&quot;&gt;CVE-2024-47535&lt;/a&gt; 5.5 Uncontrolled Resource Consumption ('Resource Exhaustion') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2025-25193?utm_source=JetBrains&quot;&gt;CVE-2025-25193&lt;/a&gt; 5.5 Denial of Service attack on windows app using Netty &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:io.netty:netty-common:4.1.101.Final" vulnerabilityIds="e2035e21-efc0-4662-992e-a10a72829fed,c2c39dfc-4d8b-4ab1-8386-fadf78ea0ec3" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.apache.commons:commons-compress:1.24.0 is vulnerable , safe version 1.26.0&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-25710?utm_source=JetBrains&quot;&gt;CVE-2024-25710&lt;/a&gt; 8.1 Loop with Unreachable Exit Condition ('Infinite Loop') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-25710?utm_source=JetBrains&quot;&gt;CVE-2024-25710&lt;/a&gt; 8.1 Loop with Unreachable Exit Condition ('Infinite Loop') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-26308?utm_source=JetBrains&quot;&gt;CVE-2024-26308&lt;/a&gt; 5.5 Allocation of Resources Without Limits or Throttling &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-26308?utm_source=JetBrains&quot;&gt;CVE-2024-26308&lt;/a&gt; 5.5 Allocation of Resources Without Limits or Throttling &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.apache.commons:commons-compress:1.24.0" vulnerabilityIds="0a74dc91-49c7-4733-9e61-79b8cd97bb00,0a74dc91-49c7-4733-9e61-79b8cd97bb00,fb1f032e-b059-4974-a92a-92d3663539ec,fb1f032e-b059-4974-a92a-92d3663539ec" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:ch.qos.logback:logback-classic:1.4.11 is vulnerable , safe version 1.5.13&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2023-6378?utm_source=JetBrains&quot;&gt;CVE-2023-6378&lt;/a&gt; 7.1 Deserialization of Untrusted Data &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-12798?utm_source=JetBrains&quot;&gt;CVE-2024-12798&lt;/a&gt; 6.6 JaninoEventEvaluator vulnerability &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:ch.qos.logback:logback-classic:1.4.11" vulnerabilityIds="255f81f4-6a92-4008-8a20-2ee48bbcf418,87565bf6-75b4-4171-a23a-bf2d103739c4" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework.security:spring-security-crypto:6.2.0 is vulnerable , safe version 6.4.4&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2025-22228?utm_source=JetBrains&quot;&gt;CVE-2025-22228&lt;/a&gt; 7.4 CVE-2025-22228: Spring Security BCryptPasswordEncoder does not enforce maximum password length &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework.security:spring-security-crypto:6.2.0" vulnerabilityIds="601655d5-29b5-4996-bd6a-e338b810af37,3f07ad40-7a79-4881-81d3-12fb778f13e6" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:ch.qos.logback:logback-core:1.4.11 is vulnerable , safe version 1.5.13&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-12798?utm_source=JetBrains&quot;&gt;CVE-2024-12798&lt;/a&gt; 6.6 JaninoEventEvaluator vulnerability &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-12798?utm_source=JetBrains&quot;&gt;CVE-2024-12798&lt;/a&gt; 6.6 JaninoEventEvaluator vulnerability &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-12801?utm_source=JetBrains&quot;&gt;CVE-2024-12801&lt;/a&gt; 4.4 SaxEventRecorder vulnerable to Server-Side Request Forgery (SSRF) attacks &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-12801?utm_source=JetBrains&quot;&gt;CVE-2024-12801&lt;/a&gt; 4.4 SaxEventRecorder vulnerable to Server-Side Request Forgery (SSRF) attacks &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:ch.qos.logback:logback-core:1.4.11" vulnerabilityIds="87565bf6-75b4-4171-a23a-bf2d103739c4,87565bf6-75b4-4171-a23a-bf2d103739c4,22aa39e1-fd70-49c4-a073-686aad7bc864,22aa39e1-fd70-49c4-a073-686aad7bc864" />
+</problem>
+<problem>
+  <file>chat-platform-backend.test</file>
+  <module>chat-platform-backend.test</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.test" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.postgresql:postgresql:42.6.0 is vulnerable , safe version 42.7.7&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-1597?utm_source=JetBrains&quot;&gt;CVE-2024-1597&lt;/a&gt; 10.0 SQL Injection &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.postgresql:postgresql:42.6.0" vulnerabilityIds="8eaece0c-80a3-4820-9b8e-0457763dc110" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework:spring-webmvc:6.1.1 is vulnerable , safe version 6.1.14&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38819?utm_source=JetBrains&quot;&gt;CVE-2024-38819&lt;/a&gt; 7.5 Information Leak / Disclosure &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38819?utm_source=JetBrains&quot;&gt;CVE-2024-38819&lt;/a&gt; 7.5 Information Leak / Disclosure &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38816?utm_source=JetBrains&quot;&gt;CVE-2024-38816&lt;/a&gt; 7.5 Path Traversal &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38816?utm_source=JetBrains&quot;&gt;CVE-2024-38816&lt;/a&gt; 7.5 Path Traversal &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework:spring-webmvc:6.1.1" vulnerabilityIds="32400b61-db43-489c-a34a-15b2bb93634c,32400b61-db43-489c-a34a-15b2bb93634c,e6ba330e-166a-4a2b-8126-6ef1c92f6391,e6ba330e-166a-4a2b-8126-6ef1c92f6391" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework:spring-web:6.1.1 is vulnerable , safe version 6.2.8&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22262?utm_source=JetBrains&quot;&gt;CVE-2024-22262&lt;/a&gt; 8.1 Server-Side Request Forgery (SSRF) &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22259?utm_source=JetBrains&quot;&gt;CVE-2024-22259&lt;/a&gt; 8.1 URL Redirection to Untrusted Site ('Open Redirect') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22243?utm_source=JetBrains&quot;&gt;CVE-2024-22243&lt;/a&gt; 8.1 URL Redirection to Untrusted Site ('Open Redirect') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22262?utm_source=JetBrains&quot;&gt;CVE-2024-22262&lt;/a&gt; 8.1 Server-Side Request Forgery (SSRF) &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22259?utm_source=JetBrains&quot;&gt;CVE-2024-22259&lt;/a&gt; 8.1 URL Redirection to Untrusted Site ('Open Redirect') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22243?utm_source=JetBrains&quot;&gt;CVE-2024-22243&lt;/a&gt; 8.1 URL Redirection to Untrusted Site ('Open Redirect') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38809?utm_source=JetBrains&quot;&gt;CVE-2024-38809&lt;/a&gt; 5.3 Uncontrolled Resource Consumption ('Resource Exhaustion') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38809?utm_source=JetBrains&quot;&gt;CVE-2024-38809&lt;/a&gt; 5.3 Uncontrolled Resource Consumption ('Resource Exhaustion') &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework:spring-web:6.1.1" vulnerabilityIds="156de737-9d19-4bf5-aeb5-15f42997a498,56babfcc-960b-48f7-ae75-2e1ba68843b5,1666fd71-e177-4924-9525-c68faa8cf36c,156de737-9d19-4bf5-aeb5-15f42997a498,56babfcc-960b-48f7-ae75-2e1ba68843b5,1666fd71-e177-4924-9525-c68faa8cf36c,8ffd024a-a8ce-4858-a828-eaee9384bef6,8ffd024a-a8ce-4858-a828-eaee9384bef6" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework.security:spring-security-web:6.2.0 is vulnerable , safe version 6.3.5&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38821?utm_source=JetBrains&quot;&gt;CVE-2024-38821&lt;/a&gt; 9.1 Allocation of Resources Without Limits or Throttling &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38821?utm_source=JetBrains&quot;&gt;CVE-2024-38821&lt;/a&gt; 9.1 Allocation of Resources Without Limits or Throttling &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38821?utm_source=JetBrains&quot;&gt;CVE-2024-38821&lt;/a&gt; 9.1 Allocation of Resources Without Limits or Throttling &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22234?utm_source=JetBrains&quot;&gt;CVE-2024-22234&lt;/a&gt; 7.4 Improper Access Control &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22234?utm_source=JetBrains&quot;&gt;CVE-2024-22234&lt;/a&gt; 7.4 Improper Access Control &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22234?utm_source=JetBrains&quot;&gt;CVE-2024-22234&lt;/a&gt; 7.4 Improper Access Control &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework.security:spring-security-web:6.2.0" vulnerabilityIds="1f18d5b5-4777-410b-8f04-50307fe909e4,1f18d5b5-4777-410b-8f04-50307fe909e4,1f18d5b5-4777-410b-8f04-50307fe909e4,13100160-0950-48a8-b95d-4c7cc4fbcbf1,13100160-0950-48a8-b95d-4c7cc4fbcbf1,13100160-0950-48a8-b95d-4c7cc4fbcbf1,3f07ad40-7a79-4881-81d3-12fb778f13e6,3f07ad40-7a79-4881-81d3-12fb778f13e6,3f07ad40-7a79-4881-81d3-12fb778f13e6" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework.security:spring-security-config:6.2.0 is vulnerable , safe version 6.3.5&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework.security:spring-security-config:6.2.0" vulnerabilityIds="3f07ad40-7a79-4881-81d3-12fb778f13e6" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework:spring-context:6.1.1 is vulnerable , safe version 6.2.7&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38820?utm_source=JetBrains&quot;&gt;CVE-2024-38820&lt;/a&gt; 3.1 Improper Handling of Case Sensitivity &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework:spring-context:6.1.1" vulnerabilityIds="76d226f2-ecb9-4976-b2e2-17a07c77dbfd" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.apache.tomcat.embed:tomcat-embed-websocket:10.1.16 is vulnerable , safe version 11.0.0-M17&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-23672?utm_source=JetBrains&quot;&gt;CVE-2024-23672&lt;/a&gt; 6.3 Incomplete Cleanup &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.apache.tomcat.embed:tomcat-embed-websocket:10.1.16" vulnerabilityIds="068e2618-8b95-40c0-9393-dc97fc63db22" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.apache.tomcat.embed:tomcat-embed-core:10.1.16 is vulnerable , safe version 11.0.8&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-50379?utm_source=JetBrains&quot;&gt;CVE-2024-50379&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-56337?utm_source=JetBrains&quot;&gt;CVE-2024-56337&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2025-24813?utm_source=JetBrains&quot;&gt;CVE-2025-24813&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-52316?utm_source=JetBrains&quot;&gt;CVE-2024-52316&lt;/a&gt; 9.8 Unchecked Error Condition &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-50379?utm_source=JetBrains&quot;&gt;CVE-2024-50379&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-56337?utm_source=JetBrains&quot;&gt;CVE-2024-56337&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2025-24813?utm_source=JetBrains&quot;&gt;CVE-2025-24813&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-52316?utm_source=JetBrains&quot;&gt;CVE-2024-52316&lt;/a&gt; 9.8 Unchecked Error Condition &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-50379?utm_source=JetBrains&quot;&gt;CVE-2024-50379&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-56337?utm_source=JetBrains&quot;&gt;CVE-2024-56337&lt;/a&gt; 9.8 Insufficient Information &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.apache.tomcat.embed:tomcat-embed-core:10.1.16" vulnerabilityIds="53dd7760-9c02-4990-8b66-2f61b53a40ec,a8770419-945b-41b4-9ec4-d2a9797344eb,d497a549-f3e5-4cba-9831-5b140357d600,405df489-68b7-486a-a84b-90dcbde43bd6,53dd7760-9c02-4990-8b66-2f61b53a40ec,a8770419-945b-41b4-9ec4-d2a9797344eb,d497a549-f3e5-4cba-9831-5b140357d600,405df489-68b7-486a-a84b-90dcbde43bd6,53dd7760-9c02-4990-8b66-2f61b53a40ec,a8770419-945b-41b4-9ec4-d2a9797344eb,d497a549-f3e5-4cba-9831-5b140357d600,405df489-68b7-486a-a84b-90dcbde43bd6,53dd7760-9c02-4990-8b66-2f61b53a40ec,a8770419-945b-41b4-9ec4-d2a9797344eb,d497a549-f3e5-4cba-9831-5b140357d600,405df489-68b7-486a-a84b-90dcbde43bd6,53dd7760-9c02-4990-8b66-2f61b53a40ec,a8770419-945b-41b4-9ec4-d2a9797344eb,d497a549-f3e5-4cba-9831-5b140357d600,405df489-68b7-486a-a84b-90dcbde43bd6,53dd7760-9c02-4990-8b66-2f61b53a40ec,a8770419-945b-41b4-9ec4-d2a9797344eb,d497a549-f3e5-4cba-9831-5b140357d600,405df489-68b7-486a-a84b-90dcbde43bd6,b6e39b08-44cb-4925-b729-16def1338c28,b6e39b08-44cb-4925-b729-16def1338c28,b6e39b08-44cb-4925-b729-16def1338c28,b6e39b08-44cb-4925-b729-16def1338c28,b6e39b08-44cb-4925-b729-16def1338c28,b6e39b08-44cb-4925-b729-16def1338c28,4e3e6ef2-2ec8-434f-8754-8a9c79cb8ebe,902ab799-7fd6-4e07-b5cd-ac2d3fc3a992,4e3e6ef2-2ec8-434f-8754-8a9c79cb8ebe,902ab799-7fd6-4e07-b5cd-ac2d3fc3a992,902ab799-7fd6-4e07-b5cd-ac2d3fc3a992,4e3e6ef2-2ec8-434f-8754-8a9c79cb8ebe,4e3e6ef2-2ec8-434f-8754-8a9c79cb8ebe,902ab799-7fd6-4e07-b5cd-ac2d3fc3a992,4e3e6ef2-2ec8-434f-8754-8a9c79cb8ebe,902ab799-7fd6-4e07-b5cd-ac2d3fc3a992,902ab799-7fd6-4e07-b5cd-ac2d3fc3a992,4e3e6ef2-2ec8-434f-8754-8a9c79cb8ebe,afc962b3-65f5-48a9-bee4-643eaa3ac9b3,afc962b3-65f5-48a9-bee4-643eaa3ac9b3,afc962b3-65f5-48a9-bee4-643eaa3ac9b3,afc962b3-65f5-48a9-bee4-643eaa3ac9b3,afc962b3-65f5-48a9-bee4-643eaa3ac9b3,afc962b3-65f5-48a9-bee4-643eaa3ac9b3" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework.security:spring-security-core:6.2.0 is vulnerable , safe version 6.4.4&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22257?utm_source=JetBrains&quot;&gt;CVE-2024-22257&lt;/a&gt; 8.2 Missing Authorization &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22257?utm_source=JetBrains&quot;&gt;CVE-2024-22257&lt;/a&gt; 8.2 Missing Authorization &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22234?utm_source=JetBrains&quot;&gt;CVE-2024-22234&lt;/a&gt; 7.4 Improper Access Control &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-22234?utm_source=JetBrains&quot;&gt;CVE-2024-22234&lt;/a&gt; 7.4 Improper Access Control &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework.security:spring-security-core:6.2.0" vulnerabilityIds="b05ba94a-9a8d-4cf9-a9d5-9e2433e36183,b05ba94a-9a8d-4cf9-a9d5-9e2433e36183,13100160-0950-48a8-b95d-4c7cc4fbcbf1,13100160-0950-48a8-b95d-4c7cc4fbcbf1,3f07ad40-7a79-4881-81d3-12fb778f13e6,3f07ad40-7a79-4881-81d3-12fb778f13e6" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:io.netty:netty-handler:4.1.101.Final is vulnerable , safe version 4.1.118.Final&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2025-24970?utm_source=JetBrains&quot;&gt;CVE-2025-24970&lt;/a&gt; 7.5 SslHandler doesn't correctly validate packets which can lead to native crash when using native SSLEngine &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:io.netty:netty-handler:4.1.101.Final" vulnerabilityIds="486f3c75-3c5a-4d32-9c5d-dc310847fca1" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:io.netty:netty-common:4.1.101.Final is vulnerable , safe version 4.1.118.Final&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-47535?utm_source=JetBrains&quot;&gt;CVE-2024-47535&lt;/a&gt; 5.5 Uncontrolled Resource Consumption ('Resource Exhaustion') &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2025-25193?utm_source=JetBrains&quot;&gt;CVE-2025-25193&lt;/a&gt; 5.5 Denial of Service attack on windows app using Netty &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:io.netty:netty-common:4.1.101.Final" vulnerabilityIds="e2035e21-efc0-4662-992e-a10a72829fed,c2c39dfc-4d8b-4ab1-8386-fadf78ea0ec3" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:ch.qos.logback:logback-classic:1.4.11 is vulnerable , safe version 1.5.13&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2023-6378?utm_source=JetBrains&quot;&gt;CVE-2023-6378&lt;/a&gt; 7.1 Deserialization of Untrusted Data &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-12798?utm_source=JetBrains&quot;&gt;CVE-2024-12798&lt;/a&gt; 6.6 JaninoEventEvaluator vulnerability &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:ch.qos.logback:logback-classic:1.4.11" vulnerabilityIds="255f81f4-6a92-4008-8a20-2ee48bbcf418,87565bf6-75b4-4171-a23a-bf2d103739c4" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.springframework.security:spring-security-crypto:6.2.0 is vulnerable , safe version 6.4.4&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2025-22228?utm_source=JetBrains&quot;&gt;CVE-2025-22228&lt;/a&gt; 7.4 CVE-2025-22228: Spring Security BCryptPasswordEncoder does not enforce maximum password length &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-38827?utm_source=JetBrains&quot;&gt;CVE-2024-38827&lt;/a&gt; 4.8 Improper Authorization &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.springframework.security:spring-security-crypto:6.2.0" vulnerabilityIds="601655d5-29b5-4996-bd6a-e338b810af37,3f07ad40-7a79-4881-81d3-12fb778f13e6" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:ch.qos.logback:logback-core:1.4.11 is vulnerable , safe version 1.5.13&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-12798?utm_source=JetBrains&quot;&gt;CVE-2024-12798&lt;/a&gt; 6.6 JaninoEventEvaluator vulnerability &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-12798?utm_source=JetBrains&quot;&gt;CVE-2024-12798&lt;/a&gt; 6.6 JaninoEventEvaluator vulnerability &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-12801?utm_source=JetBrains&quot;&gt;CVE-2024-12801&lt;/a&gt; 4.4 SaxEventRecorder vulnerable to Server-Side Request Forgery (SSRF) attacks &lt;/li&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-12801?utm_source=JetBrains&quot;&gt;CVE-2024-12801&lt;/a&gt; 4.4 SaxEventRecorder vulnerable to Server-Side Request Forgery (SSRF) attacks &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:ch.qos.logback:logback-core:1.4.11" vulnerabilityIds="87565bf6-75b4-4171-a23a-bf2d103739c4,87565bf6-75b4-4171-a23a-bf2d103739c4,22aa39e1-fd70-49c4-a073-686aad7bc864,22aa39e1-fd70-49c4-a073-686aad7bc864" />
+</problem>
+<problem>
+  <file>chat-platform-backend.main</file>
+  <module>chat-platform-backend.main</module>
+  <entry_point TYPE="module" FQNAME="chat-platform-backend.main" />
+  <problem_class id="VulnerableLibrariesGlobal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Vulnerable imported dependency</problem_class>
+  <hints />
+  <description>&lt;html&gt;&lt;body&gt; Dependency maven:org.postgresql:postgresql:42.6.0 is vulnerable , safe version 42.7.7&lt;ul&gt;&lt;li&gt;&lt;a href=&quot;https://www.mend.io/vulnerability-database/CVE-2024-1597?utm_source=JetBrains&quot;&gt;CVE-2024-1597&lt;/a&gt; 10.0 SQL Injection &lt;/li&gt;&lt;/ul&gt; Results powered by &lt;a href=&quot;https://www.mend.io/jetbrains-lp/?utm_source=JetBrains&quot;&gt;Mend.io&lt;/a&gt;&lt;/body&gt; &lt;/html&gt;</description>
+  <highlighted_element />
+  <language />
+  <fingerprint sourcePackage="maven:org.postgresql:postgresql:42.6.0" vulnerabilityIds="8eaece0c-80a3-4820-9b8e-0457763dc110" />
+</problem>
+</problems>

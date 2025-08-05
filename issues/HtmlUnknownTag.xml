@@ -1,0 +1,62 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-media-minmax/README-zh.md</file>
+  <line>96</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-media-minmax/README-zh.md" />
+  <problem_class id="HtmlUnknownTag" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown tag</problem_class>
+  <description>Unknown html tag ratio</description>
+  <highlighted_element>ratio</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>5</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-media-minmax/README-zh.md</file>
+  <line>96</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-media-minmax/README-zh.md" />
+  <problem_class id="HtmlUnknownTag" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown tag</problem_class>
+  <description>Unknown html tag integer</description>
+  <highlighted_element>integer</highlighted_element>
+  <language>XML</language>
+  <offset>25</offset>
+  <length>7</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-media-minmax/README-zh.md</file>
+  <line>96</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-media-minmax/README-zh.md" />
+  <problem_class id="HtmlUnknownTag" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown tag</problem_class>
+  <description>Unknown html tag integer</description>
+  <highlighted_element>integer</highlighted_element>
+  <language>XML</language>
+  <offset>85</offset>
+  <length>7</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-media-minmax/README-zh.md</file>
+  <line>111</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-media-minmax/README-zh.md" />
+  <problem_class id="HtmlUnknownTag" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown tag</problem_class>
+  <description>Unknown html tag integer</description>
+  <highlighted_element>integer</highlighted_element>
+  <language>XML</language>
+  <offset>31</offset>
+  <length>7</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-media-minmax/README-zh.md</file>
+  <line>111</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-media-minmax/README-zh.md" />
+  <problem_class id="HtmlUnknownTag" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown tag</problem_class>
+  <description>Unknown html tag mq-boolean</description>
+  <highlighted_element>mq-boolean</highlighted_element>
+  <language>XML</language>
+  <offset>92</offset>
+  <length>10</length>
+</problem>
+</problems>

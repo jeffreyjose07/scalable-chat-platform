@@ -1,0 +1,58 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/websocket/ChatWebSocketHandler.java</file>
+  <line>60</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.websocket</package>
+  <entry_point TYPE="field" FQNAME="com.chatplatform.websocket.ChatWebSocketHandler.ConnectionInfo isActive" />
+  <problem_class id="CanBeFinal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Declaration can have 'final' modifier</problem_class>
+  <hints />
+  <description>Declaration can have final modifier</description>
+  <highlighted_element>isActive</highlighted_element>
+  <language>JAVA</language>
+  <offset>25</offset>
+  <length>8</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/integration/IntegrationTestTemplate.java</file>
+  <line>30</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.integration</package>
+  <entry_point TYPE="field" FQNAME="com.chatplatform.integration.IntegrationTestTemplate postgres" />
+  <problem_class id="CanBeFinal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Declaration can have 'final' modifier</problem_class>
+  <hints />
+  <description>Declaration can have final modifier</description>
+  <highlighted_element>postgres</highlighted_element>
+  <language>JAVA</language>
+  <offset>34</offset>
+  <length>8</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/integration/IntegrationTestTemplate.java</file>
+  <line>36</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.integration</package>
+  <entry_point TYPE="field" FQNAME="com.chatplatform.integration.IntegrationTestTemplate mongodb" />
+  <problem_class id="CanBeFinal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Declaration can have 'final' modifier</problem_class>
+  <hints />
+  <description>Declaration can have final modifier</description>
+  <highlighted_element>mongodb</highlighted_element>
+  <language>JAVA</language>
+  <offset>28</offset>
+  <length>7</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/test/java/com/chatplatform/integration/IntegrationTestTemplate.java</file>
+  <line>40</line>
+  <module>chat-platform-backend.test</module>
+  <package>com.chatplatform.integration</package>
+  <entry_point TYPE="field" FQNAME="com.chatplatform.integration.IntegrationTestTemplate redis" />
+  <problem_class id="CanBeFinal" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Declaration can have 'final' modifier</problem_class>
+  <hints />
+  <description>Declaration can have final modifier</description>
+  <highlighted_element>redis</highlighted_element>
+  <language>JAVA</language>
+  <offset>31</offset>
+  <length>5</length>
+</problem>
+</problems>

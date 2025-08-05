@@ -36,10 +36,17 @@ public class DatabaseCleanupService {
      * 3. Old deleted conversations (permanently remove after 30 days)
      */
     @Scheduled(fixedRate = 1728000000L) // Run every 20 days (20 * 24 * 60 * 60 * 1000 milliseconds)
-    @Transactional
     public void performScheduledCleanup() {
         logger.info("Starting scheduled database cleanup task (every 20 days)");
-        
+        executeCleanupTransactionally();
+    }
+    
+    /**
+     * Executes the cleanup operations within a transaction
+     * Separated to avoid @Transactional issues when called from other methods in same class
+     */
+    @Transactional
+    public void executeCleanupTransactionally() {
         try {
             // Clean up orphaned messages (messages from conversations that don't exist)
             int orphanedMessagesDeleted = cleanupOrphanedMessages();
@@ -50,12 +57,12 @@ public class DatabaseCleanupService {
             // Clean up old soft-deleted conversations (permanently remove after 30 days)
             int deletedConversationsRemoved = cleanupSoftDeletedConversations();
             
-            logger.info("Scheduled cleanup completed. Orphaned messages deleted: {}, " +
+            logger.info("Cleanup completed. Orphaned messages deleted: {}, " +
                        "Soft-deleted messages deleted: {}, Conversations permanently removed: {}", 
                        orphanedMessagesDeleted, softDeletedMessagesDeleted, deletedConversationsRemoved);
                        
         } catch (Exception e) {
-            logger.error("Error during scheduled cleanup", e);
+            logger.error("Error during cleanup", e);
         }
     }
     
@@ -166,7 +173,7 @@ public class DatabaseCleanupService {
      */
     public void performManualCleanup() {
         logger.info("Starting manual database cleanup");
-        performScheduledCleanup();
+        executeCleanupTransactionally();
     }
     
     /**

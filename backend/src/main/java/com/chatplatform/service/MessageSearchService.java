@@ -246,7 +246,7 @@ public class MessageSearchService {
                 // Date to filter
                 if (request.getDateTo() != null) {
                     // Add 24 hours to include the entire day
-                    Instant endOfDay = request.getDateTo().plusSeconds(24 * 60 * 60);
+                    Instant endOfDay = request.getDateTo().plusSeconds(24L * 60 * 60);
                     if (msg.getTimestamp().isAfter(endOfDay)) {
                         return false;
                     }
@@ -333,7 +333,9 @@ public class MessageSearchService {
         
         logger.debug("Text search found {} results out of {} total", resultDtos.size(), totalCount);
         
-        return new SearchResultDto(resultDtos, (int) totalCount, page, size, query, conversationId);
+        // Safely convert totalCount to int, capping at Integer.MAX_VALUE to prevent overflow
+        int safeCount = totalCount > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) totalCount;
+        return new SearchResultDto(resultDtos, safeCount, page, size, query, conversationId);
     }
     
     private SearchResultDto performRegexSearch(String conversationId, String query, 
@@ -357,7 +359,9 @@ public class MessageSearchService {
         
         logger.debug("Regex search found {} results out of {} total", resultDtos.size(), totalCount);
         
-        return new SearchResultDto(resultDtos, (int) totalCount, page, size, query, conversationId);
+        // Safely convert totalCount to int, capping at Integer.MAX_VALUE to prevent overflow
+        int safeCount = totalCount > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) totalCount;
+        return new SearchResultDto(resultDtos, safeCount, page, size, query, conversationId);
     }
 
     private SearchResultDto createEmptyResult(String query, String conversationId, int page, int size) {

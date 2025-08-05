@@ -69,7 +69,8 @@ public class MongoIndexConfiguration {
         try {
             List<Document> indexes = mongoTemplate.getCollection(collectionName).listIndexes().into(new java.util.ArrayList<>());
             return indexes.stream().anyMatch(index -> indexName.equals(index.getString("name")));
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            logger.debug("Failed to check index existence for {}: {}", indexName, e.getMessage());
             return false;
         }
     }

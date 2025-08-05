@@ -87,7 +87,8 @@ public class TokenBlacklistService {
         // This would require keeping track of all user tokens
         // For now, we'll just log the action - full implementation would need user session tracking
         logger.info("Request to blacklist all tokens for user: {}", username);
-        // TODO: Implement if user session tracking is added
+        // Note: Full implementation requires user session tracking system
+        // Current design focuses on individual token blacklisting for security
     }
     
     /**

@@ -1,0 +1,50 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/is-callable/.editorconfig</file>
+  <line>18</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/is-callable/.editorconfig" />
+  <problem_class id="EditorConfigValueCorrectness" severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Invalid property value</problem_class>
+  <description>'off' is not allowed here</description>
+  <highlighted_element>off</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>15</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/is-callable/.editorconfig</file>
+  <line>19</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/is-callable/.editorconfig" />
+  <problem_class id="EditorConfigValueCorrectness" severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Invalid property value</problem_class>
+  <description>'off' is not allowed here</description>
+  <highlighted_element>off</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>14</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/is-callable/.editorconfig</file>
+  <line>29</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/is-callable/.editorconfig" />
+  <problem_class id="EditorConfigValueCorrectness" severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Invalid property value</problem_class>
+  <description>'off' is not allowed here</description>
+  <highlighted_element>off</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>15</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/is-callable/.editorconfig</file>
+  <line>30</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/is-callable/.editorconfig" />
+  <problem_class id="EditorConfigValueCorrectness" severity="ERROR" attribute_key="ERRORS_ATTRIBUTES">Invalid property value</problem_class>
+  <description>'off' is not allowed here</description>
+  <highlighted_element>off</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>14</offset>
+  <length>3</length>
+</problem>
+</problems>

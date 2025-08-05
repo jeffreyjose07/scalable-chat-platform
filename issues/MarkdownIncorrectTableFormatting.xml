@@ -1,0 +1,1610 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/css-loader/README.md</file>
+  <line>1255</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/css-loader/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Name | Type | Description ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>951</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/css.escape/README.md</file>
+  <line>33</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/css.escape/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| [![twitter/mathias](https://gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70)](https://tw...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>203</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/README.md</file>
+  <line>31</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Name                       | Description ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>1979</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/README.md</file>
+  <line>44</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Name                     | Description ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>1203</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/README.md</file>
+  <line>54</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Name                        | Description ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>3518</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/README.md</file>
+  <line>74</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Name                            | Description ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>3899</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/extensions.md</file>
+  <line>99</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/extensions.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| property | required | type | description ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>621</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/extensions.md</file>
+  <line>101</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/extensions.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>`pattern`</highlighted_element>
+  <language>Markdown</language>
+  <offset>1</offset>
+  <length>18</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/extensions.md</file>
+  <line>103</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/extensions.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>`action`</highlighted_element>
+  <language>Markdown</language>
+  <offset>1</offset>
+  <length>18</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/order.md</file>
+  <line>194</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/order.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| property | required | type | description ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>1121</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/order.md</file>
+  <line>196</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/order.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>`pattern`</highlighted_element>
+  <language>Markdown</language>
+  <offset>1</offset>
+  <length>18</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/order.md</file>
+  <line>198</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/order.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>`group`</highlighted_element>
+  <language>Markdown</language>
+  <offset>1</offset>
+  <length>18</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/order.md</file>
+  <line>199</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/order.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>`&quot;after&quot; \| &quot;before&quot;`</highlighted_element>
+  <language>Markdown</language>
+  <offset>31</offset>
+  <length>24</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md</file>
+  <line>166</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Name | Purpose | |-----------|-----------------------...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>461</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md</file>
+  <line>186</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Formatter | Representation | |-----------|----------------| | `%O` | Pretty-print an Object o...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>437</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-jsx-a11y/README.md</file>
+  <line>238</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-jsx-a11y/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Name                                          ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>10987</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/fill-range/README.md</file>
+  <line>207</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/fill-range/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| **Commits** | **Contributor** | | --- | --- | | 116 | [jonschlinkert](https://github.com/jonsc...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>407</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>20</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Site | Original size *(KB)...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>2295</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>22</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>45</highlighted_element>
+  <language>Markdown</language>
+  <offset>80</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>22</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>**41**</highlighted_element>
+  <language>Markdown</language>
+  <offset>103</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>22</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>45</highlighted_element>
+  <language>Markdown</language>
+  <offset>118</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>22</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>46</highlighted_element>
+  <language>Markdown</language>
+  <offset>129</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>22</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>45</highlighted_element>
+  <language>Markdown</language>
+  <offset>142</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>23</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>115</highlighted_element>
+  <language>Markdown</language>
+  <offset>80</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>23</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>**82**</highlighted_element>
+  <language>Markdown</language>
+  <offset>103</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>23</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>90</highlighted_element>
+  <language>Markdown</language>
+  <offset>118</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>23</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>92</highlighted_element>
+  <language>Markdown</language>
+  <offset>129</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>23</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>88</highlighted_element>
+  <language>Markdown</language>
+  <offset>142</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>24</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>132</highlighted_element>
+  <language>Markdown</language>
+  <offset>80</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>24</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>**105**</highlighted_element>
+  <language>Markdown</language>
+  <offset>103</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>24</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>118</highlighted_element>
+  <language>Markdown</language>
+  <offset>118</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>24</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>123</highlighted_element>
+  <language>Markdown</language>
+  <offset>129</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>24</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>118</highlighted_element>
+  <language>Markdown</language>
+  <offset>142</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>25</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>271</highlighted_element>
+  <language>Markdown</language>
+  <offset>80</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>25</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>**260**</highlighted_element>
+  <language>Markdown</language>
+  <offset>103</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>25</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>269</highlighted_element>
+  <language>Markdown</language>
+  <offset>118</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>25</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>229</highlighted_element>
+  <language>Markdown</language>
+  <offset>129</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>25</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>269</highlighted_element>
+  <language>Markdown</language>
+  <offset>142</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>26</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>289</highlighted_element>
+  <language>Markdown</language>
+  <offset>80</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>26</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>**238**</highlighted_element>
+  <language>Markdown</language>
+  <offset>103</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>26</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>282</highlighted_element>
+  <language>Markdown</language>
+  <offset>118</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>26</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>314</highlighted_element>
+  <language>Markdown</language>
+  <offset>129</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>26</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>282</highlighted_element>
+  <language>Markdown</language>
+  <offset>142</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>27</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>298</highlighted_element>
+  <language>Markdown</language>
+  <offset>80</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>27</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>**233**</highlighted_element>
+  <language>Markdown</language>
+  <offset>103</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>27</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>289</highlighted_element>
+  <language>Markdown</language>
+  <offset>118</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>27</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>291</highlighted_element>
+  <language>Markdown</language>
+  <offset>129</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>27</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>269</highlighted_element>
+  <language>Markdown</language>
+  <offset>142</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>28</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>574</highlighted_element>
+  <language>Markdown</language>
+  <offset>80</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>28</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>**468**</highlighted_element>
+  <language>Markdown</language>
+  <offset>103</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>28</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>557</highlighted_element>
+  <language>Markdown</language>
+  <offset>118</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>28</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>578</highlighted_element>
+  <language>Markdown</language>
+  <offset>129</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>28</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>557</highlighted_element>
+  <language>Markdown</language>
+  <offset>142</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>29</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>702</highlighted_element>
+  <language>Markdown</language>
+  <offset>80</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>29</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>**343**</highlighted_element>
+  <language>Markdown</language>
+  <offset>103</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>29</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>692</highlighted_element>
+  <language>Markdown</language>
+  <offset>118</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>29</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>704</highlighted_element>
+  <language>Markdown</language>
+  <offset>129</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>29</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>n/a</highlighted_element>
+  <language>Markdown</language>
+  <offset>142</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>30</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>844</highlighted_element>
+  <language>Markdown</language>
+  <offset>80</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>30</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>**805**</highlighted_element>
+  <language>Markdown</language>
+  <offset>103</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>30</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>843</highlighted_element>
+  <language>Markdown</language>
+  <offset>118</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>30</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>844</highlighted_element>
+  <language>Markdown</language>
+  <offset>129</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>30</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>n/a</highlighted_element>
+  <language>Markdown</language>
+  <offset>142</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>31</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>870</highlighted_element>
+  <language>Markdown</language>
+  <offset>80</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>31</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>**815**</highlighted_element>
+  <language>Markdown</language>
+  <offset>103</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>31</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>840</highlighted_element>
+  <language>Markdown</language>
+  <offset>118</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>31</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>864</highlighted_element>
+  <language>Markdown</language>
+  <offset>129</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>31</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>n/a</highlighted_element>
+  <language>Markdown</language>
+  <offset>142</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>32</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>1304</highlighted_element>
+  <language>Markdown</language>
+  <offset>80</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>32</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>**1183**</highlighted_element>
+  <language>Markdown</language>
+  <offset>103</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>32</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>1301</highlighted_element>
+  <language>Markdown</language>
+  <offset>118</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>32</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>1295</highlighted_element>
+  <language>Markdown</language>
+  <offset>129</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>32</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>n/a</highlighted_element>
+  <language>Markdown</language>
+  <offset>142</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>33</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>6347</highlighted_element>
+  <language>Markdown</language>
+  <offset>80</offset>
+  <length>22</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>33</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>**5686**</highlighted_element>
+  <language>Markdown</language>
+  <offset>103</offset>
+  <length>14</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>33</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>5863</highlighted_element>
+  <language>Markdown</language>
+  <offset>118</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>33</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>n/a</highlighted_element>
+  <language>Markdown</language>
+  <offset>129</offset>
+  <length>12</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>33</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>n/a</highlighted_element>
+  <language>Markdown</language>
+  <offset>142</offset>
+  <length>20</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md</file>
+  <line>39</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-minifier-terser/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Option | Description | Default | |--------------------------------|---...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>6025</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md</file>
+  <line>141</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Name | Type | ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>13964</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/htmlparser2/README.md</file>
+  <line>18</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/htmlparser2/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Name | Description ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>991</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/http-errors/README.md</file>
+  <line>111</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/http-errors/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>|Status Code|Constructor Name | |-----------|-----------------------------| |400 ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>1891</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/jest-watch-typeahead/node_modules/pretty-format/README.md</file>
+  <line>69</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/jest-watch-typeahead/node_modules/pretty-format/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| key | type | default | description ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>1634</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/jest-watch-typeahead/node_modules/pretty-format/README.md</file>
+  <line>209</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/jest-watch-typeahead/node_modules/pretty-format/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| key | type | description | | :---...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>1315</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-custom-media/README.md</file>
+  <line>43</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-custom-media/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| [Node](INSTALL.md#node) | [PostCSS CLI](INSTALL.md#postcss-cli) | [Webpack](INSTALL.md#webpack) | ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>241</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-env-function/README.md</file>
+  <line>54</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-env-function/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| [Node](INSTALL.md#node) | [PostCSS CLI](INSTALL.md#postcss-cli) | [Webpack](INSTALL.md#webpack) | ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>241</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-focus-visible/README.md</file>
+  <line>67</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-focus-visible/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| [Node](INSTALL.md#node) | [PostCSS CLI](INSTALL.md#postcss-cli) | [Webpack](INSTALL.md#webpack) | ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>241</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-focus-within/README.md</file>
+  <line>67</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-focus-within/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| [Node](INSTALL.md#node) | [PostCSS CLI](INSTALL.md#postcss-cli) | [Webpack](INSTALL.md#webpack) | ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>241</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-lab-function/README.md</file>
+  <line>56</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-lab-function/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| [Node](INSTALL.md#node) | [PostCSS CLI](INSTALL.md#postcss-cli) | [Webpack](INSTALL.md#webpack) | ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>241</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>166</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>|Name|Type|Default|Description| |:--:|:--:|:-----:|:----------| |[**`to`**](#to)|`{String}`|`undefin...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>508</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>166</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>Description</highlighted_element>
+  <language>Markdown</language>
+  <offset>19</offset>
+  <length>11</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>168</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>Destination File Path</highlighted_element>
+  <language>Markdown</language>
+  <offset>40</offset>
+  <length>21</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>169</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>Enable/Disable Source Maps</highlighted_element>
+  <language>Markdown</language>
+  <offset>46</offset>
+  <length>26</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>170</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>Source File Path</highlighted_element>
+  <language>Markdown</language>
+  <offset>44</offset>
+  <length>16</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>171</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>Custom PostCSS Parser</highlighted_element>
+  <language>Markdown</language>
+  <offset>54</offset>
+  <length>21</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>172</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>Custom PostCSS Syntax</highlighted_element>
+  <language>Markdown</language>
+  <offset>54</offset>
+  <length>21</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>173</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Cell is not correctly formatted</description>
+  <highlighted_element>Custom PostCSS Stringifier</highlighted_element>
+  <language>Markdown</language>
+  <offset>64</offset>
+  <length>26</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/node_modules/lilconfig/readme.md</file>
+  <line>54</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/node_modules/lilconfig/readme.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>|cosmiconfig option | lilconfig | |------------------------|-----------| |cache ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>343</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-selector-not/README.md</file>
+  <line>44</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-selector-not/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| [Node](INSTALL.md#node) | [PostCSS CLI](INSTALL.md#postcss-cli) | [Webpack](INSTALL.md#webpack) | ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>241</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/regjsparser/node_modules/jsesc/README.md</file>
+  <line>416</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/regjsparser/node_modules/jsesc/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| [![twitter/mathias](https://gravatar.com/avatar/24e08a9ea84deb17ae121074d0f17125?s=70)](https://tw...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>203</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/serve-index/node_modules/debug/README.md</file>
+  <line>101</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/serve-index/node_modules/debug/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Name | Purpose | |-----------|-----------------------...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>378</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/serve-index/node_modules/debug/README.md</file>
+  <line>120</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/serve-index/node_modules/debug/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Formatter | Representation | |-----------|----------------| | `%O` | Pretty-print an Object o...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>437</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/serve-index/node_modules/http-errors/README.md</file>
+  <line>78</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/serve-index/node_modules/http-errors/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>|Status Code|Constructor Name | |-----------|-----------------------------| |400 ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>1891</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>117</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | Default | Description | | --- | --- | --- | --- | | [description] | &lt;code&gt;string&lt;/c...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>195</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>133</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>64</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>146</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>64</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>159</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>64</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>172</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>64</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>185</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>64</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>198</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>64</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>211</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>64</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>224</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>64</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>240</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | Description | | --- | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; | | | [options] |...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>360</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>258</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | Default | Description | | --- | --- | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; | ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>498</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>274</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | Default | Description | | --- | --- | --- | --- | | parent | &lt;code&gt;Object&lt;/code&gt; | ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>569</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>291</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | Default | Description | | --- | --- | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; | ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>569</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>308</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | Default | Description | | --- | --- | --- | --- | | root | &lt;code&gt;Object&lt;/code&gt; | |...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>567</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>326</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | Default | | --- | --- | --- | | parent | &lt;code&gt;Object&lt;/code&gt; | | | [options] | &lt;c...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>190</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>342</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>64</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>356</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>64</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>370</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | object | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>64</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>387</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | Default | | --- | --- | --- | | root | &lt;code&gt;Object&lt;/code&gt; | | | options | &lt;code&gt;...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>186</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>404</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | child | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>63</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>418</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | parent | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>64</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>446</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | left | &lt;code&gt;Object&lt;/code&gt; | | right | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>95</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>462</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | removeObject | &lt;code&gt;Object&lt;/code&gt; |</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>70</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>481</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | referenceObject | &lt;code&gt;Object&lt;/code&gt; | | newObject | &lt;code&gt;Object...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>110</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>501</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | referenceObject | &lt;code&gt;Object&lt;/code&gt; | | newObject | &lt;code&gt;Object...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>110</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>521</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | referenceObject | &lt;code&gt;Object&lt;/code&gt; | | newObject | &lt;code&gt;Object...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>110</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>541</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| Param | Type | | --- | --- | | referenceObject | &lt;code&gt;Object&lt;/code&gt; | | newObject | &lt;code&gt;Object...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>110</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/tailwindcss/node_modules/lilconfig/readme.md</file>
+  <line>54</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/tailwindcss/node_modules/lilconfig/readme.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>|cosmiconfig option | lilconfig | |------------------------|-----------| |cache ...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>343</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/websocket-extensions/README.md</file>
+  <line>44</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/websocket-extensions/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| property | description | | ------------...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>859</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/websocket-extensions/README.md</file>
+  <line>60</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/websocket-extensions/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| property | description | | -------- | ------...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>566</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/websocket-extensions/README.md</file>
+  <line>204</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/websocket-extensions/README.md" />
+  <problem_class id="MarkdownIncorrectTableFormatting" severity="WEAK WARNING" attribute_key="INFO_ATTRIBUTES">Incorrect table formatting</problem_class>
+  <description>Table is not correctly formatted</description>
+  <highlighted_element>| property | description | | ------...</highlighted_element>
+  <language>Markdown</language>
+  <offset>0</offset>
+  <length>643</length>
+</problem>
+</problems>

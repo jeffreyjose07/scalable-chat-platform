@@ -1,0 +1,54 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/test/resolver/false_main/package.json</file>
+  <line>3</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/test/resolver/false_main/package.json" />
+  <problem_class id="JsonSchemaCompliance" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Compliance with JSON schema</problem_class>
+  <description>Incompatible types.
+ Required: string. Actual: boolean.</description>
+  <highlighted_element>false</highlighted_element>
+  <language>JSON</language>
+  <offset>9</offset>
+  <length>5</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/test/resolver/invalid_main/package.json</file>
+  <line>3</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/test/resolver/invalid_main/package.json" />
+  <problem_class id="JsonSchemaCompliance" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Compliance with JSON schema</problem_class>
+  <description>Incompatible types.
+ Required: string. Actual: array.</description>
+  <highlighted_element>[ &quot;why is this a thing&quot;, &quot;srsly omg wtf&quot; ]</highlighted_element>
+  <language>JSON</language>
+  <offset>10</offset>
+  <length>52</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/test/resolver/null_main/package.json</file>
+  <line>2</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/test/resolver/null_main/package.json" />
+  <problem_class id="JsonSchemaCompliance" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Compliance with JSON schema</problem_class>
+  <description>Incompatible types.
+ Required: string. Actual: null.</description>
+  <highlighted_element>null</highlighted_element>
+  <language>JSON</language>
+  <offset>10</offset>
+  <length>4</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/lodash.uniq/package.json</file>
+  <line>8</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/lodash.uniq/package.json" />
+  <problem_class id="JsonSchemaCompliance" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Compliance with JSON schema</problem_class>
+  <description>Incompatible types.
+ Required: array. Actual: string.</description>
+  <highlighted_element>&quot;lodash-modularized, uniq&quot;</highlighted_element>
+  <language>JSON</language>
+  <offset>14</offset>
+  <length>26</length>
+</problem>
+</problems>

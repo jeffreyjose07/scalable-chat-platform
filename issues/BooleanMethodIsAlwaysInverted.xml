@@ -1,0 +1,30 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/model/ChatMessage.java</file>
+  <line>172</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.model</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.model.ChatMessage boolean isDeliveredTo(java.lang.String userId)" />
+  <problem_class id="BooleanMethodIsAlwaysInverted" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Boolean method is always inverted</problem_class>
+  <hints />
+  <description>Calls to boolean method 'isDeliveredTo()' are always inverted</description>
+  <highlighted_element>isDeliveredTo</highlighted_element>
+  <language>JAVA</language>
+  <offset>19</offset>
+  <length>13</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/service/JwtService.java</file>
+  <line>86</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.JwtService boolean isTokenExpired(java.lang.String token)" />
+  <problem_class id="BooleanMethodIsAlwaysInverted" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Boolean method is always inverted</problem_class>
+  <hints />
+  <description>Calls to boolean method 'isTokenExpired()' are always inverted</description>
+  <highlighted_element>isTokenExpired</highlighted_element>
+  <language>JAVA</language>
+  <offset>20</offset>
+  <length>14</length>
+</problem>
+</problems>

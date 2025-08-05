@@ -1,0 +1,15 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/config/MongoIndexConfiguration.java</file>
+  <line>46</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.config</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.config.MongoIndexConfiguration void createMessageTTLIndex()" />
+  <problem_class id="ConstantValue" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Constant values</problem_class>
+  <description>Condition &lt;code&gt;currentTTL.equals(newTTLSeconds)&lt;/code&gt; is always &lt;code&gt;true&lt;/code&gt; when reached</description>
+  <highlighted_element>currentTTL.equals(newTTLSeconds)</highlighted_element>
+  <language>JAVA</language>
+  <offset>53</offset>
+  <length>32</length>
+</problem>
+</problems>

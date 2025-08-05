@@ -1,0 +1,50 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/static-eval/node_modules/optionator/README.md</file>
+  <line>2</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/static-eval/node_modules/optionator/README.md" />
+  <problem_class id="CheckEmptyScriptTag" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Empty tag</problem_class>
+  <description>Empty tag doesn't work in some browsers</description>
+  <highlighted_element>&lt;a name=&quot;optionator&quot; /&gt;</highlighted_element>
+  <language>HTML</language>
+  <offset>0</offset>
+  <length>23</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/static-eval/node_modules/type-check/README.md</file>
+  <line>3</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/static-eval/node_modules/type-check/README.md" />
+  <problem_class id="CheckEmptyScriptTag" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Empty tag</problem_class>
+  <description>Empty tag doesn't work in some browsers</description>
+  <highlighted_element>&lt;a name=&quot;type-check&quot; /&gt;</highlighted_element>
+  <language>HTML</language>
+  <offset>0</offset>
+  <length>23</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/static-eval/node_modules/type-check/README.md</file>
+  <line>128</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/static-eval/node_modules/type-check/README.md" />
+  <problem_class id="CheckEmptyScriptTag" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Empty tag</problem_class>
+  <description>Empty tag doesn't work in some browsers</description>
+  <highlighted_element>&lt;a name=&quot;type-format&quot; /&gt;</highlighted_element>
+  <language>HTML</language>
+  <offset>0</offset>
+  <length>24</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/static-eval/node_modules/type-check/README.md</file>
+  <line>184</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/static-eval/node_modules/type-check/README.md" />
+  <problem_class id="CheckEmptyScriptTag" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Empty tag</problem_class>
+  <description>Empty tag doesn't work in some browsers</description>
+  <highlighted_element>&lt;a name=&quot;custom-types&quot; /&gt;</highlighted_element>
+  <language>HTML</language>
+  <offset>0</offset>
+  <length>25</length>
+</problem>
+</problems>

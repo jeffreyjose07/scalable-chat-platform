@@ -1,6 +1,7 @@
 package com.chatplatform.service;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
@@ -65,7 +66,7 @@ public class JwtService {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-        } catch (Exception e) {
+        } catch (JwtException | IllegalArgumentException e) {
             logger.warn("Token validation with issuer/audience failed: {}, trying without", e.getMessage());
             try {
                 // Fall back to basic validation for legacy tokens (temporary compatibility)
@@ -76,7 +77,7 @@ public class JwtService {
                         .getBody();
                 logger.info("Token validated successfully with basic validation (legacy mode)");
                 return claims;
-            } catch (Exception fallbackException) {
+            } catch (JwtException | IllegalArgumentException fallbackException) {
                 logger.error("Both JWT validation methods failed: original={}, fallback={}", e.getMessage(), fallbackException.getMessage());
                 throw fallbackException;
             }
@@ -113,7 +114,8 @@ public class JwtService {
         try {
             final String username = extractUsername(token);
             return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-        } catch (Exception e) {
+        } catch (JwtException | IllegalArgumentException e) {
+            logger.debug("Token validation failed for user {}: {}", userDetails.getUsername(), e.getMessage());
             return false;
         }
     }
@@ -122,7 +124,8 @@ public class JwtService {
         try {
             extractAllClaims(token);
             return !isTokenExpired(token);
-        } catch (Exception e) {
+        } catch (JwtException | IllegalArgumentException e) {
+            logger.debug("Token validation failed: {}", e.getMessage());
             return false;
         }
     }
