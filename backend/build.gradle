@@ -262,6 +262,7 @@ sonar {
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.projectName", "Scalable Chat Platform"
         property "sonar.projectVersion", version
+        property "sonar.projectDescription", "A scalable real-time chat platform with Spring Boot backend and React frontend"
         property "sonar.sources", "src/main/java"
         property "sonar.tests", "src/test/java"
         property "sonar.java.source", "17" 
