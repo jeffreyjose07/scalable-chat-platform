@@ -366,4 +366,4 @@ docker run -d \
 
 ## 📝 License
 
-This project is for educational and demonstration purposes.
+This project is for educational and demonstration purposes.# SonarCloud Analysis Ready
