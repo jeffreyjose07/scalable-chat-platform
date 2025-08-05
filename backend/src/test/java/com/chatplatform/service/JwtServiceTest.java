@@ -25,6 +25,8 @@ class JwtServiceTest {
         jwtService = new JwtService();
         ReflectionTestUtils.setField(jwtService, "jwtSecret", testSecret);
         ReflectionTestUtils.setField(jwtService, "jwtExpiration", testExpiration);
+        ReflectionTestUtils.setField(jwtService, "jwtIssuer", "test-issuer");
+        ReflectionTestUtils.setField(jwtService, "jwtAudience", "test-audience");
         
         testUser = new User();
         testUser.setUsername("testuser");
