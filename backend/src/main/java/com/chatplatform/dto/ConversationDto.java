@@ -178,4 +178,17 @@ public class ConversationDto {
         UserDto otherUser = getOtherParticipant(currentUserId);
         return otherUser != null ? otherUser.getDisplayName() : "Unknown User";
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ConversationDto that)) return false;
+        
+        return id != null && id.equals(that.id);
+    }
+    
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }

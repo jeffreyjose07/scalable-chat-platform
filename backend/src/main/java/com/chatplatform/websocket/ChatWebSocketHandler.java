@@ -50,6 +50,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private static final long CONNECTION_TIMEOUT_MINUTES = 30;
     private static final long HEARTBEAT_INTERVAL_MINUTES = 5;
     private static final long PING_INTERVAL_MINUTES = 2;
+    private static final long CONNECTION_SETUP_DELAY_MS = 100;
     
     // Connection state tracking
     private static class ConnectionInfo {
@@ -205,7 +206,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             // Add a small delay to ensure connection is fully established
             new Thread(() -> {
                 try {
-                    Thread.sleep(100); // Small delay
+                    Thread.sleep(CONNECTION_SETUP_DELAY_MS); // Small delay
                     if (session.isOpen()) {
                         pendingMessages.forEach(msg -> {
                             try {

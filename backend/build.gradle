@@ -3,6 +3,8 @@ plugins {
     id 'org.springframework.boot' version '3.2.0'
     id 'io.spring.dependency-management' version '1.1.4'
     id 'com.github.node-gradle.node' version '7.0.1'
+    id 'org.sonarqube' version '4.4.1.3373'
+    id 'jacoco'
 }
 
 group = 'com.chatplatform'
@@ -233,3 +235,144 @@ task integrationTest(type: Test) {
 }
 
 check.dependsOn integrationTest
+
+// JaCoCo configuration for code coverage
+jacoco {
+    toolVersion = "0.8.10"
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
+}
+
+// SonarQube configuration for SonarCloud (free for open source)
+sonar {
+    properties {
+        property "sonar.projectKey", "jeffreyjose07_scalable-chat-platform"
+        property "sonar.organization", "jeffreyjose07"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.projectName", "Scalable Chat Platform"
+        property "sonar.projectVersion", version
+        property "sonar.sources", "src/main/java"
+        property "sonar.tests", "src/test/java"
+        property "sonar.java.source", "17"
+        property "sonar.sourceEncoding", "UTF-8"
+        
+        // Coverage settings
+        property "sonar.java.coveragePlugin", "jacoco"
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml"
+        
+        // Exclude generated files and static resources
+        property "sonar.exclusions", "**/build/**,**/static/**,**/node_modules/**,**/generated/**"
+        property "sonar.test.exclusions", "**/build/**,**/static/**,**/generated/**"
+        
+        // Language-specific settings
+        property "sonar.java.binaries", "build/classes/java/main"
+        property "sonar.java.test.binaries", "build/classes/java/test"
+    }
+}
+
+// Task to run SonarCloud analysis (free for public repos)
+task sonarAnalysis {
+    group = 'verification'
+    description = 'Run SonarCloud analysis (requires SONAR_TOKEN env var)'
+    
+    dependsOn compileJava, compileTestJava, test, jacocoTestReport
+    
+    doFirst {
+        def token = System.getenv('SONAR_TOKEN')
+        if (!token) {
+            println "❌ SONAR_TOKEN environment variable not found!"
+            println "📋 To run SonarCloud analysis:"
+            println "   1. Go to https://sonarcloud.io"
+            println "   2. Sign up with your GitHub account (free for public repos)"
+            println "   3. Create a new project for 'jeffreyjose07/scalable-chat-platform'"
+            println "   4. Generate a token and set: export SONAR_TOKEN=your_token_here"
+            println "   5. Run: ./gradlew sonarAnalysis"
+            println ""
+            println "🔍 For now, running local analysis with JaCoCo coverage..."
+            return
+        }
+        
+        println "🔍 Running SonarCloud analysis..."
+        println "📊 Project: jeffreyjose07_scalable-chat-platform"
+        println "🌐 Results will be available at: https://sonarcloud.io/project/overview?id=jeffreyjose07_scalable-chat-platform"
+    }
+    
+    doLast {
+        def token = System.getenv('SONAR_TOKEN')
+        if (token) {
+            println "🔍 Running SonarCloud analysis..."
+            exec {
+                commandLine './gradlew', 'sonar', "--no-daemon"
+                environment 'SONAR_TOKEN', token
+            }
+            println "✅ SonarCloud analysis completed!"
+            println "🌐 View results: https://sonarcloud.io/project/overview?id=jeffreyjose07_scalable-chat-platform"
+        } else {
+            println "📋 Coverage Report: build/jacocoHtml/index.html"
+            println "ℹ️  Set SONAR_TOKEN environment variable to run SonarCloud analysis"
+        }
+    }
+}
+
+// Alternative local analysis task without SonarCloud
+task localAnalysis {
+    group = 'verification'
+    description = 'Run local code analysis with JaCoCo coverage'
+    
+    dependsOn compileJava, compileTestJava, test, jacocoTestReport
+    
+    doLast {
+        println "=" * 60
+        println "📊 LOCAL CODE ANALYSIS SUMMARY"
+        println "=" * 60
+        
+        // Check JaCoCo coverage
+        def jacocoReport = file("build/reports/jacoco/test/jacocoTestReport.xml")
+        if (jacocoReport.exists()) {
+            try {
+                // Create parser that allows DTD
+                def parser = new XmlSlurper()
+                parser.setFeature("http://apache.org/xml/features/disallow-doctype-decl", false)
+                parser.setFeature("http://xml.org/sax/features/external-general-entities", false)
+                parser.setFeature("http://xml.org/sax/features/external-parameter-entities", false)
+                
+                def jacocoXml = parser.parse(jacocoReport)
+                def instructions = jacocoXml.counter.find { it.@type == 'INSTRUCTION' }
+                if (instructions) {
+                    def covered = instructions.@covered as Integer
+                    def missed = instructions.@missed as Integer
+                    def total = covered + missed
+                    def coverage = total > 0 ? (covered * 100.0 / total).round(1) : 0
+                    println "📋 Test Coverage: ${coverage}% (${covered}/${total} instructions)"
+                    println "   📄 HTML Report: build/jacocoHtml/index.html"
+                    println "   📄 XML Report: build/reports/jacoco/test/jacocoTestReport.xml"
+                }
+            } catch (Exception e) {
+                println "📋 Test Coverage: Report available at build/jacocoHtml/index.html"
+                println "   ⚠️  Could not parse XML report: ${e.message}"
+            }
+        }
+        
+        // Check test results  
+        def testReport = file("build/reports/tests/test/index.html")
+        if (testReport.exists()) {
+            println "🧪 Test Results: build/reports/tests/test/index.html"
+        }
+        
+        println ""
+        println "💡 For comprehensive analysis, run: ./gradlew sonarAnalysis"
+        println "   (requires SONAR_TOKEN for SonarCloud)"
+        println "=" * 60
+    }
+}
