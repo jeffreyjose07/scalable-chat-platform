@@ -11,23 +11,37 @@ RUN apt-get update && apt-get install -y curl && \
 # Set working directory
 WORKDIR /app
 
-# Copy entire frontend directory
-COPY frontend/ ./frontend/
-
-# Copy backend files
+# Copy dependency files first for better caching
 COPY backend/build.gradle ./backend/
 COPY backend/settings.gradle ./backend/
 COPY backend/gradle.properties ./backend/
 COPY backend/gradlew ./backend/
 COPY backend/gradlew.bat ./backend/
 COPY backend/gradle/ ./backend/gradle/
-COPY backend/src ./backend/src
+COPY frontend/package*.json ./frontend/
 
-# Set working directory to backend for Gradle build
+# Set working directory to backend for initial setup
 WORKDIR /app/backend
 
-# Make gradlew executable
-RUN chmod +x ./gradlew
+# Make gradlew executable and download dependencies (cached layer)
+RUN chmod +x ./gradlew && \
+    ./gradlew --no-daemon dependencies
+
+# Install frontend dependencies (cached layer)
+WORKDIR /app/frontend
+RUN npm ci --only=production
+
+# Copy source code (changes frequently, should be last)
+WORKDIR /app
+COPY frontend/src ./frontend/src
+COPY frontend/public ./frontend/public
+COPY frontend/tsconfig.json ./frontend/
+COPY frontend/tailwind.config.js ./frontend/
+COPY frontend/generate-build-info.js ./frontend/
+COPY backend/src ./backend/src
+
+# Set working directory to backend for build
+WORKDIR /app/backend
 
 # Build the application (this will also build the React frontend)
 RUN ./gradlew buildForRender --no-daemon
@@ -60,11 +74,11 @@ EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
   CMD curl -f http://localhost:8080/api/health/status || exit 1
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "app.jar", "--spring.profiles.active=render"]
+# JVM optimization for containers and fast startup
+ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:TieredStopAtLevel=1 -noverify"
 
-# JVM optimization for containers
-ENV JAVA_OPTS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+UseG1GC"
+# Run the application
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar --spring.profiles.active=render"]
 
 # Labels for metadata
 LABEL maintainer="Chat Platform Team"

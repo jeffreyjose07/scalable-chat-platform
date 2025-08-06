@@ -24,7 +24,7 @@ services:
       - key: GRADLE_OPTS
         value: "-Xmx2048m -XX:MaxMetaspaceSize=512m -Dorg.gradle.daemon=false"
       - key: JAVA_OPTS
-        value: "-Xmx1024m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+        value: "-Xmx1024m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:TieredStopAtLevel=1 -noverify"
       
       # CORS Configuration - SECURITY HARDENED
       - key: CORS_ALLOWED_ORIGINS

@@ -1,5 +1,9 @@
 spring:
   # Render deployment profile - single service with external dependencies
+  
+  # Lazy initialization for faster startup (20-40% improvement)
+  main:
+    lazy-initialization: true
     
   # PostgreSQL Configuration (Render managed database)
   datasource:
@@ -113,7 +117,12 @@ spring.devtools.livereload.enabled: false
 # Resource limits for free tier
 spring.datasource.hikari.leak-detection-threshold: 30000
 
-# Single service optimizations
+# Single service optimizations  
 spring.task.execution.pool.max-size: 4
 spring.task.execution.pool.core-size: 2
 spring.task.scheduling.pool.size: 2
+
+# Additional startup optimizations
+spring.autoconfigure.exclude: |
+  org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,
+  org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration
