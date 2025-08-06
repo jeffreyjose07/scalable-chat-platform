@@ -31,11 +31,15 @@ function removeConsoleFromFile(filePath) {
   try {
     let content = fs.readFileSync(filePath, 'utf8');
     
-    // Remove console.log, console.debug, console.info (keep console.warn and console.error)
-    // This regex handles most common console statement patterns
+    // More careful console removal to prevent syntax errors
+    // Replace console statements with void 0 to maintain syntax structure
     content = content
-      .replace(/console\.(log|debug|info)\s*\([^)]*\)\s*;?/g, '')
-      .replace(/console\.(log|debug|info)\s*\([^)]*\)/g, 'void 0');
+      // Handle console.log(...); with semicolon
+      .replace(/console\.(log|debug|info)\s*\([^)]*\)\s*;/g, 'void 0;')
+      // Handle console.log(...) without semicolon (in expressions)
+      .replace(/console\.(log|debug|info)\s*\([^)]*\)/g, 'void 0')
+      // Clean up any double void 0 patterns
+      .replace(/void 0\s*void 0/g, 'void 0');
     
     fs.writeFileSync(filePath, content, 'utf8');
     console.log(`✅ Cleaned console statements from: ${path.basename(filePath)}`);
