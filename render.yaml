@@ -7,7 +7,7 @@ services:
     dockerfilePath: ./Dockerfile.render
     plan: starter  # Upgraded from free for better performance
     region: oregon
-    branch: render-single-service-deployment
+    branch: main
     buildCommand: ""
     startCommand: ""
     healthCheckPath: /api/health/status
