@@ -1,19 +1,19 @@
 # Chat Platform Frontend
 
-A modern React frontend for a scalable chat platform with real-time messaging, group management, and responsive design.
+A modern React 18 frontend with TypeScript, optimized for real-time messaging and responsive design. Built to be embedded in Spring Boot for single-service deployment.
 
 ## 🚀 Features
 
 ### Core Functionality
 - **Real-time messaging** via WebSocket with automatic reconnection
-- **Responsive design** with mobile-first approach
-- **Direct messaging** between users
-- **Group conversations** with advanced management
-- **Conversation deletion** with role-based permissions
-- **Message search** with highlighting and pagination
-- **Unread message tracking** with visual indicators
-- **User authentication** with JWT tokens
-- **Network access support** for multi-device testing
+- **Responsive design** with mobile-first approach using Tailwind CSS
+- **Direct messaging** between users with search functionality
+- **Group conversations** with advanced management and permissions
+- **Conversation deletion** with role-based permissions (OWNER/ADMIN/MEMBER)
+- **Message search** with highlighting, pagination, and recent searches
+- **Unread message tracking** with industry-standard timestamp approach
+- **User authentication** with JWT tokens and secure session management
+- **Single-page application** optimized for production embedding
 
 ### Advanced Group Management
 - **Group creation modal** with customizable settings

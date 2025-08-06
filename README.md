@@ -1,111 +1,78 @@
 # Scalable Chat Platform
 
-A real-time chat platform built with Spring Boot backend and React frontend, designed for local development and network access.
+A production-ready real-time chat platform built with Spring Boot 3.2 and React 18, optimized for single-service deployment with comprehensive documentation.
 
-## Architecture
+## 🚀 Quick Start
 
-- **Backend**: Spring Boot 3.2 with Java 17, WebSocket support, PostgreSQL, MongoDB, Redis, Kafka, Elasticsearch
-- **Frontend**: React 18 with TypeScript, WebSocket client, Tailwind CSS
-- **Infrastructure**: Docker Compose with persistent volumes and automatic topic management
-- **Network Access**: Automatic IP detection and dynamic CORS configuration
-
-📊 **[View System Architecture](docs/ARCHITECTURE.md)** | 🎯 **[Professional Demo Guide](docs/DEMO.md)**
-
-> **Features professional Mermaid diagrams, sequence flows, and comprehensive technical documentation**
-
-## ⚡ Quick Start
-
-### **One Command Setup** (Recommended):
+### One-Command Development Setup
 ```bash
-# Start everything - takes 4-6 minutes first time
-./start-full-stack.sh
-```
-**What you get:** Complete chat platform running at http://localhost:3000
+# Start infrastructure (PostgreSQL, MongoDB, Redis)
+./start-dev.sh
 
-### **Stop the Application**:
-```bash
-# Safe stop - preserves all your data  
-./stop-full-stack.sh
+# In another terminal - Start backend
+cd backend && export JAVA_HOME=/path/to/java17 && ./gradlew bootRun
 
-# Clean stop - removes all data (fresh start)
-./stop-full-stack.sh --clean
+# In another terminal - Start frontend
+cd frontend && npm install && npm start
 ```
 
-### **Requirements**
-- Docker Desktop (4GB+ RAM recommended)
-- Git
-
-### **Manual Development Setup** (Alternative):
-
-1. **Start Infrastructure**
-   ```bash
-   ./start-dev.sh
-   ```
-
-2. **Start Backend**
-   ```bash
-   cd backend
-   ./gradlew bootRun
-   ```
-
-3. **Start Frontend**
-   ```bash
-   cd frontend
-   npm install && npm start
-   ```
-
-### Testing Real-time Chat
-
-For testing the real-time functionality, start multiple frontend instances:
-
+### Production Build
 ```bash
-# Terminal 1 - First instance
-cd frontend && npm start
-
-# Terminal 2 - Second instance  
-cd frontend && PORT=3001 npm start
-
-# Terminal 3 - Third instance
-cd frontend && PORT=3002 npm start
+# Build single JAR with embedded frontend
+export JAVA_HOME=/path/to/java17
+cd backend && ./gradlew buildForRender
 ```
 
-Then open:
-- http://localhost:3000 (User 1)
-- http://localhost:3001 (User 2) 
-- http://localhost:3002 (User 3)
+## 🏗️ Architecture Overview
 
-Login with different emails on each instance and start chatting!
+- **Backend**: Spring Boot 3.2 with Java 17, WebSocket support
+- **Databases**: PostgreSQL (users), MongoDB (messages), Redis (sessions)
+- **Frontend**: React 18 with TypeScript, embedded in Spring Boot JAR
+- **Messaging**: In-memory queue with event-driven distribution
+- **Deployment**: Single-service container optimized for Render platform
 
-### **Data Management**
+**🎯 [Complete Architecture Documentation →](docs/ARCHITECTURE.md)**
 
-```bash
-# Normal stop - keeps all data
-./stop-full-stack.sh
 
-# Clean restart - removes all data  
-./stop-full-stack.sh --clean && ./start-full-stack.sh
 
-# Legacy infrastructure only
-./stop-dev.sh  # Preserves data
+---
+
+## 📚 Documentation Tree
+
+### 🏗️ **Architecture & Design**
+```
+├── 📋 System Architecture    → docs/ARCHITECTURE.md
+├── 🎯 Professional Demo     → docs/DEMO.md  
+└── 🔧 Development Setup     → docs/development/setup.md
 ```
 
-### Network Access
-
-For accessing from other machines on the same network:
-
-```bash
-# Start frontend with network access
-cd frontend && npm run start:network
-
-# Access from any device on your network
-http://YOUR_IP:3000
+### 🚀 **Component Documentation**
+```
+├── ⚙️  Backend (Spring Boot)  → backend/README.md
+├── ⚛️  Frontend (React)       → frontend/README.md
+└── 🧪 Testing Strategy       → backend/src/test/README.md
 ```
 
-✅ **Automatic IP detection - no hardcoding needed**
-✅ **Dynamic CORS configuration**
-✅ **Works across different WiFi networks**
+### 🌐 **Deployment & Operations**
+```
+├── 🚀 Render Deployment      → docs/deployment/render.md
+├── 📊 Deployment Overview    → docs/deployment/README.md
+├── 🔐 JWT Security Setup     → docs/render-jwt-security-summary.md
+└── 🛡️  Security Deployment    → docs/render-security-deployment.md
+```
 
-## Features
+### 📖 **Project Documentation**
+```
+├── ✨ Features Overview      → FEATURES.md
+├── 📊 Project Phases        → PROJECT_PHASES.md
+├── 📝 Changelog             → CHANGELOG.md
+├── 🔐 Security Guidelines    → SECURITY.md
+└── 🌐 Network Access Guide  → NETWORK_ACCESS_GUIDE.md
+```
+
+---
+
+## ✨ Key Features
 
 ### Core Features
 - ✅ **Real-time messaging** via WebSocket with automatic reconnection
@@ -119,182 +86,223 @@ http://YOUR_IP:3000
 - ✅ **Advanced search features** with recent searches, filters, and proper z-index handling
 - ✅ **Read receipts system** with WhatsApp-style visual indicators (sent/delivered/read)
 - ✅ **Modern UI/UX** following WhatsApp/Telegram design standards with message bubbles and gradients
-- ✅ **User authentication** (demo mode with JWT tokens)
+- ✅ **User authentication** with JWT tokens and secure session management
 - ✅ **Message persistence** (MongoDB with automatic indexing)
 - ✅ **Connection management** (Redis with session tracking)
-- ✅ **Message queuing** (Kafka with guaranteed delivery)
+- ✅ **In-memory message queue** with event-driven distribution
 - ✅ **Responsive UI** with Tailwind CSS and mobile-first design
 
 ### Infrastructure Features
-- ✅ **Kafka topic auto-creation** and persistence
-- ✅ **Zookeeper cluster ID consistency** 
-- ✅ **Multi-layer health monitoring**
-- ✅ **Automatic IP detection** for network access
-- ✅ **Dynamic CORS configuration**
-- ✅ **Persistent volumes** for data retention
-- ✅ **Enhanced logging** with emoji indicators
-- ✅ **Graceful error handling** and recovery
+- ✅ **Single-service deployment** optimized for production
+- ✅ **Docker containerization** with multi-stage builds
+- ✅ **Build optimization** with lazy initialization and JVM tuning
+- ✅ **Health monitoring** with actuator endpoints
+- ✅ **Dynamic CORS configuration** for cross-origin access
+- ✅ **Database connection pooling** optimized for cloud deployment
+- ✅ **Enhanced logging** with structured output
+- ✅ **Graceful shutdown** and error handling
 
 ### Technical Highlights
-- **Event-Driven Architecture**: Microservices with Kafka message distribution
+- **Single-Service Architecture**: Optimized monolithic deployment with embedded frontend
 - **Multi-Database Strategy**: PostgreSQL for users/conversations, MongoDB for messages, Redis for sessions
-- **Real-Time Communication**: WebSocket-based instant messaging with unread tracking
-- **Modern React Architecture**: Custom hooks pattern without Redux complexity
+- **Real-Time Communication**: WebSocket-based instant messaging with in-memory queuing
+- **Modern React Architecture**: Custom hooks pattern with TypeScript
 - **Industry-Standard UX**: Last-read timestamp approach used by Discord/Slack/WhatsApp
-- **Horizontal Scalability**: Stateless services designed for load balancing
-- **Fault Tolerance**: Message persistence and graceful error handling
+- **Production Ready**: Optimized build pipeline with startup performance tuning
+- **Cloud Deployment**: Render platform integration with environment-specific configurations
 
-## Services and Ports
+## 🔌 Services & Infrastructure
 
-| Service | Port | Purpose |
-|---------|------|---------|
-| Backend API | 8080 | Spring Boot application |
-| Frontend | 3000 | React development server |
-| PostgreSQL | 5432 | User data storage |
-| MongoDB | 27017 | Message storage |
-| Redis | 6379 | Caching and sessions |
-| Kafka | 9092 | Message queuing |
-| Elasticsearch | 9200 | Message search (future) |
+### Development Environment
+| Service | Port | Purpose | Documentation |
+|---------|------|---------|---------------|
+| Backend API | 8080 | Spring Boot with embedded frontend | [Backend Docs →](backend/README.md) |
+| PostgreSQL | 5432 | User accounts and conversations | [Setup Guide →](docs/development/setup.md) |
+| MongoDB | 27017 | Chat messages and history | [Setup Guide →](docs/development/setup.md) |
+| Redis | 6379 | Session management and caching | [Setup Guide →](docs/development/setup.md) |
 
-## Development
+### Production Deployment
+- **Single Service**: Frontend embedded as static resources in Spring Boot JAR
+- **External Databases**: Managed PostgreSQL, MongoDB Atlas, Upstash Redis
+- **Platform**: Render with build optimizations
+- **📋 [Complete Deployment Guide →](docs/deployment/render.md)**
 
-### Backend Structure
+## 🛠️ Development Resources
+
+### 📁 Project Structure
 ```
-backend/src/main/java/com/chatplatform/
-├── config/          # Configuration classes
-├── controller/      # REST controllers
-├── dto/            # Data transfer objects
-├── model/          # Entity models
-├── repository/     # Data repositories
-├── service/        # Business logic
-└── websocket/      # WebSocket handlers
+scalable-chat-platform/
+├── 📂 backend/              → Spring Boot Application
+│   ├── 📖 README.md         → Backend documentation
+│   ├── 🧪 src/test/         → Testing strategy & tests
+│   └── ⚙️  build.gradle     → Build configuration
+├── 📂 frontend/             → React Application  
+│   ├── 📖 README.md         → Frontend documentation
+│   └── 📦 package.json     → Dependencies & scripts
+├── 📂 docs/                 → Complete documentation
+│   ├── 🏗️  ARCHITECTURE.md  → System design & diagrams
+│   ├── 🚀 deployment/      → Deployment guides
+│   ├── 🛠️  development/     → Setup & dev guides
+│   ├── 📋 api/             → API documentation
+│   ├── ✨ features/        → Feature specifications
+│   └── 📚 guides/          → How-to guides
+├── 🐳 docker-compose.yml   → Local infrastructure
+├── 🚀 Dockerfile.render    → Production container
+└── 📜 scripts/             → Utility scripts
 ```
 
-### Frontend Structure
+### 🔗 Quick Links
+- **[Backend Development →](backend/README.md)** - Spring Boot setup, API docs, testing
+- **[Frontend Development →](frontend/README.md)** - React components, hooks, styling  
+- **[System Architecture →](docs/ARCHITECTURE.md)** - Diagrams, data flow, technical design
+- **[Development Setup →](docs/development/setup.md)** - Local environment configuration
+- **[Testing Strategy →](backend/src/test/README.md)** - Unit tests, integration tests, coverage
+- **[Render Deployment →](docs/deployment/render.md)** - Production deployment guide
+
+## 🆘 Support & Troubleshooting
+
+### 🔧 Quick Solutions
+| Issue | Solution | Documentation |
+|-------|----------|---------------|
+| Build fails | Ensure Java 17+ installed | [Backend Setup →](backend/README.md#troubleshooting) |
+| Database connection | Check Docker services running | [Development Setup →](docs/development/setup.md) |
+| WebSocket issues | Verify CORS configuration | [Architecture →](docs/ARCHITECTURE.md#security-features) |
+| Frontend errors | Clear node_modules, reinstall | [Frontend Guide →](frontend/README.md) |
+
+### 📋 Comprehensive Guides
+- **[Backend Troubleshooting →](backend/README.md#troubleshooting)** - Java, Gradle, Spring Boot issues
+- **[Development Setup →](docs/development/setup.md)** - Environment configuration
+- **[Deployment Issues →](docs/deployment/render.md)** - Production deployment problems
+- **[System Architecture →](docs/ARCHITECTURE.md)** - Understanding the system design
+
+## 📡 API Reference
+
+### 🔗 API Documentation
+**Complete API documentation is available in the backend README:**
+
+├── 🔐 Authentication API     → [backend/README.md#authentication-endpoints](backend/README.md#authentication-endpoints)
+├── 💬 Message API            → [backend/README.md#message-endpoints](backend/README.md#message-endpoints)  
+├── 👥 Conversation API       → [backend/README.md#conversation-endpoints](backend/README.md#conversation-endpoints)
+└── 🔌 WebSocket API          → [backend/README.md#websocket-endpoint](backend/README.md#websocket-endpoint)
+
+### 🚀 Quick API Overview
+| Endpoint Category | Base Path | Documentation |
+|------------------|-----------|---------------|
+| Authentication | `/api/auth/*` | [Auth API →](backend/README.md#authentication-endpoints) |
+| Messages | `/api/messages/*` | [Message API →](backend/README.md#message-endpoints) |
+| Conversations | `/api/conversations/*` | [Conversation API →](backend/README.md#conversation-endpoints) |
+| WebSocket | `/ws/chat` | [WebSocket API →](backend/README.md#websocket-endpoint) |
+| Health Check | `/api/health/status` | [Monitoring →](backend/README.md#monitoring--health) |
+
+## 🧪 Testing & Quality
+
+### 📋 Testing Documentation
 ```
-frontend/src/
-├── components/     # React components
-├── hooks/         # Custom React hooks
-├── pages/         # Page components
-├── services/      # API services
-├── types/         # TypeScript types
-└── utils/         # Utility functions
+🧪 Testing Resources
+├── 📖 Testing Strategy        → backend/src/test/README.md
+├── 🔧 Unit Tests             → backend/src/test/java/
+├── 🌐 Integration Tests      → backend/src/integrationTest/
+└── 📊 Coverage Reports       → build/jacocoHtml/index.html
 ```
 
-## Troubleshooting
-
-### Common Issues
-
-**🔧 Kafka Issues:**
-- **Topic missing**: Run `./start-dev.sh` - it will auto-create topics
-- **Cluster ID mismatch**: Run `./fix-kafka-only.sh` to fix without data loss
-- **Messages not real-time**: Check backend logs for Kafka connection status
-
-**🌐 Network Access:**
-- **Login fails from other machines**: Use `npm run start:network` for frontend
-- **IP detection wrong**: Check "Network Info" button in chat window
-- **CORS errors**: Backend automatically allows private IP ranges
-
-**🐳 Infrastructure:**
-- **Port conflicts**: Use `docker ps` to check running containers
-- **Services not starting**: Run `docker-compose logs <service-name>`
-- **Data loss**: Use `./stop-dev.sh` (preserves data) not `docker-compose down -v`
-
-**💻 Development:**
-- **Frontend issues**: Delete `node_modules`, run `npm install`
-- **Backend compilation**: Ensure Java 17+ is installed
-- **WebSocket connection**: Check browser console for connection errors
-
-### Advanced Troubleshooting
-
-**📊 Health Monitoring:**
+### ⚡ Quick Test Commands
 ```bash
-# Check all services
-docker-compose ps
+# Run all tests
+cd backend && ./gradlew test
 
-# Check specific service logs
-docker-compose logs -f kafka
+# Run with coverage report  
+./gradlew test jacocoTestReport
 
-# Verify Kafka topics
-docker exec scalable-chat-platform-kafka-1 kafka-topics --list --bootstrap-server localhost:9092
+# Run integration tests
+./gradlew integrationTest
+
+# Local code analysis
+./gradlew localAnalysis
 ```
 
-**🔍 Debug Network Issues:**
-- Use "Network Info" button in chat interface
-- Check browser developer tools network tab
-- Verify backend accessibility: `curl http://YOUR_IP:8080/api/health`
+**🔗 [Complete Testing Guide →](backend/src/test/README.md)**
 
-## API Documentation
+## 🚀 Production Deployment
 
-### Authentication
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/auth/login` | User authentication |
+### 🌐 Deployment Options
+```
+🚀 Deployment Guides  
+├── 🎯 Render Platform (Recommended) → docs/deployment/render.md
+├── 🐳 Docker Deployment           → docs/deployment/docker.md
+├── ☁️  Generic Cloud Platform      → docs/deployment/cloud.md
+└── 🏠 Self-Hosted                 → docs/deployment/self-hosted.md
+```
 
-### Conversations
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/conversations` | Get user's conversations |
-| GET | `/api/conversations/{id}` | Get specific conversation |
-| POST | `/api/conversations/direct` | Create direct conversation |
-| POST | `/api/conversations/groups` | Create group conversation |
-| PUT | `/api/conversations/{id}/settings` | Update group settings |
-| POST | `/api/conversations/{id}/participants` | Add participant to group |
-| DELETE | `/api/conversations/{id}/participants/{userId}` | Remove participant from group |
-| DELETE | `/api/conversations/{id}` | Delete conversation (with message cleanup) |
+### ⚡ Build Optimizations
+- **20-40% faster startup** with lazy initialization
+- **JVM container tuning** for optimal memory usage
+- **Gradle build caching** for faster CI/CD
+- **Single JAR deployment** with embedded frontend
 
-### Messages
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/messages/{conversationId}` | Get conversation messages |
-| POST | `/api/messages` | Send message |
+**🔗 [Complete Deployment Guide →](docs/deployment/render.md)**
 
-### WebSocket
-| Endpoint | Description |
-|----------|-------------|
-| `/ws/chat` | Real-time messaging and status updates |
+---
 
-### WebSocket Message Types
-| Type | Description |
-|------|-------------|
-| `MESSAGE` | Regular chat message |
-| `MESSAGE_DELIVERED` | Message delivery status update |
-| `MESSAGE_READ` | Message read receipt update |
-| `ack` | Message acknowledgment |
-| `ping/pong` | Connection heartbeat |
+## 🏆 Production Features
 
-### Role-Based Access Control
-- **OWNER**: Full control (delete group, manage all participants, update settings)
-- **ADMIN**: Manage participants and update settings
-- **MEMBER**: Send messages and view conversation history
+- ✅ **Single-service deployment** - Simplified architecture
+- ✅ **Build optimizations** - Fast startup and efficient resource usage  
+- ✅ **Production monitoring** - Health checks and metrics
+- ✅ **Security hardened** - JWT authentication, CORS, rate limiting
+- ✅ **Database agnostic** - Works with managed cloud databases
+- ✅ **Container ready** - Docker support with multi-stage builds
 
-### Conversation Deletion
-- **Groups**: Only group owners can delete groups (includes all messages)
-- **Direct conversations**: Any participant can delete (removes for both users)
-- **Message cleanup**: All messages are automatically deleted with the conversation
+**Total deployment cost: $0/month** on free tiers! 🎉
 
-## Testing
+---
 
-The application includes demo authentication - you can login with any email/password combination to test the functionality.
+## 🤝 Contributing & Support
 
-## Production Deployment
+### 📋 Development Workflow
+1. **Fork & Clone** the repository
+2. **Setup Environment** - Follow [development setup guide](docs/development/setup.md)
+3. **Create Feature Branch** - `git checkout -b feature/your-feature`
+4. **Make Changes** - Follow code standards and add tests
+5. **Test Locally** - Run test suite and verify functionality
+6. **Submit PR** - Include description and link any issues
 
-For production deployment, additional configuration is needed:
-- JWT authentication implementation
-- SSL/TLS certificates
-- Database connection pooling
-- Load balancing
-- Monitoring and logging
-- Environment-specific configurations
+### 📚 Documentation Standards
+- **Keep docs current** - Update relevant .md files with changes
+- **Link between docs** - Maintain cross-references and navigation
+- **Include examples** - Add code samples and usage examples
+- **Test instructions** - Verify setup steps work on fresh environment
 
-## Contributing
+---
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test locally
-5. Submit a pull request
+## 📄 License & Usage
 
-## License
+This project is for **educational and demonstration purposes**.
 
-This project is for educational and demonstration purposes.
+---
+
+## 🗂️ Quick Navigation
+
+**🏗️ Architecture & Design**
+- [System Architecture](docs/ARCHITECTURE.md) - Complete system design with diagrams
+- [Professional Demo](docs/DEMO.md) - Feature showcase and screenshots  
+- [Features Overview](FEATURES.md) - Complete feature list and capabilities
+
+**🛠️ Development**  
+- [Backend Development](backend/README.md) - Spring Boot setup and API docs
+- [Frontend Development](frontend/README.md) - React components and styling
+- [Development Setup](docs/development/setup.md) - Local environment configuration
+- [Testing Strategy](backend/src/test/README.md) - Test approach and coverage
+
+**🚀 Deployment & Operations**
+- [Render Deployment](docs/deployment/render.md) - Production deployment guide
+- [Security Guidelines](SECURITY.md) - Security best practices
+- [Network Access](NETWORK_ACCESS_GUIDE.md) - Multi-device testing setup
+
+**📄 Project Management**
+- [Project Phases](PROJECT_PHASES.md) - Development roadmap and milestones
+- [Changelog](CHANGELOG.md) - Version history and updates
+- [Contributing](CONTRIBUTING.md) - Contribution guidelines
+
+---
+
+*📅 Last Updated: January 2025 | 🏷️ Version: 1.0.0*

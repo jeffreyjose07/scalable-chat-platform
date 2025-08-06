@@ -26,8 +26,7 @@ void testConversationCreation() {
 @DataJpaTest
 @EnableAutoConfiguration(exclude = {
     MongoAutoConfiguration.class,
-    RedisAutoConfiguration.class,
-    KafkaAutoConfiguration.class
+    RedisAutoConfiguration.class
 })
 class ConversationRepositoryTest {
     @Autowired
@@ -65,28 +64,21 @@ class ConversationIntegrationTest {
 
 ## 🚨 Current Issues
 
-### Maven Repository Problem
-```
-[ERROR] Could not transfer artifact org.springframework.boot:spring-boot-starter-parent:pom:3.2.0 
-from/to ecomm (https://devopsartifact.jio.com/artifactory/mvn_all/): 
-devopsartifact.jio.com: nodename nor servname provided, or not known
-```
+### Build System
+The project uses **Gradle** as the build system:
 
-**Cause**: Corporate Maven settings override with inaccessible repository
-**Impact**: Cannot run Spring Boot tests locally
-**Solution**: 
-1. Use corporate VPN/network
-2. Override Maven settings in CI (already done)
-3. Use offline mode for development
-
-### Workaround for Local Development
 ```bash
-# Use offline mode (if dependencies already cached)
-mvn test -o
+# Run all tests
+./gradlew test
 
-# Or override settings
-mvn test -s ~/.m2/settings-default.xml
+# Run with coverage
+./gradlew test jacocoTestReport
+
+# Run integration tests
+./gradlew integrationTest
 ```
+
+**Java 17 Required**: Ensure JAVA_HOME points to Java 17+ installation
 
 ## 📋 Test Guidelines
 

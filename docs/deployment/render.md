@@ -13,9 +13,9 @@ Deploy the complete Scalable Chat Platform on Render's free tier with external m
 ### Local Requirements
 - Git for cloning the repository
 - Web browser for service configuration
-- Java 17+ (for local development)
-- Node.js 18+ (for local development)
-- Maven 3.8+ (for local builds)
+- Java 17+ (required for Spring Boot 3.2)
+- Node.js 18+ (for frontend development)
+- Gradle 8+ (build system - uses wrapper)
 
 ## 🏗️ Architecture Overview
 
@@ -24,12 +24,13 @@ Deploy the complete Scalable Chat Platform on Render's free tier with external m
 - ✅ Render PostgreSQL (free 1GB database, expires after 30 days)
 - ✅ External MongoDB Atlas (free 512MB, permanent)
 - ✅ External Redis service (free tier, permanent)
-- ✅ In-memory message queue (replaces Kafka for simplicity)
+- ✅ In-memory message queue (optimized for single-service deployment)
 
 **Key Design Decisions:**
 - **Single container**: Reduces complexity and resource usage
-- **Static file serving**: React app served directly by Spring Boot
-- **External managed services**: Offload database management
+- **Build optimizations**: Lazy initialization and JVM tuning for fast startup
+- **Embedded frontend**: React build served as static resources by Spring Boot
+- **External services**: Managed databases for reliability and persistence
 - **SSL everywhere**: All external connections use TLS
 
 **Total Monthly Cost: $0.00** 🎉

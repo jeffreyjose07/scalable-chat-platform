@@ -1,369 +1,244 @@
 # Chat Platform Backend
 
-A comprehensive Spring Boot backend for a scalable chat platform with real-time messaging, group management, and role-based access control.
+Spring Boot 3.2 backend with Java 17, optimized for single-service deployment.
 
-## 🚀 Features
+## Architecture
 
-### Core Functionality
-- **Real-time messaging** via WebSocket with automatic reconnection
-- **User authentication** with JWT tokens
-- **Direct messaging** between users
-- **Group conversations** with advanced management
-- **Role-based access control** (OWNER/ADMIN/MEMBER)
-- **Conversation deletion** with automatic message cleanup
-- **Message persistence** with MongoDB
-- **Session management** with Redis
-- **Message queuing** with Kafka
+### Core Technologies
+- **Spring Boot 3.2**: Main application framework
+- **Java 17**: Programming language with latest features
+- **PostgreSQL**: User accounts and conversation metadata
+- **MongoDB**: Chat messages and history
+- **Redis**: Session management and caching
+- **WebSocket**: Real-time messaging
+- **JWT**: Stateless authentication
 
-### Advanced Group Management
-- **Group creation** with customizable settings
-- **Role-based permissions** with hierarchical access
-- **Participant management** (add/remove users)
-- **Group settings** (name, description, visibility, limits)
-- **Group deletion** with proper permission checks and message cleanup
-- **Security controls** with permission validation
-
-### Architecture
-- **Event-driven design** with Kafka integration
-- **Multi-database strategy** (PostgreSQL + MongoDB + Redis)
-- **Microservices-ready** with stateless design
-- **Comprehensive logging** with structured output
-- **Health monitoring** and diagnostics
-
-## 📋 Requirements
-
-- Java 17+
-- Gradle 8.5+ (wrapper included)
-- Docker & Docker Compose (for dependencies)
-
-## 🛠️ Quick Start
-
-### 1. Start Dependencies
-```bash
-# From project root
-./start-dev.sh
+### Message Flow
+```
+User Message → WebSocket → MessageService → MongoDB + In-Memory Queue → Distribution → All Connected Users
 ```
 
-### 2. Run Backend
+## Key Features
+
+### Authentication & Security
+- JWT-based authentication with configurable expiration
+- Role-based access control (OWNER/ADMIN/MEMBER)
+- WebSocket authentication via interceptors
+- Rate limiting and security filters
+- CORS configuration for cross-origin requests
+
+### Real-time Messaging
+- WebSocket-based bidirectional communication
+- In-memory message queue for fast distribution
+- Automatic connection management and session tracking
+- Message delivery status and read receipts
+- Connection heartbeat and automatic reconnection
+
+### Data Management
+- Multi-database strategy for optimal performance
+- PostgreSQL for structured user/conversation data
+- MongoDB for flexible message storage with indexing
+- Redis for fast session and cache management
+- Soft delete for conversations with proper cleanup
+
+## Project Structure
+
+```
+src/main/java/com/chatplatform/
+├── config/                  # Spring configuration classes
+│   ├── SecurityConfig.java  # JWT and security setup
+│   ├── WebSocketConfig.java # WebSocket configuration
+│   └── RedisConfig.java     # Redis connection setup
+├── controller/              # REST API endpoints
+│   ├── AuthController.java  # Authentication endpoints
+│   ├── MessageController.java # Message API
+│   └── ConversationController.java # Conversation management
+├── dto/                     # Data transfer objects
+├── model/                   # Entity models (JPA + MongoDB)
+│   ├── User.java            # User entity (PostgreSQL)
+│   ├── Conversation.java    # Conversation entity (PostgreSQL)
+│   └── ChatMessage.java     # Message entity (MongoDB)
+├── repository/              # Data access layer
+│   ├── jpa/                 # PostgreSQL repositories
+│   └── mongo/               # MongoDB repositories
+├── service/                 # Business logic
+│   ├── MessageService.java  # Message processing and distribution
+│   ├── AuthService.java     # Authentication logic
+│   └── ConversationService.java # Conversation management
+└── websocket/               # WebSocket handling
+    └── ChatWebSocketHandler.java # Real-time message handling
+```
+
+## Build & Deployment
+
+### Local Development
 ```bash
-cd backend
+# Start infrastructure (PostgreSQL, MongoDB, Redis)
+../start-dev.sh
+
+# Run application
+export JAVA_HOME=/path/to/java17
 ./gradlew bootRun
 ```
 
-### 3. Verify Setup
+### Production Build
 ```bash
-curl http://localhost:8080/api/health
+# Build with embedded frontend
+export JAVA_HOME=/path/to/java17
+./gradlew buildForRender
 ```
 
-## 🏗️ Project Structure
+### Build Optimizations
+- **Lazy initialization**: `spring.main.lazy-initialization: true`
+- **JVM tuning**: `-XX:TieredStopAtLevel=1 -noverify`
+- **Gradle caching**: Parallel builds and dependency caching
+- **Docker optimization**: Multi-stage builds with layer caching
 
-```
-backend/src/main/java/com/chatplatform/
-├── config/
-│   ├── CorsConfig.java           # CORS configuration
-│   ├── JwtTokenUtil.java         # JWT token utilities
-│   ├── SecurityConfig.java       # Security configuration
-│   └── WebSocketConfig.java      # WebSocket configuration
-├── controller/
-│   ├── AuthController.java       # Authentication endpoints
-│   ├── ConversationController.java # Conversation management
-│   ├── MessageController.java    # Message endpoints
-│   └── UserController.java       # User management
-├── dto/
-│   ├── ConversationDto.java      # Conversation data transfer
-│   ├── CreateGroupRequest.java   # Group creation payload
-│   ├── UpdateGroupSettingsRequest.java # Group settings payload
-│   ├── MessageDto.java           # Message data transfer
-│   └── UserDto.java              # User data transfer
-├── model/
-│   ├── Conversation.java         # Conversation entity
-│   ├── ConversationParticipant.java # Participant entity
-│   ├── ConversationType.java     # Conversation type enum
-│   ├── ParticipantRole.java      # Role enum (OWNER/ADMIN/MEMBER)
-│   ├── Message.java              # Message entity
-│   └── User.java                 # User entity
-├── repository/
-│   ├── jpa/                      # JPA repositories
-│   │   ├── ConversationRepository.java
-│   │   ├── ConversationParticipantRepository.java
-│   │   └── UserRepository.java
-│   └── mongo/                    # MongoDB repositories
-│       └── MessageRepository.java
-├── service/
-│   ├── ConversationService.java  # Conversation business logic
-│   ├── MessageService.java       # Message business logic
-│   ├── UserService.java          # User business logic
-│   └── WebSocketService.java     # WebSocket management
-└── websocket/
-    ├── ChatHandler.java          # WebSocket message handler
-    └── MessageType.java          # WebSocket message types
+## Configuration
+
+### Environment Profiles
+- **local**: Development with localhost databases
+- **docker**: Docker Compose with container networking
+- **render**: Production deployment with external services
+
+### Key Configuration Properties
+```yaml
+# Database connections
+spring.datasource.url: PostgreSQL connection
+spring.data.mongodb.uri: MongoDB connection  
+spring.redis.host: Redis connection
+
+# JWT configuration
+app.jwt.secret: JWT signing key
+app.jwt.expiration: Token expiration time
+
+# CORS settings
+app.cors.allowed-origins: Allowed frontend origins
 ```
 
-## 🔐 Security & Permissions
+## API Documentation
 
-### Role-Based Access Control
-The system implements a hierarchical permission model:
-
-#### OWNER (Full Control)
-- Create and delete groups (with complete message cleanup)
-- Manage all participants (add/remove/promote/demote)
-- Update all group settings
-- Transfer ownership
-
-#### ADMIN (Management)
-- Manage participants (add/remove)
-- Update group settings (name, description, visibility)
-- Cannot delete group or manage other admins
-
-#### MEMBER (Basic Access)
-- Send and receive messages
-- View conversation history
-- Leave group
-
-### Permission Validation
-All endpoints validate permissions before executing operations:
-
-```java
-// Example permission check
-@PostMapping("/{conversationId}/participants")
-public ResponseEntity<Void> addParticipant(
-    @PathVariable String conversationId,
-    @RequestParam String participantId,
-    Authentication authentication) {
-    
-    String userId = getUserId(authentication);
-    
-    if (!conversationService.canManageParticipants(userId, conversationId)) {
-        return ResponseEntity.status(403).build();
-    }
-    
-    // ... rest of implementation
-}
+### Authentication Endpoints
+```
+POST /api/auth/login     # User login
+POST /api/auth/register  # User registration  
+POST /api/auth/logout    # User logout
 ```
 
-## 📊 Database Schema
-
-### PostgreSQL (User Data)
-```sql
--- Users table
-CREATE TABLE users (
-    id VARCHAR(255) PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    display_name VARCHAR(255),
-    avatar_url VARCHAR(255),
-    created_at TIMESTAMP,
-    last_seen_at TIMESTAMP,
-    is_online BOOLEAN DEFAULT FALSE
-);
-
--- Conversations table
-CREATE TABLE conversations (
-    id VARCHAR(255) PRIMARY KEY,
-    type VARCHAR(50) NOT NULL,
-    name VARCHAR(255),
-    description TEXT,
-    is_public BOOLEAN DEFAULT FALSE,
-    max_participants INTEGER DEFAULT 100,
-    created_by VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP,
-    updated_at TIMESTAMP
-);
-
--- Conversation participants table
-CREATE TABLE conversation_participants (
-    conversation_id VARCHAR(255),
-    user_id VARCHAR(255),
-    role VARCHAR(50) DEFAULT 'MEMBER',
-    joined_at TIMESTAMP,
-    last_read_at TIMESTAMP,
-    is_active BOOLEAN DEFAULT TRUE,
-    PRIMARY KEY (conversation_id, user_id)
-);
+### Message Endpoints
+```
+GET  /api/messages/{conversationId}  # Get conversation messages
+POST /api/messages                   # Send message
 ```
 
-### MongoDB (Message Data)
-```javascript
-// Messages collection
-{
-  "_id": ObjectId,
-  "conversationId": "string",
-  "senderId": "string",
-  "content": "string",
-  "timestamp": ISODate,
-  "messageType": "TEXT",
-  "isEdited": false,
-  "editedAt": ISODate,
-  "replyTo": "string"
-}
+### Conversation Endpoints
+```
+GET    /api/conversations           # Get user conversations
+POST   /api/conversations/direct    # Create direct conversation
+POST   /api/conversations/groups    # Create group conversation
+DELETE /api/conversations/{id}      # Delete conversation
 ```
 
-## 🔧 Configuration
-
-### Application Properties
-```properties
-# Database Configuration
-spring.datasource.url=jdbc:postgresql://localhost:5432/chatplatform
-spring.data.mongodb.uri=mongodb://localhost:27017/chatplatform
-spring.data.redis.host=localhost
-spring.data.redis.port=6379
-
-# Kafka Configuration
-spring.kafka.bootstrap-servers=localhost:9092
-spring.kafka.producer.value-serializer=org.springframework.kafka.support.serializer.JsonSerializer
-spring.kafka.consumer.value-deserializer=org.springframework.kafka.support.serializer.JsonDeserializer
-
-# JWT Configuration
-jwt.secret=your-secret-key
-jwt.expiration=86400000
-
-# WebSocket Configuration
-websocket.allowed-origins=*
+### WebSocket Endpoint
+```
+/ws/chat  # Real-time messaging with JWT authentication
 ```
 
-### Environment Variables
-```bash
-# Database
-DB_HOST=localhost
-DB_PORT=5432
-DB_NAME=chatplatform
-DB_USERNAME=chatuser
-DB_PASSWORD=chatpass
-
-# MongoDB
-MONGO_URI=mongodb://localhost:27017/chatplatform
-
-# Redis
-REDIS_HOST=localhost
-REDIS_PORT=6379
-
-# Kafka
-KAFKA_BOOTSTRAP_SERVERS=localhost:9092
-```
-
-## 🧪 Testing
+## Testing
 
 ### Unit Tests
 ```bash
-# Run all tests
 ./gradlew test
-
-# Run specific test class
-./gradlew test --tests ConversationServiceTest
-
-# Run tests with coverage
-./gradlew test jacocoTestReport
 ```
 
 ### Integration Tests
 ```bash
-# Run integration tests
 ./gradlew integrationTest
-
-# Run with test containers
-./gradlew test -Dspring.profiles.active=test
 ```
 
-### API Testing
+### Test Coverage
 ```bash
-# Test authentication
-curl -X POST http://localhost:8080/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email": "test@example.com", "password": "password"}'
-
-# Test group creation
-curl -X POST http://localhost:8080/api/conversations/groups \
-  -H "Authorization: Bearer YOUR_TOKEN" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "name": "Test Group",
-    "description": "A test group",
-    "isPublic": false,
-    "maxParticipants": 50,
-    "participantIds": ["user1", "user2"]
-  }'
+./gradlew localAnalysis  # Generate JaCoCo coverage report
 ```
 
-## 📈 Performance
+## Performance Features
 
-### Database Optimization
-- **Indexes** on frequently queried fields
-- **Connection pooling** for database connections
-- **Caching** with Redis for session data
-- **Pagination** for large result sets
+### Startup Optimization
+- Lazy initialization reduces startup time by 20-40%
+- JVM flags optimized for fast startup in containers
+- Minimal auto-configuration for reduced overhead
 
-### WebSocket Optimization
-- **Connection pooling** for WebSocket sessions
-- **Message batching** for high-frequency updates
-- **Heartbeat monitoring** for connection health
-- **Graceful reconnection** handling
+### Runtime Performance
+- In-memory message queue for sub-100ms message delivery
+- Connection pooling for database efficiency
+- Redis caching for frequently accessed data
+- WebSocket connection reuse and heartbeat management
 
-## 🔍 Monitoring & Logging
+### Scalability Considerations
+- Stateless service design for horizontal scaling
+- Database connection pooling with configurable limits
+- Session externalization via Redis
+- Event-driven architecture with in-memory queuing
+
+## Security Features
+
+### Authentication
+- JWT tokens with configurable expiration
+- Secure password hashing with BCrypt
+- Token blacklist for logout functionality
+
+### Authorization
+- Role-based access control for group operations
+- Conversation-level permissions
+- WebSocket connection authentication
+
+### Data Protection
+- Input validation and sanitization
+- SQL injection prevention via JPA
+- XSS protection headers
+- Rate limiting for API endpoints
+
+## Monitoring & Health
 
 ### Health Checks
+```
+GET /api/health/status    # Application health
+GET /actuator/health      # Detailed health information
+GET /actuator/metrics     # Application metrics
+```
+
+### Logging
+- Structured logging with correlation IDs
+- Configurable log levels per package
+- Request/response logging for debugging
+- Error tracking and alerting
+
+## Troubleshooting
+
+### Common Issues
+
+**Java Version**: Ensure Java 17+ is installed and JAVA_HOME is set
+**Database Connection**: Verify PostgreSQL and MongoDB are accessible
+**Redis Connection**: Check Redis connectivity for sessions
+**WebSocket Issues**: Verify CORS settings and authentication
+
+### Debug Commands
 ```bash
-# Application health
+# Check Java version
+java -version
+
+# Test database connections
 curl http://localhost:8080/actuator/health
 
-# Database connectivity
-curl http://localhost:8080/actuator/health/db
-
-# Kafka connectivity
-curl http://localhost:8080/actuator/health/kafka
+# View application logs
+./gradlew bootRun --info
 ```
 
-### Logging Configuration
-```yaml
-logging:
-  level:
-    com.chatplatform: INFO
-    com.chatplatform.service: DEBUG
-    org.springframework.web: DEBUG
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-```
-
-## 🚀 Production Deployment
-
-### Docker Build
+### Performance Monitoring
 ```bash
-# Build image
-docker build -t chat-platform-backend .
+# Check JVM metrics
+curl http://localhost:8080/actuator/metrics/jvm.memory.used
 
-# Run container
-docker run -d \
-  --name chat-backend \
-  -p 8080:8080 \
-  -e DB_HOST=your-db-host \
-  -e KAFKA_BOOTSTRAP_SERVERS=your-kafka-host:9092 \
-  chat-platform-backend
+# Monitor connection pools
+curl http://localhost:8080/actuator/metrics/hikaricp.connections.active
 ```
-
-### Production Considerations
-- **SSL/TLS** configuration for HTTPS
-- **Database connection pooling** optimization
-- **Load balancing** with multiple instances
-- **Caching strategy** optimization
-- **Security hardening** and audit logging
-- **Monitoring** and alerting setup
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Code Style
-- Follow Java naming conventions
-- Use meaningful variable and method names
-- Add comprehensive JavaDoc for public methods
-- Write unit tests for new functionality
-- Follow Spring Boot best practices
-
-## 📝 License
-
-This project is for educational and demonstration purposes.# SonarCloud Analysis Ready
