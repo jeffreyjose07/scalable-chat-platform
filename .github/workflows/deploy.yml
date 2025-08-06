@@ -1,109 +1,109 @@
-name: Deploy to Production
+# name: Deploy to Production
 
-on:
-  push:
-    branches: [ main, master ]
-    tags: [ 'v*' ]
-  workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to deploy to'
-        required: true
-        default: 'staging'
-        type: choice
-        options:
-          - staging
-          - production
+# on:
+#   push:
+#     branches: [ main, master ]
+#     tags: [ 'v*' ]
+#   workflow_dispatch:
+#     inputs:
+#       environment:
+#         description: 'Environment to deploy to'
+#         required: true
+#         default: 'staging'
+#         type: choice
+#         options:
+#           - staging
+#           - production
 
-jobs:
-  deploy:
-    name: Deploy Application
-    runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment || 'staging' }}
+# jobs:
+#   deploy:
+#     name: Deploy Application
+#     runs-on: ubuntu-latest
+#     environment: ${{ github.event.inputs.environment || 'staging' }}
     
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v4
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+#     - name: Set up JDK 17
+#       uses: actions/setup-java@v4
+#       with:
+#         java-version: '17'
+#         distribution: 'temurin'
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
+#     - name: Set up Node.js
+#       uses: actions/setup-node@v4
+#       with:
+#         node-version: '18'
+#         cache: 'npm'
+#         cache-dependency-path: frontend/package-lock.json
 
-    - name: Create Maven settings.xml
-      run: |
-        mkdir -p ~/.m2
-        cat > ~/.m2/settings.xml << 'EOF'
-        <?xml version="1.0" encoding="UTF-8"?>
-        <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0">
-          <!-- Use Maven Central only -->
-        </settings>
-        EOF
+#     - name: Create Maven settings.xml
+#       run: |
+#         mkdir -p ~/.m2
+#         cat > ~/.m2/settings.xml << 'EOF'
+#         <?xml version="1.0" encoding="UTF-8"?>
+#         <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0">
+#           <!-- Use Maven Central only -->
+#         </settings>
+#         EOF
 
-    - name: Build backend
-      working-directory: ./backend
-      run: |
-        mvn clean package -DskipTests -B
-        echo "Backend JAR built: $(ls -la target/*.jar)"
+#     - name: Build backend
+#       working-directory: ./backend
+#       run: |
+#         mvn clean package -DskipTests -B
+#         echo "Backend JAR built: $(ls -la target/*.jar)"
 
-    - name: Build frontend
-      working-directory: ./frontend
-      run: |
-        npm ci
-        npm run build
-        echo "Frontend build completed: $(ls -la build/)"
+#     - name: Build frontend
+#       working-directory: ./frontend
+#       run: |
+#         npm ci
+#         npm run build
+#         echo "Frontend build completed: $(ls -la build/)"
 
-    - name: Create deployment artifacts
-      run: |
-        mkdir -p deploy
-        cp backend/target/*.jar deploy/
-        cp -r frontend/build deploy/frontend-build
-        cp docker-compose.yml deploy/ || echo "No docker-compose.yml found"
+#     - name: Create deployment artifacts
+#       run: |
+#         mkdir -p deploy
+#         cp backend/target/*.jar deploy/
+#         cp -r frontend/build deploy/frontend-build
+#         cp docker-compose.yml deploy/ || echo "No docker-compose.yml found"
         
-        # Create deployment info
-        cat > deploy/deployment-info.json << EOF
-        {
-          "version": "${{ github.sha }}",
-          "ref": "${{ github.ref }}",
-          "environment": "${{ github.event.inputs.environment || 'staging' }}",
-          "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
-          "actor": "${{ github.actor }}"
-        }
-        EOF
+#         # Create deployment info
+#         cat > deploy/deployment-info.json << EOF
+#         {
+#           "version": "${{ github.sha }}",
+#           "ref": "${{ github.ref }}",
+#           "environment": "${{ github.event.inputs.environment || 'staging' }}",
+#           "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+#           "actor": "${{ github.actor }}"
+#         }
+#         EOF
 
-    - name: Upload deployment artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: deployment-${{ github.sha }}
-        path: deploy/
-        retention-days: 30
+#     - name: Upload deployment artifacts
+#       uses: actions/upload-artifact@v3
+#       with:
+#         name: deployment-${{ github.sha }}
+#         path: deploy/
+#         retention-days: 30
 
-    # Uncomment and configure when you have actual deployment targets
-    # - name: Deploy to staging
-    #   if: github.event.inputs.environment == 'staging' || (github.ref == 'refs/heads/main' && github.event_name == 'push')
-    #   run: |
-    #     echo "Deploying to staging environment..."
-    #     # Add your staging deployment commands here
+#     # Uncomment and configure when you have actual deployment targets
+#     # - name: Deploy to staging
+#     #   if: github.event.inputs.environment == 'staging' || (github.ref == 'refs/heads/main' && github.event_name == 'push')
+#     #   run: |
+#     #     echo "Deploying to staging environment..."
+#     #     # Add your staging deployment commands here
     
-    # - name: Deploy to production
-    #   if: github.event.inputs.environment == 'production' || startsWith(github.ref, 'refs/tags/v')
-    #   run: |
-    #     echo "Deploying to production environment..."
-    #     # Add your production deployment commands here
+#     # - name: Deploy to production
+#     #   if: github.event.inputs.environment == 'production' || startsWith(github.ref, 'refs/tags/v')
+#     #   run: |
+#     #     echo "Deploying to production environment..."
+#     #     # Add your production deployment commands here
 
-    - name: Deployment summary
-      run: |
-        echo "## Deployment Summary 🚀" >> $GITHUB_STEP_SUMMARY
-        echo "- **Environment**: ${{ github.event.inputs.environment || 'staging' }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Version**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Ref**: ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Actor**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
-        echo "- **Timestamp**: $(date -u)" >> $GITHUB_STEP_SUMMARY
+#     - name: Deployment summary
+#       run: |
+#         echo "## Deployment Summary 🚀" >> $GITHUB_STEP_SUMMARY
+#         echo "- **Environment**: ${{ github.event.inputs.environment || 'staging' }}" >> $GITHUB_STEP_SUMMARY
+#         echo "- **Version**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+#         echo "- **Ref**: ${{ github.ref }}" >> $GITHUB_STEP_SUMMARY
+#         echo "- **Actor**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+#         echo "- **Timestamp**: $(date -u)" >> $GITHUB_STEP_SUMMARY
