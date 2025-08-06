@@ -11,40 +11,16 @@ RUN apt-get update && apt-get install -y curl && \
 # Set working directory
 WORKDIR /app
 
-# Copy dependency files first for better caching
-COPY backend/build.gradle ./backend/
-COPY backend/settings.gradle ./backend/
-COPY backend/gradle.properties ./backend/
-COPY backend/gradlew ./backend/
-COPY backend/gradlew.bat ./backend/
-COPY backend/gradle/ ./backend/gradle/
-COPY frontend/package*.json ./frontend/
-
-# Set working directory to backend for initial setup
-WORKDIR /app/backend
-
-# Make gradlew executable and download dependencies (cached layer)
-RUN chmod +x ./gradlew && \
-    ./gradlew --no-daemon dependencies
-
-# Install frontend dependencies (cached layer)
-WORKDIR /app/frontend
-RUN npm ci --only=production
-
-# Copy source code (changes frequently, should be last)
-WORKDIR /app
-COPY frontend/src ./frontend/src
-COPY frontend/public ./frontend/public
-COPY frontend/tsconfig.json ./frontend/
-COPY frontend/tailwind.config.js ./frontend/
-COPY frontend/generate-build-info.js ./frontend/
-COPY backend/src ./backend/src
+# Copy entire project (simplified for reliability)
+COPY frontend/ ./frontend/
+COPY backend/ ./backend/
 
 # Set working directory to backend for build
 WORKDIR /app/backend
 
-# Build the application (this will also build the React frontend)
-RUN ./gradlew buildForRender --no-daemon
+# Make gradlew executable and build the application
+RUN chmod +x ./gradlew && \
+    ./gradlew buildForRender --no-daemon
 
 # Stage 2: Create the runtime image
 FROM openjdk:17-jdk-slim
