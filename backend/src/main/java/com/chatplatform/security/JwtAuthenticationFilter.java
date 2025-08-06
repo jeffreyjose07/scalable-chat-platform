@@ -1,6 +1,7 @@
 package com.chatplatform.security;
 
 import com.chatplatform.service.JwtService;
+import com.chatplatform.service.TokenBlacklistService;
 import com.chatplatform.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -25,10 +26,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     
     private final JwtService jwtService;
     private final UserService userService;
+    private final TokenBlacklistService tokenBlacklistService;
     
-    public JwtAuthenticationFilter(JwtService jwtService, UserService userService) {
+    public JwtAuthenticationFilter(JwtService jwtService, UserService userService, TokenBlacklistService tokenBlacklistService) {
         this.jwtService = jwtService;
         this.userService = userService;
+        this.tokenBlacklistService = tokenBlacklistService;
     }
     
     @Override
@@ -61,8 +64,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 // Load user details
                 UserDetails userDetails = userService.loadUserByUsername(username);
                 
-                // Validate token
-                if (jwtService.validateToken(jwt, userDetails)) {
+                // Validate token with blacklist checking
+                if (jwtService.validateTokenWithBlacklist(jwt, userDetails, tokenBlacklistService)) {
                     // Create authentication token
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,

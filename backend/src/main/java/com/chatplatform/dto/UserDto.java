@@ -92,9 +92,22 @@ public class UserDto {
         
         String[] parts = name.trim().split("\\s+");
         if (parts.length >= 2) {
-            return (parts[0].charAt(0) + "" + parts[1].charAt(0)).toUpperCase();
+            return (String.valueOf(parts[0].charAt(0)) + parts[1].charAt(0)).toUpperCase();
         } else {
             return String.valueOf(name.charAt(0)).toUpperCase();
         }
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserDto userDto)) return false;
+        
+        return id != null && id.equals(userDto.id);
+    }
+    
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

@@ -40,6 +40,8 @@ app:
   jwt:
     secret: testSecretKey-changeInProduction-veryLongRandomString123456789
     expiration: 86400000 # 24 hours
+    issuer: test-issuer
+    audience: test-audience
   
   admin:
     username: testadmin

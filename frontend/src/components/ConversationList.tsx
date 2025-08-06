@@ -66,6 +66,13 @@ const ConversationList: React.FC<ConversationListProps> = ({
     currentUserId
   });
 
+  // Utility function to determine text color based on background brightness
+  const getTextColorForBackground = (hue: number, saturation: number, lightness: number) => {
+    // For light backgrounds (lightness > 70), use dark text
+    // For dark backgrounds (lightness <= 70), use white text
+    return lightness > 70 ? 'text-gray-800 dark:text-gray-200' : 'text-white dark:text-gray-100';
+  };
+
   const getConversationDisplayName = (conversation: Conversation) => {
     if (conversation.type === 'DIRECT' && conversation.participants && conversation.participants.length > 0) {
       // Backend returns ConversationParticipantDto objects with nested user property
@@ -84,26 +91,38 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   const getConversationAvatar = (conversation: Conversation) => {
     const displayName = getConversationDisplayName(conversation);
-    console.log('Debug displayName:', displayName, 'type:', typeof displayName);
-    const safeDisplayName = String(displayName || 'U'); // Ensure it's a string
-    console.log('Debug safeDisplayName:', safeDisplayName, 'type:', typeof safeDisplayName);
+    const safeDisplayName = String(displayName || 'U');
+    const hue = safeDisplayName.charCodeAt(0) * 7 % 360;
+    const saturation = 75;
+    const lightness = 45; // Darker for better visibility
+    
+    const avatarColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    const textColorClass = getTextColorForBackground(hue, saturation, lightness);
+    
     if (conversation.type === 'DIRECT') {
-      // For direct messages, show user avatar (could be actual image later)
       return (
-        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-          <span className="text-sm font-medium text-white">
-            {safeDisplayName.charAt(0).toUpperCase()}
-          </span>
+        <div className="relative mr-3 flex-shrink-0">
+          <div 
+            className={`w-12 h-12 rounded-full flex items-center justify-center ${textColorClass} font-semibold shadow-lg border-2 border-white/20 dark:border-gray-600/30`}
+            style={{ background: `linear-gradient(135deg, ${avatarColor}, hsl(${hue}, ${saturation}%, ${lightness - 10}%))` }}
+          >
+            <span className="text-lg">
+              {safeDisplayName.charAt(0).toUpperCase()}
+            </span>
+          </div>
         </div>
       );
     } else {
-      // For groups, show group icon
       return (
-        <div className="w-8 h-8 bg-gray-300 rounded-full flex items-center justify-center mr-3 flex-shrink-0">
-          <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} 
-                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-          </svg>
+        <div className="relative mr-3 flex-shrink-0">
+          <div 
+            className="w-12 h-12 rounded-full flex items-center justify-center text-white shadow-lg border-2 border-white/20 dark:border-gray-600/30"
+            style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}
+          >
+            <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
+            </svg>
+          </div>
         </div>
       );
     }
@@ -129,21 +148,23 @@ const ConversationList: React.FC<ConversationListProps> = ({
 
   return (
     <div className="flex-1 overflow-y-auto">
-      <div className="p-3 sm:p-4">
+      <div className="p-3 sm:p-4 pb-6">
         <ConversationTypeToggle 
           activeType={activeType}
           onTypeChange={onTypeChange}
+          conversations={conversations}
+          unreadCounts={unreadCounts}
         />
         
         <div className="flex items-center justify-between mb-3">
-          <h3 className="text-sm font-semibold text-gray-700">
+          <h3 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
             {activeType === 'groups' ? 'Group Conversations' : 'Direct Messages'}
           </h3>
           
           {activeType === 'direct' && (
             <button
               onClick={onNewDirectMessage}
-              className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              className="p-1.5 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
               title="New Direct Message"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,7 +176,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
           {activeType === 'groups' && onNewGroup && (
             <button
               onClick={onNewGroup}
-              className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+              className="p-1.5 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
               title="Create New Group"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -170,32 +191,64 @@ const ConversationList: React.FC<ConversationListProps> = ({
             filteredConversations.map((conversation) => (
               <div
                 key={conversation.id}
-                className={`group relative rounded-lg transition-colors ${
+                className={`group relative transition-all duration-200 rounded-lg mx-2 ${
                   selectedConversation === conversation.id
-                    ? 'bg-blue-100 text-blue-700'
-                    : 'hover:bg-gray-100 text-gray-700'
+                    ? 'bg-green-50 dark:bg-green-900/30 ring-2 ring-green-500/20'
+                    : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
                 }`}
               >
                 <button
                   onClick={() => onSelectConversation(conversation.id)}
-                  className="w-full text-left p-3 rounded-lg"
+                  className="w-full text-left p-3 transition-all duration-200 rounded-lg"
                 >
                   <div className="flex items-center">
                     {getConversationAvatar(conversation)}
                     <div className="min-w-0 flex-1">
+                      <div className="flex items-center justify-between mb-1">
+                        <div className={`font-semibold truncate text-base ${
+                          selectedConversation === conversation.id ? 'text-gray-900 dark:text-gray-100' : 'text-gray-800 dark:text-gray-200'
+                        }`}>
+                          {String(getConversationDisplayName(conversation))}
+                        </div>
+                        <div className="flex items-center space-x-2 mr-8">
+                          {conversation.lastMessage && (
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                              {new Date().toDateString() === new Date(conversation.lastMessage.timestamp || Date.now()).toDateString() 
+                                ? new Date(conversation.lastMessage.timestamp || Date.now()).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                                : new Date(conversation.lastMessage.timestamp || Date.now()).toLocaleDateString([], { month: 'short', day: 'numeric' })
+                              }
+                            </span>
+                          )}
+                          {unreadCounts[conversation.id] && unreadCounts[conversation.id] > 0 && (
+                            <span className="bg-green-500 text-white text-xs rounded-full px-2.5 py-1 font-semibold shadow-sm">
+                              {unreadCounts[conversation.id] > 99 ? '99+' : unreadCounts[conversation.id]}
+                            </span>
+                          )}
+                        </div>
+                      </div>
                       <div className="flex items-center justify-between">
-                        <div className="font-medium truncate">{String(getConversationDisplayName(conversation))}</div>
-                        {unreadCounts[conversation.id] && unreadCounts[conversation.id] > 0 && (
-                          <span className="bg-blue-500 text-white text-xs rounded-full px-2 py-1 ml-2">
-                            {unreadCounts[conversation.id]}
-                          </span>
+                        {conversation.lastMessage ? (
+                          <div className={`text-sm truncate pr-2 ${
+                            unreadCounts[conversation.id] && unreadCounts[conversation.id] > 0 
+                              ? 'text-gray-700 dark:text-gray-300 font-medium' 
+                              : 'text-gray-500 dark:text-gray-400'
+                          }`}>
+                            {typeof conversation.lastMessage === 'string' 
+                              ? conversation.lastMessage 
+                              : conversation.lastMessage.content
+                            }
+                          </div>
+                        ) : null}
+                        {/* Message status for sent messages */}
+                        {conversation.lastMessage && conversation.lastMessage.senderId === currentUserId && (
+                          <div className="flex items-center text-gray-400">
+                            {/* Single checkmark for sent messages in conversation list */}
+                            <svg className="w-3 h-3 opacity-70" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                            </svg>
+                          </div>
                         )}
                       </div>
-                      {conversation.lastMessage && (
-                        <div className="text-sm text-gray-500 truncate mt-1">
-                          {typeof conversation.lastMessage === 'string' ? conversation.lastMessage : conversation.lastMessage.content}
-                        </div>
-                      )}
                     </div>
                   </div>
                 </button>
@@ -209,7 +262,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                         onDeleteConversation(conversation.id);
                       }
                     }}
-                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 text-red-500 hover:text-red-700 hover:bg-red-50 rounded"
+                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-1 text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 rounded"
                     title={`Delete ${conversation.type === 'GROUP' ? 'group' : 'conversation'}`}
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -220,7 +273,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
               </div>
             ))
           ) : (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-gray-500 dark:text-gray-400">
               {activeType === 'groups' 
                 ? 'No group conversations yet' 
                 : 'No direct messages yet'}
@@ -228,7 +281,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                 <div className="mt-2">
                   <button
                     onClick={onNewDirectMessage}
-                    className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
                   >
                     Start a conversation
                   </button>
@@ -238,7 +291,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                 <div className="mt-2">
                   <button
                     onClick={onNewGroup}
-                    className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 text-sm font-medium"
                   >
                     Create a group
                   </button>

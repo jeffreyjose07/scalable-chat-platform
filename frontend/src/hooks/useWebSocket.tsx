@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { useAuth } from './useAuth';
-import { ChatMessage } from '../types/chat';
+import { ChatMessage, MessageStatusUpdate, WebSocketMessage } from '../types/chat';
 import { messageService } from '../services/messageService';
 import toast from 'react-hot-toast';
 import { getWebSocketUrl } from '../utils/networkUtils';
@@ -9,7 +9,13 @@ interface WebSocketContextType {
   socket: WebSocket | null;
   isConnected: boolean;
   sendMessage: (message: Omit<ChatMessage, 'id' | 'timestamp'>) => void;
+  sendMessageStatusUpdate: (statusUpdate: MessageStatusUpdate) => void;
   messages: ChatMessage[];
+  loadConversationMessages: (conversationId: string, forceReload?: boolean) => Promise<void>;
+  isLoadingMessages: boolean;
+  isReconnecting: boolean;
+  reconnectAttempts: number;
+  clearMessagesCache: () => void;
 }
 
 const WebSocketContext = createContext<WebSocketContextType | null>(null);
@@ -29,20 +35,186 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [messagesLoaded, setMessagesLoaded] = useState(false);
   const [isIntentionalDisconnect, setIsIntentionalDisconnect] = useState(false);
   const [hasShownConnectedToast, setHasShownConnectedToast] = useState(false);
-  const [lastSentMessageId, setLastSentMessageId] = useState<string | null>(null);
+  const [lastSentMessage, setLastSentMessage] = useState<{content: string, timestamp: number} | null>(null);
   const [wasEverConnected, setWasEverConnected] = useState(false);
+  const [isLoadingMessages, setIsLoadingMessages] = useState(false);
+  const [loadedConversations, setLoadedConversations] = useState<Set<string>>(new Set());
+  const [reconnectAttempts, setReconnectAttempts] = useState(0);
+  const [isReconnecting, setIsReconnecting] = useState(false);
   const { user, token } = useAuth();
+  
+  // Reconnection configuration - optimized for faster reconnection
+  const MAX_RECONNECT_ATTEMPTS = 8;
+  const BASE_RECONNECT_DELAY = 300; // 300ms instead of 1 second
+  
+  // Reconnection with exponential backoff
+  const attemptReconnect = useCallback(() => {
+    if (isIntentionalDisconnect || !user || !token) {
+      return;
+    }
+    
+    if (reconnectAttempts >= MAX_RECONNECT_ATTEMPTS) {
+      console.log('Max reconnection attempts reached');
+      setIsReconnecting(false);
+      toast.error('Unable to reconnect to chat server. Please refresh the page.');
+      return;
+    }
+    
+    const delay = BASE_RECONNECT_DELAY * Math.pow(2, reconnectAttempts);
+    console.log(`Attempting to reconnect in ${delay}ms (attempt ${reconnectAttempts + 1}/${MAX_RECONNECT_ATTEMPTS})`);
+    
+    setIsReconnecting(true);
+    setReconnectAttempts(prev => prev + 1);
+    
+    setTimeout(() => {
+      if (!isIntentionalDisconnect && !isConnected) {
+        console.log('Executing reconnection attempt');
+        // Force recreation of WebSocket connection
+        setSocket(null);
+      }
+    }, delay);
+  }, [reconnectAttempts, isIntentionalDisconnect, user, token, isConnected]);
 
-  // Load messages immediately when user and token are available
+  // Load conversation messages function with caching
+  const loadConversationMessages = async (conversationId: string, forceReload = false) => {
+    if (!user || !token) {
+      console.log('Skipping conversation load: missing user or token', { user: !!user, token: !!token });
+      return;
+    }
+    
+    if (!forceReload && loadedConversations.has(conversationId)) {
+      console.log('Conversation already loaded, skipping:', conversationId);
+      return;
+    }
+    
+    // Try conversation-specific cache first for instant load
+    const cacheKey = `conversation_messages_${conversationId}`;
+    if (!forceReload) {
+      try {
+        const cached = sessionStorage.getItem(cacheKey);
+        if (cached) {
+          const parsedCache = JSON.parse(cached);
+          // Use cache if less than 30 seconds old
+          if (Date.now() - parsedCache.timestamp < 30000) {
+            console.log(`📦 Using cached messages for conversation ${conversationId}`);
+            
+            setMessages(prev => {
+              const filteredPrev = prev.filter(msg => msg.conversationId !== conversationId);
+              const combined = [...filteredPrev, ...parsedCache.data];
+              return combined.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+            });
+            
+            setLoadedConversations(prev => {
+              const newSet = new Set(prev);
+              newSet.add(conversationId);
+              return newSet;
+            });
+            return;
+          }
+        }
+      } catch (error) {
+        console.warn(`Failed to load cached conversation ${conversationId}:`, error);
+      }
+    }
+    
+    setIsLoadingMessages(true);
+    try {
+      console.log(`🔄 Loading messages for conversation: ${conversationId}`);
+      const conversationMessages = await messageService.fetchConversationMessages(conversationId, token);
+      console.log(`✅ Fetched ${conversationMessages.length} messages for conversation: ${conversationId}`);
+      
+      // Cache the conversation messages
+      try {
+        sessionStorage.setItem(cacheKey, JSON.stringify({
+          data: conversationMessages,
+          timestamp: Date.now()
+        }));
+      } catch (error) {
+        console.warn(`Failed to cache conversation ${conversationId}:`, error);
+      }
+      
+      setMessages(prev => {
+        console.log(`📝 Before update: ${prev.length} total messages, ${prev.filter(m => m.conversationId === conversationId).length} from this conversation`);
+        
+        // Remove any existing messages from this conversation to avoid duplicates
+        const filteredPrev = prev.filter(msg => msg.conversationId !== conversationId);
+        console.log(`🗑️ After filtering out conversation ${conversationId}: ${filteredPrev.length} messages remaining`);
+        
+        // Add the new conversation messages
+        const combined = [...filteredPrev, ...conversationMessages];
+        console.log(`➕ After adding new messages: ${combined.length} total messages`);
+        
+        // Sort by timestamp to maintain chronological order
+        const sorted = combined.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+        console.log(`🔄 After sorting: ${sorted.length} messages, conversation ${conversationId} has ${sorted.filter(m => m.conversationId === conversationId).length} messages`);
+        
+        return sorted;
+      });
+      
+      setLoadedConversations(prev => {
+        const newSet = new Set(prev);
+        newSet.add(conversationId);
+        console.log(`📚 Marked conversation ${conversationId} as loaded. Total loaded: ${newSet.size}`);
+        return newSet;
+      });
+    } catch (error) {
+      console.error(`❌ Error loading messages for conversation ${conversationId}:`, error);
+    } finally {
+      setIsLoadingMessages(false);
+    }
+  };
+
+  // Load recent messages only on initial load (with optional caching)
   useEffect(() => {
     if (!user || !token || messagesLoaded) return;
     
     const loadInitialMessages = async () => {
       try {
+        console.log('🔄 Loading initial messages...');
+        
+        // Enable smart caching for better performance
+        const USE_CACHE = true; // Smart caching enabled
+        
+        if (USE_CACHE) {
+          try {
+            const cached = sessionStorage.getItem('recent_messages');
+            if (cached) {
+              const parsedCache = JSON.parse(cached);
+              // Use cache if less than 2 minutes old for better performance
+              if (Date.now() - parsedCache.timestamp < 120000) {
+                console.log('📦 Using cached recent messages for instant load');
+                setMessages(parsedCache.data);
+                setMessagesLoaded(true);
+                return; // Skip API call if cache is fresh
+              } else {
+                console.log('📦 Cache expired, loading fresh messages');
+              }
+            }
+          } catch (error) {
+            console.warn('Failed to load cached messages:', error);
+          }
+        } else {
+          console.log('📦 Cache disabled, loading fresh messages');
+        }
+        
         const recentMessages = await messageService.fetchRecentMessages(token);
+        console.log(`✅ Loaded ${recentMessages.length} recent messages`);
         setMessages(recentMessages);
         setMessagesLoaded(true);
-        console.log('Historical messages loaded on component mount');
+        
+        // Cache for next time (if enabled)
+        if (USE_CACHE) {
+          try {
+            sessionStorage.setItem('recent_messages', JSON.stringify({
+              data: recentMessages,
+              timestamp: Date.now()
+            }));
+          } catch (error) {
+            console.warn('Failed to cache messages:', error);
+          }
+        }
+        
+        console.log('Initial recent messages loaded on component mount');
       } catch (error) {
         console.error('Error loading initial messages:', error);
       }
@@ -58,8 +230,8 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
 
     // Prevent creating multiple connections
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      console.log('WebSocket already connected, skipping new connection');
+    if (socket && (socket.readyState === WebSocket.OPEN || socket.readyState === WebSocket.CONNECTING)) {
+      console.log('WebSocket already connected/connecting, skipping new connection');
       return;
     }
 
@@ -84,23 +256,21 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       setIsIntentionalDisconnect(false);
       setWasEverConnected(true);
       
-      // Only show connected toast once per session or after a disconnect
-      if (!hasShownConnectedToast) {
+      // Reset reconnection state on successful connection
+      setReconnectAttempts(0);
+      setIsReconnecting(false);
+      
+      // Show appropriate toast message
+      if (reconnectAttempts > 0) {
+        toast.success('Reconnected to chat server');
+      } else if (!hasShownConnectedToast) {
         toast.success('Connected to chat server');
         setHasShownConnectedToast(true);
       }
       
-      // Load recent messages when connected (if not already loaded)
-      if (!messagesLoaded) {
-        try {
-          const recentMessages = await messageService.fetchRecentMessages(token);
-          setMessages(recentMessages);
-          setMessagesLoaded(true);
-          console.log('Historical messages loaded on WebSocket connection');
-        } catch (error) {
-          console.error('Error loading recent messages:', error);
-        }
-      }
+      // Skip loading messages here - they're already loaded by the initial useEffect
+      // This eliminates duplicate loading and speeds up connection
+      console.log('WebSocket connected - messages already loaded, skipping duplicate load');
     };
 
     newSocket.onclose = (event) => {
@@ -117,7 +287,10 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       // 2. We were previously connected (not initial connection failures)
       // 3. It's not a normal close code (1000 = normal, 1001 = going away)
       if (!isIntentionalDisconnect && wasEverConnected && event.code !== 1000 && event.code !== 1001) {
-        toast.error('Disconnected from chat server');
+        if (reconnectAttempts === 0) {
+          toast.error('Disconnected from chat server. Attempting to reconnect...');
+        }
+        attemptReconnect();
       }
     };
 
@@ -130,6 +303,49 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           console.log('Message acknowledged:', data.messageId);
         } else if (data.type === 'error') {
           toast.error(data.message);
+        } else if (data.type === 'ping') {
+          // Handle ping message - send pong response
+          console.log('Received ping from server, sending pong');
+          try {
+            const pongResponse = JSON.stringify({
+              type: 'pong',
+              timestamp: data.timestamp
+            });
+            newSocket.send(pongResponse);
+          } catch (error) {
+            console.error('Error sending pong response:', error);
+          }
+        } else if (data.type === 'MESSAGE_DELIVERED' || data.type === 'MESSAGE_READ') {
+          // Handle message status updates
+          console.log('Received message status update:', data);
+          const statusUpdate: MessageStatusUpdate = data.data;
+          
+          // Update the corresponding message's status in our state
+          setMessages(prev => prev.map(msg => {
+            if (msg.id === statusUpdate.messageId) {
+              const updatedMessage = { ...msg };
+              
+              if (data.type === 'MESSAGE_DELIVERED') {
+                updatedMessage.deliveredTo = {
+                  ...updatedMessage.deliveredTo,
+                  [statusUpdate.userId]: statusUpdate.timestamp
+                };
+              } else if (data.type === 'MESSAGE_READ') {
+                // Ensure it's also marked as delivered
+                updatedMessage.deliveredTo = {
+                  ...updatedMessage.deliveredTo,
+                  [statusUpdate.userId]: statusUpdate.timestamp
+                };
+                updatedMessage.readBy = {
+                  ...updatedMessage.readBy,
+                  [statusUpdate.userId]: statusUpdate.timestamp
+                };
+              }
+              
+              return updatedMessage;
+            }
+            return msg;
+          }));
         } else {
           // Handle regular chat message
           const message: ChatMessage = data;
@@ -146,14 +362,16 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
             console.warn('Message missing senderUsername, using senderId as fallback');
           }
           
-          // Prevent duplicate messages
+          // Add new message (real-time)
           setMessages(prev => {
             const exists = prev.some(msg => msg.id === message.id);
             if (exists) {
               console.log('Duplicate message detected, skipping:', message.id);
               return prev;
             }
-            return [...prev, message];
+            // Insert message in correct chronological position
+            const newMessages = [...prev, message];
+            return newMessages.sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
           });
         }
       } catch (error) {
@@ -187,13 +405,13 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     if (socket && isConnected) {
       const messageId = `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
       const messageContent = message.content.trim();
+      const now = Date.now();
       
-      // Create unique identifier for content-based deduplication
-      const contentId = `${messageContent}-${message.conversationId}-${message.senderId}`;
-      
-      // Prevent sending duplicate messages based on content
-      if (lastSentMessageId === contentId) {
-        console.log('Preventing duplicate message send');
+      // Prevent sending duplicate messages within 1 second (rapid clicking prevention)
+      if (lastSentMessage && 
+          lastSentMessage.content === messageContent && 
+          (now - lastSentMessage.timestamp) < 1000) {
+        console.log('Preventing rapid duplicate message send');
         return;
       }
       
@@ -204,15 +422,64 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         timestamp: new Date().toISOString(),
       };
       
-      setLastSentMessageId(contentId);
+      setLastSentMessage({ content: messageContent, timestamp: now });
       console.log('Sending message:', { id: messageId, content: messageContent.substring(0, 50) });
       socket.send(JSON.stringify(fullMessage));
       // Don't add to messages here - wait for it to come back through WebSocket
     }
   };
 
+  const sendMessageStatusUpdate = (statusUpdate: MessageStatusUpdate) => {
+    if (socket && isConnected) {
+      const wsMessage: WebSocketMessage = {
+        type: statusUpdate.statusType === 'DELIVERED' ? 'MESSAGE_DELIVERED' : 'MESSAGE_READ',
+        data: {
+          ...statusUpdate,
+          timestamp: new Date().toISOString()
+        }
+      };
+      
+      console.log('Sending message status update:', wsMessage);
+      socket.send(JSON.stringify(wsMessage));
+    }
+  };
+
+  const clearMessagesCache = () => {
+    console.log('🧹 Clearing all message caches and reloading');
+    setMessages([]);
+    setMessagesLoaded(false);
+    setLoadedConversations(new Set());
+    try {
+      // Clear recent messages cache
+      sessionStorage.removeItem('recent_messages');
+      
+      // Clear all conversation-specific caches
+      const keys = Object.keys(sessionStorage);
+      keys.forEach(key => {
+        if (key.startsWith('conversation_messages_')) {
+          sessionStorage.removeItem(key);
+        }
+      });
+      
+      console.log('✅ Cleared all message caches');
+    } catch (error) {
+      console.warn('Failed to clear message caches:', error);
+    }
+  };
+
   return (
-    <WebSocketContext.Provider value={{ socket, isConnected, sendMessage, messages }}>
+    <WebSocketContext.Provider value={{ 
+      socket, 
+      isConnected, 
+      sendMessage, 
+      sendMessageStatusUpdate,
+      messages, 
+      loadConversationMessages, 
+      isLoadingMessages,
+      isReconnecting,
+      reconnectAttempts,
+      clearMessagesCache
+    }}>
       {children}
     </WebSocketContext.Provider>
   );

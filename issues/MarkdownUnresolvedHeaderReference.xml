@@ -1,0 +1,1346 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/ajv-keywords/README.md</file>
+  <line>38</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/ajv-keywords/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor switch</description>
+  <highlighted_element>switch</highlighted_element>
+  <language>Markdown</language>
+  <offset>16</offset>
+  <length>6</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>11</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-installation</description>
+  <highlighted_element>eslint-plugin-flowtype-installation</highlighted_element>
+  <language>Markdown</language>
+  <offset>22</offset>
+  <length>35</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>12</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-configuration</description>
+  <highlighted_element>eslint-plugin-flowtype-configuration</highlighted_element>
+  <language>Markdown</language>
+  <offset>23</offset>
+  <length>36</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>13</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-configuration-shareable-configurations</description>
+  <highlighted_element>eslint-plugin-flowtype-configuration-shareable-configurations</highlighted_element>
+  <language>Markdown</language>
+  <offset>38</offset>
+  <length>61</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>14</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-configuration-community-maintained-configurations</description>
+  <highlighted_element>eslint-plugin-flowtype-configuration-community-maintained-configurations</highlighted_element>
+  <language>Markdown</language>
+  <offset>49</offset>
+  <length>72</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>15</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-settings</description>
+  <highlighted_element>eslint-plugin-flowtype-settings</highlighted_element>
+  <language>Markdown</language>
+  <offset>18</offset>
+  <length>31</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>16</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-settings-onlyfileswithflowannotation</description>
+  <highlighted_element>eslint-plugin-flowtype-settings-onlyfileswithflowannotation</highlighted_element>
+  <language>Markdown</language>
+  <offset>43</offset>
+  <length>59</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>17</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules</description>
+  <highlighted_element>eslint-plugin-flowtype-rules</highlighted_element>
+  <language>Markdown</language>
+  <offset>15</offset>
+  <length>28</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>18</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-array-style-complex-type</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-array-style-complex-type</highlighted_element>
+  <language>Markdown</language>
+  <offset>40</offset>
+  <length>53</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>19</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-array-style-simple-type</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-array-style-simple-type</highlighted_element>
+  <language>Markdown</language>
+  <offset>39</offset>
+  <length>52</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>20</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-arrow-parens</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-arrow-parens</highlighted_element>
+  <language>Markdown</language>
+  <offset>28</offset>
+  <length>41</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>21</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-boolean-style</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-boolean-style</highlighted_element>
+  <language>Markdown</language>
+  <offset>29</offset>
+  <length>42</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>22</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-define-flow-type</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-define-flow-type</highlighted_element>
+  <language>Markdown</language>
+  <offset>32</offset>
+  <length>45</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>23</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-delimiter-dangle</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-delimiter-dangle</highlighted_element>
+  <language>Markdown</language>
+  <offset>32</offset>
+  <length>45</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>24</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-enforce-line-break</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-enforce-line-break</highlighted_element>
+  <language>Markdown</language>
+  <offset>34</offset>
+  <length>47</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>25</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-generic-spacing</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-generic-spacing</highlighted_element>
+  <language>Markdown</language>
+  <offset>31</offset>
+  <length>44</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>26</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-interface-id-match</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-interface-id-match</highlighted_element>
+  <language>Markdown</language>
+  <offset>34</offset>
+  <length>47</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>27</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-newline-after-flow-annotation</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-newline-after-flow-annotation</highlighted_element>
+  <language>Markdown</language>
+  <offset>45</offset>
+  <length>58</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>28</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-no-dupe-keys</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-no-dupe-keys</highlighted_element>
+  <language>Markdown</language>
+  <offset>28</offset>
+  <length>41</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>29</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-no-duplicate-type-union-intersection-members</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-no-duplicate-type-union-intersection-members</highlighted_element>
+  <language>Markdown</language>
+  <offset>60</offset>
+  <length>73</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>30</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-no-existential-type</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-no-existential-type</highlighted_element>
+  <language>Markdown</language>
+  <offset>35</offset>
+  <length>48</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>31</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-no-flow-fix-me-comments</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-no-flow-fix-me-comments</highlighted_element>
+  <language>Markdown</language>
+  <offset>39</offset>
+  <length>52</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>32</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-no-internal-flow-type</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-no-internal-flow-type</highlighted_element>
+  <language>Markdown</language>
+  <offset>37</offset>
+  <length>50</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>33</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-no-mixed</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-no-mixed</highlighted_element>
+  <language>Markdown</language>
+  <offset>24</offset>
+  <length>37</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>34</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-no-mutable-array</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-no-mutable-array</highlighted_element>
+  <language>Markdown</language>
+  <offset>32</offset>
+  <length>45</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>35</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-no-primitive-constructor-types</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-no-primitive-constructor-types</highlighted_element>
+  <language>Markdown</language>
+  <offset>46</offset>
+  <length>59</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>36</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-no-types-missing-file-annotation</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-no-types-missing-file-annotation</highlighted_element>
+  <language>Markdown</language>
+  <offset>48</offset>
+  <length>61</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>37</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-no-unused-expressions</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-no-unused-expressions</highlighted_element>
+  <language>Markdown</language>
+  <offset>37</offset>
+  <length>50</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>38</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-no-weak-types</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-no-weak-types</highlighted_element>
+  <language>Markdown</language>
+  <offset>29</offset>
+  <length>42</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>39</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-object-type-curly-spacing</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-object-type-curly-spacing</highlighted_element>
+  <language>Markdown</language>
+  <offset>41</offset>
+  <length>54</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>40</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-object-type-delimiter</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-object-type-delimiter</highlighted_element>
+  <language>Markdown</language>
+  <offset>37</offset>
+  <length>50</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>41</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-quotes</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-quotes</highlighted_element>
+  <language>Markdown</language>
+  <offset>22</offset>
+  <length>35</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>42</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-require-compound-type-alias</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-require-compound-type-alias</highlighted_element>
+  <language>Markdown</language>
+  <offset>43</offset>
+  <length>56</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>43</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-require-exact-type</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-require-exact-type</highlighted_element>
+  <language>Markdown</language>
+  <offset>34</offset>
+  <length>47</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>44</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-require-indexer-name</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-require-indexer-name</highlighted_element>
+  <language>Markdown</language>
+  <offset>36</offset>
+  <length>49</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>45</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-require-inexact-type</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-require-inexact-type</highlighted_element>
+  <language>Markdown</language>
+  <offset>36</offset>
+  <length>49</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>46</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-require-parameter-type</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-require-parameter-type</highlighted_element>
+  <language>Markdown</language>
+  <offset>38</offset>
+  <length>51</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>47</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-require-readonly-react-props</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-require-readonly-react-props</highlighted_element>
+  <language>Markdown</language>
+  <offset>44</offset>
+  <length>57</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>48</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-require-return-type</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-require-return-type</highlighted_element>
+  <language>Markdown</language>
+  <offset>35</offset>
+  <length>48</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>49</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-require-types-at-top</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-require-types-at-top</highlighted_element>
+  <language>Markdown</language>
+  <offset>36</offset>
+  <length>49</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>50</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-require-valid-file-annotation</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-require-valid-file-annotation</highlighted_element>
+  <language>Markdown</language>
+  <offset>45</offset>
+  <length>58</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>51</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-require-variable-type</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-require-variable-type</highlighted_element>
+  <language>Markdown</language>
+  <offset>37</offset>
+  <length>50</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>52</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-semi</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-semi</highlighted_element>
+  <language>Markdown</language>
+  <offset>20</offset>
+  <length>33</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>53</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-sort-keys</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-sort-keys</highlighted_element>
+  <language>Markdown</language>
+  <offset>25</offset>
+  <length>38</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>54</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-sort-type-union-intersection-members</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-sort-type-union-intersection-members</highlighted_element>
+  <language>Markdown</language>
+  <offset>52</offset>
+  <length>65</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>55</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-space-after-type-colon</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-space-after-type-colon</highlighted_element>
+  <language>Markdown</language>
+  <offset>38</offset>
+  <length>51</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>56</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-space-before-generic-bracket</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-space-before-generic-bracket</highlighted_element>
+  <language>Markdown</language>
+  <offset>44</offset>
+  <length>57</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>57</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-space-before-type-colon</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-space-before-type-colon</highlighted_element>
+  <language>Markdown</language>
+  <offset>39</offset>
+  <length>52</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>58</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-spread-exact-type</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-spread-exact-type</highlighted_element>
+  <language>Markdown</language>
+  <offset>33</offset>
+  <length>46</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>59</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-type-id-match</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-type-id-match</highlighted_element>
+  <language>Markdown</language>
+  <offset>29</offset>
+  <length>42</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>60</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-type-import-style</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-type-import-style</highlighted_element>
+  <language>Markdown</language>
+  <offset>33</offset>
+  <length>46</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>61</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-union-intersection-spacing</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-union-intersection-spacing</highlighted_element>
+  <language>Markdown</language>
+  <offset>42</offset>
+  <length>55</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>62</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-use-flow-type</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-use-flow-type</highlighted_element>
+  <language>Markdown</language>
+  <offset>29</offset>
+  <length>42</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>63</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-use-read-only-spread</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-use-read-only-spread</highlighted_element>
+  <language>Markdown</language>
+  <offset>36</offset>
+  <length>49</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md</file>
+  <line>64</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-flowtype/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor eslint-plugin-flowtype-rules-valid-syntax</description>
+  <highlighted_element>eslint-plugin-flowtype-rules-valid-syntax</highlighted_element>
+  <language>Markdown</language>
+  <offset>28</offset>
+  <length>41</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/no-unresolved.md</file>
+  <line>65</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/docs/rules/no-unresolved.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor resolver-plugins</description>
+  <highlighted_element>resolver-plugins</highlighted_element>
+  <language>Markdown</language>
+  <offset>108</offset>
+  <length>16</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md</file>
+  <line>6</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor sponsors</description>
+  <highlighted_element>sponsors</highlighted_element>
+  <language>Markdown</language>
+  <offset>101</offset>
+  <length>8</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>79</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree</description>
+  <highlighted_element>module_symbol-tree</highlighted_element>
+  <language>Markdown</language>
+  <offset>17</offset>
+  <length>18</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>80</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>20</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>81</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor new_module_symbol-tree--SymbolTree_new</description>
+  <highlighted_element>new_module_symbol-tree--SymbolTree_new</highlighted_element>
+  <language>Markdown</language>
+  <offset>43</offset>
+  <length>38</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>82</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+initialize</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+initialize</highlighted_element>
+  <language>Markdown</language>
+  <offset>33</offset>
+  <length>41</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>83</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+hasChildren</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+hasChildren</highlighted_element>
+  <language>Markdown</language>
+  <offset>34</offset>
+  <length>42</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>84</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+firstChild</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+firstChild</highlighted_element>
+  <language>Markdown</language>
+  <offset>33</offset>
+  <length>41</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>85</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+lastChild</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+lastChild</highlighted_element>
+  <language>Markdown</language>
+  <offset>32</offset>
+  <length>40</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>86</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+previousSibling</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+previousSibling</highlighted_element>
+  <language>Markdown</language>
+  <offset>38</offset>
+  <length>46</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>87</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+nextSibling</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+nextSibling</highlighted_element>
+  <language>Markdown</language>
+  <offset>34</offset>
+  <length>42</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>88</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+parent</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+parent</highlighted_element>
+  <language>Markdown</language>
+  <offset>29</offset>
+  <length>37</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>89</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+lastInclusiveDescendant</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+lastInclusiveDescendant</highlighted_element>
+  <language>Markdown</language>
+  <offset>46</offset>
+  <length>54</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>90</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+preceding</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+preceding</highlighted_element>
+  <language>Markdown</language>
+  <offset>43</offset>
+  <length>40</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>91</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+following</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+following</highlighted_element>
+  <language>Markdown</language>
+  <offset>43</offset>
+  <length>40</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>92</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+childrenToArray</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+childrenToArray</highlighted_element>
+  <language>Markdown</language>
+  <offset>49</offset>
+  <length>46</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>93</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+ancestorsToArray</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+ancestorsToArray</highlighted_element>
+  <language>Markdown</language>
+  <offset>50</offset>
+  <length>47</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>94</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+treeToArray</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+treeToArray</highlighted_element>
+  <language>Markdown</language>
+  <offset>43</offset>
+  <length>42</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>95</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+childrenIterator</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+childrenIterator</highlighted_element>
+  <language>Markdown</language>
+  <offset>50</offset>
+  <length>47</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>96</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+previousSiblingsIterator</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+previousSiblingsIterator</highlighted_element>
+  <language>Markdown</language>
+  <offset>47</offset>
+  <length>55</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>97</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+nextSiblingsIterator</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+nextSiblingsIterator</highlighted_element>
+  <language>Markdown</language>
+  <offset>43</offset>
+  <length>51</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>98</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+ancestorsIterator</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+ancestorsIterator</highlighted_element>
+  <language>Markdown</language>
+  <offset>40</offset>
+  <length>48</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>99</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+treeIterator</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+treeIterator</highlighted_element>
+  <language>Markdown</language>
+  <offset>42</offset>
+  <length>43</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>100</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+index</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+index</highlighted_element>
+  <language>Markdown</language>
+  <offset>27</offset>
+  <length>36</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>101</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+childrenCount</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+childrenCount</highlighted_element>
+  <language>Markdown</language>
+  <offset>36</offset>
+  <length>44</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>102</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+compareTreePosition</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+compareTreePosition</highlighted_element>
+  <language>Markdown</language>
+  <offset>47</offset>
+  <length>50</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>103</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+remove</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+remove</highlighted_element>
+  <language>Markdown</language>
+  <offset>35</offset>
+  <length>37</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>104</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+insertBefore</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+insertBefore</highlighted_element>
+  <language>Markdown</language>
+  <offset>55</offset>
+  <length>43</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>105</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+insertAfter</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+insertAfter</highlighted_element>
+  <language>Markdown</language>
+  <offset>54</offset>
+  <length>42</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>106</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+prependChild</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+prependChild</highlighted_element>
+  <language>Markdown</language>
+  <offset>55</offset>
+  <length>43</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>107</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor module_symbol-tree--SymbolTree+appendChild</description>
+  <highlighted_element>module_symbol-tree--SymbolTree+appendChild</highlighted_element>
+  <language>Markdown</language>
+  <offset>54</offset>
+  <length>42</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>130</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>144</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>157</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>170</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>183</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>196</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>209</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>222</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>238</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>256</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>272</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>289</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>306</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>323</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>339</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>353</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>367</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>384</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>401</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>416</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>444</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>459</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>474</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>494</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>514</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md</file>
+  <line>534</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/symbol-tree/README.md" />
+  <problem_class id="MarkdownUnresolvedHeaderReference" severity="WARNING" attribute_key="INFO_ATTRIBUTES">Unresolved header reference</problem_class>
+  <description>Cannot resolve anchor exp_module_symbol-tree--SymbolTree</description>
+  <highlighted_element>exp_module_symbol-tree--SymbolTree</highlighted_element>
+  <language>Markdown</language>
+  <offset>56</offset>
+  <length>34</length>
+</problem>
+</problems>

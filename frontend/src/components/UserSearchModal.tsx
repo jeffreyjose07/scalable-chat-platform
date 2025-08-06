@@ -125,10 +125,23 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
       );
     }
     
+    // Generate consistent avatar colors
+    const displayName = getUserDisplayName(user);
+    const safeDisplayName = String(displayName || 'U');
+    const hue = safeDisplayName.charCodeAt(0) * 7 % 360;
+    const saturation = 75;
+    const lightness = 45;
+    
+    const avatarColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    const textColor = lightness > 70 ? '#374151' : '#ffffff'; // gray-700 or white
+    
     return (
-      <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
-        <span className="text-white font-medium">
-          {getUserDisplayName(user).charAt(0).toUpperCase()}
+      <div 
+        className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg border-2 border-white/20 dark:border-gray-600/30"
+        style={{ background: `linear-gradient(135deg, ${avatarColor}, hsl(${hue}, ${saturation}%, ${lightness - 10}%))` }}
+      >
+        <span className="font-medium" style={{ color: textColor }}>
+          {safeDisplayName.charAt(0).toUpperCase()}
         </span>
       </div>
     );

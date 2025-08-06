@@ -20,19 +20,35 @@ export const isLocalIP = (hostname: string): boolean => {
  * Gets the appropriate API base URL based on current environment
  */
 export const getApiBaseUrl = (): string => {
-  // If environment variable is set, use it
-  if (process.env.REACT_APP_API_URL) {
+  // Check for runtime configuration first (Docker/Render deployment)
+  if (typeof window !== 'undefined' && (window as any)._env_?.REACT_APP_API_URL) {
+    const baseUrl = (window as any)._env_.REACT_APP_API_URL;
+    console.log('🌐 Using runtime API base URL:', baseUrl);
+    return baseUrl;
+  }
+  
+  // If environment variable is set and not empty, use it
+  if (process.env.REACT_APP_API_URL && process.env.REACT_APP_API_URL.trim()) {
+    console.log('🌐 Using build-time API base URL:', process.env.REACT_APP_API_URL);
     return process.env.REACT_APP_API_URL;
   }
   
   const hostname = window.location.hostname;
   
+  // For production deployment (render.com, etc), use relative URL
+  if (hostname !== 'localhost' && !hostname.startsWith('192.168') && !hostname.startsWith('10.') && !hostname.startsWith('172.')) {
+    console.log('🌐 Using relative API base URL for single service deployment');
+    return ''; // Relative path for single service deployment
+  }
+  
   // If accessing via local IP, use the same IP for backend
   if (isLocalIP(hostname)) {
+    console.log('🌐 Using local IP API base URL:', `http://${hostname}:8080`);
     return `http://${hostname}:8080`;
   }
   
   // Default to localhost for local development
+  console.log('🌐 Using localhost API base URL for development');
   return 'http://localhost:8080';
 };
 
@@ -62,26 +78,10 @@ export const getWebSocketUrl = (): string => {
     return wsUrl;
   }
   
-  // Default to localhost for local development
-  const wsUrl = 'ws://localhost:8080';
-  console.log('🔌 Using default WebSocket URL:', wsUrl);
+  // For single service deployment, use relative WebSocket URL
+  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+  const wsUrl = `${protocol}//${window.location.host}`;
+  console.log('🔌 Using single-service WebSocket URL:', wsUrl);
   return wsUrl;
 };
 
-/**
- * Gets the current network configuration info for debugging
- */
-export const getNetworkInfo = () => {
-  const hostname = window.location.hostname;
-  const port = window.location.port;
-  const isLocal = isLocalIP(hostname);
-  
-  return {
-    hostname,
-    port,
-    isLocalIP: isLocal,
-    apiUrl: getApiBaseUrl(),
-    wsUrl: getWebSocketUrl(),
-    fullUrl: window.location.href
-  };
-};

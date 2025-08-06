@@ -1,0 +1,98 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/.editorconfig</file>
+  <line>13</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/.editorconfig" />
+  <problem_class id="EditorConfigKeyCorrectness" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown property</problem_class>
+  <description>The property is not supported</description>
+  <highlighted_element>block_comment_start</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>19</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/.editorconfig</file>
+  <line>14</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/.editorconfig" />
+  <problem_class id="EditorConfigKeyCorrectness" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown property</problem_class>
+  <description>The property is not supported</description>
+  <highlighted_element>block_comment</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>13</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/.editorconfig</file>
+  <line>15</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-react/node_modules/resolve/.editorconfig" />
+  <problem_class id="EditorConfigKeyCorrectness" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown property</problem_class>
+  <description>The property is not supported</description>
+  <highlighted_element>block_comment_end</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>17</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/object-keys/.editorconfig</file>
+  <line>6</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/object-keys/.editorconfig" />
+  <problem_class id="EditorConfigKeyCorrectness" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown property</problem_class>
+  <description>The property is not supported</description>
+  <highlighted_element>quote_type</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>10</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/object-keys/.editorconfig</file>
+  <line>7</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/object-keys/.editorconfig" />
+  <problem_class id="EditorConfigKeyCorrectness" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown property</problem_class>
+  <description>The property is not supported</description>
+  <highlighted_element>space_after_anonymous_functions</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>31</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/object-keys/.editorconfig</file>
+  <line>8</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/object-keys/.editorconfig" />
+  <problem_class id="EditorConfigKeyCorrectness" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown property</problem_class>
+  <description>The property is not supported</description>
+  <highlighted_element>space_after_control_statements</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>30</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/object-keys/.editorconfig</file>
+  <line>9</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/object-keys/.editorconfig" />
+  <problem_class id="EditorConfigKeyCorrectness" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown property</problem_class>
+  <description>The property is not supported</description>
+  <highlighted_element>spaces_around_operators</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>23</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/object-keys/.editorconfig</file>
+  <line>11</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/object-keys/.editorconfig" />
+  <problem_class id="EditorConfigKeyCorrectness" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown property</problem_class>
+  <description>The property is not supported</description>
+  <highlighted_element>spaces_in_brackets</highlighted_element>
+  <language>EditorConfig</language>
+  <offset>0</offset>
+  <length>18</length>
+</problem>
+</problems>

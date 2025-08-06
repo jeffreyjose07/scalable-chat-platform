@@ -1,0 +1,102 @@
+# Render configuration file for JWT-secured chat platform deployment
+services:
+  # Combined Web Service (Spring Boot + React) with JWT Security
+  - type: web
+    name: chat-platform
+    env: docker
+    dockerfilePath: ./Dockerfile.render
+    plan: starter  # Upgraded from free for better performance
+    region: oregon
+    branch: render-single-service-deployment
+    buildCommand: ""
+    startCommand: ""
+    healthCheckPath: /api/health/status
+    envVars:
+      # Application Configuration
+      - key: SPRING_PROFILES_ACTIVE
+        value: render
+      - key: PORT
+        value: 8080
+      
+      # Java/Gradle Build Optimization
+      - key: JAVA_HOME
+        value: /usr/local/openjdk-17
+      - key: GRADLE_OPTS
+        value: "-Xmx2048m -XX:MaxMetaspaceSize=512m -Dorg.gradle.daemon=false"
+      - key: JAVA_OPTS
+        value: "-Xmx1024m -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
+      
+      # CORS Configuration - SECURITY HARDENED
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://chat-platform.onrender.com"  # Replace with your actual domain
+      - key: WEBSOCKET_ALLOWED_ORIGINS
+        value: "https://chat-platform.onrender.com"  # Replace with your actual domain
+      
+      # JWT Security Configuration - PRODUCTION READY
+      - key: JWT_SECRET
+        sync: false  # CRITICAL: Set manually in Render dashboard with generated secret
+      - key: JWT_EXPIRATION
+        value: "14400000"  # 4 hours in milliseconds
+      - key: JWT_ISSUER
+        value: "chat-platform-backend"
+      - key: JWT_AUDIENCE
+        value: "chat-platform-users"
+      
+      # Admin Credentials - SET MANUALLY FOR SECURITY
+      - key: ADMIN_USERNAME
+        value: "admin"
+      - key: ADMIN_EMAIL
+        value: "admin@chatplatform.com"
+      - key: ADMIN_PASSWORD
+        sync: false  # CRITICAL: Set manually with strong password
+      - key: ADMIN_DISPLAY_NAME
+        value: "System Administrator"
+      
+      # Logging Configuration
+      - key: LOGGING_LEVEL_COM_CHATPLATFORM
+        value: INFO
+      - key: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB
+        value: WARN
+      - key: LOGGING_LEVEL_ORG_HIBERNATE
+        value: WARN
+      - key: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_SECURITY
+        value: INFO
+      
+      # External Service URLs (Set these manually in Render dashboard)
+      - key: MONGODB_URI
+        sync: false  # MongoDB Atlas connection string
+      - key: REDIS_URL
+        sync: false  # Redis service connection string (Upstash, Redis Cloud, etc.)
+
+  # PostgreSQL Database (Free Tier)
+  - type: pgsql
+    name: chat-platform-db
+    plan: free
+    databaseName: chatdb
+    databaseUser: chatuser
+    region: oregon
+
+# Build System: Migrated from Maven to Gradle for better performance and security
+# - Uses Gradle 8.5 with Spring Boot 3.2.0
+# - Frontend build integrated via Node.js Gradle plugin
+# - Optimized for Render deployment with buildForRender task
+#
+# Security Notes:
+# 1. JWT_SECRET: Generate using: openssl rand -base64 32
+# 2. ADMIN_PASSWORD: Use a strong password with mixed case, numbers, symbols
+# 3. MONGODB_URI: Set up MongoDB Atlas and use connection string
+# 4. REDIS_URL: Set up Upstash Redis or Redis Cloud for token blacklisting
+# 5. CORS_ALLOWED_ORIGINS: Replace with your actual domain
+# 
+# Required Manual Environment Variables in Render Dashboard:
+# - JWT_SECRET (critical for security)
+# - ADMIN_PASSWORD (strong password required)
+# - MONGODB_URI (MongoDB Atlas connection)
+# - REDIS_URL (Redis service for token blacklisting)
+#
+# DATABASE_URL will be auto-set by Render PostgreSQL service
+#
+# Gradle Build Notes:
+# - GRADLE_OPTS optimized for containerized builds
+# - JAVA_OPTS configured for Render's memory constraints
+# - Build uses 'buildForRender' task for optimal JAR creation

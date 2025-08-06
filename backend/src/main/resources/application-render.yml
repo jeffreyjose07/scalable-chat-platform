@@ -1,0 +1,121 @@
+spring:
+  # Render deployment profile - single service with external dependencies
+    
+  # PostgreSQL Configuration (Render managed database)
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 3      # Conservative for Render free tier
+      minimum-idle: 1
+      connection-timeout: 20000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      
+  # JPA Configuration
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+        
+  # MongoDB Configuration (MongoDB Atlas)
+  data:
+    mongodb:
+      uri: ${MONGODB_URI}
+      database: chatdb
+      auto-index-creation: true
+      
+  # Redis Configuration (External service - Upstash or similar)
+  redis:
+    url: ${REDIS_URL}
+    timeout: 2000ms
+    ssl: true
+    lettuce:
+      pool:
+        max-active: 3           # Conservative for free tier
+        max-idle: 2
+        min-idle: 0
+        
+# Server Configuration
+server:
+  port: ${PORT:8080}
+  compression:
+    enabled: true
+  tomcat:
+    threads:
+      max: 50                   # Conservative for free tier
+      min-spare: 5
+      
+  # Static resources configuration for serving React app
+  servlet:
+    context-path: /
+  resources:
+    static-locations: classpath:/static/
+    cache:
+      cachecontrol:
+        max-age: 3600           # Cache static files for 1 hour
+        must-revalidate: true
+    
+# WebSocket Configuration
+websocket:
+  allowed-origins: ${WEBSOCKET_ALLOWED_ORIGINS:*}
+  
+# Application Configuration with JWT Security
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration: ${JWT_EXPIRATION:14400000} # 4 hours (matches security implementation)
+    issuer: ${JWT_ISSUER:chat-platform-backend}
+    audience: ${JWT_AUDIENCE:chat-platform-users}
+  
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:*}
+  
+  admin:
+    username: ${ADMIN_USERNAME}
+    email: ${ADMIN_EMAIL}
+    password: ${ADMIN_PASSWORD}
+    displayName: ${ADMIN_DISPLAY_NAME:System Administrator}
+  
+# Logging Configuration (Optimized for Render)
+logging:
+  level:
+    com.chatplatform: INFO
+    org.springframework.web: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.type: WARN
+    org.mongodb: WARN
+  pattern:
+    console: "%d{HH:mm:ss} %-5level %logger{36} - %msg%n"
+    
+# Management/Health Check Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+      base-path: /api/actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+      
+  
+# Render Optimizations
+spring.jpa.open-in-view: false
+spring.devtools.restart.enabled: false
+spring.devtools.livereload.enabled: false
+
+# Resource limits for free tier
+spring.datasource.hikari.leak-detection-threshold: 30000
+
+# Single service optimizations
+spring.task.execution.pool.max-size: 4
+spring.task.execution.pool.core-size: 2
+spring.task.scheduling.pool.size: 2

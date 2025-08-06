@@ -3,6 +3,7 @@ package com.chatplatform.repository.jpa;
 import com.chatplatform.model.ConversationParticipant;
 import com.chatplatform.model.ConversationParticipantId;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -42,4 +43,23 @@ public interface ConversationParticipantRepository extends JpaRepository<Convers
            "WHERE p.id.userId = :userId AND p.isActive = true " +
            "ORDER BY c.updatedAt DESC")
     List<ConversationParticipant> findUserConversations(@Param("userId") String userId);
+    
+    // Admin cleanup methods
+    @Query("SELECT COUNT(p) FROM ConversationParticipant p WHERE p.id.conversationId NOT IN :conversationIds")
+    long countByIdConversationIdNotIn(@Param("conversationIds") List<String> conversationIds);
+    
+    @Modifying
+    @Query("DELETE FROM ConversationParticipant p WHERE p.id.conversationId NOT IN :conversationIds")
+    long deleteByIdConversationIdNotIn(@Param("conversationIds") List<String> conversationIds);
+    
+    @Query("SELECT DISTINCT p.id.conversationId FROM ConversationParticipant p")
+    List<String> findDistinctConversationIds();
+    
+    // Delete participants by conversation ID (for cleanup)
+    void deleteByIdConversationId(String conversationId);
+    
+    // Convenience method alias for migration service
+    default List<ConversationParticipant> findByConversationId(String conversationId) {
+        return findByIdConversationId(conversationId);
+    }
 }

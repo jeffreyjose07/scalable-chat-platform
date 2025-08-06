@@ -38,9 +38,12 @@ server:
   port: ${SERVER_PORT:8080}
 
 # JWT Configuration
-jwt:
-  secret: ${JWT_SECRET:mySecretKey}
-  expiration: ${JWT_EXPIRATION:86400000}
+app:
+  jwt:
+    secret: ${JWT_SECRET:mySecretKey}
+    expiration: ${JWT_EXPIRATION:86400000}
+    issuer: ${JWT_ISSUER:chat-platform-backend}
+    audience: ${JWT_AUDIENCE:chat-platform-users}
 
 # CORS Configuration
 cors:

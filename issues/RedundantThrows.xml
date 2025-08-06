@@ -1,0 +1,66 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/config/DataInitializer.java</file>
+  <line>37</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.config</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.config.DataInitializer void run(java.lang.String... args)" />
+  <problem_class id="RedundantThrows" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Redundant 'throws' clause</problem_class>
+  <hints>
+    <hint value="Exception" />
+  </hints>
+  <description>The declared exception &lt;code&gt;Exception&lt;/code&gt; is never thrown</description>
+  <highlighted_element>Exception</highlighted_element>
+  <language>JAVA</language>
+  <offset>43</offset>
+  <length>9</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/config/DynamicOriginWebSocketConfigurer.java</file>
+  <line>39</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.config</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.config.DynamicOriginWebSocketConfigurer boolean beforeHandshake(org.springframework.http.server.ServerHttpRequest request, org.springframework.http.server.ServerHttpResponse response, org.springframework.web.socket.WebSocketHandler wsHandler, java.util.Map&lt;java.lang.String,java.lang.Object&gt; attributes)" />
+  <problem_class id="RedundantThrows" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Redundant 'throws' clause</problem_class>
+  <hints>
+    <hint value="Exception" />
+  </hints>
+  <description>The declared exception &lt;code&gt;Exception&lt;/code&gt; is never thrown</description>
+  <highlighted_element>Exception</highlighted_element>
+  <language>JAVA</language>
+  <offset>47</offset>
+  <length>9</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/service/MessageMigrationService.java</file>
+  <line>30</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.MessageMigrationService void run(java.lang.String... args)" />
+  <problem_class id="RedundantThrows" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Redundant 'throws' clause</problem_class>
+  <hints>
+    <hint value="Exception" />
+  </hints>
+  <description>The declared exception &lt;code&gt;Exception&lt;/code&gt; is never thrown</description>
+  <highlighted_element>Exception</highlighted_element>
+  <language>JAVA</language>
+  <offset>43</offset>
+  <length>9</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/websocket/ChatWebSocketHandler.java</file>
+  <line>226</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.websocket</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.websocket.ChatWebSocketHandler void handleTextMessage(org.springframework.web.socket.WebSocketSession session, org.springframework.web.socket.TextMessage message)" />
+  <problem_class id="RedundantThrows" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Redundant 'throws' clause</problem_class>
+  <hints>
+    <hint value="Exception" />
+  </hints>
+  <description>The declared exception &lt;code&gt;Exception&lt;/code&gt; is never thrown</description>
+  <highlighted_element>Exception</highlighted_element>
+  <language>JAVA</language>
+  <offset>91</offset>
+  <length>9</length>
+</problem>
+</problems>

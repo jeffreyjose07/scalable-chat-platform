@@ -10,6 +10,7 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Map;
 
@@ -91,6 +92,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<MessageResponse<Object>> handleIllegalArgumentException(IllegalArgumentException e) {
         logger.warn("Illegal argument: {}", e.getMessage());
         return ResponseUtils.conflict(e.getMessage(), null);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<MessageResponse<Object>> handleNoResourceFoundException(NoResourceFoundException e) {
+        // Don't log static resource errors as errors - just debug level
+        logger.debug("Static resource not found: {}", e.getResourcePath());
+        return ResponseUtils.notFound("Resource not found", Map.of("path", e.getResourcePath()));
     }
 
     @ExceptionHandler(Exception.class)

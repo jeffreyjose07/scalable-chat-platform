@@ -4,6 +4,26 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Gradle
+.gradle/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Gradle cache
+.gradletasknamecache
+
+# Gradle build output directory
+build/
+
+# Gradle 7+ specific
+.fleet/
+.attach_pid*
+
+# Local Gradle configuration - exclude only temp files
+gradle.zip
+
 # STS
 .apt_generated
 .classpath
@@ -18,6 +38,30 @@ target/
 *.iws
 *.iml
 *.ipr
+*.ipr
+*.iws
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+!.mvn/*
+.mvn/
+mvnw
+mvnw.cmd
+.mvn/wrapper/maven-wrapper.jar
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
 
 # NetBeans
 /nbproject/private/

@@ -77,4 +77,19 @@ public class ConversationParticipantDto {
                 ", lastReadAt=" + lastReadAt +
                 '}';
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ConversationParticipantDto that)) return false;
+        
+        return user != null && user.equals(that.user) && role == that.role;
+    }
+    
+    @Override
+    public int hashCode() {
+        int result = user != null ? user.hashCode() : 0;
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        return result;
+    }
 }

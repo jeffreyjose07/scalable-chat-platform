@@ -5,11 +5,13 @@ import com.chatplatform.dto.LoginRequest;
 import com.chatplatform.dto.RegisterRequest;
 import com.chatplatform.model.User;
 import com.chatplatform.exception.AuthenticationException;
+import com.chatplatform.exception.ValidationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -29,13 +31,19 @@ public class AuthService {
     private final UserService userService;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final TokenBlacklistService tokenBlacklistService;
+    private final PasswordEncoder passwordEncoder;
     
     public AuthService(UserService userService, 
                       JwtService jwtService,
-                      AuthenticationManager authenticationManager) {
+                      AuthenticationManager authenticationManager,
+                      TokenBlacklistService tokenBlacklistService,
+                      PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
+        this.tokenBlacklistService = tokenBlacklistService;
+        this.passwordEncoder = passwordEncoder;
     }
     
     /**
@@ -84,15 +92,25 @@ public class AuthService {
     }
     
     /**
-     * Logout user with graceful error handling
+     * Logout user with token blacklisting and graceful error handling
      */
     public void logout(String token) {
         Optional.ofNullable(token)
-                .map(this::safeGetUserFromToken)
+                .map(this::removeBearerPrefix)
                 .ifPresentOrElse(
-                    user -> {
-                        userService.updateUserOnlineStatus(user.getId(), false);
-                        logger.info("👋 Logout successful for user: {}", user.getUsername());
+                    cleanToken -> {
+                        // Blacklist the token first
+                        tokenBlacklistService.blacklistToken(cleanToken);
+                        
+                        // Then update user status
+                        Optional.ofNullable(safeGetUserFromToken("Bearer " + cleanToken))
+                                .ifPresentOrElse(
+                                    user -> {
+                                        userService.updateUserOnlineStatus(user.getId(), false);
+                                        logger.info("👋 Logout successful for user: {} (token blacklisted)", user.getUsername());
+                                    },
+                                    () -> logger.info("🚫 Token blacklisted successfully (user not found)")
+                                );
                     },
                     () -> logger.warn("⚠️ Logout failed: Invalid token")
                 );
@@ -232,6 +250,47 @@ public class AuthService {
             return null;
         }
     }
+    
+    /**
+     * Change user password with security validation
+     */
+    public void changePassword(String userId, String currentPassword, String newPassword) {
+        logger.info("Password change requested for user: {}", userId);
+        
+        try {
+            // Find user by username (userId in our case is username)
+            Optional<User> userOptional = userService.findByUsername(userId);
+            if (userOptional.isEmpty()) {
+                throw new AuthenticationException("User not found");
+            }
+            
+            User user = userOptional.get();
+            
+            // Verify current password
+            if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+                logger.warn("Password change failed - incorrect current password for user: {}", userId);
+                throw new AuthenticationException("Current password is incorrect");
+            }
+            
+            // Ensure new password is different
+            if (passwordEncoder.matches(newPassword, user.getPassword())) {
+                throw new ValidationException("New password must be different from current password");
+            }
+            
+            // Update password
+            String encodedNewPassword = passwordEncoder.encode(newPassword);
+            userService.updateUserPassword(user.getId(), encodedNewPassword);
+            
+            logger.info("Password changed successfully for user: {}", userId);
+            
+        } catch (AuthenticationException | ValidationException e) {
+            throw e; // Re-throw expected exceptions
+        } catch (Exception e) {
+            logger.error("Unexpected error during password change for user: {}", userId, e);
+            throw new RuntimeException("Password change failed", e);
+        }
+    }
+    
     
     /**
      * Functional validation chain builder

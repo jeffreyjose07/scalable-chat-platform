@@ -2,7 +2,9 @@ package com.chatplatform.controller;
 
 import com.chatplatform.dto.UserDto;
 import com.chatplatform.dto.UserSearchRequest;
+import com.chatplatform.model.User;
 import com.chatplatform.service.UserSearchService;
+import com.chatplatform.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -11,15 +13,18 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserSearchController {
     
     private final UserSearchService userSearchService;
+    private final UserService userService;
     
-    public UserSearchController(UserSearchService userSearchService) {
+    public UserSearchController(UserSearchService userSearchService, UserService userService) {
         this.userSearchService = userSearchService;
+        this.userService = userService;
     }
     
     @GetMapping("/search")
@@ -27,7 +32,14 @@ public class UserSearchController {
             @RequestParam(required = false) String query,
             @RequestParam(defaultValue = "20") @Min(1) @Max(100) int limit,
             Authentication authentication) {
-        String currentUserId = authentication.getName();
+        String username = authentication.getName();
+        Optional<User> userOpt = userService.findByUsername(username);
+        
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).build();
+        }
+        
+        String currentUserId = userOpt.get().getId();
         List<UserDto> users = userSearchService.searchUsers(query, currentUserId, limit);
         return ResponseEntity.ok(users);
     }
@@ -36,7 +48,14 @@ public class UserSearchController {
     public ResponseEntity<List<UserDto>> searchUsersPost(
             @Valid @RequestBody UserSearchRequest request,
             Authentication authentication) {
-        String currentUserId = authentication.getName();
+        String username = authentication.getName();
+        Optional<User> userOpt = userService.findByUsername(username);
+        
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).build();
+        }
+        
+        String currentUserId = userOpt.get().getId();
         List<UserDto> users = userSearchService.searchUsers(
             request.getQuery(), 
             currentUserId, 
@@ -49,7 +68,14 @@ public class UserSearchController {
     public ResponseEntity<List<UserDto>> getAllUsers(
             @RequestParam(defaultValue = "50") @Min(1) @Max(100) int limit,
             Authentication authentication) {
-        String currentUserId = authentication.getName();
+        String username = authentication.getName();
+        Optional<User> userOpt = userService.findByUsername(username);
+        
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).build();
+        }
+        
+        String currentUserId = userOpt.get().getId();
         // Return all users except the current user for group creation, etc.
         List<UserDto> users = userSearchService.getAllUsers(currentUserId, limit);
         return ResponseEntity.ok(users);
@@ -59,7 +85,14 @@ public class UserSearchController {
     public ResponseEntity<List<UserDto>> getUserSuggestions(
             @RequestParam(defaultValue = "10") @Min(1) @Max(50) int limit,
             Authentication authentication) {
-        String currentUserId = authentication.getName();
+        String username = authentication.getName();
+        Optional<User> userOpt = userService.findByUsername(username);
+        
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).build();
+        }
+        
+        String currentUserId = userOpt.get().getId();
         List<UserDto> suggestions = userSearchService.getUserSuggestions(currentUserId, limit);
         return ResponseEntity.ok(suggestions);
     }

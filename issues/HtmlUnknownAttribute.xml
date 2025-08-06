@@ -1,0 +1,26 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>349</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlUnknownAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown attribute</problem_class>
+  <description>Attribute halign is not allowed here</description>
+  <highlighted_element>halign</highlighted_element>
+  <language>XML</language>
+  <offset>30</offset>
+  <length>6</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/node_modules/yaml/README.md</file>
+  <line>35</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/node_modules/yaml/README.md" />
+  <problem_class id="HtmlUnknownAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Unknown attribute</problem_class>
+  <description>Attribute width is not allowed here</description>
+  <highlighted_element>width</highlighted_element>
+  <language>XML</language>
+  <offset>18</offset>
+  <length>5</length>
+</problem>
+</problems>

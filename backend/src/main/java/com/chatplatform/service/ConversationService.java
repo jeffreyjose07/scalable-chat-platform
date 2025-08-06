@@ -510,8 +510,8 @@ public class ConversationService {
         
         dto.setParticipants(participantDtos);
         
-        // TODO: Add last message info and unread count
-        // This will be implemented when we integrate with MessageService
+        // Note: Last message info and unread count integration with MessageService
+        // is planned for future enhancement to provide richer conversation metadata
         
         return dto;
     }

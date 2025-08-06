@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { api, SearchResult } from '../services/api';
+import { SearchFilters } from '../components/NewMessageSearchBar';
 
 interface UseMessageSearchReturn {
   isSearchMode: boolean;
@@ -7,7 +8,7 @@ interface UseMessageSearchReturn {
   isSearchLoading: boolean;
   searchError: string | null;
   toggleSearchMode: () => void;
-  performSearch: (conversationId: string, query: string) => Promise<void>;
+  performSearch: (conversationId: string, query: string, filters?: SearchFilters) => Promise<void>;
   clearSearch: () => void;
   loadMoreResults: (conversationId: string) => Promise<void>;
   jumpToMessage: (messageId: string) => void;
@@ -30,17 +31,66 @@ export const useMessageSearch = (): UseMessageSearchReturn => {
     });
   }, []);
 
-  const performSearch = useCallback(async (conversationId: string, query: string) => {
+  const performSearch = useCallback(async (conversationId: string, query: string, filters?: SearchFilters) => {
+    console.log('🔍 performSearch called:', { conversationId, query, filters });
+    console.log('🔍 Current search result state:', searchResult);
+    console.log('🔍 Current loading state:', isSearchLoading);
+    
     if (!query.trim()) {
+      console.log('❌ Empty query, clearing search result');
       setSearchResult(null);
       return;
     }
 
+    if (!conversationId) {
+      console.log('❌ No conversation selected, cannot search');
+      setSearchError('Please select a conversation to search');
+      return;
+    }
+
+    console.log('🔍 Setting loading state to true');
     setIsSearchLoading(true);
     setSearchError(null);
     
     try {
+      console.log('🔄 Calling API search for conversation:', conversationId, 'query:', query);
+      // For now, we'll just use the basic search API
+      // TODO: Extend backend API to support filters
       const result = await api.messageSearch.searchMessages(conversationId, query);
+      console.log('✅ Search API returned:', result.totalCount, 'results');
+      
+      // Client-side filtering as fallback until backend supports filters
+      if (filters && result.messages) {
+        let filteredMessages = result.messages;
+        
+        if (filters.sender) {
+          filteredMessages = filteredMessages.filter(msg => 
+            msg.senderUsername.toLowerCase().includes(filters.sender!.toLowerCase())
+          );
+        }
+        
+        if (filters.dateFrom) {
+          const fromDate = new Date(filters.dateFrom);
+          filteredMessages = filteredMessages.filter(msg => 
+            new Date(msg.timestamp) >= fromDate
+          );
+        }
+        
+        if (filters.dateTo) {
+          const toDate = new Date(filters.dateTo);
+          toDate.setHours(23, 59, 59, 999); // End of day
+          filteredMessages = filteredMessages.filter(msg => 
+            new Date(msg.timestamp) <= toDate
+          );
+        }
+        
+        // Note: hasMedia filter would require backend support
+        // as message content field doesn't contain attachment info
+        
+        result.messages = filteredMessages;
+        result.totalCount = filteredMessages.length;
+      }
+      
       setSearchResult(result);
     } catch (error) {
       console.error('Failed to search messages:', error);
@@ -64,7 +114,8 @@ export const useMessageSearch = (): UseMessageSearchReturn => {
       const nextPage = await api.messageSearch.searchMessages(
         conversationId,
         searchResult.query,
-        searchResult.currentPage + 1
+        searchResult.currentPage + 1,
+        20 // page size
       );
       
       // Append new results to existing ones
@@ -84,9 +135,16 @@ export const useMessageSearch = (): UseMessageSearchReturn => {
     // TODO: Implement message jumping/scrolling logic
     console.log('Jump to message:', messageId);
     
-    // For now, just close search mode
-    setIsSearchMode(false);
-    setSearchResult(null);
+    // Emit custom event that MessageList can listen to
+    window.dispatchEvent(new CustomEvent('jumpToMessage', { 
+      detail: { messageId } 
+    }));
+    
+    // Close search mode after a brief delay to allow jumping
+    setTimeout(() => {
+      setIsSearchMode(false);
+      setSearchResult(null);
+    }, 100);
   }, []);
 
   return {

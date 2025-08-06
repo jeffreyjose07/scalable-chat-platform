@@ -3,7 +3,9 @@ package com.chatplatform.controller;
 import com.chatplatform.dto.MessageSearchRequest;
 import com.chatplatform.dto.MessageSearchResultDto;
 import com.chatplatform.dto.SearchResultDto;
+import com.chatplatform.model.User;
 import com.chatplatform.service.MessageSearchService;
+import com.chatplatform.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -12,15 +14,18 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/conversations/{conversationId}/search")
 public class MessageSearchController {
     
     private final MessageSearchService messageSearchService;
+    private final UserService userService;
     
-    public MessageSearchController(MessageSearchService messageSearchService) {
+    public MessageSearchController(MessageSearchService messageSearchService, UserService userService) {
         this.messageSearchService = messageSearchService;
+        this.userService = userService;
     }
     
     @GetMapping
@@ -29,9 +34,21 @@ public class MessageSearchController {
             @RequestParam String query,
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "20") @Min(1) @Max(100) int size,
+            @RequestParam(required = false) String sender,
+            @RequestParam(required = false) String dateFrom,
+            @RequestParam(required = false) String dateTo,
+            @RequestParam(required = false, defaultValue = "false") boolean hasMedia,
             Authentication authentication) {
-        String userId = authentication.getName();
-        SearchResultDto results = messageSearchService.searchMessages(conversationId, query, userId, page, size);
+        String username = authentication.getName();
+        Optional<User> userOpt = userService.findByUsername(username);
+        
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).build();
+        }
+        
+        String userId = userOpt.get().getId();
+        SearchResultDto results = messageSearchService.searchMessages(
+            conversationId, query, userId, page, size, sender, dateFrom, dateTo, hasMedia);
         return ResponseEntity.ok(results);
     }
     
@@ -40,14 +57,17 @@ public class MessageSearchController {
             @PathVariable String conversationId,
             @Valid @RequestBody MessageSearchRequest request,
             Authentication authentication) {
-        String userId = authentication.getName();
-        SearchResultDto results = messageSearchService.searchMessages(
-            conversationId, 
-            request.getQuery(), 
-            userId, 
-            request.getPage(), 
-            request.getSize()
-        );
+        String username = authentication.getName();
+        Optional<User> userOpt = userService.findByUsername(username);
+        
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).build();
+        }
+        
+        String userId = userOpt.get().getId();
+        
+        // Use the new method that supports advanced filters
+        SearchResultDto results = messageSearchService.searchMessages(conversationId, request, userId);
         return ResponseEntity.ok(results);
     }
     
@@ -57,7 +77,14 @@ public class MessageSearchController {
             @PathVariable String messageId,
             @RequestParam(defaultValue = "10") @Min(1) @Max(50) int contextSize,
             Authentication authentication) {
-        String userId = authentication.getName();
+        String username = authentication.getName();
+        Optional<User> userOpt = userService.findByUsername(username);
+        
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).build();
+        }
+        
+        String userId = userOpt.get().getId();
         List<MessageSearchResultDto> context = messageSearchService.getMessageContext(messageId, userId, contextSize);
         return ResponseEntity.ok(context);
     }

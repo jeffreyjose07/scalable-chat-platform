@@ -1,0 +1,518 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/ansi-escapes/node_modules/type-fest/readme.md</file>
+  <line>23</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/ansi-escapes/node_modules/type-fest/readme.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/ansi-escapes/readme.md</file>
+  <line>181</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/ansi-escapes/readme.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>1</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/babel-loader/node_modules/schema-utils/README.md</file>
+  <line>3</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/babel-loader/node_modules/schema-utils/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/babel-loader/node_modules/schema-utils/README.md</file>
+  <line>7</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/babel-loader/node_modules/schema-utils/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/css-loader/README.md</file>
+  <line>2</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/css-loader/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>3</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/css-loader/README.md</file>
+  <line>5</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/css-loader/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/electron-to-chromium/README.md</file>
+  <line>20</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/electron-to-chromium/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md</file>
+  <line>5</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>1</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md</file>
+  <line>122</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>1</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md</file>
+  <line>131</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>1</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md</file>
+  <line>138</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>1</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md</file>
+  <line>142</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-plugin-import/node_modules/debug/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>1</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-webpack-plugin/README.md</file>
+  <line>2</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-webpack-plugin/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>46</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/eslint-webpack-plugin/README.md</file>
+  <line>3</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/eslint-webpack-plugin/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>48</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/file-loader/README.md</file>
+  <line>3</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/file-loader/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/file-loader/node_modules/schema-utils/README.md</file>
+  <line>3</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/file-loader/node_modules/schema-utils/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/file-loader/node_modules/schema-utils/README.md</file>
+  <line>7</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/file-loader/node_modules/schema-utils/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/fill-range/README.md</file>
+  <line>227</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/fill-range/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>1</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/glob-parent/README.md</file>
+  <line>3</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/glob-parent/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md</file>
+  <line>9</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>3</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md</file>
+  <line>11</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md</file>
+  <line>15</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md</file>
+  <line>623</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>9</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md</file>
+  <line>629</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/html-webpack-plugin/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>9</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/jest-circus/README.md</file>
+  <line>4</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/jest-circus/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>3</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/jest-circus/README.md</file>
+  <line>5</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/jest-circus/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>3</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/jest-watch-typeahead/README.md</file>
+  <line>5</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/jest-watch-typeahead/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/jest-watch-typeahead/node_modules/ansi-styles/readme.md</file>
+  <line>7</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/jest-watch-typeahead/node_modules/ansi-styles/readme.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>1</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>4</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>3</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>6</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>8</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>3</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>321</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>3</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>349</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>3</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>378</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>3</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>412</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>7</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>418</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>7</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>433</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>7</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>439</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>7</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>445</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>7</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md</file>
+  <line>451</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/postcss-load-config/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>7</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/sass-loader/README.md</file>
+  <line>2</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/sass-loader/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>3</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/sass-loader/README.md</file>
+  <line>5</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/sass-loader/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/frontend/node_modules/terser-webpack-plugin/README.md</file>
+  <line>3</line>
+  <module>scalable-chat-platform</module>
+  <entry_point TYPE="file" FQNAME="file://$PROJECT_DIR$/frontend/node_modules/terser-webpack-plugin/README.md" />
+  <problem_class id="HtmlRequiredAltAttribute" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Missing required 'alt' attribute</problem_class>
+  <description>Missing required 'alt' attribute</description>
+  <highlighted_element>img</highlighted_element>
+  <language>XML</language>
+  <offset>5</offset>
+  <length>3</length>
+</problem>
+</problems>

@@ -14,7 +14,7 @@ interface UseChatStateReturn {
 }
 
 export const useChatState = (): UseChatStateReturn => {
-  const [selectedConversation, setSelectedConversation] = useState<string>('general');
+  const [selectedConversation, setSelectedConversation] = useState<string>('');
   const [activeConversationType, setActiveConversationType] = useState<ConversationType>('groups');
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 

@@ -1,0 +1,72 @@
+<problems>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/config/SearchTestConfig.java</file>
+  <line>28</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.config</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.config.SearchTestConfig.MockConversationService boolean hasUserAccess(java.lang.String userId, java.lang.String conversationId)" />
+  <problem_class id="SameReturnValue" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Method always returns the same value</problem_class>
+  <hints />
+  <description>Method &lt;code&gt;hasUserAccess()&lt;/code&gt; always returns &lt;code&gt;true&lt;/code&gt;</description>
+  <highlighted_element>hasUserAccess</highlighted_element>
+  <language>JAVA</language>
+  <offset>23</offset>
+  <length>13</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/controller/WebController.java</file>
+  <line>25</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.WebController java.lang.String serveReactApp()" />
+  <problem_class id="SameReturnValue" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Method always returns the same value</problem_class>
+  <hints />
+  <description>Method &lt;code&gt;serveReactApp()&lt;/code&gt; always returns &lt;code&gt;forward:/index.html&lt;/code&gt;</description>
+  <highlighted_element>serveReactApp</highlighted_element>
+  <language>JAVA</language>
+  <offset>18</offset>
+  <length>13</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/controller/WebController.java</file>
+  <line>33</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.WebController java.lang.String index()" />
+  <problem_class id="SameReturnValue" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Method always returns the same value</problem_class>
+  <hints />
+  <description>Method &lt;code&gt;index()&lt;/code&gt; always returns &lt;code&gt;forward:/index.html&lt;/code&gt;</description>
+  <highlighted_element>index</highlighted_element>
+  <language>JAVA</language>
+  <offset>18</offset>
+  <length>5</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/controller/WebController.java</file>
+  <line>41</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.controller</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.controller.WebController java.lang.String health()" />
+  <problem_class id="SameReturnValue" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Method always returns the same value</problem_class>
+  <hints />
+  <description>Method &lt;code&gt;health()&lt;/code&gt; always returns &lt;code&gt;forward:/api/health/status&lt;/code&gt;</description>
+  <highlighted_element>health</highlighted_element>
+  <language>JAVA</language>
+  <offset>18</offset>
+  <length>6</length>
+</problem>
+<problem>
+  <file>file://$PROJECT_DIR$/backend/src/main/java/com/chatplatform/service/AdminDatabaseCleanupService.java</file>
+  <line>357</line>
+  <module>chat-platform-backend.main</module>
+  <package>com.chatplatform.service</package>
+  <entry_point TYPE="method" FQNAME="com.chatplatform.service.AdminDatabaseCleanupService int cleanupDuplicateParticipants()" />
+  <problem_class id="SameReturnValue" severity="WARNING" attribute_key="WARNING_ATTRIBUTES">Method always returns the same value</problem_class>
+  <hints />
+  <description>Method &lt;code&gt;cleanupDuplicateParticipants()&lt;/code&gt; always returns &lt;code&gt;0&lt;/code&gt;</description>
+  <highlighted_element>cleanupDuplicateParticipants</highlighted_element>
+  <language>JAVA</language>
+  <offset>16</offset>
+  <length>28</length>
+</problem>
+</problems>
