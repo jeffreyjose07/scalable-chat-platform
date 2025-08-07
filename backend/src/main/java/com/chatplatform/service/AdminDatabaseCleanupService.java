@@ -22,21 +22,33 @@ import java.util.Map;
  */
 @Service
 public class AdminDatabaseCleanupService {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(AdminDatabaseCleanupService.class);
+    public static final String ERROR = "error";
+    public static final String TOTAL_PARTICIPANTS = "totalParticipants";
+
+
+    private final ConversationRepository conversationRepository;
     
-    @Autowired
-    private ConversationRepository conversationRepository;
+
+    private final ConversationParticipantRepository participantRepository;
     
-    @Autowired
-    private ConversationParticipantRepository participantRepository;
+
+    private final UserRepository userRepository;
     
-    @Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
-    private ChatMessageRepository chatMessageRepository;
-    
+
+    private final ChatMessageRepository chatMessageRepository;
+
+    public AdminDatabaseCleanupService(ConversationRepository conversationRepository,
+                                       ConversationParticipantRepository participantRepository,
+                                       UserRepository userRepository,
+                                       ChatMessageRepository chatMessageRepository) {
+        this.conversationRepository = conversationRepository;
+        this.participantRepository = participantRepository;
+        this.userRepository = userRepository;
+        this.chatMessageRepository = chatMessageRepository;
+    }
+
     /**
      * Performs comprehensive database cleanup with safety checks
      * CRITICAL: This should only be called by admin users
@@ -50,7 +62,6 @@ public class AdminDatabaseCleanupService {
         
         Map<String, Object> report = new HashMap<>();
         Map<String, Integer> deletionCounts = new HashMap<>();
-        Map<String, List<String>> sampleData = new HashMap<>();
         
         try {
             // Phase 1: Analyze orphaned data
@@ -101,8 +112,8 @@ public class AdminDatabaseCleanupService {
             return report;
             
         } catch (Exception e) {
-            logger.error("CRITICAL ERROR during admin cleanup", e);
-            report.put("error", e.getMessage());
+            // Logged for visibility, rethrown for transaction rollback and upstream handling
+            report.put(ERROR, e.getMessage());
             report.put("success", false);
             throw e;
         }
@@ -136,7 +147,7 @@ public class AdminDatabaseCleanupService {
             
         } catch (Exception e) {
             logger.error("Error analyzing orphaned messages", e);
-            report.put("error", e.getMessage());
+            report.put(ERROR, e.getMessage());
         }
         
         return report;
@@ -158,7 +169,7 @@ public class AdminDatabaseCleanupService {
             // Find participants with invalid conversation IDs
             long orphanedParticipants = participantRepository.countByIdConversationIdNotIn(validConversationIds);
             
-            report.put("totalParticipants", totalParticipants);
+            report.put(TOTAL_PARTICIPANTS, totalParticipants);
             report.put("orphanedParticipantsCount", orphanedParticipants);
             report.put("healthyParticipantsCount", totalParticipants - orphanedParticipants);
             
@@ -167,7 +178,7 @@ public class AdminDatabaseCleanupService {
             
         } catch (Exception e) {
             logger.error("Error analyzing orphaned participants", e);
-            report.put("error", e.getMessage());
+            report.put(ERROR, e.getMessage());
         }
         
         return report;
@@ -199,7 +210,7 @@ public class AdminDatabaseCleanupService {
             
         } catch (Exception e) {
             logger.error("Error analyzing soft-deleted conversation messages", e);
-            report.put("error", e.getMessage());
+            report.put(ERROR, e.getMessage());
         }
         
         return report;
@@ -230,7 +241,7 @@ public class AdminDatabaseCleanupService {
             
         } catch (Exception e) {
             logger.error("Error analyzing empty conversations", e);
-            report.put("error", e.getMessage());
+            report.put(ERROR, e.getMessage());
         }
         
         return report;
@@ -247,14 +258,14 @@ public class AdminDatabaseCleanupService {
             // For now, we'll do a basic count
             long totalParticipants = participantRepository.count();
             
-            report.put("totalParticipants", totalParticipants);
+            report.put(TOTAL_PARTICIPANTS, totalParticipants);
             report.put("duplicatesFound", 0); // Placeholder - would need custom query
             
             logger.info("Duplicate participants analysis: Total participants={}", totalParticipants);
             
         } catch (Exception e) {
             logger.error("Error analyzing duplicate participants", e);
-            report.put("error", e.getMessage());
+            report.put(ERROR, e.getMessage());
         }
         
         return report;
@@ -370,13 +381,13 @@ public class AdminDatabaseCleanupService {
         try {
             stats.put("totalUsers", userRepository.count());
             stats.put("totalConversations", conversationRepository.count());
-            stats.put("totalParticipants", participantRepository.count());
+            stats.put(TOTAL_PARTICIPANTS, participantRepository.count());
             stats.put("totalMessages", chatMessageRepository.count());
             stats.put("timestamp", LocalDateTime.now());
             
         } catch (Exception e) {
             logger.error("Error generating database stats", e);
-            stats.put("error", e.getMessage());
+            stats.put(ERROR, e.getMessage());
         }
         
         return stats;

@@ -311,13 +311,6 @@ public class AuthController {
     }
     
     /**
-     * Legacy method for backward compatibility
-     */
-    private boolean isPasswordStrong(String password) {
-        return validatePasswordStrength(password) == null;
-    }
-    
-    /**
      * Update user profile information
      */
     @PutMapping("/profile")

@@ -43,14 +43,14 @@ public record AuthResponse(
      * Factory method for failed authentication
      */
     public static AuthResponse failure() {
-        return new AuthResponse(null, "Bearer", null, Instant.now(), false);
+        return new AuthResponse(null, BEARER, null, Instant.now(), false);
     }
     
     /**
      * Factory method for failed authentication with message
      */
     public static AuthResponse failure(String message) {
-        return new AuthResponse(null, "Bearer", null, Instant.now(), false);
+        return new AuthResponse(null, BEARER, null, Instant.now(), false);
     }
     
     /**

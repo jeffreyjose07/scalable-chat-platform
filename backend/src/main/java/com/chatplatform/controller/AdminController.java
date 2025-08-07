@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +23,18 @@ import java.util.Map;
 public class AdminController {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
-    
-    @Autowired
-    private AdminDatabaseCleanupService cleanupService;
-    
-    @Autowired
-    private UserService userService;
-    
+    public static final String ERROR = "error";
+    public static final String ADMIN_ACCESS_REQUIRED = "Admin access required";
+
+    private final AdminDatabaseCleanupService cleanupService;
+
+    private final UserService userService;
+
+    public AdminController(AdminDatabaseCleanupService cleanupService, UserService userService) {
+        this.cleanupService = cleanupService;
+        this.userService = userService;
+    }
+
     /**
      * CRITICAL: Preview database cleanup without making changes
      * Shows what would be deleted in a real cleanup operation
@@ -45,7 +49,7 @@ public class AdminController {
             if (!isAdminUser(userId)) {
                 logger.error("UNAUTHORIZED admin preview attempt by user: {}", userId);
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of("error", "Admin access required"));
+                    .body(Map.of(ERROR, ADMIN_ACCESS_REQUIRED));
             }
             
             // Get cleanup preview (dry run)
@@ -59,7 +63,7 @@ public class AdminController {
         } catch (Exception e) {
             logger.error("Error generating cleanup preview for user: {}", userId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("error", "Failed to generate preview: " + e.getMessage()));
+                .body(Map.of(ERROR, "Failed to generate preview: " + e.getMessage()));
         }
     }
     
@@ -80,7 +84,7 @@ public class AdminController {
             if (!isAdminUser(userId)) {
                 logger.error("UNAUTHORIZED admin cleanup attempt by user: {}", userId);
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of("error", "Admin access required"));
+                    .body(Map.of(ERROR, ADMIN_ACCESS_REQUIRED));
             }
             
             // Require explicit confirmation
@@ -90,7 +94,7 @@ public class AdminController {
             if (!Boolean.TRUE.equals(confirmed) || !"DELETE_ORPHANED_DATA".equals(confirmationText)) {
                 logger.warn("Admin cleanup attempted without proper confirmation by user: {}", userId);
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", "Explicit confirmation required"));
+                    .body(Map.of(ERROR, "Explicit confirmation required"));
             }
             
             // Log the critical operation
@@ -107,7 +111,7 @@ public class AdminController {
         } catch (Exception e) {
             logger.error("CRITICAL ERROR during database cleanup by admin: {}", userId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("error", "Cleanup failed: " + e.getMessage(), "executedBy", userId));
+                .body(Map.of(ERROR, "Cleanup failed: " + e.getMessage(), "executedBy", userId));
         }
     }
     
@@ -124,7 +128,7 @@ public class AdminController {
             if (!isAdminUser(userId)) {
                 logger.warn("Unauthorized database stats request by user: {}", userId);
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of("error", "Admin access required"));
+                    .body(Map.of(ERROR, ADMIN_ACCESS_REQUIRED));
             }
             
             // Generate basic stats without cleanup analysis
@@ -140,7 +144,7 @@ public class AdminController {
         } catch (Exception e) {
             logger.error("Error getting database stats for user: {}", userId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("error", "Failed to get stats: " + e.getMessage()));
+                .body(Map.of(ERROR, "Failed to get stats: " + e.getMessage()));
         }
     }
     
@@ -181,7 +185,8 @@ public class AdminController {
         try {
             // Check if user is admin in the database
             var userOptional = userService.findByUsername(userId);
-            boolean isAdmin = userOptional.isPresent() && "admin".equalsIgnoreCase(userOptional.get().getUsername());
+            boolean isAdmin = userOptional.isPresent()
+                    && "admin".equalsIgnoreCase(userOptional.get().getUsername());
             
             logger.debug("Admin check for user {}: {}", userId, isAdmin);
             return isAdmin;
