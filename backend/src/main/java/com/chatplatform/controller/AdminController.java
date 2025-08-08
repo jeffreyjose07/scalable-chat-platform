@@ -1,5 +1,6 @@
 package com.chatplatform.controller;
 
+import com.chatplatform.util.Constants;
 import com.chatplatform.service.AdminDatabaseCleanupService;
 import com.chatplatform.service.UserService;
 import org.slf4j.Logger;
@@ -23,8 +24,7 @@ import java.util.Map;
 public class AdminController {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
-    public static final String ERROR = "error";
-    public static final String ADMIN_ACCESS_REQUIRED = "Admin access required";
+    
 
     private final AdminDatabaseCleanupService cleanupService;
 
@@ -49,7 +49,7 @@ public class AdminController {
             if (!isAdminUser(userId)) {
                 logger.error("UNAUTHORIZED admin preview attempt by user: {}", userId);
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of(ERROR, ADMIN_ACCESS_REQUIRED));
+                    .body(Map.of(Constants.ERROR, Constants.ADMIN_ACCESS_REQUIRED));
             }
             
             // Get cleanup preview (dry run)
@@ -63,7 +63,7 @@ public class AdminController {
         } catch (Exception e) {
             logger.error("Error generating cleanup preview for user: {}", userId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of(ERROR, "Failed to generate preview: " + e.getMessage()));
+                .body(Map.of(Constants.ERROR, "Failed to generate preview: " + e.getMessage()));
         }
     }
     
@@ -84,7 +84,7 @@ public class AdminController {
             if (!isAdminUser(userId)) {
                 logger.error("UNAUTHORIZED admin cleanup attempt by user: {}", userId);
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of(ERROR, ADMIN_ACCESS_REQUIRED));
+                    .body(Map.of(Constants.ERROR, Constants.ADMIN_ACCESS_REQUIRED));
             }
             
             // Require explicit confirmation
@@ -94,7 +94,7 @@ public class AdminController {
             if (!Boolean.TRUE.equals(confirmed) || !"DELETE_ORPHANED_DATA".equals(confirmationText)) {
                 logger.warn("Admin cleanup attempted without proper confirmation by user: {}", userId);
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of(ERROR, "Explicit confirmation required"));
+                    .body(Map.of(Constants.ERROR, "Explicit confirmation required"));
             }
             
             // Log the critical operation
@@ -111,7 +111,7 @@ public class AdminController {
         } catch (Exception e) {
             logger.error("CRITICAL ERROR during database cleanup by admin: {}", userId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of(ERROR, "Cleanup failed: " + e.getMessage(), "executedBy", userId));
+                .body(Map.of(Constants.ERROR, "Cleanup failed: " + e.getMessage(), "executedBy", userId));
         }
     }
     
@@ -128,7 +128,7 @@ public class AdminController {
             if (!isAdminUser(userId)) {
                 logger.warn("Unauthorized database stats request by user: {}", userId);
                 return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(Map.of(ERROR, ADMIN_ACCESS_REQUIRED));
+                    .body(Map.of(Constants.ERROR, Constants.ADMIN_ACCESS_REQUIRED));
             }
             
             // Generate basic stats without cleanup analysis
@@ -144,7 +144,7 @@ public class AdminController {
         } catch (Exception e) {
             logger.error("Error getting database stats for user: {}", userId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of(ERROR, "Failed to get stats: " + e.getMessage()));
+                .body(Map.of(Constants.ERROR, "Failed to get stats: " + e.getMessage()));
         }
     }
     

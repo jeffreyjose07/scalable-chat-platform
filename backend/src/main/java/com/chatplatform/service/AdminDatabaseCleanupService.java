@@ -2,6 +2,7 @@ package com.chatplatform.service;
 
 import com.chatplatform.repository.jpa.ConversationRepository;
 import com.chatplatform.repository.jpa.ConversationParticipantRepository;
+import com.chatplatform.util.Constants;
 import com.chatplatform.repository.jpa.UserRepository;
 import com.chatplatform.repository.mongo.ChatMessageRepository;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ import java.util.Map;
 public class AdminDatabaseCleanupService {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminDatabaseCleanupService.class);
-    public static final String ERROR = "error";
+    // Using Constants.ERROR instead
     public static final String TOTAL_PARTICIPANTS = "totalParticipants";
 
 
@@ -113,8 +114,8 @@ public class AdminDatabaseCleanupService {
             
         } catch (Exception e) {
             // Logged for visibility, rethrown for transaction rollback and upstream handling
-            report.put(ERROR, e.getMessage());
-            report.put("success", false);
+            report.put(Constants.ERROR, e.getMessage());
+            report.put(Constants.SUCCESS, false);
             throw e;
         }
     }
@@ -147,7 +148,7 @@ public class AdminDatabaseCleanupService {
             
         } catch (Exception e) {
             logger.error("Error analyzing orphaned messages", e);
-            report.put(ERROR, e.getMessage());
+            report.put(Constants.ERROR, e.getMessage());
         }
         
         return report;
@@ -178,7 +179,7 @@ public class AdminDatabaseCleanupService {
             
         } catch (Exception e) {
             logger.error("Error analyzing orphaned participants", e);
-            report.put(ERROR, e.getMessage());
+            report.put(Constants.ERROR, e.getMessage());
         }
         
         return report;
@@ -210,7 +211,7 @@ public class AdminDatabaseCleanupService {
             
         } catch (Exception e) {
             logger.error("Error analyzing soft-deleted conversation messages", e);
-            report.put(ERROR, e.getMessage());
+            report.put(Constants.ERROR, e.getMessage());
         }
         
         return report;
@@ -241,7 +242,7 @@ public class AdminDatabaseCleanupService {
             
         } catch (Exception e) {
             logger.error("Error analyzing empty conversations", e);
-            report.put(ERROR, e.getMessage());
+            report.put(Constants.ERROR, e.getMessage());
         }
         
         return report;
@@ -265,7 +266,7 @@ public class AdminDatabaseCleanupService {
             
         } catch (Exception e) {
             logger.error("Error analyzing duplicate participants", e);
-            report.put(ERROR, e.getMessage());
+            report.put(Constants.ERROR, e.getMessage());
         }
         
         return report;
@@ -387,7 +388,7 @@ public class AdminDatabaseCleanupService {
             
         } catch (Exception e) {
             logger.error("Error generating database stats", e);
-            stats.put(ERROR, e.getMessage());
+            stats.put(Constants.ERROR, e.getMessage());
         }
         
         return stats;

@@ -2,6 +2,7 @@ package com.chatplatform.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import com.chatplatform.util.Constants;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -221,7 +222,7 @@ class HealthControllerTest {
         @SuppressWarnings("unchecked")
         Map<String, Object> body = (Map<String, Object>) response.getBody();
         assertNotNull(body);
-        assertEquals("Backend is working correctly", body.get("message"));
+        assertEquals(Constants.BACKEND_IS_WORKING_CORRECTLY, body.get(Constants.MESSAGE));
         assertNotNull(body.get("timestamp"));
         
         @SuppressWarnings("unchecked")

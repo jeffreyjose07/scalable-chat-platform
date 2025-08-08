@@ -22,12 +22,15 @@ import java.util.stream.Collectors;
 
 @Service
 public class MessageSearchService {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(MessageSearchService.class);
     private static final int DEFAULT_PAGE_SIZE = 20;
     private static final int MAX_PAGE_SIZE = 100;
     private static final int CONTEXT_WINDOW_SECONDS = 300; // 5 minutes
-    
+    public static final String
+            USER_DOES_NOT_HAVE_ACCESS_TO_CONVERSATION =
+            "User {} does not have access to conversation {}";
+
     private final ChatMessageRepository messageRepository;
     private final ConversationService conversationService;
     
@@ -48,7 +51,7 @@ public class MessageSearchService {
         
         // Validate user access to conversation
         if (!conversationService.hasUserAccess(userId, conversationId)) {
-            logger.warn("User {} does not have access to conversation {}", userId, conversationId);
+            logger.warn(USER_DOES_NOT_HAVE_ACCESS_TO_CONVERSATION, userId, conversationId);
             return createEmptyResult(query, conversationId, page, size);
         }
         
@@ -85,7 +88,7 @@ public class MessageSearchService {
         
         // Validate user access to conversation
         if (!conversationService.hasUserAccess(userId, conversationId)) {
-            logger.warn("User {} does not have access to conversation {}", userId, conversationId);
+            logger.warn(USER_DOES_NOT_HAVE_ACCESS_TO_CONVERSATION, userId, conversationId);
             return createEmptyResult(request.getQuery(), conversationId, request.getPage(), request.getSize());
         }
         
@@ -148,7 +151,7 @@ public class MessageSearchService {
         
         // Validate user access to conversation
         if (!conversationService.hasUserAccess(userId, targetMessage.getConversationId())) {
-            logger.warn("User {} does not have access to conversation {}", userId, targetMessage.getConversationId());
+            logger.warn(USER_DOES_NOT_HAVE_ACCESS_TO_CONVERSATION, userId, targetMessage.getConversationId());
             return List.of();
         }
         
@@ -259,9 +262,9 @@ public class MessageSearchService {
             })
             .collect(Collectors.toList());
     }
-    
-    
-    
+
+
+
     private MessageSearchResultDto convertToSearchResult(ChatMessage message, String query) {
         MessageSearchResultDto result = new MessageSearchResultDto(
             message.getId(),

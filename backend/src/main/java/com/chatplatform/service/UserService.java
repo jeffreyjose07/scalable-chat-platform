@@ -1,6 +1,7 @@
 package com.chatplatform.service;
 
 import com.chatplatform.model.User;
+import com.chatplatform.util.Constants;
 import com.chatplatform.repository.jpa.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,11 +33,11 @@ public class UserService implements UserDetailsService {
     
     public User createUser(String username, String email, String password, String displayName) {
         if (userRepository.existsByUsername(username)) {
-            throw new IllegalArgumentException("Username already exists");
+            throw new IllegalArgumentException(Constants.USERNAME_ALREADY_EXISTS);
         }
         
         if (userRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("Email already exists");
+            throw new IllegalArgumentException(Constants.EMAIL_ALREADY_EXISTS);
         }
         
         User user = new User();
@@ -99,7 +100,7 @@ public class UserService implements UserDetailsService {
             user.setPassword(encodedPassword);
             userRepository.save(user);
         } else {
-            throw new IllegalArgumentException("User not found with ID: " + userId);
+            throw new IllegalArgumentException(Constants.USER_NOT_FOUND_WITH_ID + userId);
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.chatplatform.controller;
 
+import com.chatplatform.util.Constants;
 import com.chatplatform.dto.AuthResponse;
 import com.chatplatform.dto.ChangePasswordRequest;
 import com.chatplatform.dto.LoginRequest;
@@ -47,14 +48,14 @@ public class AuthController {
             AuthResponse authResponse = authService.login(loginRequest);
             
             logger.info("Login successful for email: {}", loginRequest.email());
-            return ResponseUtils.success("Login successful", authResponse);
+            return ResponseUtils.success(Constants.LOGIN_SUCCESSFUL, authResponse);
             
         } catch (AuthenticationException e) {
             logger.warn("Login failed for email: {} - {}", loginRequest.email(), e.getMessage());
             return ResponseUtils.unauthorized(e.getMessage());
         } catch (Exception e) {
             logger.error("Login failed for email: {}", loginRequest.email(), e);
-            return ResponseUtils.internalServerError("Login failed due to server error");
+            return ResponseUtils.internalServerError(Constants.LOGIN_FAILED_SERVER_ERROR);
         }
     }
 
@@ -71,7 +72,7 @@ public class AuthController {
             AuthResponse authResponse = authService.register(registerRequest);
             
             logger.info("Registration successful for email: {}", registerRequest.email());
-            return ResponseUtils.created("User registered successfully", authResponse);
+            return ResponseUtils.created(Constants.USER_REGISTERED_SUCCESSFULLY, authResponse);
             
         } catch (ValidationException e) {
             logger.warn("Registration validation failed for email: {} - {}", 
@@ -84,7 +85,7 @@ public class AuthController {
         } catch (Exception e) {
             logger.error("Unexpected error during registration for email: {}", 
                         registerRequest.email(), e);
-            return ResponseUtils.internalServerError("Registration failed due to server error");
+            return ResponseUtils.internalServerError(Constants.REGISTRATION_FAILED_SERVER_ERROR);
         }
     }
 
@@ -93,13 +94,13 @@ public class AuthController {
             @RequestHeader("Authorization") String authHeader) {
         try {
             User user = authService.getUserFromToken(authHeader);
-            return ResponseUtils.success("User retrieved successfully", user);
+            return ResponseUtils.success(Constants.USER_RETRIEVED_SUCCESSFULLY, user);
         } catch (AuthenticationException e) {
             logger.warn("Get current user failed - {}", e.getMessage());
-            return ResponseUtils.unauthorized("Invalid or expired token", (User) null);
+            return ResponseUtils.unauthorized(Constants.INVALID_OR_EXPIRED_TOKEN, (User) null);
         } catch (Exception e) {
             logger.error("Get current user failed", e);
-            return ResponseUtils.internalServerError("Failed to retrieve user information", (User) null);
+            return ResponseUtils.internalServerError(Constants.FAILED_TO_RETRIEVE_USER_INFO, (User) null);
         }
     }
 
@@ -108,10 +109,10 @@ public class AuthController {
             @RequestHeader("Authorization") String authHeader) {
         try {
             authService.logout(authHeader);
-            return ResponseUtils.success("Logout successful");
+            return ResponseUtils.success(Constants.LOGOUT_SUCCESSFUL);
         } catch (Exception e) {
             logger.warn("Logout failed", e);
-            return ResponseUtils.badRequest("Logout failed", (Void) null);
+            return ResponseUtils.badRequest(Constants.LOGOUT_FAILED, (Void) null);
         }
     }
     
@@ -119,11 +120,11 @@ public class AuthController {
     public ResponseEntity<MessageResponse<Void>> forgotPassword(@RequestBody String email) {
         try {
             authService.sendPasswordResetEmail(email);
-            return ResponseUtils.success("Password reset email sent if account exists");
+            return ResponseUtils.success(Constants.PASSWORD_RESET_EMAIL_SENT);
         } catch (Exception e) {
             logger.error("Password reset failed for email: {}", email, e);
             // Always return success for security reasons (don't reveal if email exists)
-            return ResponseUtils.success("Password reset email sent if account exists");
+            return ResponseUtils.success(Constants.PASSWORD_RESET_EMAIL_SENT);
         }
     }
     
@@ -133,10 +134,10 @@ public class AuthController {
             @RequestParam String newPassword) {
         try {
             authService.resetPassword(token, newPassword);
-            return ResponseUtils.success("Password reset successful");
+            return ResponseUtils.success(Constants.PASSWORD_RESET_SUCCESSFUL);
         } catch (Exception e) {
             logger.warn("Password reset failed for token: {} - {}", token, e.getMessage());
-            return ResponseUtils.badRequest("Invalid or expired reset token", (Void) null);
+            return ResponseUtils.badRequest(Constants.INVALID_OR_EXPIRED_RESET_TOKEN, (Void) null);
         }
     }
     
@@ -161,7 +162,7 @@ public class AuthController {
             authService.changePassword(userId, request.getCurrentPassword(), request.getNewPassword());
             
             logger.info("Password changed successfully for user: {}", userId);
-            return ResponseUtils.success("Password changed successfully");
+            return ResponseUtils.success(Constants.PASSWORD_CHANGED_SUCCESSFULLY);
             
         } catch (AuthenticationException e) {
             logger.warn("Password change failed - authentication error for user: {} - {}", userId, e.getMessage());
@@ -174,7 +175,7 @@ public class AuthController {
             return ResponseUtils.badRequest(e.getMessage(), (Void) null);
         } catch (Exception e) {
             logger.error("Unexpected error during password change for user: {}", userId, e);
-            return ResponseUtils.internalServerError("An unexpected error occurred. Please try again later.", (Void) null);
+            return ResponseUtils.internalServerError(Constants.UNEXPECTED_ERROR, (Void) null);
         }
     }
     
@@ -193,15 +194,15 @@ public class AuthController {
         }
         
         if (request.getCurrentPassword() == null || request.getCurrentPassword().trim().isEmpty()) {
-            return ResponseUtils.badRequest("Current password is required", (Void) null);
+            return ResponseUtils.badRequest(Constants.CURRENT_PASSWORD_REQUIRED, (Void) null);
         }
         
         if (request.getNewPassword() == null || request.getNewPassword().trim().isEmpty()) {
-            return ResponseUtils.badRequest("New password is required", (Void) null);
+            return ResponseUtils.badRequest(Constants.NEW_PASSWORD_REQUIRED, (Void) null);
         }
         
         if (request.getCurrentPassword().equals(request.getNewPassword())) {
-            return ResponseUtils.badRequest("New password must be different from current password", (Void) null);
+            return ResponseUtils.badRequest(Constants.NEW_PASSWORD_MUST_BE_DIFFERENT, (Void) null);
         }
         
         String passwordValidationError = validatePasswordStrength(request.getNewPassword());
@@ -239,11 +240,11 @@ public class AuthController {
      */
     private String validateBasicPasswordRequirements(String password) {
         if (password == null || password.length() < 8) {
-            return "Password must be at least 8 characters long";
+            return Constants.PASSWORD_MIN_LENGTH;
         }
         
         if (password.matches("(.)\\1{2,}")) {
-            return "Password cannot contain more than 2 consecutive identical characters";
+            return Constants.PASSWORD_NO_CONSECUTIVE_CHARS;
         }
         
         return null;
@@ -258,7 +259,7 @@ public class AuthController {
         
         for (String weak : weakPasswords) {
             if (lowerPassword.contains(weak)) {
-                return "Password contains commonly used patterns. Please choose a more unique password.";
+                return Constants.PASSWORD_TOO_COMMON;
             }
         }
         
@@ -299,12 +300,12 @@ public class AuthController {
      * Build error message for missing character types
      */
     private String buildCharacterTypeErrorMessage(boolean hasLower, boolean hasUpper, boolean hasDigit, boolean hasSpecial) {
-        StringBuilder message = new StringBuilder("Password must contain at least 3 of the following: ");
+        StringBuilder message = new StringBuilder(Constants.PASSWORD_REQUIREMENTS);
         
-        if (!hasLower) message.append("lowercase letters, ");
-        if (!hasUpper) message.append("uppercase letters, ");
-        if (!hasDigit) message.append("numbers, ");
-        if (!hasSpecial) message.append("special characters (!@#$%^&*), ");
+        if (!hasLower) message.append(Constants.LOWERCASE_LETTERS);
+        if (!hasUpper) message.append(Constants.UPPERCASE_LETTERS);
+        if (!hasDigit) message.append(Constants.NUMBERS);
+        if (!hasSpecial) message.append(Constants.SPECIAL_CHARACTERS);
         
         String result = message.toString();
         return result.endsWith(", ") ? result.substring(0, result.length() - 2) : result;
@@ -325,7 +326,7 @@ public class AuthController {
             // Find user by username (userId in our case is username)
             Optional<User> userOptional = userService.findByUsername(userId);
             if (userOptional.isEmpty()) {
-                return ResponseUtils.notFound("User not found", (User) null);
+                return ResponseUtils.notFound(Constants.USER_NOT_FOUND, (User) null);
             }
             
             User user = userOptional.get();
@@ -344,15 +345,15 @@ public class AuthController {
             if (hasChanges) {
                 User updatedUser = userService.updateUser(user);
                 logger.info("Profile updated successfully for user: {}", userId);
-                return ResponseUtils.success("Profile updated successfully", updatedUser);
+                return ResponseUtils.success(Constants.PROFILE_UPDATED_SUCCESSFULLY, updatedUser);
             } else {
                 logger.info("No changes to update for user: {}", userId);
-                return ResponseUtils.success("No changes to update", user);
+                return ResponseUtils.success(Constants.NO_CHANGES_TO_UPDATE, user);
             }
             
         } catch (Exception e) {
             logger.error("Unexpected error during profile update for user: {}", userId, e);
-            return ResponseUtils.internalServerError("Profile update failed", (User) null);
+            return ResponseUtils.internalServerError(Constants.PROFILE_UPDATE_FAILED, (User) null);
         }
     }
 }

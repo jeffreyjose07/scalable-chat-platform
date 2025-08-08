@@ -1,6 +1,7 @@
 package com.chatplatform.service;
 
 import com.chatplatform.dto.ConversationDto;
+import com.chatplatform.util.Constants;
 import com.chatplatform.dto.CreateGroupRequest;
 import com.chatplatform.dto.UpdateGroupSettingsRequest;
 import com.chatplatform.model.Conversation;
@@ -141,7 +142,7 @@ class ConversationServiceTest {
             () -> conversationService.createDirectConversation("user1", "user2")
         );
         
-        assertEquals("User not found: user1", exception.getMessage());
+        assertEquals(Constants.USER_NOT_FOUND + "user1", exception.getMessage());
     }
     
     @Test

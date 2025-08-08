@@ -10,6 +10,7 @@ import com.chatplatform.model.ConversationParticipant;
 import com.chatplatform.model.ConversationType;
 import com.chatplatform.model.ParticipantRole;
 import com.chatplatform.model.User;
+import com.chatplatform.util.Constants;
 import com.chatplatform.repository.jpa.ConversationRepository;
 import com.chatplatform.repository.jpa.ConversationParticipantRepository;
 import com.chatplatform.repository.jpa.UserRepository;
@@ -57,12 +58,12 @@ public class ConversationService {
             User user1 = userRepository.findById(userId1)
                 .orElseThrow(() -> {
                     logger.error("User not found: {}", userId1);
-                    return new IllegalArgumentException("User not found: " + userId1);
+                    return new IllegalArgumentException(Constants.USER_NOT_FOUND + userId1);
                 });
             User user2 = userRepository.findById(userId2)
                 .orElseThrow(() -> {
                     logger.error("User not found: {}", userId2);
-                    return new IllegalArgumentException("User not found: " + userId2);
+                    return new IllegalArgumentException(Constants.USER_NOT_FOUND + userId2);
                 });
             
             logger.debug("Both users found - User1: {} ({}), User2: {} ({})", 
@@ -126,7 +127,7 @@ public class ConversationService {
             User creator = userRepository.findById(creatorId)
                 .orElseThrow(() -> {
                     logger.error("Creator not found: {}", creatorId);
-                    return new IllegalArgumentException("Creator not found: " + creatorId);
+                    return new IllegalArgumentException(Constants.CREATOR_NOT_FOUND + creatorId);
                 });
             
             // Generate unique group ID
@@ -154,7 +155,7 @@ public class ConversationService {
                         User participant = userRepository.findById(participantId)
                             .orElseThrow(() -> {
                                 logger.error("Participant not found: {}", participantId);
-                                return new IllegalArgumentException("Participant not found: " + participantId);
+                                return new IllegalArgumentException(Constants.PARTICIPANT_NOT_FOUND + participantId);
                             });
                         
                         ConversationParticipant groupParticipant = new ConversationParticipant(conversation, participant, ParticipantRole.MEMBER);
@@ -186,7 +187,7 @@ public class ConversationService {
         
         // Validate user exists
         if (!userRepository.existsById(userId)) {
-            throw new IllegalArgumentException("User not found: " + userId);
+            throw new IllegalArgumentException(Constants.USER_NOT_FOUND + userId);
         }
         
         List<Conversation> conversations = conversationRepository.findByParticipantUserId(userId);
@@ -205,7 +206,7 @@ public class ConversationService {
         
         // Validate user exists
         if (!userRepository.existsById(userId)) {
-            throw new IllegalArgumentException("User not found: " + userId);
+            throw new IllegalArgumentException(Constants.USER_NOT_FOUND + userId);
         }
         
         List<Conversation> conversations = conversationRepository.findByTypeAndParticipantUserId(type, userId);
@@ -283,7 +284,7 @@ public class ConversationService {
             
             if (conversation.getType() != ConversationType.GROUP) {
                 logger.error("Cannot update settings for non-group conversation: {}", conversationId);
-                throw new IllegalArgumentException("Cannot update settings for non-group conversation");
+                throw new IllegalArgumentException(Constants.CANNOT_UPDATE_SETTINGS_FOR_NON_GROUP);
             }
             
             // Update only provided fields
@@ -342,15 +343,15 @@ public class ConversationService {
         
         // Validate conversation exists and is a group
         Conversation conversation = conversationRepository.findById(conversationId)
-            .orElseThrow(() -> new IllegalArgumentException("Conversation not found: " + conversationId));
+            .orElseThrow(() -> new IllegalArgumentException(Constants.CONVERSATION_NOT_FOUND + conversationId));
         
         if (conversation.getType() != ConversationType.GROUP) {
-            throw new IllegalArgumentException("Cannot add users to direct conversations");
+            throw new IllegalArgumentException(Constants.CANNOT_ADD_USERS_TO_DIRECT_CONVERSATIONS);
         }
         
         // Validate user exists
         if (!userRepository.existsById(userId)) {
-            throw new IllegalArgumentException("User not found: " + userId);
+            throw new IllegalArgumentException(Constants.USER_NOT_FOUND + userId);
         }
         
         // Check if user is already a participant
@@ -375,11 +376,11 @@ public class ConversationService {
         Optional<User> userOpt = userRepository.findById(userId);
         
         if (conversationOpt.isEmpty()) {
-            throw new IllegalArgumentException("Conversation not found: " + conversationId);
+            throw new IllegalArgumentException(Constants.CONVERSATION_NOT_FOUND + conversationId);
         }
         
         if (userOpt.isEmpty()) {
-            throw new IllegalArgumentException("User not found: " + userId);
+            throw new IllegalArgumentException(Constants.USER_NOT_FOUND + userId);
         }
         
         ConversationParticipant participant = new ConversationParticipant(
@@ -429,13 +430,13 @@ public class ConversationService {
                 // For groups, only owners can delete
                 if (!isOwner(userId, conversationId)) {
                     logger.error("User {} does not have permission to delete group {}", userId, conversationId);
-                    throw new IllegalArgumentException("Only group owners can delete groups");
+                    throw new IllegalArgumentException(Constants.ONLY_GROUP_OWNERS_CAN_DELETE_GROUPS);
                 }
             } else if (conversation.getType() == ConversationType.DIRECT) {
                 // For direct conversations, any participant can delete the entire conversation
                 if (!hasUserAccess(userId, conversationId)) {
                     logger.error("User {} does not have access to conversation {}", userId, conversationId);
-                    throw new IllegalArgumentException("You do not have access to this conversation");
+                    throw new IllegalArgumentException(Constants.NO_ACCESS_TO_CONVERSATION);
                 }
                 logger.info("User {} is deleting direct conversation {}", userId, conversationId);
                 // Continue with full deletion logic below

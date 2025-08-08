@@ -1,5 +1,6 @@
 package com.chatplatform.controller;
 
+import com.chatplatform.util.Constants;
 import com.chatplatform.model.ChatMessage;
 import com.chatplatform.model.User;
 import com.chatplatform.service.MessageService;
@@ -39,7 +40,7 @@ public class MessageController {
             if (authentication == null) {
                 logger.warn("Unauthenticated request to get conversation messages");
                 return ResponseEntity.status(401)
-                    .body(Map.of("error", "Authentication required"));
+                    .body(Map.of(Constants.ERROR, Constants.AUTHENTICATION_REQUIRED));
             }
             
             logger.info("Fetching messages for conversation: {} by user: {}", 
@@ -65,7 +66,7 @@ public class MessageController {
         try {
             if (authentication == null) {
                 return ResponseEntity.status(401)
-                    .body(Map.of("error", "Authentication required"));
+                    .body(Map.of(Constants.ERROR, Constants.AUTHENTICATION_REQUIRED));
             }
             
             Instant since = Instant.parse(timestamp);
@@ -91,7 +92,7 @@ public class MessageController {
         try {
             if (authentication == null) {
                 return ResponseEntity.status(401)
-                    .body(Map.of("error", "Authentication required"));
+                    .body(Map.of(Constants.ERROR, Constants.AUTHENTICATION_REQUIRED));
             }
             
             String username = authentication.getName();

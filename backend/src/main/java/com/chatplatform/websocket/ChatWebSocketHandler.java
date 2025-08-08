@@ -9,6 +9,7 @@ import com.chatplatform.service.ConnectionManager;
 import com.chatplatform.service.MessageService;
 import com.chatplatform.service.MessageStatusService;
 import com.chatplatform.service.UserService;
+import com.chatplatform.util.Constants;
 import com.chatplatform.repository.jpa.ConversationParticipantRepository;
 import com.chatplatform.repository.mongo.ChatMessageRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -507,9 +508,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             
             // Create WebSocket message wrapper
             Map<String, Object> wsMessage = new HashMap<>();
-            wsMessage.put("type", statusUpdate.getStatusType() == MessageStatusUpdate.MessageStatusType.DELIVERED 
+            wsMessage.put(Constants.TYPE, statusUpdate.getStatusType() == MessageStatusUpdate.MessageStatusType.DELIVERED 
                 ? "MESSAGE_DELIVERED" : "MESSAGE_READ");
-            wsMessage.put("data", statusUpdate);
+            wsMessage.put(Constants.DATA, statusUpdate);
             
             String json = objectMapper.writeValueAsString(wsMessage);
             
@@ -550,9 +551,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     public void sendMessageStatusUpdateToUser(String userId, MessageStatusUpdate statusUpdate) {
         try {
             Map<String, Object> wsMessage = new HashMap<>();
-            wsMessage.put("type", statusUpdate.getStatusType() == MessageStatusUpdate.MessageStatusType.DELIVERED 
+            wsMessage.put(Constants.TYPE, statusUpdate.getStatusType() == MessageStatusUpdate.MessageStatusType.DELIVERED 
                 ? "MESSAGE_DELIVERED" : "MESSAGE_READ");
-            wsMessage.put("data", statusUpdate);
+            wsMessage.put(Constants.DATA, statusUpdate);
             
             String json = objectMapper.writeValueAsString(wsMessage);
             
@@ -605,7 +606,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private void sendAcknowledgment(WebSocketSession session, String messageId) {
         try {
             Map<String, Object> ackMessage = new HashMap<>();
-            ackMessage.put("type", "ack");
+            ackMessage.put(Constants.TYPE, Constants.ACK);
             ackMessage.put("messageId", messageId);
             String ackJson = objectMapper.writeValueAsString(ackMessage);
             session.sendMessage(new TextMessage(ackJson));
@@ -617,8 +618,8 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     private void sendError(WebSocketSession session, String error) {
         try {
             Map<String, Object> errorMessage = new HashMap<>();
-            errorMessage.put("type", "error");
-            errorMessage.put("message", error);
+            errorMessage.put(Constants.TYPE, Constants.ERROR);
+            errorMessage.put(Constants.MESSAGE, error);
             String errorJson = objectMapper.writeValueAsString(errorMessage);
             session.sendMessage(new TextMessage(errorJson));
         } catch (Exception e) {
@@ -630,7 +631,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         try {
             if (session.isOpen()) {
                 Map<String, Object> pingMessage = new HashMap<>();
-                pingMessage.put("type", "ping");
+                pingMessage.put(Constants.TYPE, Constants.PING);
                 pingMessage.put("timestamp", System.currentTimeMillis());
                 String pingJson = objectMapper.writeValueAsString(pingMessage);
                 session.sendMessage(new TextMessage(pingJson));
