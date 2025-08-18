@@ -63,18 +63,12 @@ services:
         value: INFO
       
       # External Service URLs (Set these manually in Render dashboard)
+      - key: DATABASE_URL
+        sync: false  # Neon PostgreSQL connection string
       - key: MONGODB_URI
         sync: false  # MongoDB Atlas connection string
       - key: REDIS_URL
         sync: false  # Redis service connection string (Upstash, Redis Cloud, etc.)
-
-  # PostgreSQL Database (Free Tier)
-  - type: pgsql
-    name: chat-platform-db
-    plan: free
-    databaseName: chatdb
-    databaseUser: chatuser
-    region: oregon
 
 # Build System: Migrated from Maven to Gradle for better performance and security
 # - Uses Gradle 8.5 with Spring Boot 3.2.0
@@ -84,17 +78,17 @@ services:
 # Security Notes:
 # 1. JWT_SECRET: Generate using: openssl rand -base64 32
 # 2. ADMIN_PASSWORD: Use a strong password with mixed case, numbers, symbols
-# 3. MONGODB_URI: Set up MongoDB Atlas and use connection string
-# 4. REDIS_URL: Set up Upstash Redis or Redis Cloud for token blacklisting
-# 5. CORS_ALLOWED_ORIGINS: Replace with your actual domain
+# 3. DATABASE_URL: Set up Neon PostgreSQL and use connection string
+# 4. MONGODB_URI: Set up MongoDB Atlas and use connection string
+# 5. REDIS_URL: Set up Upstash Redis or Redis Cloud for token blacklisting
+# 6. CORS_ALLOWED_ORIGINS: Replace with your actual domain
 # 
 # Required Manual Environment Variables in Render Dashboard:
 # - JWT_SECRET (critical for security)
 # - ADMIN_PASSWORD (strong password required)
+# - DATABASE_URL (Neon PostgreSQL connection string)
 # - MONGODB_URI (MongoDB Atlas connection)
 # - REDIS_URL (Redis service for token blacklisting)
-#
-# DATABASE_URL will be auto-set by Render PostgreSQL service
 #
 # Gradle Build Notes:
 # - GRADLE_OPTS optimized for containerized builds
