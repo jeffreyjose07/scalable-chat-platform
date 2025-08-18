@@ -40,3 +40,11 @@ logs/
 # Temporary files
 *.tmp
 *.temp
+
+# Migration backups and data dumps
+data_migration_*/
+render_to_neon_*/
+neon_migration_*/
+rollback_backup_*.sql
+*.backup
+*.dump
