@@ -1,20 +1,23 @@
 spring:
   # Render deployment profile - single service with external dependencies
+  # Optimized for Neon PostgreSQL serverless database
   
   # Lazy initialization for faster startup (20-40% improvement)
   main:
     lazy-initialization: true
     
-  # PostgreSQL Configuration (Render managed database)
+  # PostgreSQL Configuration (Neon serverless database)
   datasource:
     url: ${DATABASE_URL}
     driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 3      # Conservative for Render free tier
-      minimum-idle: 1
-      connection-timeout: 20000
-      idle-timeout: 300000
-      max-lifetime: 1200000
+      maximum-pool-size: 10     # Neon supports more connections with built-in pooling
+      minimum-idle: 2
+      connection-timeout: 30000 # Longer timeout for serverless cold starts
+      idle-timeout: 600000      # 10 minutes idle timeout
+      max-lifetime: 1800000     # 30 minutes max lifetime
+      connection-test-query: SELECT 1  # Test query for connection validation
+      validation-timeout: 5000  # Validation timeout for health checks
       
   # JPA Configuration
   jpa:
@@ -26,6 +29,14 @@ spring:
       hibernate:
         format_sql: false
         use_sql_comments: false
+        # Neon-specific optimizations
+        jdbc:
+          time_zone: UTC          # Ensure consistent timezone handling
+          batch_size: 25          # Optimize batch operations
+        connection:
+          provider_disables_autocommit: true  # Better transaction management
+        order_inserts: true       # Optimize insert operations
+        order_updates: true       # Optimize update operations
         
   # MongoDB Configuration (MongoDB Atlas)
   data:
