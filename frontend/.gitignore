@@ -10,6 +10,11 @@ node_modules/
 # Testing
 /coverage
 
+# Playwright test artifacts
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
 # Environment variables
 .env
 .env.local
