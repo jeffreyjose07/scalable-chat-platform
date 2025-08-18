@@ -31,7 +31,7 @@ cd backend && ./gradlew buildForRender
 - **Messaging**: In-memory queue with event-driven distribution
 - **Deployment**: Single-service container optimized for Render platform
 
-**🎯 [Complete Architecture Documentation →](docs/ARCHITECTURE.md)**
+**📚 [Complete Documentation →](docs/README.md)**
 
 ## 🚀 Architecture & Scalability
 
@@ -323,6 +323,20 @@ scalable-chat-platform/
 - **[Development Setup →](docs/development/setup.md)** - Local environment configuration
 - **[Testing Strategy →](backend/src/test/README.md)** - Unit tests, integration tests, coverage
 - **[Render Deployment →](docs/deployment/render.md)** - Production deployment guide
+
+## 📚 Complete Documentation Index
+
+**All project documentation has been organized into logical categories:**
+
+| Category | Description | Key Documents |
+|----------|-------------|---------------|
+| 🏗️ **[Architecture & Development](docs/ARCHITECTURE.md)** | System design, setup guides | Architecture, Network Access, Development Setup |
+| 🚀 **[Deployment](docs/deployment/)** | Production deployment | Render Deployment, Security Configuration, Gradle Build |
+| 🔄 **[Migration & Database](docs/migration/)** | Database migrations | Neon PostgreSQL, Migration Walkthrough |
+| 📊 **[Reports & Analysis](docs/reports/)** | Code quality, improvements | UI Responsiveness, Code Quality, Project Phases |
+| 📦 **[Archive](docs/archive/)** | Historical documentation | Completed fixes, legacy guides |
+
+**📋 [Browse All Documentation →](docs/README.md)**
 
 ## 🆘 Support & Troubleshooting
 
