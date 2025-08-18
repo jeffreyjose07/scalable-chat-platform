@@ -18,6 +18,7 @@ spring:
       max-lifetime: 1800000     # 30 minutes max lifetime
       connection-test-query: SELECT 1  # Test query for connection validation
       validation-timeout: 5000  # Validation timeout for health checks
+      auto-commit: false        # Required for Spring transaction management
       
   # JPA Configuration
   jpa:
