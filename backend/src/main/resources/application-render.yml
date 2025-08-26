@@ -5,7 +5,7 @@ spring:
   main:
     lazy-initialization: true
     
-  # PostgreSQL Configuration (Supabase database)
+  # PostgreSQL Configuration (Aiven database)
   datasource:
     url: ${DATABASE_URL}
     driver-class-name: org.postgresql.Driver
@@ -15,9 +15,10 @@ spring:
       connection-timeout: 20000
       idle-timeout: 300000
       max-lifetime: 1200000
-      # Supabase-specific settings to handle connection pooling
+      # Aiven-specific settings to handle connection pooling
       leak-detection-threshold: 60000
       initialization-fail-timeout: 30000
+      auto-commit: false
       # Disable prepared statement cache to avoid pooling issues
       data-source-properties:
         prepareThreshold: 0
@@ -34,13 +35,12 @@ spring:
       hibernate:
         format_sql: false
         use_sql_comments: false
-        # Supabase-specific optimizations
+        # Aiven-specific optimizations
         jdbc:
           time_zone: UTC          # Ensure consistent timezone handling
           batch_size: 15          # Smaller batch size for pooled connections
         connection:
           provider_disables_autocommit: true  # Better transaction management
-          autocommit: false       # Explicit autocommit control for pooling
         order_inserts: true       # Optimize insert operations
         order_updates: true       # Optimize update operations
         # Connection pooling optimizations
