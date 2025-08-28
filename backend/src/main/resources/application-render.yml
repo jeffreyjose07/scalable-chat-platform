@@ -10,20 +10,28 @@ spring:
     url: ${DATABASE_URL}
     driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 3      # Conservative for Render free tier
-      minimum-idle: 1
-      connection-timeout: 20000
-      idle-timeout: 300000
-      max-lifetime: 1200000
+      maximum-pool-size: 2      # Very conservative for Render free tier
+      minimum-idle: 0           # Allow pool to shrink completely
+      connection-timeout: 60000  # Increased for Aiven cloud database
+      idle-timeout: 600000      # 10 minutes
+      max-lifetime: 1800000     # 30 minutes
+      validation-timeout: 5000  # Connection validation timeout
       # Aiven-specific settings to handle connection pooling
       leak-detection-threshold: 60000
-      initialization-fail-timeout: 30000
+      initialization-fail-timeout: 60000  # Increased for cloud database
       auto-commit: false
+      # Connection validation and retry settings for Aiven
+      connection-test-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: true
       # Disable prepared statement cache to avoid pooling issues
       data-source-properties:
         prepareThreshold: 0
         preparedStatementCacheQueries: 0
         preparedStatementCacheSizeMiB: 0
+        socketTimeout: 60
+        connectTimeout: 60
+        loginTimeout: 60
       
   # JPA Configuration
   jpa:
