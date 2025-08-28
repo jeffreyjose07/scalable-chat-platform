@@ -26,7 +26,7 @@ cd backend && ./gradlew buildForRender
 ## 🏗️ Architecture Overview
 
 - **Backend**: Spring Boot 3.2 with Java 17, WebSocket support
-- **Databases**: PostgreSQL (users), MongoDB (messages), Redis (sessions)
+- **Databases**: Aiven PostgreSQL (users), MongoDB Atlas (messages), Upstash Redis (sessions)
 - **Frontend**: React 18 with TypeScript, embedded in Spring Boot JAR
 - **Messaging**: In-memory queue with event-driven distribution
 - **Deployment**: Single-service container optimized for Render platform
@@ -157,9 +157,9 @@ public void handleMessageDistribution(MessageDistributionEvent event) {
 ```
 
 #### **External Database Architecture**
-- **PostgreSQL**: User accounts, conversations, participant relationships
-- **MongoDB**: Chat message history with automatic indexing
-- **Redis**: Session state, presence management, caching layer
+- **Aiven PostgreSQL**: User accounts, conversations, participant relationships
+- **MongoDB Atlas**: Chat message history with automatic indexing
+- **Upstash Redis**: Session state, presence management, caching layer
 
 ### **Performance Characteristics**
 
@@ -288,7 +288,7 @@ public void handleMessageDistribution(MessageDistributionEvent event) {
 
 ### Production Deployment
 - **Single Service**: Frontend embedded as static resources in Spring Boot JAR
-- **External Databases**: Managed PostgreSQL, MongoDB Atlas, Upstash Redis
+- **External Databases**: Aiven PostgreSQL, MongoDB Atlas, Upstash Redis
 - **Platform**: Render with build optimizations
 - **📋 [Complete Deployment Guide →](docs/deployment/render.md)**
 
