@@ -1,19 +1,14 @@
 package com.chatplatform.websocket;
 
-import com.chatplatform.model.ChatMessage;
-import com.chatplatform.model.User;
-import com.chatplatform.model.ConversationParticipant;
 import com.chatplatform.dto.MessageStatusUpdate;
-import com.chatplatform.dto.WebSocketMessage;
+import com.chatplatform.model.ChatMessage;
+import com.chatplatform.model.ConversationParticipant;
 import com.chatplatform.service.ConnectionManager;
 import com.chatplatform.service.MessageService;
-import com.chatplatform.service.MessageStatusService;
-import com.chatplatform.service.UserService;
 import com.chatplatform.util.Constants;
 import com.chatplatform.repository.jpa.ConversationParticipantRepository;
 import com.chatplatform.repository.mongo.ChatMessageRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
@@ -37,8 +32,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     
     private final ConnectionManager connectionManager;
     private final MessageService messageService;
-    private final MessageStatusService messageStatusService;
-    private final UserService userService;
+    private final WebSocketMessageDispatcher messageDispatcher;
     private final ObjectMapper objectMapper;
     private final ConversationParticipantRepository participantRepository;
     private final ChatMessageRepository messageRepository;
@@ -80,15 +74,13 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     
     public ChatWebSocketHandler(ConnectionManager connectionManager, 
                               MessageService messageService,
-                              MessageStatusService messageStatusService,
-                              UserService userService,
+                              WebSocketMessageDispatcher messageDispatcher,
                               ObjectMapper objectMapper,
                               ConversationParticipantRepository participantRepository,
                               ChatMessageRepository messageRepository) {
         this.connectionManager = connectionManager;
         this.messageService = messageService;
-        this.messageStatusService = messageStatusService;
-        this.userService = userService;
+        this.messageDispatcher = messageDispatcher;
         this.objectMapper = objectMapper;
         this.participantRepository = participantRepository;
         this.messageRepository = messageRepository;
@@ -226,21 +218,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) {
         updateConnectionActivity(session);
-        
-        try {
-            String payload = message.getPayload();
-            
-            if (isControlMessage(payload)) {
-                handleControlMessage(session, payload);
-                return;
-            }
-            
-            processChatMessage(session, payload);
-            
-        } catch (Exception e) {
-            logger.error("Error handling message from session: {}", session.getId(), e);
-            sendError(session, "Failed to process message: " + e.getMessage());
-        }
+        messageDispatcher.dispatch(session, message.getPayload(), this);
     }
     
     /**
@@ -251,110 +229,6 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         if (info != null) {
             info.updateActivity();
         }
-    }
-    
-    /**
-     * Check if message is a control message (ping/pong or status update)
-     */
-    private boolean isControlMessage(String payload) {
-        return isPingPongMessage(payload) || isStatusUpdateMessage(payload);
-    }
-    
-    /**
-     * Check if message is a ping/pong message
-     */
-    private boolean isPingPongMessage(String payload) {
-        return payload.contains("\"type\":\"pong\"") || payload.contains("\"type\":\"ping\"");
-    }
-    
-    /**
-     * Check if message is a status update message
-     */
-    private boolean isStatusUpdateMessage(String payload) {
-        return payload.contains("\"type\":\"MESSAGE_DELIVERED\"") || payload.contains("\"type\":\"MESSAGE_READ\"");
-    }
-    
-    /**
-     * Handle control messages (ping/pong and status updates)
-     */
-    private void handleControlMessage(WebSocketSession session, String payload) {
-        if (isPingPongMessage(payload)) {
-            logger.debug("Received ping/pong message, ignoring: {}", payload);
-            return;
-        }
-        
-        if (isStatusUpdateMessage(payload)) {
-            handleMessageStatusUpdate(session, payload);
-        }
-    }
-    
-    /**
-     * Process regular chat messages
-     */
-    private void processChatMessage(WebSocketSession session, String payload) throws Exception {
-        ChatMessage chatMessage = objectMapper.readValue(payload, ChatMessage.class);
-        String userId = getUserId(session);
-        
-        logger.info("Processing message from authenticated user");
-        
-        if (!isValidSession(session, userId)) {
-            return;
-        }
-        
-        prepareMessage(chatMessage, userId);
-        
-        if (!validateMessage(session, chatMessage)) {
-            return;
-        }
-        
-        logger.info("Processing message for conversation: {}", chatMessage.getConversationId());
-        sendAcknowledgment(session, chatMessage.getId());
-        messageService.processMessage(chatMessage);
-    }
-    
-    /**
-     * Validate session has valid user ID
-     */
-    private boolean isValidSession(WebSocketSession session, String userId) {
-        if (userId == null) {
-            logger.error("No userId in session - rejecting message");
-            sendError(session, "Authentication error");
-            return false;
-        }
-        return true;
-    }
-    
-    /**
-     * Prepare message with sender information
-     */
-    private void prepareMessage(ChatMessage chatMessage, String userId) {
-        chatMessage.setSenderId(userId);
-        
-        User sender = userService.findById(userId).orElse(null);
-        if (sender != null) {
-            chatMessage.setSenderUsername(sender.getUsername());
-            logger.debug("Set senderUsername for authenticated user");
-        } else {
-            logger.warn("Could not find user, setting fallback username");
-            chatMessage.setSenderUsername("Unknown User");
-        }
-    }
-    
-    /**
-     * Validate message content and conversation ID
-     */
-    private boolean validateMessage(WebSocketSession session, ChatMessage chatMessage) {
-        if (chatMessage.getContent() == null || chatMessage.getContent().trim().isEmpty()) {
-            sendError(session, "Message content cannot be empty");
-            return false;
-        }
-        
-        if (chatMessage.getConversationId() == null || chatMessage.getConversationId().trim().isEmpty()) {
-            sendError(session, "Conversation ID is required");
-            return false;
-        }
-        
-        return true;
     }
     
     @Override
@@ -422,73 +296,6 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         if (session != null && session.isOpen()) {
             logger.info("[WS-SESSION] Sending message {} to session {}", message.getId(), sessionId);
             sendMessage(session, message);
-        }
-    }
-    
-    /**
-     * Handle incoming message status updates from clients
-     */
-    private void handleMessageStatusUpdate(WebSocketSession session, String payload) {
-        try {
-            String userId = getUserId(session);
-            if (userId == null) {
-                logger.error("No userId in session for status update");
-                return;
-            }
-            
-            // First deserialize the payload into a WebSocketMessage wrapper
-            WebSocketMessage wsMessage = objectMapper.readValue(payload, WebSocketMessage.class);
-            if (wsMessage == null || wsMessage.getData() == null) {
-                logger.error("Invalid WebSocket message structure for status update");
-                return;
-            }
-            
-            // Extract the data field and deserialize into MessageStatusUpdate
-            MessageStatusUpdate statusUpdate = objectMapper.treeToValue(wsMessage.getData(), MessageStatusUpdate.class);
-            if (statusUpdate == null) {
-                logger.error("Failed to deserialize MessageStatusUpdate from WebSocket message data");
-                return;
-            }
-            
-            // Additional null checks
-            if (statusUpdate.getMessageId() == null || statusUpdate.getStatusType() == null) {
-                logger.error("Invalid status update - messageId or statusType is null. MessageId: {}, StatusType: {}", 
-                    statusUpdate.getMessageId(), statusUpdate.getStatusType());
-                return;
-            }
-            
-            logger.debug("Received status update from user {}: {} for message {}", 
-                userId, statusUpdate.getStatusType(), statusUpdate.getMessageId());
-            
-            // Validate that the user ID matches the authenticated user
-            statusUpdate.setUserId(userId);
-            
-            // Process the status update
-            boolean success = false;
-            switch (statusUpdate.getStatusType()) {
-                case DELIVERED:
-                    success = messageStatusService.updateMessageDeliveryStatus(
-                        statusUpdate.getMessageId(), userId);
-                    break;
-                case READ:
-                    success = messageStatusService.updateMessageReadStatus(
-                        statusUpdate.getMessageId(), userId);
-                    break;
-                default:
-                    logger.warn("Unknown status type: {}", statusUpdate.getStatusType());
-                    return;
-            }
-            
-            if (success) {
-                // Broadcast the status update to all participants in the conversation
-                broadcastMessageStatusUpdate(statusUpdate);
-            } else {
-                logger.warn("Failed to update message status for message {} with status {}", 
-                    statusUpdate.getMessageId(), statusUpdate.getStatusType());
-            }
-            
-        } catch (Exception e) {
-            logger.error("Error handling message status update: {}", e.getMessage(), e);
         }
     }
     
@@ -600,30 +407,6 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             logger.error("Error sending message to session {}: {}", session.getId(), e.getMessage());
             // Remove session from active sessions if it's broken
             sessions.remove(session.getId());
-        }
-    }
-    
-    private void sendAcknowledgment(WebSocketSession session, String messageId) {
-        try {
-            Map<String, Object> ackMessage = new HashMap<>();
-            ackMessage.put(Constants.TYPE, Constants.ACK);
-            ackMessage.put("messageId", messageId);
-            String ackJson = objectMapper.writeValueAsString(ackMessage);
-            session.sendMessage(new TextMessage(ackJson));
-        } catch (Exception e) {
-            logger.error("Error sending acknowledgment", e);
-        }
-    }
-    
-    private void sendError(WebSocketSession session, String error) {
-        try {
-            Map<String, Object> errorMessage = new HashMap<>();
-            errorMessage.put(Constants.TYPE, Constants.ERROR);
-            errorMessage.put(Constants.MESSAGE, error);
-            String errorJson = objectMapper.writeValueAsString(errorMessage);
-            session.sendMessage(new TextMessage(errorJson));
-        } catch (Exception e) {
-            logger.error("Error sending error message", e);
         }
     }
     
