@@ -54,8 +54,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'io.micrometer:micrometer-registry-prometheus'
     
-    // Email
-    implementation 'com.resend:resend-java:3.0.0'
+    // Email - Brevo (Sendinblue)
+    implementation 'com.sendinblue:sib-api-v3-sdk:6.0.0'
     
     // Testing
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

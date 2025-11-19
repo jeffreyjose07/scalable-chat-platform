@@ -1,32 +1,45 @@
 package com.chatplatform.service.impl;
 
 import com.chatplatform.service.EmailService;
-import com.resend.Resend;
-import com.resend.core.exception.ResendException;
-import com.resend.services.emails.model.CreateEmailOptions;
-import com.resend.services.emails.model.CreateEmailResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import sendinblue.ApiClient;
+import sendinblue.ApiException;
+import sendinblue.Configuration;
+import sendinblue.auth.ApiKeyAuth;
+import sibApi.TransactionalEmailsApi;
+import sibModel.SendSmtpEmail;
+import sibModel.SendSmtpEmailSender;
+import sibModel.SendSmtpEmailTo;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
-public class ResendEmailService implements EmailService {
+public class BrevoEmailService implements EmailService {
     
-    private static final Logger logger = LoggerFactory.getLogger(ResendEmailService.class);
+    private static final Logger logger = LoggerFactory.getLogger(BrevoEmailService.class);
     
-    private final Resend resend;
+    private final TransactionalEmailsApi apiInstance;
     private final String fromEmail;
     private final String frontendUrl;
     
-    public ResendEmailService(
-            @Value("${resend.api-key}") String apiKey,
-            @Value("${resend.from-email:onboarding@resend.dev}") String fromEmail,
+    public BrevoEmailService(
+            @Value("${brevo.api-key}") String apiKey,
+            @Value("${brevo.from-email}") String fromEmail,
             @Value("${app.frontend-url}") String frontendUrl) {
-        this.resend = new Resend(apiKey);
+        
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        ApiKeyAuth apiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("api-key");
+        apiKeyAuth.setApiKey(apiKey);
+        
+        this.apiInstance = new TransactionalEmailsApi();
         this.fromEmail = fromEmail;
         this.frontendUrl = frontendUrl;
-        logger.info("ResendEmailService initialized with from: {}", fromEmail);
+        
+        logger.info("BrevoEmailService initialized with from: {}", fromEmail);
     }
     
     @Override
@@ -37,20 +50,35 @@ public class ResendEmailService implements EmailService {
             String htmlContent = buildPasswordResetEmailHtml(userName, resetLink);
             String textContent = buildPasswordResetEmailText(userName, resetLink);
             
-            CreateEmailOptions emailOptions = CreateEmailOptions.builder()
-                    .from(fromEmail)
-                    .to(to)
-                    .subject("Reset Your Password - Chat Platform")
-                    .html(htmlContent)
-                    .text(textContent)
-                    .build();
+            SendSmtpEmail email = new SendSmtpEmail();
             
-            CreateEmailResponse response = resend.emails().send(emailOptions);
-            logger.info("Password reset email sent successfully. Email ID: {}", response.getId());
+            // Sender
+            SendSmtpEmailSender sender = new SendSmtpEmailSender();
+            sender.setEmail(fromEmail);
+            sender.setName("Chat Platform");
+            email.setSender(sender);
             
-        } catch (ResendException e) {
-            logger.error("Failed to send password reset email to {}: {}", to, e.getMessage(), e);
-            throw new Exception("Failed to send password reset email", e);
+            // Recipients
+            List<SendSmtpEmailTo> toList = new ArrayList<>();
+            SendSmtpEmailTo recipient = new SendSmtpEmailTo();
+            recipient.setEmail(to);
+            recipient.setName(userName);
+            toList.add(recipient);
+            email.setTo(toList);
+            
+            // Content
+            email.setSubject("Reset Your Password - Chat Platform");
+            email.setHtmlContent(htmlContent);
+            email.setTextContent(textContent);
+            
+            // Send email
+            apiInstance.sendTransacEmail(email);
+            
+            logger.info("📧 Password reset email sent successfully to: {}", to);
+            
+        } catch (ApiException e) {
+            logger.error("Failed to send password reset email to {}: {} - {}", to, e.getCode(), e.getResponseBody(), e);
+            throw new Exception("Failed to send password reset email: " + e.getResponseBody(), e);
         }
     }
     

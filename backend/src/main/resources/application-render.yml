@@ -117,10 +117,10 @@ app:
   
   frontend-url: ${FRONTEND_URL:https://scalable-chat-platform.onrender.com}
 
-# Resend Email Configuration
-resend:
-  api-key: ${RESEND_API_KEY}
-  from-email: ${RESEND_FROM_EMAIL:onboarding@resend.dev}
+# Brevo Email Configuration
+brevo:
+  api-key: ${BREVO_API_KEY}
+  from-email: ${BREVO_FROM_EMAIL:jeffreyjose.k@gmail.com}
   
 # Logging Configuration (Optimized for Render)
 logging:
