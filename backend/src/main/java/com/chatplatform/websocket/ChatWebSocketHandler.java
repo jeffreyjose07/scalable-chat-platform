@@ -132,7 +132,11 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
                 // Clean up tracking data
                 sessions.remove(sessionId);
                 connectionInfo.remove(sessionId);
-                connectionManager.unregisterConnection(info.userId, sessionId);
+                try {
+                    connectionManager.unregisterConnection(info.userId, sessionId);
+                } catch (Exception e) {
+                    logger.warn("Failed to unregister timed out connection from Redis: {}", e.getMessage());
+                }
             }
         }
         
@@ -187,9 +191,14 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         
         sessions.put(session.getId(), session);
         connectionInfo.put(session.getId(), new ConnectionInfo(userId, username));
-        connectionManager.registerConnection(userId, serverId, session.getId());
         
-        logger.info("WebSocket connection registered for authenticated user");
+        try {
+            connectionManager.registerConnection(userId, serverId, session.getId());
+            logger.info("WebSocket connection registered for authenticated user");
+        } catch (Exception e) {
+            logger.error("Failed to register connection in Redis (continuing with local session only): {}", e.getMessage());
+            // Continue without Redis - session is still valid locally
+        }
         
         // Send pending messages with a small delay to ensure connection is ready
         List<ChatMessage> pendingMessages = messageService.getPendingMessages(userId);
@@ -236,7 +245,11 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         String userId = getUserId(session);
         ConnectionInfo info = connectionInfo.remove(session.getId());
         sessions.remove(session.getId());
-        connectionManager.unregisterConnection(userId, session.getId());
+        try {
+            connectionManager.unregisterConnection(userId, session.getId());
+        } catch (Exception e) {
+            logger.warn("Failed to unregister connection from Redis: {}", e.getMessage());
+        }
         
         if (info != null) {
             long connectionDuration = java.time.Duration.between(info.connectedAt, Instant.now()).toMinutes();
@@ -266,7 +279,11 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         ConnectionInfo info = connectionInfo.remove(session.getId());
         sessions.remove(session.getId());
         if (userId != null) {
-            connectionManager.unregisterConnection(userId, session.getId());
+            try {
+                connectionManager.unregisterConnection(userId, session.getId());
+            } catch (Exception e) {
+                logger.warn("Failed to unregister connection from Redis during error handling: {}", e.getMessage());
+            }
         }
         
         super.handleTransportError(session, exception);
