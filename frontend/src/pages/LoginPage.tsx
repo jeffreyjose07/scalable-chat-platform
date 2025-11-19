@@ -20,17 +20,17 @@ const LoginPage: React.FC = () => {
   const { login, register, user } = useAuth();
   const apiUrl = getApiBaseUrl();
 
-  console.log('🔑 LoginPage: Checking auth state:', { 
-    hasUser: !!user, 
+  console.log('🔑 LoginPage: Checking auth state:', {
+    hasUser: !!user,
     userDetails: user ? { id: user.id, username: user.username } : null,
     currentURL: window.location.href
   });
-  
+
   if (user) {
     console.log('🔑 LoginPage: User authenticated, redirecting to /chat');
     return <Navigate to="/chat" replace />;
   }
-  
+
   console.log('🔑 LoginPage: No user, showing login form');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -43,7 +43,7 @@ const LoginPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     try {
       if (isRegisterMode) {
         await register(formData.username, formData.email, formData.password, formData.displayName);
@@ -60,10 +60,10 @@ const LoginPage: React.FC = () => {
   const handleForgotPassword = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsForgotPasswordLoading(true);
-    
+
     try {
-      await axios.post(`${apiUrl}/api/auth/forgot-password`, forgotPasswordEmail, {
-        headers: { 'Content-Type': 'application/json' }
+      await axios.post(`${apiUrl}/api/auth/forgot-password`, {
+        email: forgotPasswordEmail
       });
       toast.success('Password reset email sent if account exists');
       setShowForgotPassword(false);
@@ -84,7 +84,7 @@ const LoginPage: React.FC = () => {
             {isRegisterMode ? 'Create Account' : 'Sign in to Chat Platform'}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">
-            {isRegisterMode 
+            {isRegisterMode
               ? 'Join the conversation today'
               : 'Welcome back! Please sign in to continue'
             }
@@ -159,24 +159,24 @@ const LoginPage: React.FC = () => {
               disabled={isLoading}
               className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 focus:ring-indigo-500 disabled:opacity-50 min-h-[44px]"
             >
-              {isLoading 
-                ? (isRegisterMode ? 'Creating Account...' : 'Signing in...') 
+              {isLoading
+                ? (isRegisterMode ? 'Creating Account...' : 'Signing in...')
                 : (isRegisterMode ? 'Create Account' : 'Sign in')
               }
             </button>
-            
+
             <div className="text-center space-y-2">
               <button
                 type="button"
                 onClick={() => setIsRegisterMode(!isRegisterMode)}
                 className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300 text-sm font-medium"
               >
-                {isRegisterMode 
-                  ? 'Already have an account? Sign in' 
+                {isRegisterMode
+                  ? 'Already have an account? Sign in'
                   : "Don't have an account? Create one"
                 }
               </button>
-              
+
               {!isRegisterMode && (
                 <div>
                   <button
@@ -192,7 +192,7 @@ const LoginPage: React.FC = () => {
           </div>
         </form>
       </div>
-      
+
       {/* Forgot Password Modal */}
       {showForgotPassword && (
         <div className="fixed inset-0 bg-gray-600 dark:bg-gray-900 bg-opacity-50 dark:bg-opacity-75 overflow-y-auto h-full w-full z-50 flex items-center justify-center">

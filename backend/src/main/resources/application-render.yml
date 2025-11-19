@@ -115,6 +115,13 @@ app:
     password: ${ADMIN_PASSWORD:TempPass123!}
     displayName: ${ADMIN_DISPLAY_NAME:System Administrator}
   
+  frontend-url: ${FRONTEND_URL:https://scalable-chat-platform.onrender.com}
+
+# Resend Email Configuration
+resend:
+  api-key: ${RESEND_API_KEY}
+  from-email: ${RESEND_FROM_EMAIL:onboarding@resend.dev}
+  
 # Logging Configuration (Optimized for Render)
 logging:
   level:

@@ -120,3 +120,21 @@ cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/backend
 - **Feature**: Real-time search filtering for participants when creating groups
 - **Implementation**: Filters users by `displayName` and `email` using case-insensitive matching
 - **State Management**: Uses `searchTerm` state with proper cleanup on form reset/cancel
+
+### Password Reset Implementation (Nov 2025)
+- **Email Service**: Resend (free tier: 100 emails/day)
+- **Token Storage**: Redis with 30-minute expiration
+- **Security Features**:
+  - Rate limiting (5 requests per hour per email)
+  - Single-use tokens (deleted after consumption)
+  - Email enumeration prevention (always returns success)
+  - Strong password validation (min 8 chars, complexity check)
+- **Endpoints**:
+  - POST `/api/auth/forgot-password` - Request reset email
+  - POST `/api/auth/reset-password` - Reset with token
+- **Frontend**: `/reset-password` page with password strength indicator
+- **Environment Variables**:
+  - `RESEND_API_KEY` - Resend API key (set manually in Render)
+  - `RESEND_FROM_EMAIL` - Sender email (default: `onboarding@resend.dev`)
+  - `FRONTEND_URL` - Frontend URL for reset links
+```

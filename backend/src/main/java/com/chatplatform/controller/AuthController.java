@@ -3,9 +3,11 @@ package com.chatplatform.controller;
 import com.chatplatform.util.Constants;
 import com.chatplatform.dto.AuthResponse;
 import com.chatplatform.dto.ChangePasswordRequest;
+import com.chatplatform.dto.ForgotPasswordRequest;
 import com.chatplatform.dto.LoginRequest;
 import com.chatplatform.dto.MessageResponse;
 import com.chatplatform.dto.RegisterRequest;
+import com.chatplatform.dto.ResetPasswordRequest;
 import com.chatplatform.model.User;
 import com.chatplatform.service.AuthService;
 import com.chatplatform.service.UserService;
@@ -117,12 +119,13 @@ public class AuthController {
     }
     
     @PostMapping("/forgot-password")
-    public ResponseEntity<MessageResponse<Void>> forgotPassword(@RequestBody String email) {
+    public ResponseEntity<MessageResponse<Void>> forgotPassword(
+            @Valid @RequestBody ForgotPasswordRequest request) {
         try {
-            authService.sendPasswordResetEmail(email);
+            authService.sendPasswordResetEmail(request.email());
             return ResponseUtils.success(Constants.PASSWORD_RESET_EMAIL_SENT);
         } catch (Exception e) {
-            logger.error("Password reset failed for email: {}", email, e);
+            logger.error("Password reset failed for email: {}", request.email(), e);
             // Always return success for security reasons (don't reveal if email exists)
             return ResponseUtils.success(Constants.PASSWORD_RESET_EMAIL_SENT);
         }
@@ -130,13 +133,12 @@ public class AuthController {
     
     @PostMapping("/reset-password")
     public ResponseEntity<MessageResponse<Void>> resetPassword(
-            @RequestParam String token,
-            @RequestParam String newPassword) {
+            @Valid @RequestBody ResetPasswordRequest request) {
         try {
-            authService.resetPassword(token, newPassword);
+            authService.resetPassword(request.token(), request.newPassword());
             return ResponseUtils.success(Constants.PASSWORD_RESET_SUCCESSFUL);
         } catch (Exception e) {
-            logger.warn("Password reset failed for token: {} - {}", token, e.getMessage());
+            logger.warn("Password reset failed: {}", e.getMessage());
             return ResponseUtils.badRequest(Constants.INVALID_OR_EXPIRED_RESET_TOKEN, (Void) null);
         }
     }

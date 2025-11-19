@@ -33,17 +33,23 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
     private final TokenBlacklistService tokenBlacklistService;
     private final PasswordEncoder passwordEncoder;
+    private final EmailService emailService;
+    private final PasswordResetTokenService passwordResetTokenService;
     
     public AuthService(UserService userService, 
                       JwtService jwtService,
                       AuthenticationManager authenticationManager,
                       TokenBlacklistService tokenBlacklistService,
-                      PasswordEncoder passwordEncoder) {
+                      PasswordEncoder passwordEncoder,
+                      EmailService emailService,
+                      PasswordResetTokenService passwordResetTokenService) {
         this.userService = userService;
         this.jwtService = jwtService;
         this.authenticationManager = authenticationManager;
         this.tokenBlacklistService = tokenBlacklistService;
         this.passwordEncoder = passwordEncoder;
+        this.emailService = emailService;
+        this.passwordResetTokenService = passwordResetTokenService;
     }
     
     /**
@@ -117,41 +123,78 @@ public class AuthService {
     }
     
     /**
-     * Send password reset email (placeholder implementation)
+     * Send password reset email
      */
     public void sendPasswordResetEmail(String email) {
-        // For now, just log the reset request
-        // In production, you would:
-        // 1. Generate a secure reset token
-        // 2. Store it in the database with expiration
-        // 3. Send email with reset link
         logger.info("🔄 Password reset requested for email: {}", email);
         
-        // Simulate password reset token generation
-        findUserByEmail(email).ifPresent(user -> {
-            String resetToken = jwtService.generateToken(user);
-            logger.info("📧 Password reset token generated for user: {} (token: {}...)", user.getUsername(), resetToken.substring(0, 10));
-            // In production: store token and send email with reset identifier
-        });
+        try {
+            // Check rate limiting
+            if (passwordResetTokenService.isRateLimitExceeded(email)) {
+                logger.warn("Rate limit exceeded for password reset requests: {}", email);
+                // Still return success for security (don't reveal rate limit status)
+                return;
+            }
+            
+            // Find user by email
+            Optional<User> userOptional = findUserByEmail(email);
+            
+            if (userOptional.isEmpty()) {
+                logger.info("Password reset requested for non-existent email (security: not revealing)");
+                // Return success to prevent email enumeration
+                return;
+            }
+            
+            User user = userOptional.get();
+            
+            // Generate reset token
+            String resetToken = passwordResetTokenService.generateToken(user.getId());
+            
+            // Send email
+            emailService.sendPasswordResetEmail(email, resetToken, user.getDisplayName());
+            
+            logger.info("📧 Password reset email sent successfully to: {}", email);
+            
+        } catch (Exception e) {
+            logger.error("Failed to send password reset email for: {}", email, e);
+            // Don't throw exception - return success for security
+        }
     }
     
     /**
-     * Reset password using token (placeholder implementation)
+     * Reset password using token
      */
     public void resetPassword(String token, String newPassword) {
-        // For now, simple validation
-        // In production, you would:
-        // 1. Validate the reset token
-        // 2. Check token expiration
-        // 3. Update user password
-        logger.info("🔄 Password reset attempt with token: {}...", token.substring(0, 10));
+        logger.info("🔄 Password reset attempt");
         
-        if (token == null || token.length() < 10) {
-            throw new AuthenticationException("Invalid reset token");
+        // Validate token and get user ID
+        String userId = passwordResetTokenService.validateAndConsumeToken(token);
+        
+        if (userId == null) {
+            logger.warn("Invalid or expired password reset token");
+            throw new AuthenticationException("Invalid or expired reset token");
         }
         
-        // Simulate password reset
-        logger.info("✅ Password reset successful (simulated)");
+        // Find user
+        Optional<User> userOptional = userService.findById(userId);
+        
+        if (userOptional.isEmpty()) {
+            logger.error("User not found for ID: {}", userId);
+            throw new AuthenticationException("User not found");
+        }
+        
+        User user = userOptional.get();
+        
+        // Validate new password strength (reuse existing validation from changePassword)
+        if (newPassword == null || newPassword.trim().isEmpty() || newPassword.length() < 8) {
+            throw new ValidationException("Password must be at least 8 characters long");
+        }
+        
+        // Update password
+        String encodedPassword = passwordEncoder.encode(newPassword);
+        userService.updateUserPassword(user.getId(), encodedPassword);
+        
+        logger.info("✅ Password reset successful for user: {}", user.getUsername());
     }
     
     /**
