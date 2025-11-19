@@ -69,6 +69,15 @@ services:
         sync: false  # MongoDB Atlas connection string
       - key: REDIS_URL
         sync: false  # Redis service connection string (Upstash, Redis Cloud, etc.)
+      
+      # Email Service Configuration (Resend)
+      - key: RESEND_API_KEY
+        sync: false  # CRITICAL: Set manually in Render dashboard with your Resend API key
+      - key: RESEND_FROM_EMAIL
+        value: "onboarding@resend.dev"  # Use Resend's test email (or your custom domain)
+      - key: FRONTEND_URL
+        value: "https://scalable-chat-platform.onrender.com"  # Replace with your actual frontend URL
+
 
 # Build System: Migrated from Maven to Gradle for better performance and security
 # - Uses Gradle 8.5 with Spring Boot 3.2.0
