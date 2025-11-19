@@ -81,6 +81,11 @@ cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/backend
 - **Problem**: Calling repository methods that don't exist
 - **Solution**: Check existing methods first, add new ones with proper Spring Data naming conventions
 
+### Docker Build Failure (Render)
+- **Problem**: `failed to solve: openjdk:17-jdk-slim: not found`
+- **Root Cause**: `openjdk` Docker images are deprecated and removed from Docker Hub.
+- **Fix**: Use `eclipse-temurin:17-jre` in `Dockerfile` and `Dockerfile.render`.
+
 ## Architecture Notes
 
 ### Database Setup
@@ -102,6 +107,11 @@ cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/backend
 - **Base URL**: `/api` prefix automatically added by api service
 - **Authentication**: Bearer token in Authorization header
 - **Response format**: `{success: boolean, message: string, data: T}`
+
+### Refactoring Changes (Nov 2025)
+- **Frontend**: `ChatPage.tsx` split into `ChatSidebar` (navigation/users) and `ChatMainArea` (messages/input).
+- **Backend**: `ChatWebSocketHandler` refactored to delegate message processing to `WebSocketMessageDispatcher`.
+- **WebSockets**: `DynamicOriginWebSocketConfigurer` enables dynamic origin validation via `WEBSOCKET_ALLOWED_ORIGINS` env var.
 
 ## UI Components
 
