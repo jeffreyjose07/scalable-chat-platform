@@ -1,9 +1,10 @@
 package com.chatplatform.service.impl;
 
 import com.chatplatform.service.EmailService;
-import com.resend.*;
+import com.resend.Resend;
 import com.resend.core.exception.ResendException;
-import com.resend.services.emails.model.*;
+import com.resend.services.emails.model.CreateEmailOptions;
+import com.resend.services.emails.model.CreateEmailResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +37,7 @@ public class ResendEmailService implements EmailService {
             String htmlContent = buildPasswordResetEmailHtml(userName, resetLink);
             String textContent = buildPasswordResetEmailText(userName, resetLink);
             
-            SendEmailRequest sendEmailRequest = SendEmailRequest.builder()
+            CreateEmailOptions emailOptions = CreateEmailOptions.builder()
                     .from(fromEmail)
                     .to(to)
                     .subject("Reset Your Password - Chat Platform")
@@ -44,7 +45,7 @@ public class ResendEmailService implements EmailService {
                     .text(textContent)
                     .build();
             
-            SendEmailResponse response = resend.emails().send(sendEmailRequest);
+            CreateEmailResponse response = resend.emails().send(emailOptions);
             logger.info("Password reset email sent successfully. Email ID: {}", response.getId());
             
         } catch (ResendException e) {
