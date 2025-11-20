@@ -143,25 +143,21 @@ public class JwtService {
                 return false;
             }
             logger.debug("Basic JWT validation passed for user: {}", userDetails.getUsername());
-            
-            // Temporarily skip blacklist checking for debugging
-            logger.debug("Skipping blacklist check temporarily for debugging");
-            return true;
-            
+
             // Then check if token is blacklisted
-            /*
             try {
                 boolean isBlacklisted = blacklistService.isTokenBlacklisted(token);
                 if (isBlacklisted) {
                     logger.warn("JWT token is blacklisted for user: {}", userDetails.getUsername());
+                    return false;
                 }
-                return !isBlacklisted;
+                logger.debug("Token is not blacklisted for user: {}", userDetails.getUsername());
+                return true;
             } catch (Exception blacklistException) {
                 // If blacklist check fails (e.g., Redis down), log warning and allow token
                 logger.warn("Blacklist check failed, allowing token: {}", blacklistException.getMessage());
                 return true; // Fail open for blacklist issues
             }
-            */
         } catch (Exception e) {
             logger.error("JWT token validation failed: {}", e.getMessage());
             return false;
