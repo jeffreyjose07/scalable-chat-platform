@@ -1,0 +1,37 @@
+name: Keep Redis Alive
+
+on:
+  schedule:
+    # Run every 12 hours (at 00:00 and 12:00 UTC) to keep Upstash Redis active
+    - cron: '0 */12 * * *'
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  ping-redis:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install ioredis
+
+      - name: Ping Redis
+        env:
+          REDIS_URL: ${{ secrets.REDIS_URL }}
+        run: node keep-redis-alive.js
+
+      - name: Summary
+        run: |
+          echo "✅ Redis keepalive completed successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This workflow runs every 12 hours to keep the Upstash Redis instance active." >> $GITHUB_STEP_SUMMARY
