@@ -27,6 +27,11 @@ async function pingRedis() {
         await redis.set('keepalive:last_ping', timestamp, 'EX', 86400); // Expire in 24 hours
         console.log('✅ Redis: Keepalive timestamp set:', timestamp);
 
+        // Increment a counter to ensure write operations
+        const count = await redis.incr('keepalive:ping_count');
+        await redis.expire('keepalive:ping_count', 86400); // Expire in 24 hours
+        console.log('✅ Redis: Ping count incremented to:', count);
+
         // Get the value back to verify
         const value = await redis.get('keepalive:last_ping');
         console.log('✅ Redis: Keepalive verified:', value);
