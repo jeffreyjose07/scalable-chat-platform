@@ -204,23 +204,18 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
         List<ChatMessage> pendingMessages = messageService.getPendingMessages(userId);
         if (pendingMessages != null && !pendingMessages.isEmpty()) {
             logger.info("Sending {} pending messages to authenticated user", pendingMessages.size());
-            // Add a small delay to ensure connection is fully established
-            new Thread(() -> {
-                try {
-                    Thread.sleep(CONNECTION_SETUP_DELAY_MS); // Small delay
-                    if (session.isOpen()) {
-                        pendingMessages.forEach(msg -> {
-                            try {
-                                sendMessage(session, msg);
-                            } catch (Exception e) {
-                                logger.warn("Failed to send pending message to authenticated user: {}", e.getMessage());
-                            }
-                        });
-                    }
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
+            // Use scheduled executor instead of raw Thread for proper lifecycle management
+            connectionMonitor.schedule(() -> {
+                if (session.isOpen()) {
+                    pendingMessages.forEach(msg -> {
+                        try {
+                            sendMessage(session, msg);
+                        } catch (Exception e) {
+                            logger.warn("Failed to send pending message to authenticated user: {}", e.getMessage());
+                        }
+                    });
                 }
-            }).start();
+            }, CONNECTION_SETUP_DELAY_MS, TimeUnit.MILLISECONDS);
         }
     }
     
@@ -448,6 +443,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
     }
     
     // Graceful shutdown method
+    @jakarta.annotation.PreDestroy
     public void shutdown() {
         logger.info("Shutting down WebSocket connection monitor");
         connectionMonitor.shutdown();

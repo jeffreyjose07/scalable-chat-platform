@@ -22,15 +22,21 @@ import jakarta.annotation.PreDestroy;
 
 @Service
 public class MessageService {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(MessageService.class);
-    
+
+    // Queue and timing constants
+    private static final int MESSAGE_QUEUE_CAPACITY = 10000;
+    private static final int MESSAGE_LOG_PREVIEW_LENGTH = 50;
+    private static final long PENDING_MESSAGES_WINDOW_SECONDS = 3600; // 1 hour
+    private static final long RECENT_MESSAGES_WINDOW_SECONDS = 86400; // 24 hours
+
     private final ChatMessageRepository messageRepository;
     private final ApplicationEventPublisher eventPublisher;
     private final ConversationParticipantRepository participantRepository;
-    
-    // In-memory queue to replace Kafka
-    private final BlockingQueue<ChatMessage> messageQueue = new LinkedBlockingQueue<>();
+
+    // In-memory queue with bounded capacity to prevent memory issues under load
+    private final BlockingQueue<ChatMessage> messageQueue = new LinkedBlockingQueue<>(MESSAGE_QUEUE_CAPACITY);
     private final ExecutorService messageProcessor = Executors.newSingleThreadExecutor(r -> {
         Thread t = new Thread(r, "message-processor");
         t.setDaemon(true);
@@ -72,9 +78,15 @@ public class MessageService {
     @Async
     public void processMessage(ChatMessage message) {
         try {
-            // Add to in-memory queue for processing
-            messageQueue.offer(message);
-            logger.info("📤 Message queued for processing: {}", message.getContent().substring(0, Math.min(50, message.getContent().length())));
+            // Add to bounded queue for processing; offer() returns false if queue is full
+            boolean queued = messageQueue.offer(message);
+            String preview = message.getContent().substring(0, Math.min(MESSAGE_LOG_PREVIEW_LENGTH, message.getContent().length()));
+            if (queued) {
+                logger.info("📤 Message queued for processing: {}", preview);
+            } else {
+                logger.warn("⚠️ Queue full, processing message directly: {}", preview);
+                processMessageInternal(message);
+            }
         } catch (Exception e) {
             logger.error("❌ Failed to queue message: {}", e.getMessage());
             // Direct processing as fallback
@@ -130,14 +142,14 @@ public class MessageService {
     
     public List<ChatMessage> getPendingMessages(String userId) {
         // Return recent messages from the last hour
-        Instant oneHourAgo = Instant.now().minusSeconds(3600);
-        return messageRepository.findByTimestampAfterOrderByTimestampAsc(oneHourAgo);
+        Instant cutoffTime = Instant.now().minusSeconds(PENDING_MESSAGES_WINDOW_SECONDS);
+        return messageRepository.findByTimestampAfterOrderByTimestampAsc(cutoffTime);
     }
-    
+
     public List<ChatMessage> getRecentMessagesForUser(String userId) {
         // Return recent messages from the last 24 hours
-        Instant oneDayAgo = Instant.now().minusSeconds(86400);
-        return messageRepository.findByTimestampAfterOrderByTimestampAsc(oneDayAgo);
+        Instant cutoffTime = Instant.now().minusSeconds(RECENT_MESSAGES_WINDOW_SECONDS);
+        return messageRepository.findByTimestampAfterOrderByTimestampAsc(cutoffTime);
     }
     
     public void deleteConversationMessages(String conversationId) {

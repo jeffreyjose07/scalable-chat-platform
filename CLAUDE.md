@@ -104,3 +104,29 @@ cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/backend
 - **Feature**: Real-time search filtering for participants when creating groups
 - **Implementation**: Filters users by `displayName` and `email` using case-insensitive matching
 - **State Management**: Uses `searchTerm` state with proper cleanup on form reset/cancel
+
+## Code Quality Standards
+
+### Backend (Java)
+- **Magic Numbers**: Extract to named constants (e.g., `MESSAGE_QUEUE_CAPACITY`, `PENDING_MESSAGES_WINDOW_SECONDS`)
+- **Thread Management**: Use `ScheduledExecutorService` instead of raw `Thread.sleep()` for delayed tasks
+- **Lifecycle Annotations**: Always add `@PreDestroy` for cleanup methods on services with executors
+- **Queue Handling**: Use bounded queues with fallback behavior instead of unbounded `LinkedBlockingQueue`
+- **Logging**: Use emoji prefixes for log visibility (📤, ✅, ❌, ⚠️)
+
+### Frontend (TypeScript/React)
+- **Type Safety**: Avoid `any` type - use `unknown` with type narrowing or proper interfaces
+- **Error Handling**: Use `error: unknown` in catch blocks with explicit type assertions
+- **DTO Types**: Import and use proper DTO types (`ConversationDto`, `CreateGroupRequest`, etc.)
+- **Hook Error Pattern**:
+  ```typescript
+  catch (error: unknown) {
+    const axiosError = error as { response?: { data?: { message?: string } }; message?: string };
+    const errorMessage = axiosError.response?.data?.message || axiosError.message || 'Default message';
+  }
+  ```
+
+### Conversation/ConversationDto Mapping
+- **Backend returns**: `ConversationDto` (with `name: string | null`)
+- **Frontend uses**: `Conversation` (with `name: string`)
+- **Casting**: Use `as Conversation` when passing `ConversationDto` to components expecting `Conversation`
