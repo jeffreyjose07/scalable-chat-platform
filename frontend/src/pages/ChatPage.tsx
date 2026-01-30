@@ -6,9 +6,8 @@ import { useConversations } from '../hooks/useConversations';
 import { useUnreadMessages } from '../hooks/useUnreadMessages';
 import { useMessageSearch } from '../hooks/useMessageSearch';
 import { useUserSearch } from '../hooks/useUserSearch';
-import { MessageType } from '../types/chat';
+import { MessageType, Conversation, ConversationDto, User } from '../types/chat';
 import UserSearchModal from '../components/UserSearchModal';
-import { User } from '../types/chat';
 import { ConversationType } from '../components/ConversationTypeToggle';
 import { CreateGroupModal } from '../components/groups/CreateGroupModal';
 import { GroupSettingsModal } from '../components/groups/GroupSettingsModal';
@@ -166,7 +165,7 @@ const ChatPage: React.FC = () => {
     setIsCreateGroupModalOpen(true);
   };
 
-  const handleGroupCreated = (group: any) => {
+  const handleGroupCreated = (group: Conversation) => {
     // Add group to conversation list
     conversationHook.addConversation(group);
 
@@ -252,8 +251,8 @@ const ChatPage: React.FC = () => {
     return conversationId;
   };
 
-  const handleGroupUpdated = (updatedGroup: any) => {
-    conversationHook.updateConversation(updatedGroup.id, updatedGroup);
+  const handleGroupUpdated = (updatedGroup: ConversationDto) => {
+    conversationHook.updateConversation(updatedGroup.id, updatedGroup as Conversation);
   };
 
   return (
