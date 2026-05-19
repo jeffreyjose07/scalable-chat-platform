@@ -180,7 +180,7 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-zinc-400 rounded-lg focus:ring-2 focus:ring-amber-700 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-zinc-400 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent"
             />
           </div>
         </div>
@@ -198,7 +198,7 @@ const UserSearchModal: React.FC<UserSearchModalProps> = ({
 
           {isLoading && (
             <div className="p-8 text-center">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-amber-700"></div>
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
               <div className="mt-2 text-gray-600 dark:text-gray-400">
                 {searchQuery ? 'Searching...' : 'Loading suggestions...'}
               </div>

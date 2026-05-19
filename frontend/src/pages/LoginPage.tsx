@@ -73,7 +73,7 @@ const LoginPage: React.FC = () => {
     relative block w-full px-4 py-3 min-h-[44px]
     bg-white/5 border border-white/10 rounded-xl
     text-gray-100 placeholder-zinc-500
-    focus:outline-none focus:border-amber-700/70 focus:ring-2 focus:ring-amber-700/20
+    focus:outline-none focus:border-green-600/70 focus:ring-2 focus:ring-green-600/20
     transition-all duration-200 text-sm
   `;
 
@@ -100,7 +100,7 @@ const LoginPage: React.FC = () => {
 
         {/* Brand mark */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-amber-700 mb-5 shadow-lg shadow-amber-900/40">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-green-600 mb-5 shadow-lg shadow-green-900/40">
             <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
               <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
               <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
@@ -186,7 +186,7 @@ const LoginPage: React.FC = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full flex justify-center items-center py-3 px-4 min-h-[44px] rounded-xl text-sm font-semibold text-white bg-amber-700 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-700/50 focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg shadow-amber-900/30 hover:shadow-amber-900/50"
+                className="w-full flex justify-center items-center py-3 px-4 min-h-[44px] rounded-xl text-sm font-semibold text-white bg-green-600 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600/50 focus:ring-offset-2 focus:ring-offset-transparent disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-lg shadow-green-900/30 hover:shadow-green-900/50"
               >
                 {isLoading
                   ? (isRegisterMode ? 'Creating Account…' : 'Signing in…')
@@ -198,7 +198,7 @@ const LoginPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsRegisterMode(!isRegisterMode)}
-                  className="text-zinc-400 hover:text-amber-400 text-sm transition-colors"
+                  className="text-zinc-400 hover:text-green-400 text-sm transition-colors"
                 >
                   {isRegisterMode
                     ? 'Already have an account? Sign in'
@@ -229,7 +229,7 @@ const LoginPage: React.FC = () => {
             href="https://jeffreyjose07.github.io"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-zinc-500 hover:text-amber-500 transition-colors"
+            className="text-zinc-500 hover:text-green-500 transition-colors"
           >
             Jeffrey Jose
           </a>
@@ -273,7 +273,7 @@ const LoginPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isForgotPasswordLoading}
-                  className="flex-1 px-4 py-2.5 text-sm font-semibold text-white bg-amber-700 hover:bg-amber-600 rounded-xl disabled:opacity-50 transition-all duration-200 min-h-[44px]"
+                  className="flex-1 px-4 py-2.5 text-sm font-semibold text-white bg-green-600 hover:bg-green-500 rounded-xl disabled:opacity-50 transition-all duration-200 min-h-[44px]"
                 >
                   {isForgotPasswordLoading ? 'Sending…' : 'Send Link'}
                 </button>

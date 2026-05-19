@@ -107,7 +107,7 @@ const SearchResultsList: React.FC<SearchResultsListProps> = ({
     return (
       <div className={`p-4 ${className}`}>
         <div className="text-center py-8">
-          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-amber-700 dark:border-amber-400 mb-4"></div>
+          <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 dark:border-green-400 mb-4"></div>
           <p className="text-gray-600 dark:text-gray-300">Searching messages...</p>
         </div>
       </div>
@@ -146,17 +146,17 @@ const SearchResultsList: React.FC<SearchResultsListProps> = ({
   return (
     <div className={`flex flex-col h-full ${className}`}>
       {/* Results header */}
-      <div className="p-4 border-b border-gray-200 dark:border-zinc-700 bg-amber-50/60 dark:bg-zinc-800">
+      <div className="p-4 border-b border-gray-200 dark:border-zinc-700 bg-green-50/60 dark:bg-zinc-800">
         <div className="flex items-center justify-between">
           <div>
             <div className="flex items-center space-x-2">
-              <svg className="w-5 h-5 text-amber-700 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
               <h3 className="font-semibold text-gray-900 dark:text-gray-100">Search Results</h3>
             </div>
             <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-              <span className="font-medium text-amber-700 dark:text-amber-400">{searchResult.totalCount}</span> {searchResult.totalCount === 1 ? 'result' : 'results'} for 
+              <span className="font-medium text-green-600 dark:text-green-400">{searchResult.totalCount}</span> {searchResult.totalCount === 1 ? 'result' : 'results'} for 
               <span className="font-medium text-gray-800 dark:text-gray-200"> "{searchResult.query}"</span>
             </p>
           </div>
@@ -176,7 +176,7 @@ const SearchResultsList: React.FC<SearchResultsListProps> = ({
               key={`${result.id}-${index}`}
               className={`group relative transition-all duration-200 ${
                 selectedResult === result.id
-                  ? 'bg-amber-50 dark:bg-amber-900/20 border-l-4 border-amber-700 dark:border-amber-500'
+                  ? 'bg-green-50 dark:bg-green-900/20 border-l-4 border-green-600 dark:border-green-500'
                   : 'hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:shadow-sm'
               }`}
             >
@@ -233,7 +233,7 @@ const SearchResultsList: React.FC<SearchResultsListProps> = ({
                               e.stopPropagation();
                               onShowContext(result.id);
                             }}
-                            className="flex items-center space-x-1 text-amber-700 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300 font-medium"
+                            className="flex items-center space-x-1 text-green-600 dark:text-green-400 hover:text-green-500 dark:hover:text-green-300 font-medium"
                           >
                             <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -262,7 +262,7 @@ const SearchResultsList: React.FC<SearchResultsListProps> = ({
             <button
               onClick={onLoadMore}
               disabled={isLoading}
-              className="w-full py-3 px-4 bg-amber-700 text-white rounded-lg text-sm font-medium hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg"
+              className="w-full py-3 px-4 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-md hover:shadow-lg"
             >
               {isLoading ? (
                 <div className="flex items-center justify-center space-x-2">

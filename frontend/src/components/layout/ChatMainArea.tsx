@@ -106,7 +106,7 @@ const ChatMainArea: React.FC<ChatMainAreaProps> = ({
                             {isCurrentConversationGroup && (
                                 <button
                                     onClick={() => setIsGroupSettingsModalOpen(true)}
-                                    className="p-2 text-gray-400 hover:text-amber-700 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg transition-colors"
+                                    className="p-2 text-gray-400 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
                                     title="Group Settings"
                                 >
                                     <svg className="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: '18px', height: '18px' }}>

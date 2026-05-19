@@ -326,7 +326,7 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             onFocus={handleInputFocus}
-            className="w-full pl-10 pr-32 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg focus:ring-2 focus:ring-amber-700 focus:border-transparent text-sm"
+            className="w-full pl-10 pr-32 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent text-sm"
           />
           
           <div className="absolute inset-y-0 right-0 flex items-center">
@@ -343,7 +343,7 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
                 onClick={() => setShowFilters(!showFilters)}
                 className={`p-1 transition-colors mr-1 ${
                   hasActiveFilters
-                    ? 'text-amber-700 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300'
+                    ? 'text-green-600 dark:text-green-400 hover:text-green-500 dark:hover:text-green-300'
                     : 'text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300'
                 }`}
                 title="Search filters"
@@ -352,7 +352,7 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z" />
                 </svg>
                 {hasActiveFilters && (
-                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-amber-700 rounded-full"></div>
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-green-600 rounded-full"></div>
                 )}
               </button>
             )}
@@ -399,7 +399,7 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
                   placeholder="Username"
                   value={filters.sender || ''}
                   onChange={(e) => handleFilterChange('sender', e.target.value)}
-                  className="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded focus:ring-1 focus:ring-amber-700"
+                  className="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded focus:ring-1 focus:ring-green-600"
                 />
               </div>
               
@@ -411,7 +411,7 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
                   type="date"
                   value={filters.dateFrom || ''}
                   onChange={(e) => handleFilterChange('dateFrom', e.target.value)}
-                  className="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded focus:ring-1 focus:ring-amber-700"
+                  className="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded focus:ring-1 focus:ring-green-600"
                 />
               </div>
               
@@ -423,7 +423,7 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
                   type="date"
                   value={filters.dateTo || ''}
                   onChange={(e) => handleFilterChange('dateTo', e.target.value)}
-                  className="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded focus:ring-1 focus:ring-amber-700"
+                  className="w-full px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded focus:ring-1 focus:ring-green-600"
                 />
               </div>
               
@@ -433,7 +433,7 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
                   id="hasMedia"
                   checked={filters.hasMedia || false}
                   onChange={(e) => handleFilterChange('hasMedia', e.target.checked)}
-                  className="h-4 w-4 accent-amber-700 focus:ring-amber-700 border-gray-300 dark:border-gray-600 rounded"
+                  className="h-4 w-4 accent-green-600 focus:ring-green-600 border-gray-300 dark:border-gray-600 rounded"
                 />
                 <label htmlFor="hasMedia" className="ml-2 text-xs font-medium text-gray-700 dark:text-gray-300">
                   Has Media

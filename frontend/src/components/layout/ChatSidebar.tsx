@@ -84,7 +84,7 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
                     <div className="flex items-center justify-between">
                         {/* Brand */}
                         <div className="flex items-center space-x-2 min-w-0">
-                            <div className="w-8 h-8 bg-amber-700 rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
+                            <div className="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center flex-shrink-0 shadow-sm">
                                 <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
                                     <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
@@ -177,11 +177,11 @@ const ChatSidebar: React.FC<ChatSidebarProps> = ({
                     <div className="flex items-center mt-3">
                         <div className={`w-2 h-2 rounded-full mr-2 ${
                             isConnected ? 'bg-emerald-500 animate-pulse' :
-                            isReconnecting ? 'bg-amber-500 animate-pulse' : 'bg-red-500'
+                            isReconnecting ? 'bg-green-500 animate-pulse' : 'bg-red-500'
                         }`} />
                         <span className={`text-xs font-medium ${
                             isConnected ? 'text-emerald-600 dark:text-emerald-400' :
-                            isReconnecting ? 'text-amber-600 dark:text-amber-400' : 'text-red-500 dark:text-red-400'
+                            isReconnecting ? 'text-green-500 dark:text-green-400' : 'text-red-500 dark:text-red-400'
                         }`}>
                             {isConnected ? 'Connected' : isReconnecting ? 'Reconnecting…' : 'Disconnected'}
                         </span>

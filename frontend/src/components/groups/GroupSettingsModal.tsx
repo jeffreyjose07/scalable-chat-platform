@@ -244,7 +244,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
               onClick={() => setActiveTab('settings')}
               className={`px-4 py-2 font-medium transition-colors ${
                 activeTab === 'settings'
-                  ? 'border-b-2 border-amber-700 text-amber-700 dark:text-amber-400'
+                  ? 'border-b-2 border-green-600 text-green-600 dark:text-green-400'
                   : 'text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-gray-200'
               }`}
             >
@@ -254,7 +254,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
               onClick={() => setActiveTab('participants')}
               className={`px-4 py-2 font-medium transition-colors ${
                 activeTab === 'participants'
-                  ? 'border-b-2 border-amber-700 text-amber-700 dark:text-amber-400'
+                  ? 'border-b-2 border-green-600 text-green-600 dark:text-green-400'
                   : 'text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-gray-200'
               }`}
             >
@@ -275,7 +275,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                   id="groupName"
                   value={groupName}
                   onChange={(e) => setGroupName(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-700"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-600"
                   placeholder="Enter group name"
                   maxLength={100}
                   required
@@ -292,7 +292,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                   id="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-700"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-600"
                   placeholder="Enter group description"
                   rows={3}
                   maxLength={500}
@@ -325,7 +325,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                   id="maxParticipants"
                   value={maxParticipants}
                   onChange={(e) => setMaxParticipants(parseInt(e.target.value) || 100)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-700"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-600"
                   min={2}
                   max={1000}
                   disabled={!canUpdateSettings}
@@ -359,7 +359,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                     <button
                       type="submit"
                       disabled={isLoading || !groupName.trim()}
-                      className="px-4 py-2 bg-amber-700 text-white rounded-md hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                      className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
                     >
                       {isLoading ? 'Updating...' : 'Update Settings'}
                     </button>
@@ -397,7 +397,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                           <div className="flex items-center space-x-2">
                             <span className={`px-2 py-1 text-xs rounded-full ${
                               role === 'OWNER' ? 'bg-purple-100 text-purple-800' :
-                              role === 'ADMIN' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300' :
+                              role === 'ADMIN' ? 'bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300' :
                               'bg-gray-100 text-gray-800'
                             }`}>
                               {role}
@@ -452,7 +452,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                       </p>
                       <button
                         onClick={handleAddParticipants}
-                        className="px-4 py-2 bg-amber-700 text-white rounded-md hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-700"
+                        className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600"
                         disabled={isLoading}
                       >
                         {isLoading ? 'Adding...' : 'Add Selected'}

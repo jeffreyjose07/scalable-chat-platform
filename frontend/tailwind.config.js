@@ -8,7 +8,7 @@ module.exports = {
     extend: {
       fontFamily: {
         display: ['Fraunces', 'Georgia', 'serif'],
-        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', '"Helvetica Neue"', 'Arial', 'sans-serif'],
       },
       animation: {
         'fadeIn': 'fadeIn 0.5s ease-out forwards',

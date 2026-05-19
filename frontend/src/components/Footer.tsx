@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
               href="https://jeffreyjose07.github.io" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-amber-700 dark:hover:text-amber-400 transition-colors"
+              className="text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-colors"
             >
               Jeffrey Jose
             </a>

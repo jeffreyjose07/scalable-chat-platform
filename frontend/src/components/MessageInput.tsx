@@ -66,7 +66,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disabled }) 
   return (
     <div className="relative bg-white dark:bg-gray-800">
       <form onSubmit={handleSubmit} className="p-4">
-        <div className="flex items-end space-x-3 bg-gray-50 dark:bg-zinc-900 rounded-2xl p-3 border border-gray-200 dark:border-zinc-700 focus-within:border-amber-700 focus-within:ring-2 focus-within:ring-amber-700/15 transition-all duration-200">
+        <div className="flex items-end space-x-3 bg-gray-50 dark:bg-zinc-900 rounded-2xl p-3 border border-gray-200 dark:border-zinc-700 focus-within:border-green-500 focus-within:ring-2 focus-within:ring-green-500/15 transition-all duration-200">
           {/* Message input */}
           <div className="flex-1 relative">
             <textarea
@@ -88,7 +88,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disabled }) 
               type="button"
               onClick={() => setShowEmojiPicker(!showEmojiPicker)}
               disabled={disabled}
-              className="flex-shrink-0 p-2 text-gray-400 dark:text-zinc-500 hover:text-amber-700 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-full transition-colors disabled:opacity-40"
+              className="flex-shrink-0 p-2 text-gray-400 dark:text-zinc-500 hover:text-green-500 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-full transition-colors disabled:opacity-40"
               title="Add emoji"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -108,7 +108,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disabled }) 
                       key={index}
                       type="button"
                       onClick={() => handleEmojiSelect(emoji)}
-                      className="w-8 h-8 flex items-center justify-center text-lg hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg transition-colors"
+                      className="w-8 h-8 flex items-center justify-center text-lg hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
                     >
                       {emoji}
                     </button>
@@ -127,7 +127,7 @@ const MessageInput: React.FC<MessageInputProps> = ({ onSendMessage, disabled }) 
             disabled={!message.trim() || disabled}
             className={`flex-shrink-0 p-2.5 rounded-full transition-all duration-200 ${
               message.trim() && !disabled
-                ? 'bg-amber-700 text-white hover:bg-amber-600 shadow-md hover:shadow-amber-700/30 hover:shadow-lg transform hover:scale-105'
+                ? 'bg-green-500 text-white hover:bg-green-400 shadow-md hover:shadow-green-500/30 hover:shadow-lg transform hover:scale-105'
                 : 'bg-gray-100 dark:bg-zinc-800 text-gray-300 dark:text-zinc-600 cursor-not-allowed'
             }`}
             title="Send message"

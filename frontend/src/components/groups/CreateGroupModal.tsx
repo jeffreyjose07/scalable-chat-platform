@@ -127,7 +127,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
                 id="groupName"
                 value={groupName}
                 onChange={(e) => setGroupName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-600"
                 placeholder="Enter group name"
                 maxLength={100}
                 required
@@ -143,7 +143,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-600"
                 placeholder="Enter group description"
                 rows={3}
                 maxLength={500}
@@ -174,7 +174,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
                 id="maxParticipants"
                 value={maxParticipants}
                 onChange={(e) => setMaxParticipants(parseInt(e.target.value) || 100)}
-                className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-700"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-600"
                 min={2}
                 max={1000}
               />
@@ -239,7 +239,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
               <button
                 type="submit"
                 disabled={isLoading || !groupName.trim()}
-                className="px-4 py-2 bg-amber-700 text-white rounded-md hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600 disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Creating...' : 'Create Group'}
               </button>

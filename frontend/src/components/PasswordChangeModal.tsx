@@ -230,7 +230,7 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
                   type={showPasswords.current ? 'text' : 'password'}
                   value={currentPassword}
                   onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-700 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 pr-10"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 pr-10"
                   placeholder="Enter current password"
                   required
                 />
@@ -260,7 +260,7 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
                   type={showPasswords.new ? 'text' : 'password'}
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-700 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 pr-10"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 pr-10"
                   placeholder="Enter new password"
                   required
                 />
@@ -317,7 +317,7 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
                   type={showPasswords.confirm ? 'text' : 'password'}
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-700 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 pr-10"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-600 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 pr-10"
                   placeholder="Confirm new password"
                   required
                 />
@@ -365,11 +365,11 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
             )}
 
             {/* Security Tips */}
-            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-3">
-              <h4 className="text-sm font-medium text-amber-800 dark:text-amber-200 mb-1">
+            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
+              <h4 className="text-sm font-medium text-green-800 dark:text-green-200 mb-1">
                 Password Security Tips:
               </h4>
-              <ul className="text-xs text-amber-700 dark:text-amber-300 space-y-1">
+              <ul className="text-xs text-green-600 dark:text-green-300 space-y-1">
                 <li>• Use a unique password for this account</li>
                 <li>• Mix uppercase, lowercase, numbers, and symbols</li>
                 <li>• Avoid personal information or common words</li>
@@ -382,7 +382,7 @@ const PasswordChangeModal: React.FC<PasswordChangeModalProps> = ({
               <button
                 type="submit"
                 disabled={isLoading || !!success || passwordStrength.score < 3 || newPassword !== confirmPassword}
-                className="flex-1 px-4 py-2 bg-amber-700 text-white rounded-lg hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Changing...' : success ? 'Success!' : 'Change Password'}
               </button>

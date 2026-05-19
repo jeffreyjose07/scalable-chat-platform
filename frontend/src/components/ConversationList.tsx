@@ -72,7 +72,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
     }
     return (
       <div className="relative mr-3 flex-shrink-0">
-        <div className="w-11 h-11 rounded-full flex items-center justify-center text-white shadow-sm bg-amber-700">
+        <div className="w-11 h-11 rounded-full flex items-center justify-center text-white shadow-sm bg-green-600">
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
             <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z" />
           </svg>
@@ -110,7 +110,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
           {activeType === 'direct' && (
             <button
               onClick={onNewDirectMessage}
-              className="p-1.5 text-gray-400 dark:text-zinc-500 hover:text-amber-700 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg transition-colors"
+              className="p-1.5 text-gray-400 dark:text-zinc-500 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
               title="New Direct Message"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -122,7 +122,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
           {activeType === 'groups' && onNewGroup && (
             <button
               onClick={onNewGroup}
-              className="p-1.5 text-gray-400 dark:text-zinc-500 hover:text-amber-700 dark:hover:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg transition-colors"
+              className="p-1.5 text-gray-400 dark:text-zinc-500 hover:text-green-600 dark:hover:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
               title="Create New Group"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -143,7 +143,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                   key={conversation.id}
                   className={`group relative transition-all duration-150 rounded-xl ${
                     isSelected
-                      ? 'bg-amber-50 dark:bg-amber-900/20 ring-1 ring-amber-200 dark:ring-amber-800/40'
+                      ? 'bg-green-50 dark:bg-green-900/20 ring-1 ring-green-200 dark:ring-green-800/40'
                       : 'hover:bg-gray-50 dark:hover:bg-zinc-800/60'
                   }`}
                 >
@@ -157,7 +157,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                         <div className="flex items-center justify-between mb-0.5">
                           <div className={`font-semibold truncate text-sm ${
                             isSelected
-                              ? 'text-amber-900 dark:text-amber-200'
+                              ? 'text-green-900 dark:text-green-200'
                               : 'text-gray-800 dark:text-gray-200'
                           }`}>
                             {String(getConversationDisplayName(conversation))}
@@ -172,7 +172,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                               </span>
                             )}
                             {hasUnread && (
-                              <span className="bg-amber-600 text-white text-xs rounded-full px-2 py-0.5 font-semibold shadow-sm min-w-[20px] text-center">
+                              <span className="bg-green-500 text-white text-xs rounded-full px-2 py-0.5 font-semibold shadow-sm min-w-[20px] text-center">
                                 {unreadCounts[conversation.id] > 99 ? '99+' : unreadCounts[conversation.id]}
                               </span>
                             )}
@@ -235,7 +235,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                 {activeType === 'direct' && (
                   <button
                     onClick={onNewDirectMessage}
-                    className="text-amber-700 dark:text-amber-400 hover:text-amber-600 text-sm font-medium"
+                    className="text-green-600 dark:text-green-400 hover:text-green-500 text-sm font-medium"
                   >
                     Start a conversation →
                   </button>
@@ -243,7 +243,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                 {activeType === 'groups' && onNewGroup && (
                   <button
                     onClick={onNewGroup}
-                    className="text-amber-700 dark:text-amber-400 hover:text-amber-600 text-sm font-medium"
+                    className="text-green-600 dark:text-green-400 hover:text-green-500 text-sm font-medium"
                   >
                     Create a group →
                   </button>
