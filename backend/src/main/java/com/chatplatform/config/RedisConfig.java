@@ -16,9 +16,7 @@ import java.net.URI;
 @Configuration
 public class RedisConfig {
 
-    // Standard non-TLS Redis port — Upstash and most managed providers use 6380 for TLS
     private static final int REDIS_PLAINTEXT_PORT = 6379;
-    private static final int REDIS_TLS_PORT = 6380;
 
     @Value("${spring.redis.url:redis://localhost:6379}")
     private String redisUrl;
@@ -32,14 +30,11 @@ public class RedisConfig {
     public RedisConnectionFactory redisConnectionFactory() {
         URI uri = URI.create(redisUrl);
 
+        // Upstash (and Redis Cloud) serve TLS on port 6379 via the rediss:// scheme.
+        // The ssl config property is a fallback for when REDIS_URL carries redis:// by mistake.
         boolean useSSL = "rediss".equals(uri.getScheme()) || sslEnabled;
 
-        // When SSL is required but the URL still points at the standard plaintext port
-        // (common misconfiguration with Upstash where TLS lives on 6380), correct it.
         int port = uri.getPort() > 0 ? uri.getPort() : REDIS_PLAINTEXT_PORT;
-        if (useSSL && port == REDIS_PLAINTEXT_PORT) {
-            port = REDIS_TLS_PORT;
-        }
 
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
         config.setHostName(uri.getHost());
