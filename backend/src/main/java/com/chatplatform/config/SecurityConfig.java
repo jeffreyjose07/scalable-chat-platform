@@ -57,12 +57,12 @@ public class SecurityConfig {
                     response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
                     response.setHeader("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
                     // CSP to prevent XSS attacks
-                    response.setHeader("Content-Security-Policy", 
+                    response.setHeader("Content-Security-Policy",
                         "default-src 'self'; " +
                         "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
-                        "style-src 'self' 'unsafe-inline'; " +
+                        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
                         "img-src 'self' data: https:; " +
-                        "font-src 'self' data:; " +
+                        "font-src 'self' data: https://fonts.gstatic.com; " +
                         "connect-src 'self' ws: wss:; " +
                         "frame-ancestors 'none'"
                     );

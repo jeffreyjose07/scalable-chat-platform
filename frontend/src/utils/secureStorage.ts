@@ -90,6 +90,13 @@ class SecureStorage {
       }
       
       const decryptedToken = this.encrypt ? this.simpleDecrypt(token) : token;
+      // A JWT always starts with eyJ (base64url of '{"alg'...).
+      // If decryption produced garbage (e.g. wrong key from a previous version),
+      // discard it so callers never receive an invalid header value.
+      if (!decryptedToken.startsWith('eyJ')) {
+        this.removeToken();
+        return null;
+      }
       return decryptedToken;
       
     } catch (error) {
