@@ -106,12 +106,12 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-zinc-800 w-full max-w-md mx-4 max-h-[90vh] overflow-y-auto">
         <div className="p-6">
-          <h2 className="text-xl font-bold mb-4">Create New Group</h2>
-          
+          <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Create New Group</h2>
+
           {error && (
-            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-300 rounded">
               {error}
             </div>
           )}
@@ -119,7 +119,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Group Name */}
             <div>
-              <label htmlFor="groupName" className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="groupName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Group Name *
               </label>
               <input
@@ -127,7 +127,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
                 id="groupName"
                 value={groupName}
                 onChange={(e) => setGroupName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-700"
                 placeholder="Enter group name"
                 maxLength={100}
                 required
@@ -143,7 +143,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-700"
                 placeholder="Enter group description"
                 rows={3}
                 maxLength={500}
@@ -159,7 +159,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
                 onChange={(e) => setIsPublic(e.target.checked)}
                 className="mr-2"
               />
-              <label htmlFor="isPublic" className="text-sm font-medium text-gray-700">
+              <label htmlFor="isPublic" className="text-sm font-medium text-gray-700 dark:text-gray-300">
                 Make group public
               </label>
             </div>
@@ -174,7 +174,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
                 id="maxParticipants"
                 value={maxParticipants}
                 onChange={(e) => setMaxParticipants(parseInt(e.target.value) || 100)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-700"
                 min={2}
                 max={1000}
               />
@@ -182,7 +182,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
 
             {/* User Selection */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Add Participants (optional)
               </label>
               <div className="mb-2">
@@ -191,17 +191,17 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
                   placeholder="Search participants..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                 />
               </div>
-              <div className="max-h-40 overflow-y-auto border border-gray-300 rounded-md p-2">
+              <div className="max-h-40 overflow-y-auto border border-gray-300 dark:border-zinc-700 rounded-md p-2">
                 {users.length === 0 ? (
-                  <p className="text-gray-500 text-sm">Loading users...</p>
+                  <p className="text-gray-500 dark:text-zinc-400 text-sm">Loading users...</p>
                 ) : filteredUsers.length === 0 ? (
-                  <p className="text-gray-500 text-sm">No participants found</p>
+                  <p className="text-gray-500 dark:text-zinc-400 text-sm">No participants found</p>
                 ) : (
                   filteredUsers.map((user: User) => (
-                    <div key={user.id} className="flex items-center p-2 hover:bg-gray-100 rounded">
+                    <div key={user.id} className="flex items-center p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded">
                       <input
                         type="checkbox"
                         checked={selectedUsers.includes(user.id)}
@@ -209,8 +209,8 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
                         className="mr-2"
                       />
                       <div className="flex-1">
-                        <div className="text-sm font-medium">{user.displayName}</div>
-                        <div className="text-xs text-gray-500">{user.email}</div>
+                        <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{user.displayName}</div>
+                        <div className="text-xs text-gray-500 dark:text-zinc-400">{user.email}</div>
                       </div>
                       {user.isOnline && (
                         <div className="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -220,7 +220,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
                 )}
               </div>
               {selectedUsers.length > 0 && (
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">
                   {selectedUsers.length} participant{selectedUsers.length !== 1 ? 's' : ''} selected
                 </p>
               )}
@@ -231,7 +231,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
               <button
                 type="button"
                 onClick={handleCancel}
-                className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-zinc-700 rounded-md hover:bg-gray-300 dark:hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
                 disabled={isLoading}
               >
                 Cancel
@@ -239,7 +239,7 @@ export const CreateGroupModal: React.FC<CreateGroupModalProps> = ({
               <button
                 type="submit"
                 disabled={isLoading || !groupName.trim()}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-amber-700 text-white rounded-md hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
               >
                 {isLoading ? 'Creating...' : 'Create Group'}
               </button>

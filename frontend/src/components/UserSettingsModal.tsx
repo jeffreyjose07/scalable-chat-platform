@@ -239,7 +239,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                 onClick={() => { setActiveTab('profile'); clearMessages(); }}
                 className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                   activeTab === 'profile'
-                    ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                    ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                 }`}
               >
@@ -255,7 +255,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                 onClick={() => { setActiveTab('security'); clearMessages(); }}
                 className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                   activeTab === 'security'
-                    ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                    ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                 }`}
               >
@@ -271,7 +271,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                 onClick={() => { setActiveTab('preferences'); clearMessages(); }}
                 className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                   activeTab === 'preferences'
-                    ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                    ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                 }`}
               >
@@ -290,7 +290,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                     onClick={() => { setActiveTab('admin'); clearMessages(); }}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                       activeTab === 'admin'
-                        ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300'
+                        ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
                         : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800'
                     }`}
                   >
@@ -334,7 +334,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                       type="text"
                       value={profileForm.displayName}
                       onChange={(e) => setProfileForm(prev => ({ ...prev, displayName: e.target.value }))}
-                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                      className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-amber-700 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                       placeholder="Enter your display name"
                     />
                   </div>
@@ -368,7 +368,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-4 py-2 bg-amber-700 text-white rounded-lg hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isLoading ? 'Saving...' : 'Save Changes'}
                   </button>
@@ -388,7 +388,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                     </p>
                     <button
                       onClick={() => setIsPasswordChangeOpen(true)}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                      className="px-4 py-2 bg-amber-700 text-white rounded-lg hover:bg-amber-600 transition-colors"
                     >
                       Change Password
                     </button>
@@ -464,7 +464,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-4 py-2 bg-amber-700 text-white rounded-lg hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isLoading ? 'Saving...' : 'Save Preferences'}
                   </button>
@@ -503,7 +503,7 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                       <button
                         onClick={getCleanupPreview}
                         disabled={isLoading}
-                        className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="px-4 py-2 bg-amber-700 text-white rounded-lg hover:bg-amber-600 disabled:opacity-50 disabled:cursor-not-allowed"
                       >
                         {isLoading ? 'Analyzing...' : '🔍 Analyze Database'}
                       </button>
@@ -540,9 +540,9 @@ const UserSettingsModal: React.FC<UserSettingsModalProps> = ({
                             </div>
                           </div>
                           
-                          <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded">
-                            <div className="font-medium text-blue-800 dark:text-blue-200 mb-1">Database Health</div>
-                            <div className="text-sm text-blue-700 dark:text-blue-300">
+                          <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded">
+                            <div className="font-medium text-amber-800 dark:text-amber-200 mb-1">Database Health</div>
+                            <div className="text-sm text-amber-700 dark:text-amber-300">
                               {cleanupReport.finalStats.totalUsers} users, {cleanupReport.finalStats.totalConversations} conversations, {cleanupReport.finalStats.totalMessages} messages
                             </div>
                           </div>

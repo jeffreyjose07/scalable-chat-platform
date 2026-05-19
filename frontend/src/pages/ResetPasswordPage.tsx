@@ -118,7 +118,7 @@ const ResetPasswordPage: React.FC = () => {
                                 name="newPassword"
                                 type="password"
                                 required
-                                className="relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm min-h-[44px]"
+                                className="relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 rounded-md focus:outline-none focus:ring-amber-700 focus:border-amber-700 sm:text-sm min-h-[44px]"
                                 placeholder="New Password (minimum 8 characters)"
                                 value={newPassword}
                                 onChange={(e) => setNewPassword(e.target.value)}
@@ -155,7 +155,7 @@ const ResetPasswordPage: React.FC = () => {
                                 name="confirmPassword"
                                 type="password"
                                 required
-                                className="relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm min-h-[44px]"
+                                className="relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-gray-100 bg-white dark:bg-gray-700 rounded-md focus:outline-none focus:ring-amber-700 focus:border-amber-700 sm:text-sm min-h-[44px]"
                                 placeholder="Confirm New Password"
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -174,7 +174,7 @@ const ResetPasswordPage: React.FC = () => {
                         <button
                             type="submit"
                             disabled={isLoading || newPassword !== confirmPassword || newPassword.length < 8}
-                            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
+                            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-amber-700 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-800 focus:ring-amber-700 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]"
                         >
                             {isLoading ? 'Resetting Password...' : 'Reset Password'}
                         </button>
@@ -183,7 +183,7 @@ const ResetPasswordPage: React.FC = () => {
                             <button
                                 type="button"
                                 onClick={() => navigate('/')}
-                                className="text-sm text-indigo-600 dark:text-indigo-400 hover:text-indigo-500 dark:hover:text-indigo-300"
+                                className="text-sm text-amber-700 dark:text-amber-400 hover:text-amber-600 dark:hover:text-amber-300"
                             >
                                 Back to Login
                             </button>

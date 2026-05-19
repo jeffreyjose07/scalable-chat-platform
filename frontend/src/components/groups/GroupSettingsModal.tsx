@@ -217,15 +217,15 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-zinc-900 rounded-xl border border-gray-100 dark:border-zinc-800 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto">
         <div className="p-6">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-bold">Group Settings</h2>
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Group Settings</h2>
             <div className="flex items-center space-x-2">
-              <span className="text-sm text-gray-500">Your role: {userRole}</span>
+              <span className="text-sm text-gray-500 dark:text-zinc-400">Your role: {userRole}</span>
               <button
                 onClick={handleCancel}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-gray-200"
               >
                 ✕
               </button>
@@ -233,29 +233,29 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+            <div className="mb-4 p-3 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-700 text-red-700 dark:text-red-300 rounded">
               {error}
             </div>
           )}
 
           {/* Tabs */}
-          <div className="flex border-b mb-6">
+          <div className="flex border-b border-gray-200 dark:border-zinc-700 mb-6">
             <button
               onClick={() => setActiveTab('settings')}
-              className={`px-4 py-2 font-medium ${
+              className={`px-4 py-2 font-medium transition-colors ${
                 activeTab === 'settings'
-                  ? 'border-b-2 border-blue-500 text-blue-600'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'border-b-2 border-amber-700 text-amber-700 dark:text-amber-400'
+                  : 'text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-gray-200'
               }`}
             >
               Settings
             </button>
             <button
               onClick={() => setActiveTab('participants')}
-              className={`px-4 py-2 font-medium ${
+              className={`px-4 py-2 font-medium transition-colors ${
                 activeTab === 'participants'
-                  ? 'border-b-2 border-blue-500 text-blue-600'
-                  : 'text-gray-500 hover:text-gray-700'
+                  ? 'border-b-2 border-amber-700 text-amber-700 dark:text-amber-400'
+                  : 'text-gray-500 dark:text-zinc-400 hover:text-gray-700 dark:hover:text-gray-200'
               }`}
             >
               Participants ({conversation.participants?.length || 0})
@@ -267,7 +267,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
             <form onSubmit={handleSettingsUpdate} className="space-y-4">
               {/* Group Name */}
               <div>
-                <label htmlFor="groupName" className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="groupName" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                   Group Name *
                 </label>
                 <input
@@ -275,7 +275,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                   id="groupName"
                   value={groupName}
                   onChange={(e) => setGroupName(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-700"
                   placeholder="Enter group name"
                   maxLength={100}
                   required
@@ -292,7 +292,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                   id="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-700"
                   placeholder="Enter group description"
                   rows={3}
                   maxLength={500}
@@ -310,7 +310,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                   className="mr-2"
                   disabled={!canUpdateSettings}
                 />
-                <label htmlFor="isPublic" className="text-sm font-medium text-gray-700">
+                <label htmlFor="isPublic" className="text-sm font-medium text-gray-700 dark:text-gray-300">
                   Make group public
                 </label>
               </div>
@@ -325,7 +325,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                   id="maxParticipants"
                   value={maxParticipants}
                   onChange={(e) => setMaxParticipants(parseInt(e.target.value) || 100)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-zinc-700 rounded-md bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-amber-700"
                   min={2}
                   max={1000}
                   disabled={!canUpdateSettings}
@@ -350,7 +350,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                   <button
                     type="button"
                     onClick={handleCancel}
-                    className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                    className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-200 dark:bg-zinc-700 rounded-md hover:bg-gray-300 dark:hover:bg-zinc-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
                     disabled={isLoading}
                   >
                     Cancel
@@ -359,7 +359,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                     <button
                       type="submit"
                       disabled={isLoading || !groupName.trim()}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                      className="px-4 py-2 bg-amber-700 text-white rounded-md hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
                     >
                       {isLoading ? 'Updating...' : 'Update Settings'}
                     </button>
@@ -374,7 +374,7 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
             <div className="space-y-6">
               {/* Current Participants */}
               <div>
-                <h3 className="text-lg font-medium mb-3">Current Participants</h3>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3">Current Participants</h3>
                 <div className="space-y-2">
                   {conversation.participants?.map((participant) => {
                     // Handle both ConversationDto (with ConversationParticipant[]) and Conversation (with User[])
@@ -388,16 +388,16 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                     if (!user || !user.id) return null;
                     
                     return (
-                      <div key={user.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-md">
+                      <div key={user.id} className="flex items-center justify-between p-3 bg-gray-50 dark:bg-zinc-800 rounded-md">
                         <div className="flex items-center space-x-3">
                           <div className="flex-1">
-                            <div className="text-sm font-medium">{user.displayName || user.username}</div>
-                            <div className="text-xs text-gray-500">{user.email}</div>
+                            <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{user.displayName || user.username}</div>
+                            <div className="text-xs text-gray-500 dark:text-zinc-400">{user.email}</div>
                           </div>
                           <div className="flex items-center space-x-2">
                             <span className={`px-2 py-1 text-xs rounded-full ${
                               role === 'OWNER' ? 'bg-purple-100 text-purple-800' :
-                              role === 'ADMIN' ? 'bg-blue-100 text-blue-800' :
+                              role === 'ADMIN' ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-800 dark:text-amber-300' :
                               'bg-gray-100 text-gray-800'
                             }`}>
                               {role}
@@ -425,10 +425,10 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
               {/* Add Participants */}
               {canManageParticipants && availableUsers.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-medium mb-3">Add Participants</h3>
-                  <div className="max-h-40 overflow-y-auto border border-gray-300 rounded-md p-2 mb-3">
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-gray-100 mb-3">Add Participants</h3>
+                  <div className="max-h-40 overflow-y-auto border border-gray-300 dark:border-zinc-700 rounded-md p-2 mb-3">
                     {availableUsers.map((user: User) => (
-                      <div key={user.id} className="flex items-center p-2 hover:bg-gray-100 rounded">
+                      <div key={user.id} className="flex items-center p-2 hover:bg-gray-100 dark:hover:bg-zinc-800 rounded">
                         <input
                           type="checkbox"
                           checked={selectedUsers.includes(user.id)}
@@ -436,8 +436,8 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                           className="mr-2"
                         />
                         <div className="flex-1">
-                          <div className="text-sm font-medium">{user.displayName}</div>
-                          <div className="text-xs text-gray-500">{user.email}</div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-gray-100">{user.displayName}</div>
+                          <div className="text-xs text-gray-500 dark:text-zinc-400">{user.email}</div>
                         </div>
                         {user.isOnline && (
                           <div className="w-2 h-2 bg-green-500 rounded-full"></div>
@@ -447,12 +447,12 @@ export const GroupSettingsModal: React.FC<GroupSettingsModalProps> = ({
                   </div>
                   {selectedUsers.length > 0 && (
                     <div className="flex justify-between items-center">
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-600 dark:text-gray-400">
                         {selectedUsers.length} user{selectedUsers.length !== 1 ? 's' : ''} selected
                       </p>
                       <button
                         onClick={handleAddParticipants}
-                        className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="px-4 py-2 bg-amber-700 text-white rounded-md hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-700"
                         disabled={isLoading}
                       >
                         {isLoading ? 'Adding...' : 'Add Selected'}
