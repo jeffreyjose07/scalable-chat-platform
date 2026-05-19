@@ -310,7 +310,34 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
             sendMessage(session, message);
         }
     }
-    
+
+    /**
+     * Broadcast a chat message only to sessions belonging to conversation participants.
+     */
+    public void broadcastMessage(ChatMessage message) {
+        try {
+            List<ConversationParticipant> participants = participantRepository
+                .findByIdConversationIdAndIsActiveTrue(message.getConversationId());
+            Set<String> participantUserIds = participants.stream()
+                .map(ConversationParticipant::getUserId)
+                .collect(java.util.stream.Collectors.toSet());
+
+            int broadcastCount = 0;
+            for (Map.Entry<String, WebSocketSession> entry : sessions.entrySet()) {
+                WebSocketSession session = entry.getValue();
+                String sessionUserId = getUserId(session);
+                if (session.isOpen() && sessionUserId != null && participantUserIds.contains(sessionUserId)) {
+                    sendMessage(session, message);
+                    broadcastCount++;
+                }
+            }
+            logger.info("📢 Broadcast message {} to {} participants in conversation {}",
+                message.getId(), broadcastCount, message.getConversationId());
+        } catch (Exception e) {
+            logger.error("❌ Error broadcasting message {}: {}", message.getId(), e.getMessage());
+        }
+    }
+
     /**
      * Broadcast message status update to all participants in the conversation
      */

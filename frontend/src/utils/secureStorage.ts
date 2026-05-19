@@ -38,7 +38,6 @@ class SecureStorage {
       };
       storage.setItem(key + '_meta', JSON.stringify(metadata));
       
-      console.debug('Token stored securely', { persistent, encrypted: this.encrypt });
     } catch (error) {
       console.error('Failed to store token:', error);
       throw new Error('Token storage failed');
@@ -113,7 +112,6 @@ class SecureStorage {
       localStorage.removeItem(key);
       localStorage.removeItem(key + '_meta');
       
-      console.debug('Token removed from secure storage');
     } catch (error) {
       console.error('Failed to remove token:', error);
     }
@@ -147,7 +145,6 @@ class SecureStorage {
         }
       }
       
-      console.debug('All secure storage cleared');
     } catch (error) {
       console.error('Failed to clear secure storage:', error);
     }
@@ -207,10 +204,6 @@ class SecureStorage {
     const fingerprint = components.join('|');
     const hash = this.simpleHash(fingerprint);
     
-    // Debug logging to understand fingerprint changes
-    console.debug('🔒 Fingerprint components:', components);
-    console.debug('🔒 Generated fingerprint hash:', hash);
-    
     return hash;
   }
 
@@ -232,7 +225,7 @@ class SecureStorage {
    * Note: This is basic obfuscation, not cryptographic security
    */
   private simpleEncrypt(text: string): string {
-    const key = 'chatSecureKey2024'; // In production, use environment variable
+    const key = 'chatAppSecureKey';
     let result = '';
     for (let i = 0; i < text.length; i++) {
       result += String.fromCharCode(
@@ -279,24 +272,5 @@ export const tokenStorage = {
   clearSecurityFlag: () => secureStorage.clearSecurityFlag()
 };
 
-// Auto-cleanup on page unload for security
-window.addEventListener('beforeunload', () => {
-  // Clear sessionStorage tokens on page unload for extra security
-  const key = 'chat_app_token';
-  if (sessionStorage.getItem(key)) {
-    console.debug('Clearing session token on page unload');
-  }
-});
-
-// Detect potential XSS and clear tokens
-window.addEventListener('error', (event) => {
-  // If there are script errors that might indicate XSS, clear tokens
-  if (event.error && event.error.message && 
-      event.error.message.includes('script') && 
-      event.error.message.includes('blocked')) {
-    console.warn('Potential XSS detected, clearing tokens for security');
-    secureStorage.clearAll();
-  }
-});
 
 export default secureStorage;

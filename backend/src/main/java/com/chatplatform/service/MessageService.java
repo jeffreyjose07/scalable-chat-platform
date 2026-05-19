@@ -141,15 +141,25 @@ public class MessageService {
     }
     
     public List<ChatMessage> getPendingMessages(String userId) {
-        // Return recent messages from the last hour
         Instant cutoffTime = Instant.now().minusSeconds(PENDING_MESSAGES_WINDOW_SECONDS);
-        return messageRepository.findByTimestampAfterOrderByTimestampAsc(cutoffTime);
+        List<String> conversationIds = participantRepository.findByIdUserIdAndIsActiveTrue(userId).stream()
+            .map(p -> p.getId().getConversationId())
+            .toList();
+        if (conversationIds.isEmpty()) {
+            return List.of();
+        }
+        return messageRepository.findByConversationIdInAndTimestampAfterOrderByTimestampAsc(conversationIds, cutoffTime);
     }
 
     public List<ChatMessage> getRecentMessagesForUser(String userId) {
-        // Return recent messages from the last 24 hours
         Instant cutoffTime = Instant.now().minusSeconds(RECENT_MESSAGES_WINDOW_SECONDS);
-        return messageRepository.findByTimestampAfterOrderByTimestampAsc(cutoffTime);
+        List<String> conversationIds = participantRepository.findByIdUserIdAndIsActiveTrue(userId).stream()
+            .map(p -> p.getId().getConversationId())
+            .toList();
+        if (conversationIds.isEmpty()) {
+            return List.of();
+        }
+        return messageRepository.findByConversationIdInAndTimestampAfterOrderByTimestampAsc(conversationIds, cutoffTime);
     }
     
     public void deleteConversationMessages(String conversationId) {
@@ -177,7 +187,4 @@ public class MessageService {
         }
     }
     
-    private String getServerId() {
-        return System.getenv().getOrDefault("SERVER_ID", "server-1");
-    }
 }
