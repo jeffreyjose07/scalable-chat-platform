@@ -90,10 +90,14 @@ class SecureStorage {
       }
       
       const decryptedToken = this.encrypt ? this.simpleDecrypt(token) : token;
-      // A JWT always starts with eyJ (base64url of '{"alg'...).
-      // If decryption produced garbage (e.g. wrong key from a previous version),
-      // discard it so callers never receive an invalid header value.
-      if (!decryptedToken.startsWith('eyJ')) {
+      // Validate full JWT structure: 3 base64url segments separated by dots.
+      // A prefix-only check ('eyJ') is insufficient — XOR key mismatches produce
+      // tokens with correct first chars but control characters after position 3,
+      // which cause fetch() to throw "Invalid value" on the Authorization header.
+      const jwtParts = decryptedToken.split('.');
+      const isValidJwt = jwtParts.length === 3 &&
+        jwtParts.every(part => /^[A-Za-z0-9\-_]+=*$/.test(part));
+      if (!isValidJwt) {
         this.removeToken();
         return null;
       }
@@ -247,7 +251,7 @@ class SecureStorage {
    */
   private simpleDecrypt(encrypted: string): string {
     try {
-      const key = 'chatSecureKey2024';
+      const key = 'chatAppSecureKey';
       const text = atob(encrypted);
       let result = '';
       for (let i = 0; i < text.length; i++) {
