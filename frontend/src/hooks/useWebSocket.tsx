@@ -242,7 +242,7 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     }
 
     const wsUrl = getWebSocketUrl();
-    const fullWsUrl = `${wsUrl}/ws/chat?token=${token}`;
+    const fullWsUrl = `${wsUrl}/ws/chat?token=${encodeURIComponent(token)}`;
     
     console.log('Attempting WebSocket connection to:', fullWsUrl);
     console.log('User info:', { id: user.id, username: user.username });

@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from './hooks/useAuth';
 import { WebSocketProvider } from './hooks/useWebSocket';
 import { ThemeProvider } from './contexts/ThemeContext';
 import LoginPage from './pages/LoginPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 import ChatPage from './pages/ChatPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import ErrorBoundary, { ChatErrorBoundary } from './components/ErrorBoundary';
@@ -27,11 +28,11 @@ const RootRedirect: React.FC = () => {
   const { user, isLoading, token } = useAuth();
 
   logger.debug('🏠 RootRedirect rendered at URL:', window.location.href);
-  logger.debug('🏠 Auth State:', { 
-    isLoading, 
-    hasUser: !!user, 
+  logger.debug('🏠 Auth State:', {
+    isLoading,
+    hasUser: !!user,
     hasToken: !!token,
-    userDetails: user ? { id: user.id, username: user.username } : null 
+    userDetails: user ? { id: user.id, username: user.username } : null
   });
 
   if (isLoading) {
@@ -49,7 +50,7 @@ const RootRedirect: React.FC = () => {
   const redirect = user ? '/chat' : '/login';
   logger.debug('🏠 RootRedirect: About to redirect to:', redirect);
   logger.debug('🏠 Current URL before redirect:', window.location.href);
-  
+
   return user ? <Navigate to="/chat" replace /> : <Navigate to="/login" replace />;
 };
 
@@ -63,15 +64,16 @@ const AppContent: React.FC = () => {
           <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
             <Routes>
               <Route path="/login" element={<LoginPage />} />
-              <Route 
-                path="/chat" 
+              <Route path="/reset-password" element={<ResetPasswordPage />} />
+              <Route
+                path="/chat"
                 element={
                   <ProtectedRoute>
                     <ChatErrorBoundary>
                       <ChatPage />
                     </ChatErrorBoundary>
                   </ProtectedRoute>
-                } 
+                }
               />
               <Route path="/" element={<RootRedirect />} />
             </Routes>

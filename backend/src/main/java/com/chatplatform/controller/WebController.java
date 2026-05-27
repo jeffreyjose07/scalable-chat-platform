@@ -2,7 +2,6 @@ package com.chatplatform.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * Controller to serve the React frontend from Spring Boot
@@ -16,24 +15,18 @@ public class WebController {
      * This allows React Router to handle client-side routing
      */
     @GetMapping(value = {
-            "/", 
-            "/login", 
-            "/chat/**", 
+            "/",
+            "/login",
+            "/chat",
+            "/chat/**",
+            "/reset-password",
             "/conversations/**",
             "/settings/**"
     })
     public String serveReactApp() {
         return "forward:/index.html";
     }
-    
-    /**
-     * Explicit mapping for the root path
-     */
-    @RequestMapping("/")
-    public String index() {
-        return "forward:/index.html";
-    }
-    
+
     /**
      * Health check endpoint for the combined app
      */

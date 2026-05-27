@@ -17,6 +17,12 @@ frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
 
+# Frontend testing artifacts
+frontend/test-results/
+frontend/playwright-report/
+frontend/playwright/.cache/
+frontend/coverage/
+
 # IDEs
 .idea/
 .vscode/
@@ -40,3 +46,11 @@ logs/
 # Temporary files
 *.tmp
 *.temp
+
+# Migration backups and data dumps
+data_migration_*/
+render_to_neon_*/
+neon_migration_*/
+rollback_backup_*.sql
+*.backup
+*.dump
