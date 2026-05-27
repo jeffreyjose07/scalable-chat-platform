@@ -38,7 +38,6 @@ class SecureStorage {
       };
       storage.setItem(key + '_meta', JSON.stringify(metadata));
       
-      console.debug('Token stored securely', { persistent, encrypted: this.encrypt });
     } catch (error) {
       console.error('Failed to store token:', error);
       throw new Error('Token storage failed');
@@ -91,6 +90,17 @@ class SecureStorage {
       }
       
       const decryptedToken = this.encrypt ? this.simpleDecrypt(token) : token;
+      // Validate full JWT structure: 3 base64url segments separated by dots.
+      // A prefix-only check ('eyJ') is insufficient — XOR key mismatches produce
+      // tokens with correct first chars but control characters after position 3,
+      // which cause fetch() to throw "Invalid value" on the Authorization header.
+      const jwtParts = decryptedToken.split('.');
+      const isValidJwt = jwtParts.length === 3 &&
+        jwtParts.every(part => /^[A-Za-z0-9\-_]+=*$/.test(part));
+      if (!isValidJwt) {
+        this.removeToken();
+        return null;
+      }
       return decryptedToken;
       
     } catch (error) {
@@ -113,7 +123,6 @@ class SecureStorage {
       localStorage.removeItem(key);
       localStorage.removeItem(key + '_meta');
       
-      console.debug('Token removed from secure storage');
     } catch (error) {
       console.error('Failed to remove token:', error);
     }
@@ -147,7 +156,6 @@ class SecureStorage {
         }
       }
       
-      console.debug('All secure storage cleared');
     } catch (error) {
       console.error('Failed to clear secure storage:', error);
     }
@@ -207,10 +215,6 @@ class SecureStorage {
     const fingerprint = components.join('|');
     const hash = this.simpleHash(fingerprint);
     
-    // Debug logging to understand fingerprint changes
-    console.debug('🔒 Fingerprint components:', components);
-    console.debug('🔒 Generated fingerprint hash:', hash);
-    
     return hash;
   }
 
@@ -232,7 +236,7 @@ class SecureStorage {
    * Note: This is basic obfuscation, not cryptographic security
    */
   private simpleEncrypt(text: string): string {
-    const key = 'chatSecureKey2024'; // In production, use environment variable
+    const key = 'chatAppSecureKey';
     let result = '';
     for (let i = 0; i < text.length; i++) {
       result += String.fromCharCode(
@@ -247,7 +251,7 @@ class SecureStorage {
    */
   private simpleDecrypt(encrypted: string): string {
     try {
-      const key = 'chatSecureKey2024';
+      const key = 'chatAppSecureKey';
       const text = atob(encrypted);
       let result = '';
       for (let i = 0; i < text.length; i++) {
@@ -279,24 +283,5 @@ export const tokenStorage = {
   clearSecurityFlag: () => secureStorage.clearSecurityFlag()
 };
 
-// Auto-cleanup on page unload for security
-window.addEventListener('beforeunload', () => {
-  // Clear sessionStorage tokens on page unload for extra security
-  const key = 'chat_app_token';
-  if (sessionStorage.getItem(key)) {
-    console.debug('Clearing session token on page unload');
-  }
-});
-
-// Detect potential XSS and clear tokens
-window.addEventListener('error', (event) => {
-  // If there are script errors that might indicate XSS, clear tokens
-  if (event.error && event.error.message && 
-      event.error.message.includes('script') && 
-      event.error.message.includes('blocked')) {
-    console.warn('Potential XSS detected, clearing tokens for security');
-    secureStorage.clearAll();
-  }
-});
 
 export default secureStorage;

@@ -1,4 +1,4 @@
-import { User, Conversation } from '../types/chat';
+import { User, Conversation, CreateGroupRequest, UpdateGroupSettingsRequest, ConversationDto } from '../types/chat';
 import { tokenStorage } from '../utils/secureStorage';
 
 // Get API base URL from runtime config or environment variables
@@ -200,31 +200,31 @@ export const conversationApi = {
     return result;
   },
 
-  createGroup: async (createGroupRequest: any): Promise<any> => {
+  createGroup: async (createGroupRequest: CreateGroupRequest): Promise<ConversationDto> => {
     console.log('🔄 Creating group:', createGroupRequest);
-    
+
     const response = await authenticatedFetch(`${API_BASE_URL}/conversations/groups`, {
       method: 'POST',
       body: JSON.stringify(createGroupRequest),
     });
-    
+
     const result = await response.json();
     console.log('✅ Group created:', result);
-    
+
     return result;
   },
 
-  updateGroupSettings: async (conversationId: string, updateRequest: any): Promise<any> => {
+  updateGroupSettings: async (conversationId: string, updateRequest: UpdateGroupSettingsRequest): Promise<ConversationDto> => {
     console.log('🔄 Updating group settings:', conversationId, updateRequest);
-    
+
     const response = await authenticatedFetch(`${API_BASE_URL}/conversations/${conversationId}/settings`, {
       method: 'PUT',
       body: JSON.stringify(updateRequest),
     });
-    
+
     const result = await response.json();
     console.log('✅ Group settings updated:', result);
-    
+
     return result;
   },
 

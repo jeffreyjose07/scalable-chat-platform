@@ -169,8 +169,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         toast.error(messageResponse.message || 'Login failed');
         throw new Error(messageResponse.message || 'Login failed');
       }
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || error.message || 'Login failed';
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } }; message?: string };
+      const errorMessage = axiosError.response?.data?.message || axiosError.message || 'Login failed';
       toast.error(errorMessage);
       throw error;
     }
@@ -184,12 +185,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         password,
         displayName
       });
-      
+
       const messageResponse = response.data as MessageResponse<AuthResponse>;
-      
+
       if (messageResponse.success && messageResponse.data) {
         const { token: newToken, user: userData } = messageResponse.data;
-        
+
         // Map backend UserInfo to frontend User interface
         const user: User = {
           id: userData.id,
@@ -198,19 +199,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           displayName: userData.displayName,
           avatarUrl: undefined // Backend doesn't have avatarUrl yet
         };
-        
+
         // Store token persistently so it survives page reloads
         tokenStorage.set(newToken, true); // Persist for better UX
         setToken(newToken);
         setUser(user);
-        
+
         toast.success(messageResponse.message || 'Registration successful');
       } else {
         toast.error(messageResponse.message || 'Registration failed');
         throw new Error(messageResponse.message || 'Registration failed');
       }
-    } catch (error: any) {
-      const errorMessage = error.response?.data?.message || error.message || 'Registration failed';
+    } catch (error: unknown) {
+      const axiosError = error as { response?: { data?: { message?: string } }; message?: string };
+      const errorMessage = axiosError.response?.data?.message || axiosError.message || 'Registration failed';
       toast.error(errorMessage);
       throw error;
     }
@@ -277,9 +279,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       } else {
         throw new Error(messageResponse.message || 'Failed to update profile');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to update profile:', error);
-      if (error.response?.status === 401) {
+      const axiosError = error as { response?: { status?: number } };
+      if (axiosError.response?.status === 401) {
         // Token expired, trigger logout
         logout();
         throw new Error('Session expired. Please log in again.');

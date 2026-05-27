@@ -7,6 +7,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.index.Index;
+import org.springframework.data.mongodb.core.index.TextIndexDefinition;
 import org.bson.Document;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,7 @@ public class MongoIndexConfiguration {
     @EventListener(ApplicationReadyEvent.class)
     public void createIndexes() {
         createMessageTTLIndex();
+        createMessageTextIndex();
     }
 
     private void createMessageTTLIndex() {
@@ -62,6 +64,23 @@ public class MongoIndexConfiguration {
         } catch (Exception e) {
             // Log error but don't fail application startup
             logger.warn("Could not create/update TTL index: {}", e.getMessage());
+        }
+    }
+
+    private void createMessageTextIndex() {
+        String collectionName = "messages";
+        String indexName = "content_text";
+
+        try {
+            if (!indexExists(collectionName, indexName)) {
+                TextIndexDefinition textIndex = new TextIndexDefinition.TextIndexDefinitionBuilder()
+                        .onField("content")
+                        .build();
+                mongoTemplate.indexOps(collectionName).ensureIndex(textIndex);
+                logger.info("✅ Created text index on messages.content");
+            }
+        } catch (Exception e) {
+            logger.warn("Could not create text index on messages.content: {}", e.getMessage());
         }
     }
 
