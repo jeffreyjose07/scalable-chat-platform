@@ -43,7 +43,7 @@ const NewMessageSearchBar: React.FC<NewMessageSearchBarProps> = ({
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
   const filtersRef = useRef<HTMLDivElement>(null);
-  const debounceTimeoutRef = useRef<NodeJS.Timeout>();
+  const debounceTimeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
   
   // Load recent searches from localStorage on mount
   useEffect(() => {
