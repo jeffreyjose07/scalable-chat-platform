@@ -57,12 +57,12 @@ public class SecurityConfig {
                     response.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
                     response.setHeader("Permissions-Policy", "geolocation=(), microphone=(), camera=()");
                     // CSP to prevent XSS attacks
-                    response.setHeader("Content-Security-Policy", 
+                    response.setHeader("Content-Security-Policy",
                         "default-src 'self'; " +
                         "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
-                        "style-src 'self' 'unsafe-inline'; " +
+                        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
                         "img-src 'self' data: https:; " +
-                        "font-src 'self' data:; " +
+                        "font-src 'self' data: https://fonts.gstatic.com; " +
                         "connect-src 'self' ws: wss:; " +
                         "frame-ancestors 'none'"
                     );
@@ -72,11 +72,12 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/ws/**").permitAll() // WebSocket endpoint
                 .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
+                .requestMatchers("/api/auth/forgot-password", "/api/auth/reset-password").permitAll() // Password reset endpoints
                 .requestMatchers("/api/health/**").permitAll() // Health endpoints
                 .requestMatchers("/actuator/health").permitAll() // Actuator health check
                 .requestMatchers("/health").permitAll() // Health check endpoint
                 // Static resources and frontend routes
-                .requestMatchers("/", "/login", "/chat/**", "/conversations/**", "/settings/**").permitAll()
+                .requestMatchers("/", "/login", "/reset-password", "/chat/**", "/conversations/**", "/settings/**").permitAll()
                 .requestMatchers("/static/**", "/css/**", "/js/**", "/images/**", "/favicon.ico", "/manifest.json").permitAll()
                 .requestMatchers("/index.html", "/asset-manifest.json", "/robots.txt").permitAll()
                 .requestMatchers("/api/auth/**").authenticated() // Other auth endpoints require auth
