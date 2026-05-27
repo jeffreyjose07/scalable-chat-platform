@@ -5,16 +5,33 @@ spring:
   main:
     lazy-initialization: true
     
-  # PostgreSQL Configuration (Render managed database)
+  # PostgreSQL Configuration (Aiven database)
   datasource:
     url: ${DATABASE_URL}
     driver-class-name: org.postgresql.Driver
     hikari:
-      maximum-pool-size: 3      # Conservative for Render free tier
-      minimum-idle: 1
-      connection-timeout: 20000
-      idle-timeout: 300000
-      max-lifetime: 1200000
+      maximum-pool-size: 2      # Very conservative for Render free tier
+      minimum-idle: 0           # Allow pool to shrink completely
+      connection-timeout: 60000  # Increased for Aiven cloud database
+      idle-timeout: 600000      # 10 minutes
+      max-lifetime: 1800000     # 30 minutes
+      validation-timeout: 5000  # Connection validation timeout
+      # Aiven-specific settings to handle connection pooling
+      leak-detection-threshold: 60000
+      initialization-fail-timeout: 60000  # Increased for cloud database
+      auto-commit: false
+      # Connection validation and retry settings for Aiven
+      connection-test-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: true
+      # Disable prepared statement cache to avoid pooling issues
+      data-source-properties:
+        prepareThreshold: 0
+        preparedStatementCacheQueries: 0
+        preparedStatementCacheSizeMiB: 0
+        socketTimeout: 60
+        connectTimeout: 60
+        loginTimeout: 60
       
   # JPA Configuration
   jpa:
@@ -26,6 +43,18 @@ spring:
       hibernate:
         format_sql: false
         use_sql_comments: false
+        # Aiven-specific optimizations
+        jdbc:
+          time_zone: UTC          # Ensure consistent timezone handling
+          batch_size: 15          # Smaller batch size for pooled connections
+        connection:
+          provider_disables_autocommit: true  # Better transaction management
+        order_inserts: true       # Optimize insert operations
+        order_updates: true       # Optimize update operations
+        # Connection pooling optimizations
+        cache:
+          use_second_level_cache: false  # Disable L2 cache with connection pooling
+          use_query_cache: false         # Disable query cache with pooled connections
         
   # MongoDB Configuration (MongoDB Atlas)
   data:
@@ -85,6 +114,13 @@ app:
     email: ${ADMIN_EMAIL:admin@chatplatform.com}
     password: ${ADMIN_PASSWORD:TempPass123!}
     displayName: ${ADMIN_DISPLAY_NAME:System Administrator}
+  
+  frontend-url: ${FRONTEND_URL:https://scalable-chat-platform.onrender.com}
+
+# Brevo Email Configuration
+brevo:
+  api-key: ${BREVO_API_KEY}
+  from-email: ${BREVO_FROM_EMAIL:jeffreyjose.k@gmail.com}
   
 # Logging Configuration (Optimized for Render)
 logging:

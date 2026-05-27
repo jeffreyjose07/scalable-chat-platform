@@ -15,6 +15,7 @@ public interface ChatMessageRepository extends MongoRepository<ChatMessage, Stri
     List<ChatMessage> findByConversationIdAndTimestampAfterOrderByTimestampAsc(String conversationId, Instant timestamp);
     List<ChatMessage> findBySenderIdOrderByTimestampDesc(String senderId);
     List<ChatMessage> findByTimestampAfterOrderByTimestampAsc(Instant timestamp);
+    List<ChatMessage> findByConversationIdInAndTimestampAfterOrderByTimestampAsc(List<String> conversationIds, Instant timestamp);
     void deleteByConversationId(String conversationId);
     
     // Text search methods

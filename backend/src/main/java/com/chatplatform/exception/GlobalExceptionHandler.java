@@ -17,8 +17,9 @@ import java.util.Map;
 /**
  * Global exception handler for consistent error responses
  * Centralizes error handling logic following DRY principle
+ * Limited to @RestController annotated classes only - SPA routes are handled by SpaErrorController
  */
-@RestControllerAdvice
+@RestControllerAdvice(annotations = org.springframework.web.bind.annotation.RestController.class)
 public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
@@ -96,7 +97,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<MessageResponse<Object>> handleNoResourceFoundException(NoResourceFoundException e) {
-        // Don't log static resource errors as errors - just debug level
         logger.debug("Static resource not found: {}", e.getResourcePath());
         return ResponseUtils.notFound("Resource not found", Map.of("path", e.getResourcePath()));
     }

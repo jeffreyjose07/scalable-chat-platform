@@ -26,12 +26,12 @@ cd backend && ./gradlew buildForRender
 ## 🏗️ Architecture Overview
 
 - **Backend**: Spring Boot 3.2 with Java 17, WebSocket support
-- **Databases**: PostgreSQL (users), MongoDB (messages), Redis (sessions)
+- **Databases**: Aiven PostgreSQL (users), MongoDB Atlas (messages), Upstash Redis (sessions)
 - **Frontend**: React 18 with TypeScript, embedded in Spring Boot JAR
 - **Messaging**: In-memory queue with event-driven distribution
 - **Deployment**: Single-service container optimized for Render platform
 
-**🎯 [Complete Architecture Documentation →](docs/ARCHITECTURE.md)**
+**📚 [Complete Documentation →](docs/README.md)**
 
 ## 🚀 Architecture & Scalability
 
@@ -157,9 +157,9 @@ public void handleMessageDistribution(MessageDistributionEvent event) {
 ```
 
 #### **External Database Architecture**
-- **PostgreSQL**: User accounts, conversations, participant relationships
-- **MongoDB**: Chat message history with automatic indexing
-- **Redis**: Session state, presence management, caching layer
+- **Aiven PostgreSQL**: User accounts, conversations, participant relationships
+- **MongoDB Atlas**: Chat message history with automatic indexing
+- **Upstash Redis**: Session state, presence management, caching layer
 
 ### **Performance Characteristics**
 
@@ -288,7 +288,7 @@ public void handleMessageDistribution(MessageDistributionEvent event) {
 
 ### Production Deployment
 - **Single Service**: Frontend embedded as static resources in Spring Boot JAR
-- **External Databases**: Managed PostgreSQL, MongoDB Atlas, Upstash Redis
+- **External Databases**: Aiven PostgreSQL, MongoDB Atlas, Upstash Redis
 - **Platform**: Render with build optimizations
 - **📋 [Complete Deployment Guide →](docs/deployment/render.md)**
 
@@ -323,6 +323,20 @@ scalable-chat-platform/
 - **[Development Setup →](docs/development/setup.md)** - Local environment configuration
 - **[Testing Strategy →](backend/src/test/README.md)** - Unit tests, integration tests, coverage
 - **[Render Deployment →](docs/deployment/render.md)** - Production deployment guide
+
+## 📚 Complete Documentation Index
+
+**All project documentation has been organized into logical categories:**
+
+| Category | Description | Key Documents |
+|----------|-------------|---------------|
+| 🏗️ **[Architecture & Development](docs/ARCHITECTURE.md)** | System design, setup guides | Architecture, Network Access, Development Setup |
+| 🚀 **[Deployment](docs/deployment/)** | Production deployment | Render Deployment, Security Configuration, Gradle Build |
+| 🔄 **[Migration & Database](docs/migration/)** | Database migrations | Neon PostgreSQL, Migration Walkthrough |
+| 📊 **[Reports & Analysis](docs/reports/)** | Code quality, improvements | UI Responsiveness, Code Quality, Project Phases |
+| 📦 **[Archive](docs/archive/)** | Historical documentation | Completed fixes, legacy guides |
+
+**📋 [Browse All Documentation →](docs/README.md)**
 
 ## 🆘 Support & Troubleshooting
 
