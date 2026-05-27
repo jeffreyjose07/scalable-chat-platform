@@ -68,7 +68,15 @@ services:
       - key: MONGODB_URI
         sync: false  # MongoDB Atlas connection string
       - key: REDIS_URL
-        sync: false  # Redis service connection string (Upstash, Redis Cloud, etc.)
+        sync: false  # MUST use rediss:// (TLS) on port 6380 for Upstash: rediss://default:<password>@<host>.upstash.io:6380
+      
+      # Email Service Configuration (Brevo/Sendinblue)
+      - key: BREVO_API_KEY
+        sync: false  # CRITICAL: Set manually in Render dashboard with your Brevo API key
+      - key: BREVO_FROM_EMAIL
+        value: "jeffreyjose.k@gmail.com"  # Your verified sender email in Brevo
+      - key: FRONTEND_URL
+        value: "https://scalable-chat-platform.onrender.com"  # Replace with your actual frontend URL
 
 # Build System: Migrated from Maven to Gradle for better performance and security
 # - Uses Gradle 8.5 with Spring Boot 3.2.0
@@ -80,7 +88,7 @@ services:
 # 2. ADMIN_PASSWORD: Use a strong password with mixed case, numbers, symbols
 # 3. DATABASE_URL: Set up Neon PostgreSQL and use connection string
 # 4. MONGODB_URI: Set up MongoDB Atlas and use connection string
-# 5. REDIS_URL: Set up Upstash Redis or Redis Cloud for token blacklisting
+# 5. REDIS_URL: Upstash requires TLS — use rediss:// on port 6380, NOT redis:// on 6379
 # 6. CORS_ALLOWED_ORIGINS: Replace with your actual domain
 # 
 # Required Manual Environment Variables in Render Dashboard:

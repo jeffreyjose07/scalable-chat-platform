@@ -81,6 +81,11 @@ cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/backend
 - **Problem**: Calling repository methods that don't exist
 - **Solution**: Check existing methods first, add new ones with proper Spring Data naming conventions
 
+### Docker Build Failure (Render)
+- **Problem**: `failed to solve: openjdk:17-jdk-slim: not found`
+- **Root Cause**: `openjdk` Docker images are deprecated and removed from Docker Hub.
+- **Fix**: Use `eclipse-temurin:17-jre` in `Dockerfile` and `Dockerfile.render`.
+
 ## Architecture Notes
 
 ### Database Setup
@@ -103,6 +108,11 @@ cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/backend
 - **Authentication**: Bearer token in Authorization header
 - **Response format**: `{success: boolean, message: string, data: T}`
 
+### Refactoring Changes (Nov 2025)
+- **Frontend**: `ChatPage.tsx` split into `ChatSidebar` (navigation/users) and `ChatMainArea` (messages/input).
+- **Backend**: `ChatWebSocketHandler` refactored to delegate message processing to `WebSocketMessageDispatcher`.
+- **WebSockets**: `DynamicOriginWebSocketConfigurer` enables dynamic origin validation via `WEBSOCKET_ALLOWED_ORIGINS` env var.
+
 ## UI Components
 
 ### CreateGroupModal Search Implementation
@@ -110,3 +120,20 @@ cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/backend
 - **Feature**: Real-time search filtering for participants when creating groups
 - **Implementation**: Filters users by `displayName` and `email` using case-insensitive matching
 - **State Management**: Uses `searchTerm` state with proper cleanup on form reset/cancel
+
+### Password Reset Implementation (Nov 2025)
+- **Email Service**: Resend (free tier: 100 emails/day)
+- **Token Storage**: Redis with 30-minute expiration
+- **Security Features**:
+  - Rate limiting (5 requests per hour per email)
+  - Single-use tokens (deleted after consumption)
+  - Email enumeration prevention (always returns success)
+  - Strong password validation (min 8 chars, complexity check)
+- **Endpoints**:
+  - POST `/api/auth/forgot-password` - Request reset email
+  - POST `/api/auth/reset-password` - Reset with token
+- **Frontend**: `/reset-password` page with password strength indicator
+- **Environment Variables**:
+  - `RESEND_API_KEY` - Resend API key (set manually in Render)
+  - `RESEND_FROM_EMAIL` - Sender email (default: `onboarding@resend.dev`)
+  - `FRONTEND_URL` - Frontend URL for reset links
