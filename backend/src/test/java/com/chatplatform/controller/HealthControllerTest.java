@@ -13,6 +13,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -210,7 +211,39 @@ class HealthControllerTest {
         @SuppressWarnings("unchecked")
         Map<String, Object> body = (Map<String, Object>) response.getBody();
         assertNotNull(body);
-        assertEquals("DOWN", body.get("status"));
+        assertEquals(Constants.DOWN, body.get(Constants.STATUS));
+    }
+
+    @Test
+    void testGetStatus_deepCheckHitsDataStoresOnceWithinCacheTtl() throws SQLException {
+        ReflectionTestUtils.setField(healthController, "cacheTtlUpSeconds", 120);
+        ReflectionTestUtils.setField(healthController, "cacheTtlDownSeconds", 120);
+
+        when(dataSource.getConnection()).thenReturn(connection);
+        when(connection.isValid(5)).thenReturn(true);
+        when(connection.getMetaData()).thenReturn(metaData);
+        when(metaData.getDatabaseProductName()).thenReturn("PostgreSQL");
+        when(metaData.getURL()).thenReturn("jdbc:postgresql://localhost:5432/testdb");
+
+        when(mongoTemplate.execute(any())).thenReturn("pong");
+        when(mongoTemplate.getDb()).thenReturn(mock(com.mongodb.client.MongoDatabase.class));
+        when(mongoTemplate.getDb().getName()).thenReturn("testdb");
+
+        when(redisTemplate.getConnectionFactory()).thenReturn(connectionFactory);
+        when(connectionFactory.getConnection()).thenReturn(redisConnection);
+        when(redisConnection.ping()).thenReturn("PONG");
+
+        ResponseEntity<Map<String, Object>> first = healthController.getStatus();
+        ResponseEntity<Map<String, Object>> second = healthController.getStatus();
+
+        assertEquals(HttpStatus.OK, first.getStatusCode());
+        assertEquals(HttpStatus.OK, second.getStatusCode());
+        assertEquals("MISS", first.getHeaders().getFirst(HealthController.HEADER_DEEP_PROBE_CACHE));
+        assertEquals("HIT", second.getHeaders().getFirst(HealthController.HEADER_DEEP_PROBE_CACHE));
+
+        verify(dataSource, times(1)).getConnection();
+        verify(mongoTemplate, times(1)).execute(any());
+        verify(connectionFactory, times(1)).getConnection();
     }
 
     @Test
@@ -218,13 +251,13 @@ class HealthControllerTest {
         ResponseEntity<?> response = healthController.test();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        
+
         @SuppressWarnings("unchecked")
         Map<String, Object> body = (Map<String, Object>) response.getBody();
         assertNotNull(body);
         assertEquals(Constants.BACKEND_IS_WORKING_CORRECTLY, body.get(Constants.MESSAGE));
         assertNotNull(body.get("timestamp"));
-        
+
         @SuppressWarnings("unchecked")
         Map<String, Object> features = (Map<String, Object>) body.get("features");
         assertNotNull(features);

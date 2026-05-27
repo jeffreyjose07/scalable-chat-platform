@@ -10,43 +10,62 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.EnumMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Rate limiting filter to prevent DDoS and brute force attacks
- * Implements sliding window rate limiting per IP address
+ * Rate limiting filter to reduce abuse (DDoS, brute force). Tracks separate sliding windows per
+ * limit category so aggressive /api/health polling does not starve unrelated API quotas.
  */
 public class RateLimitingFilter extends OncePerRequestFilter {
-    
+
     private static final Logger logger = LoggerFactory.getLogger(RateLimitingFilter.class);
-    
-    // Rate limits per endpoint type
-    private static final int AUTH_REQUESTS_PER_MINUTE = 5; // Login/register attempts
-    private static final int API_REQUESTS_PER_MINUTE = 100; // General API requests
-    private static final int WEBSOCKET_CONNECTIONS_PER_MINUTE = 10; // WebSocket connections
-    
-    // Sliding window duration in milliseconds (1 minute)
+
+    /** Login / registration / forgot-password bursts */
+    private static final int AUTH_REQUESTS_PER_MINUTE = 5;
+    /** General authenticated API usage */
+    private static final int API_REQUESTS_PER_MINUTE = 100;
+    /** WebSocket connect attempts */
+    private static final int WEBSOCKET_CONNECTIONS_PER_MINUTE = 10;
+    /** Deep/actuator probes — shields PostgreSQL / MongoDB / Redis from high-QPS scripted abuse */
+    private static final int HEALTH_REQUESTS_PER_MINUTE = 30;
+
+    /** Sliding window (1 minute) */
     private static final long WINDOW_DURATION = 60 * 1000;
-    
-    // Request counters per IP address
-    private final Map<String, RequestCounter> requestCounters = new ConcurrentHashMap<>();
-    
+
+    enum LimitBucket {
+        HEALTH,
+        AUTH,
+        WEBSOCKET,
+        API
+    }
+
+    private final Map<LimitBucket, Map<String, RequestCounter>> buckets = new EnumMap<>(LimitBucket.class);
+
+    public RateLimitingFilter() {
+        for (LimitBucket b : LimitBucket.values()) {
+            buckets.put(b, new ConcurrentHashMap<>());
+        }
+    }
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, 
-                                  FilterChain filterChain) throws ServletException, IOException {
-        
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
+
+        LimitBucket resolved = resolveBucket(request.getRequestURI());
+        if (resolved == null) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        int limit = limitForBucket(resolved);
         String clientIp = getClientIpAddress(request);
-        String requestPath = request.getRequestURI();
-        
-        // Determine rate limit based on endpoint
-        int rateLimit = getRateLimitForEndpoint(requestPath);
-        
-        if (rateLimit > 0 && isRateLimitExceeded(clientIp, rateLimit)) {
-            logger.warn("Rate limit exceeded for endpoint type: {}", getEndpointType(requestPath));
-            
-            // Return 429 Too Many Requests
+
+        if (limit > 0 && isRateLimitExceeded(clientIp, resolved, limit)) {
+            logger.warn("⚠️ Rate limit exceeded (bucket={}, ip={})", resolved, sanitizeIpForLog(clientIp));
+
             response.setStatus(429);
             response.setContentType("application/json");
             response.getWriter().write(
@@ -54,103 +73,121 @@ public class RateLimitingFilter extends OncePerRequestFilter {
             );
             return;
         }
-        
-        // Continue with the request
+
         filterChain.doFilter(request, response);
     }
-    
+
+    /** Avoid logging rare IPv6 in full verbosity at WARN level abuse cases */
+    private static String sanitizeIpForLog(String ip) {
+        if (ip != null && ip.length() > 45) {
+            return ip.substring(0, 45) + "...";
+        }
+        return ip;
+    }
+
+    private LimitBucket resolveBucket(String requestPath) {
+        if ("/health".equals(requestPath)) {
+            return LimitBucket.HEALTH;
+        }
+        if (requestPath.startsWith("/ws/")) {
+            return LimitBucket.WEBSOCKET;
+        }
+        // Health probes (heavy DB/redis/mongo work or Spring health aggregation)
+        if (requestPath.startsWith("/api/health/")
+                || requestPath.startsWith("/api/actuator/health")) {
+            return LimitBucket.HEALTH;
+        }
+        if (requestPath.startsWith("/actuator/health")) {
+            return LimitBucket.HEALTH;
+        }
+        // Auth flows (explicit prefix before generic /api/)
+        if (requestPath.startsWith("/api/auth/")) {
+            return LimitBucket.AUTH;
+        }
+        if (requestPath.startsWith("/api/")) {
+            return LimitBucket.API;
+        }
+        return null;
+    }
+
+    private int limitForBucket(LimitBucket bucket) {
+        return switch (bucket) {
+            case AUTH -> AUTH_REQUESTS_PER_MINUTE;
+            case HEALTH -> HEALTH_REQUESTS_PER_MINUTE;
+            case WEBSOCKET -> WEBSOCKET_CONNECTIONS_PER_MINUTE;
+            case API -> API_REQUESTS_PER_MINUTE;
+        };
+    }
+
     private String getClientIpAddress(HttpServletRequest request) {
-        // Check for X-Forwarded-For header (common in load balancers)
         String xForwardedFor = request.getHeader("X-Forwarded-For");
         if (xForwardedFor != null && !xForwardedFor.isEmpty()) {
             return xForwardedFor.split(",")[0].trim();
         }
-        
-        // Check for X-Real-IP header
+
         String xRealIp = request.getHeader("X-Real-IP");
         if (xRealIp != null && !xRealIp.isEmpty()) {
             return xRealIp;
         }
-        
-        // Fallback to remote address
+
         return request.getRemoteAddr();
     }
-    
-    private int getRateLimitForEndpoint(String requestPath) {
-        if (requestPath.startsWith("/api/auth/")) {
-            return AUTH_REQUESTS_PER_MINUTE;
-        } else if (requestPath.startsWith("/ws/")) {
-            return WEBSOCKET_CONNECTIONS_PER_MINUTE;
-        } else if (requestPath.startsWith("/api/")) {
-            return API_REQUESTS_PER_MINUTE;
-        }
-        
-        // No rate limiting for static resources
-        return 0;
-    }
-    
-    private String getEndpointType(String requestPath) {
-        if (requestPath.startsWith("/api/auth/")) {
-            return "AUTH";
-        } else if (requestPath.startsWith("/ws/")) {
-            return "WEBSOCKET";
-        } else if (requestPath.startsWith("/api/")) {
-            return "API";
-        }
-        return "STATIC";
-    }
-    
-    private boolean isRateLimitExceeded(String clientIp, int rateLimit) {
+
+    private boolean isRateLimitExceeded(String clientIp, LimitBucket bucket, int rateLimit) {
         long currentTime = Instant.now().toEpochMilli();
-        
-        RequestCounter counter = requestCounters.computeIfAbsent(clientIp, k -> new RequestCounter());
-        
+        Map<String, RequestCounter> bucketMap = buckets.get(bucket);
+
+        RequestCounter counter = bucketMap.computeIfAbsent(clientIp, k -> new RequestCounter());
+
         synchronized (counter) {
-            // Clean up old entries (sliding window)
-            counter.timestamps.entrySet().removeIf(entry -> 
-                currentTime - entry.getKey() > WINDOW_DURATION
+            counter.timestamps.entrySet().removeIf(entry ->
+                currentTime - entry.getKey() * 1000L > WINDOW_DURATION
             );
-            
-            // Count current requests in the window
+
             int currentRequests = counter.timestamps.values().stream()
                 .mapToInt(AtomicInteger::get)
                 .sum();
-            
+
             if (currentRequests >= rateLimit) {
                 return true;
             }
-            
-            // Add current request
-            long timeSlot = currentTime / 1000; // Group by second
+
+            long timeSlot = currentTime / 1000;
             counter.timestamps.computeIfAbsent(timeSlot, k -> new AtomicInteger(0)).incrementAndGet();
-            
+
             return false;
         }
     }
-    
+
     /**
-     * Request counter for tracking requests per IP address
+     * Request counter per IP inside one {@link LimitBucket}.
      */
     private static class RequestCounter {
         private final Map<Long, AtomicInteger> timestamps = new ConcurrentHashMap<>();
     }
-    
+
     /**
-     * Cleanup old entries periodically to prevent memory leaks
+     * Cleanup old counters for all buckets to limit memory growth.
      */
     public void cleanupOldEntries() {
         long currentTime = Instant.now().toEpochMilli();
-        
-        requestCounters.entrySet().removeIf(entry -> {
-            RequestCounter counter = entry.getValue();
-            synchronized (counter) {
-                counter.timestamps.entrySet().removeIf(timeEntry -> 
-                    currentTime - timeEntry.getKey() * 1000 > WINDOW_DURATION * 2
-                );
-                return counter.timestamps.isEmpty();
-            }
-        });
-        
-        logger.debug("Cleaned up old rate limiting entries. Active IPs: {}", requestCounters.size());
+
+        for (Map<String, RequestCounter> bucketMap : buckets.values()) {
+            bucketMap.entrySet().removeIf(entry -> {
+                RequestCounter counter = entry.getValue();
+                synchronized (counter) {
+                    counter.timestamps.entrySet().removeIf(timeEntry ->
+                        currentTime - timeEntry.getKey() * 1000L > WINDOW_DURATION * 2
+                    );
+                    return counter.timestamps.isEmpty();
+                }
+            });
+        }
+
+        if (logger.isDebugEnabled()) {
+            StringBuilder sb = new StringBuilder();
+            buckets.forEach((k, v) -> sb.append(k).append('=').append(v.size()).append(' '));
+            logger.debug("Rate limit buckets after cleanup: {}", sb.toString().trim());
+        }
     }
 }

@@ -1,0 +1,54 @@
+# Deep health: PostgreSQL + MongoDB + Redis via GET /api/health/status (HTTP 200 only when all are UP).
+# Add repository secret APP_BASE_URL = your deployed origin without a trailing slash, e.g. https://scalable-chat-platform.onrender.com
+#
+# If you repeatedly see HTTP 429, health endpoints are rate-limited per IP — increase HEALTH_REQUESTS_PER_MINUTE
+# in RateLimitingFilter or poll less aggressively.
+
+name: Ping app health
+
+on:
+  schedule:
+    # Intended every ~5 minutes (scheduled runs may be delayed slightly by GitHub).
+    - cron: '*/5 * * * *'
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: GET /api/health/status
+        env:
+          BASE_URL: ${{ secrets.APP_BASE_URL }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${BASE_URL:-}" ]; then
+            echo "::error::Set repository secret APP_BASE_URL (https://your-host.com — no trailing slash)." >&2
+            exit 1
+          fi
+
+          ORIGIN="${BASE_URL%/}"
+          TARGET="${ORIGIN}/api/health/status"
+          echo "Probing ${TARGET}"
+
+          HDR="$(mktemp)"
+          BODY="$(mktemp)"
+          trap 'rm -f "$HDR" "$BODY"' EXIT
+
+          curl -fsS --max-time 45 -D "$HDR" -o "$BODY" "${TARGET}"
+
+          echo "--- probe cache ---"
+          grep -i '^x-health-deep-probe-cache:' "$HDR" || echo "(none — caching may be disabled in this deployment)"
+
+          echo "--- body (truncated) ---"
+          head -c 4000 "$BODY"
+          echo ""
+
+          echo "--- jq summary ---"
+          jq -r '.status as $s | "overall: \($s)", (.dependencies | to_entries[] | "  \(.key): \(.value.status)")' "$BODY"

@@ -121,7 +121,7 @@ public class SecurityConfig {
     public FilterRegistrationBean<RateLimitingFilter> rateLimitingFilterRegistration(RateLimitingFilter rateLimitingFilter) {
         FilterRegistrationBean<RateLimitingFilter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(rateLimitingFilter);
-        registrationBean.addUrlPatterns("/api/*");
+        registrationBean.addUrlPatterns("/api/*", "/actuator/*", "/health");
         registrationBean.setOrder(1); // Set order to run before other filters
         return registrationBean;
     }

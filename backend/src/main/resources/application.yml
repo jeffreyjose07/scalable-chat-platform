@@ -69,6 +69,11 @@ app:
     email: ${ADMIN_EMAIL:admin@chatplatform.com}
     password: ${ADMIN_PASSWORD:admin123}
     displayName: ${ADMIN_DISPLAY_NAME:System Administrator}
+
+  # TTL cache for GET /api/health/status deep dependency checks — limits Postgres/Mongo/Redis churn under probing abuse
+  health:
+    deep-check-cache-when-up-seconds: 60
+    deep-check-cache-when-down-seconds: 15
   
 
 logging:
