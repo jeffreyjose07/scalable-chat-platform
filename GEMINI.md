@@ -137,4 +137,3 @@ cd /Users/jeffrey.jose/cursorProjects/scalable-chat-platform/backend
   - `RESEND_API_KEY` - Resend API key (set manually in Render)
   - `RESEND_FROM_EMAIL` - Sender email (default: `onboarding@resend.dev`)
   - `FRONTEND_URL` - Frontend URL for reset links
-```
