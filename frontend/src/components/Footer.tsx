@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
         <div className="flex flex-col sm:flex-row justify-between items-center space-y-2 sm:space-y-0">
           {/* Left side - Main info */}
           <div className="flex flex-col sm:flex-row items-center space-y-1 sm:space-y-0 sm:space-x-4 text-sm text-gray-600 dark:text-gray-400">
-            <span>© 2025 Chat Platform</span>
+            <span>© 2026 Chat Platform</span>
             <span className="hidden sm:inline">•</span>
             <span>Real-time messaging</span>
           </div>
@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
               href="https://jeffreyjose07.github.io" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              className="text-gray-600 dark:text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-colors"
             >
               Jeffrey Jose
             </a>
