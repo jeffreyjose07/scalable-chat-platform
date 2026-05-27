@@ -74,7 +74,8 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                 .requestMatchers("/api/auth/forgot-password", "/api/auth/reset-password").permitAll() // Password reset endpoints
                 .requestMatchers("/api/health/**").permitAll() // Health endpoints
-                .requestMatchers("/actuator/health").permitAll() // Actuator health check
+                .requestMatchers("/api/actuator/health/**").permitAll() // Actuator health (render: management base-path /api/actuator)
+                .requestMatchers("/actuator/health/**").permitAll() // Actuator health check (local/prod default base-path)
                 .requestMatchers("/health").permitAll() // Health check endpoint
                 // Static resources and frontend routes
                 .requestMatchers("/", "/login", "/reset-password", "/chat/**", "/conversations/**", "/settings/**").permitAll()
