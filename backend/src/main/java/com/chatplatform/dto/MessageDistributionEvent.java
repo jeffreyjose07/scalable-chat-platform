@@ -6,8 +6,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 /**
- * Message distribution event record using Java 17 features
- * Immutable event data for Kafka messaging
+ * Immutable event record for in-memory Spring event distribution of chat messages.
  */
 public record MessageDistributionEvent(
     ChatMessage message,

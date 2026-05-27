@@ -34,7 +34,7 @@ export interface MessageStatusUpdate {
 
 export interface WebSocketMessage {
   type: 'MESSAGE' | 'MESSAGE_DELIVERED' | 'MESSAGE_READ' | 'CONVERSATION_READ';
-  data: any;
+  data: ChatMessage | MessageStatusUpdate;
 }
 
 export interface Conversation {
