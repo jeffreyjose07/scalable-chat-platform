@@ -1,0 +1,61 @@
+name: Frontend CI
+
+on:
+  pull_request:
+    paths:
+      - 'frontend/**'
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      # React and react-dom must be on identical versions — they check this at
+      # runtime and throw error #527 if they diverge, causing a blank page.
+      - name: Check react/react-dom version parity
+        run: |
+          REACT=$(node -p "require('./package-lock.json').packages['node_modules/react'].version")
+          REACT_DOM=$(node -p "require('./package-lock.json').packages['node_modules/react-dom'].version")
+          if [ "$REACT" != "$REACT_DOM" ]; then
+            echo "❌ react ($REACT) and react-dom ($REACT_DOM) must be on identical versions"
+            exit 1
+          fi
+          echo "✅ react and react-dom are both at $REACT"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Build
+        run: npm run build
+        env:
+          CI: false  # Prevents react-scripts from treating warnings as errors
+
+      - name: Install Playwright (Chromium only)
+        run: npx playwright install chromium --with-deps
+
+      - name: Smoke test — verify app loads without runtime errors
+        run: npx playwright test --config=playwright.ci.config.ts
+
+      - name: Upload screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-screenshots
+          path: frontend/test-results/
+          retention-days: 7
