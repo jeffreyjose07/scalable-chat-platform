@@ -52,7 +52,7 @@
     "autoprefixer": "^10.5.0",
     "axios": "^1.12.2",
     "date-fns": "^2.30.0",
-    "postcss": "^8.4.23",
+    "postcss": "^8.5.15",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.65.0",
