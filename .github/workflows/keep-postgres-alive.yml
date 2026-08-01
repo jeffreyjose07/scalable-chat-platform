@@ -1,0 +1,45 @@
+name: Keep Postgres Alive
+
+on:
+  schedule:
+    # Run every 6 hours to keep the Aiven free-tier PostgreSQL service active.
+    # Aiven powers off free services after a period of no client activity; once
+    # powered off the hostname stops resolving and the app cannot boot.
+    - cron: '30 */6 * * *'
+
+  # Allow manual trigger
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping-postgres:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Install postgresql-client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Ping PostgreSQL
+        env:
+          # libpq URI form: postgres://user:password@host:port/db?sslmode=require
+          # NOTE: this is the libpq/psql form, NOT the jdbc: form used by DATABASE_URL in Render.
+          PG_URI: ${{ secrets.AIVEN_POSTGRES_URI }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${PG_URI:-}" ]; then
+            echo "::error::Set repository secret AIVEN_POSTGRES_URI (postgres://... form)." >&2
+            exit 1
+          fi
+
+          # A real query counts as client activity and resets the inactivity timer.
+          psql "$PG_URI" -Atc "SELECT now();"
+
+      - name: Summary
+        run: |
+          echo "✅ Postgres keepalive completed successfully!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Runs every 6 hours to keep the Aiven PostgreSQL instance from powering off." >> $GITHUB_STEP_SUMMARY
