@@ -75,7 +75,7 @@
     "@types/jest": "^27.5.2",
     "@types/react-virtualized": "^9.21.21",
     "eslint-config-prettier": "^8.8.0",
-    "prettier": "^2.8.8"
+    "prettier": "^3.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
