@@ -1,31 +1,91 @@
 name: Keep Postgres Alive
 
+# Aiven powers off free-tier services after a period of inactivity. The warning email
+# (noreply@aiven.io, "Warning: Your Aiven free service pg-1ccb991e hasn't been actively
+# used recently") states:
+#
+#   "Free services are automatically powered off if they or the Aiven platform aren't
+#    actively used. Log in to Aiven Console to keep your free services running."
+#
+# A read-only `SELECT now();` ping every 6h ran GREEN through all three warning emails
+# (2026-08-05, 08-06, 08-07) and the service was powered off anyway on 2026-08-07.
+# Read traffic alone demonstrably does not register as "actively used".
+#
+# This workflow therefore tests two hypotheses at once:
+#   A. Aiven *platform* activity  — an authenticated API call, the closest programmatic
+#      analogue to "log in to Aiven Console".
+#   B. Aiven *service* activity   — a real WRITE (WAL-generating), not just a read.
+#
+# Both run every cycle, and both run even if the other fails, so neither masks the other.
+
 on:
   schedule:
-    # Run every 6 hours to keep the Aiven free-tier PostgreSQL service active.
-    # Aiven powers off free services after a period of no client activity; once
-    # powered off the hostname stops resolving and the app cannot boot.
+    # Every 6 hours, offset from the Redis keepalive.
     - cron: '30 */6 * * *'
 
-  # Allow manual trigger
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  ping-postgres:
+  keepalive:
     runs-on: ubuntu-latest
     timeout-minutes: 5
 
     steps:
-      - name: Install postgresql-client
-        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+      # ---- Hypothesis A: platform activity -------------------------------------
+      - name: Aiven platform activity (authenticated API)
+        env:
+          AIVEN_API_TOKEN: ${{ secrets.AIVEN_API_TOKEN }}
+          AIVEN_PROJECT: chat-platform-db
+          AIVEN_SERVICE: pg-1ccb991e
+        run: |
+          set -euo pipefail
 
-      - name: Ping PostgreSQL
+          if [ -z "${AIVEN_API_TOKEN:-}" ]; then
+            echo "::error::Set repository secret AIVEN_API_TOKEN (Aiven Console -> User profile -> Tokens)." >&2
+            exit 1
+          fi
+
+          AUTH="Authorization: aivenv1 ${AIVEN_API_TOKEN}"
+          API="https://api.aiven.io/v1"
+
+          echo "--- projects ---"
+          curl -fsS --max-time 30 -H "$AUTH" "$API/project" -o projects.json
+          jq -r '.projects[]?.project_name' projects.json || echo "(unexpected shape)"
+
+          echo "--- services in ${AIVEN_PROJECT} ---"
+          curl -fsS --max-time 30 -H "$AUTH" "$API/project/${AIVEN_PROJECT}/service" -o services.json
+          jq -r '.services[]? | "\(.service_name)  type=\(.service_type)  state=\(.state)  plan=\(.plan)"' \
+            services.json || echo "(unexpected shape)"
+
+          echo "--- ${AIVEN_SERVICE} ---"
+          curl -fsS --max-time 30 -H "$AUTH" \
+            "$API/project/${AIVEN_PROJECT}/service/${AIVEN_SERVICE}" -o service.json
+          STATE="$(jq -r '.service.state // "unknown"' service.json)"
+          echo "state=${STATE}"
+
+          {
+            echo "### Aiven platform probe"
+            echo ""
+            echo "- Service \`${AIVEN_SERVICE}\` state: **${STATE}**"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$STATE" != "RUNNING" ]; then
+            echo "::warning::Service ${AIVEN_SERVICE} is ${STATE}, not RUNNING."
+          fi
+
+      # ---- Hypothesis B: service activity (write, not read) --------------------
+      - name: Install postgresql-client
+        if: always()
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq postgresql-client
+
+      - name: Postgres write activity
+        if: always()
         env:
           # libpq URI form: postgres://user:password@host:port/db?sslmode=require
-          # NOTE: this is the libpq/psql form, NOT the jdbc: form used by DATABASE_URL in Render.
+          # NOTE: libpq/psql form, NOT the jdbc: form used by DATABASE_URL in Render.
           PG_URI: ${{ secrets.AIVEN_POSTGRES_URI }}
         run: |
           set -euo pipefail
@@ -35,11 +95,34 @@ jobs:
             exit 1
           fi
 
-          # A real query counts as client activity and resets the inactivity timer.
-          psql "$PG_URI" -Atc "SELECT now();"
+          # INSERT ... ON CONFLICT DO UPDATE is a genuine write on every run: it produces
+          # WAL and advances the transaction id, unlike the previous read-only SELECT.
+          # Dedicated table — no app-owned table is touched, and Hibernate's ddl-auto
+          # ignores it because it maps to no entity.
+          psql "$PG_URI" -v ON_ERROR_STOP=1 <<'SQL'
+          CREATE TABLE IF NOT EXISTS keepalive_ping (
+              id         integer     PRIMARY KEY,
+              last_ping  timestamptz NOT NULL,
+              ping_count bigint      NOT NULL DEFAULT 0
+          );
+
+          INSERT INTO keepalive_ping AS k (id, last_ping, ping_count)
+               VALUES (1, now(), 1)
+          ON CONFLICT (id) DO UPDATE
+                  SET last_ping  = now(),
+                      ping_count = k.ping_count + 1;
+
+          SELECT id, last_ping, ping_count FROM keepalive_ping WHERE id = 1;
+          SQL
 
       - name: Summary
+        if: always()
         run: |
-          echo "✅ Postgres keepalive completed successfully!" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Runs every 6 hours to keep the Aiven PostgreSQL instance from powering off." >> $GITHUB_STEP_SUMMARY
+          {
+            echo ""
+            echo "Runs every 6 hours. Testing two hypotheses together:"
+            echo "1. Authenticated Aiven API call = \"platform activity\""
+            echo "2. WAL-generating write = \"service activity\""
+            echo ""
+            echo "Signal to watch: warning emails from noreply@aiven.io should stop."
+          } >> "$GITHUB_STEP_SUMMARY"
